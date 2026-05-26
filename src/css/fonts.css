@@ -1,0 +1,23 @@
+/* Geist */
+.geist {
+  font-family: 'Geist';
+  font-optical-sizing: auto;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* Geist Mono*/
+.geist-mono {
+  font-family: 'Geist Mono';
+  font-optical-sizing: auto;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* CSS custom properties for easy usage */
+:root {
+  --font-geist: 'Geist', sans-serif;
+  --font-geist-mono:
+    'Geist Mono', ui-monospace, SFMono-Regular, 'Roboto Mono', Menlo, Monaco, 'Liberation Mono', 'DejaVu Sans Mono',
+    'Courier New', monospace;
+}
