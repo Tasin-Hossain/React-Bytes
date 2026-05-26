@@ -1,5 +1,10 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,18 +12,85 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.local
 
-# Editor directories and files
+# Build output
+dist/
+dist-ssr/
+build/
+out/
+.next/
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+.turbo/
+.swc/
+.vercel/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Next.js export
+next-env.d.ts
+
+# Static generated files
+public/default/
+public/tailwind/
+public/ts/default/
+public/ts/tailwind/
+
+# Config / Generated
+components.json
+components-mcp.json
+scripts/mcp.js
+AGENTS.md
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# Editor files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
+.wrangler/
+
+# OS files
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# Windows
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+.envrc
