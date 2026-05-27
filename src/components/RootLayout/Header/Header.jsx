@@ -8,16 +8,19 @@ import { useStars } from '../../../hooks/useStarts';
 import { RiMenu4Line } from 'react-icons/ri';
 import { MdOutlineClose } from 'react-icons/md';
 import { HiMiniUsers } from 'react-icons/hi2';
+import { useTheme } from '../../../hooks/useTheme';
+
 
 const NAV_LINKS = [
-  { label: 'Docs', to: '#' },
-  { label: 'Components', to: '#' },
-  { label: 'Blocks', to: '#' },
-  { label: 'Tools', to: '#' }
+  { label: 'Docs', to: '/docs' },
+  { label: 'Components', to: '/components' },
+  { label: 'Blocks', to: '/blocks' },
+  { label: 'Tools', to: '/tools' }
 ];
 
 const Header = () => {
   const stars = useStars();
+  const { toggleTheme } = useTheme();
   const [activeLink, setActiveLink] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -79,7 +82,7 @@ const Header = () => {
           </Link>
 
           {/* theme */}
-          <button className="hidden md:flex btn-none">
+          <button className="hidden md:flex btn-none" onClick={toggleTheme} aria-label="Toggle theme">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -111,7 +114,7 @@ const Header = () => {
           {/* Mobile hamburger */}
           <div className="flex items-center gap-2">
             {/* theme */}
-            <button className="md:hidden btn-none">
+            <button className="md:hidden btn-none" onClick={toggleTheme} aria-label="Toggle theme">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
