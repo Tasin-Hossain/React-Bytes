@@ -2,139 +2,135 @@
 @import './css/fonts.css';
 @import './css/variables.css';
 
-/* CSS RESET */
+/* ── BASE ── box model, typography, body, media, form elements */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  min-width: 100%;
-  min-height: 100vh;
+  body {
+    min-width: 100%;
+    min-height: 100vh;
+    line-height: 1.5;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--font-geist);
+    background-color: var(--bg);
+    color-scheme: light dark;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
-  line-height: 1.5;
-  font-weight: 400;
-  font-family: var(--font-geist);
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
 
-  background-color: var(--bg);
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 
-  color-scheme: light dark;
-  color: var(--text-primary);
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.2;
+    font-weight: 700;
+  }
 
-  text-rendering: optimizeLegibility;
-}
+  p {
+    color: var(--text-secondary);
+  }
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+  a {
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+  }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
+  a:hover {
+    opacity: 0.85;
+  }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+  ul,
+  ol {
+    list-style: none;
+  }
+  input,
+  textarea,
+  select {
+    outline: none;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+  }
 
-input,
-textarea,
-select {
-  outline: none;
-  border-radius: var(--radius-md);
-  transition: var(--transition);
-}
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 216, 255, 0.15);
+  }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--color-primary);
+  input[type='color'] {
+    border: 2px solid #999;
+    border-radius: 15px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0;
+    width: 60px;
+    height: 30px;
+    background-color: transparent;
+    cursor: pointer;
+  }
 
-  box-shadow: 0 0 0 3px rgba(0, 216, 255, 0.15);
-}
+  input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
 
-/* COLOR PICKER */
-input[type='color'] {
-  border: 2px solid #999;
-  border-radius: 15px;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding: 0;
-  width: 60px;
-  height: 30px;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-input[type='color']::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-input[type='color']::-webkit-color-swatch,
-input[type='color']::-moz-color-swatch {
-  border: none;
-}
-
-/* TYPOGRAPHY */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-p {
-  color: var(--text-secondary);
-}
-
-a {
-  color: inherit;
-  font-weight: 500;
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-a:hover {
-  opacity: 0.85;
+  input[type='color']::-webkit-color-swatch,
+  input[type='color']::-moz-color-swatch {
+    border: none;
+  }
 }
 
-ul,
-ol {
-  list-style: none;
-}
-
-img,
-picture,
-svg,
-video,
-canvas {
-  display: block;
-  max-width: 100%;
+/* ── COMPONENTS ── reusable UI patterns (inputs, color picker) */
+@layer components {
+  .app-container {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .btn {
+    @apply flex items-center gap-1.5 px-3 h-8 rounded-md border border-(--border-button) bg-(--bg-button) text-sm font-medium text-(--text-primary) hover:text-(--text-muted) transition-all duration-150 cursor-pointer;
+  }
+  .btn-none {
+    @apply flex w-8 h-8 rounded-md items-center justify-center transition-all duration-150 hover:bg-(--bg-hover) cursor-pointer;
+  }
 }

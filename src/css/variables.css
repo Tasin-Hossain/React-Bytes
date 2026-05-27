@@ -1,37 +1,24 @@
 /* Light Theme (Default) */
 :root {
-  /* Background colors */
-  --bg: #ffffff;
-  --bg-card: #ffffff;
-  --bg-elevated: #f5f5f5;
-  --bg-hover: #ececf2;
+  --bg: #0a0a0a;
+  --bg-card: #121212;
+  --bg-elevated: #1a1a1a;
+  --bg-hover: #262626;
+  --bg-button: #1f1f1f;
 
-  /* Border colors */
   --border-primary: #1f1f1f;
-  --border-secondary: #2a2a2a;
+  --border-secondary: #ffffff0e;
+  --border-button: #2a2a2a;
 
-  /* Brand colors */
-  --color-primary: #a855f7;
-  --color-accent: #8b5cf6;
-  --color-accent-muted: #b497cf;
+  --brand-primary: #a855f7;
+  --brand-accent: #b497cf;
+  --brand-accent-muted: #b497cf;
 
-  /* Text colors */
-  --text-primary: #000000;
-  --text-secondary: #3f3f46;
-  --text-muted: #71717a;
+  --text-primary: #e5e5e5;
+  --text-secondary: #f5f5f5;
+  --text-muted: #aaaaaa;
   --text-dimmed: #a1a1aa;
-  --text-link: #000000;
-
-  /* Radii */
-  --radius-sm: 10px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-full: 50px;
-
-  /* Shadows */
-  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.08);
-  --shadow-primary: 0 2px 8px rgba(168, 85, 247, 0.25);
+  --text-link: #ffffff;
 
   /* Transitions */
   --transition-fast: 0.15s ease;
@@ -40,6 +27,48 @@
 
   --gradient-title: linear-gradient(135deg, #111 0%, #8660fa 20%, #a855f7 40%, #8400ff 60%, #a855f7 80%, #111 100%);
 }
+
+/* :root {
+  
+  --bg: #000000;
+  --bg-card: #ffffff;
+  --bg-elevated: #f5f5f5;
+  --bg-hover: #ececf2;
+
+
+  --border-primary: #1f1f1f;
+  --border-secondary: #2a2a2a;
+
+
+  --color-primary: #a855f7;
+  --color-accent: #8b5cf6;
+  --color-accent-muted: #b497cf;
+
+
+  --text-primary: #000000;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --text-dimmed: #a1a1aa;
+  --text-link: #000000;
+
+
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50px;
+
+
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(168, 85, 247, 0.25);
+
+
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  --gradient-title: linear-gradient(135deg, #111 0%, #8660fa 20%, #a855f7 40%, #8400ff 60%, #a855f7 80%, #111 100%);
+} */
 
 /* Dark Theme */
 [data-theme='dark'] {
