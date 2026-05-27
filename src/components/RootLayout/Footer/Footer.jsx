@@ -72,10 +72,10 @@ const Footer = () => {
                   className={`group w-12 hover:w-30 h-10 hover:${item.bg} relative ${item.bg} rounded-md text-(--text-primary) duration-700 font-medium flex justify-start gap-2 items-center 
                   p-2 pr-6 overflow-hidden before:absolute before:-z-10 before:left-8  hover:before:left-36 before:w-5 before:h-5 before:${item.bg} hover:before:bg-(--bg-hover) before:rotate-45 before:duration-700`}
                 >
-                  <span className="w-8 h-8 shrink-0 flex items-center justify-center">{item.icon}</span>
+                  <span className="w-8 h-8 shrink-0 flex items-center justify-center text-white">{item.icon}</span>
 
                   <span
-                    className="text-(--text-primary) origin-left inline-flex border-l border-(--border-primary) px-2 opacity-0 scale-x-0 transition-all duration-300 group-hover:delay-500 group-hover:opacity-100
+                    className="text-white origin-left inline-flex border-l border-(--border-primary) px-2 opacity-0 scale-x-0 transition-all duration-300 group-hover:delay-500 group-hover:opacity-100
                     group-hover:scale-x-100"
                   >
                     {item.label}
