@@ -91,11 +91,11 @@ export const WordmarkParticles = () => {
           style={{
             fontSize: 'clamp(2.5rem, 12vw, 13rem)',
             letterSpacing: '-0.02em',
-            lineHeight: '1.3',
-            background: 'var(--wordmark-gradient)',
+            lineHeight: '1.2',
+            // background: 'var(--wordmark-gradient)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            WebkitTextStroke: "2px var(--wordmark-color)",
             color: 'transparent'
           }}
         >
