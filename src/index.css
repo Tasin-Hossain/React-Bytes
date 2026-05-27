@@ -124,9 +124,15 @@
 /* ── COMPONENTS ── reusable UI patterns (inputs, color picker) */
 @layer components {
   .app-container {
-    max-width: 1300px;
-    margin: 0 auto;
-  }
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+
+}
   .btn {
     @apply flex items-center gap-1.5 px-3 h-8 rounded-md border border-(--border-button) bg-(--bg-button) text-sm font-medium text-(--text-primary) hover:text-(--text-muted) transition-all duration-150 cursor-pointer;
   }
