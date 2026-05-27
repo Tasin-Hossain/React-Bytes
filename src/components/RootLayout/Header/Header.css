@@ -1,0 +1,23 @@
+/* ── Mobile menu slide open ── */
+.mobile-menu {
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.25s ease;
+}
+
+.mobile-menu.closed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.mobile-menu.open {
+  max-height: 400px;
+  opacity: 1;
+}
+
+/* ── Scrolled header shadow ── */
+.header-scrolled {
+  border-bottom-color: rgba(124, 106, 255, 0.2) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
