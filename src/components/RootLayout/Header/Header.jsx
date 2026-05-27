@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import Logo from '../../../assets/logos/logo.svg';
+import DarkLogo from '../../../assets/logos/dark-logo.png';
 import './Header.css';
 import { Link } from 'react-router';
 import { FaGithub, FaLongArrowAltRight } from 'react-icons/fa';
@@ -20,7 +21,8 @@ const NAV_LINKS = [
 
 const Header = () => {
   const stars = useStars();
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   const [activeLink, setActiveLink] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -43,7 +45,7 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="w-7 h-7 flex items-center justify-center hover:rotate-50 transition-all">
-            <img src={Logo} alt="Logo" col />
+           <img src={isDark ? Logo : DarkLogo} alt="Logo" />
           </div>
           <span className="tracking-wide text-[15px]">React Bytes</span>
         </Link>
@@ -77,7 +79,7 @@ const Header = () => {
             rel="noopener noreferrer"
             className="hidden md:flex items-center gap-1.5 px-2.5 h-8 rounded-md  transition-all duration-150 hover:bg-(--bg-hover) "
           >
-            <FaGithub size={16} color="#fff" />
+            <FaGithub size={18}  />
             <span className="text-xs text-(--text-muted)">{formattedStars}</span>
           </Link>
 
@@ -172,8 +174,8 @@ const Header = () => {
           ))}
 
           <Link to={GITHUB_URL} target="_blank" className="mt-2 flex items-center gap-2 px-3 h-9 btn">
-            <FaGithub size={16} color="#fff" />
-            <span className="tracking-wider text-(--text-muted)">GITHUB</span>
+            <FaGithub size={18}  />
+            <span className="tracking-wider text-(--text-primary)">GITHUB</span>
             <span className="text-xs text-(--text-muted)">{formattedStars}</span>
           </Link>
         </div>
