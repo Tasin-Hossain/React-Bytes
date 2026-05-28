@@ -1,0 +1,153 @@
+
+/* button */
+.button-custom::before,
+.button-custom::after {
+  content: "";
+  position: absolute;
+  inset: var(--space);
+  transition: all 0.5s ease-in-out;
+  border-radius: calc(0.75rem - var(--space));
+  z-index: 0;
+}
+
+/* .button-custom::before {
+  --space: 1px;
+
+  background: linear-gradient(
+    177.95deg,
+    rgba(255, 255, 255, 0.19) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+} */
+
+.button-custom::after {
+  --space: 1px;
+  background:
+    radial-gradient(
+      65.28% 65.28% at 50% 100%,
+      rgba(223, 113, 255, 0.8) 0%,
+      rgba(223, 113, 255, 0) 100%
+    ),
+    linear-gradient(0deg, #7a5af8, #7a5af8);
+}
+
+
+.point {
+  position: absolute;
+  bottom: -10px;
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: white;
+  animation: floating-points infinite ease-in-out;
+}
+
+@keyframes floating-points {
+  0% {
+    transform: translateY(0);
+  }
+
+  85% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(-55px);
+    opacity: 0;
+  }
+}
+
+.point-1 {
+  left: 10%;
+  animation-duration: 2.35s;
+  animation-delay: .2s;
+}
+
+.point-2 {
+  left: 30%;
+  opacity: .7;
+  animation-duration: 2.5s;
+  animation-delay: .5s;
+}
+
+.point-3 {
+  left: 25%;
+  opacity: .8;
+  animation-duration: 2.2s;
+  animation-delay: .1s;
+}
+
+.point-4 {
+  left: 44%;
+  opacity: .6;
+  animation-duration: 2.05s;
+}
+
+.point-5 {
+  left: 50%;
+  animation-duration: 1.9s;
+}
+
+.point-6 {
+  left: 75%;
+  opacity: .5;
+  animation-duration: 1.5s;
+  animation-delay: 1.5s;
+}
+
+.point-7 {
+  left: 88%;
+  opacity: .9;
+  animation-duration: 2.2s;
+  animation-delay: .2s;
+}
+
+.point-8 {
+  left: 58%;
+  opacity: .8;
+  animation-duration: 2.25s;
+  animation-delay: .2s;
+}
+
+.point-9 {
+  left: 98%;
+  opacity: .6;
+  animation-duration: 2.6s;
+  animation-delay: .1s;
+}
+
+.point-10 {
+  left: 65%;
+  animation-duration: 2.5s;
+  animation-delay: .2s;
+}
+
+/* Icon animation */
+
+.icon {
+  transition: fill .1s linear;
+}
+
+.group:hover .icon {
+  fill: transparent;
+
+  animation:
+    dasharray 1s linear forwards,
+    filled .1s linear forwards .95s;
+}
+
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+
+@keyframes filled {
+  to {
+    fill: white;
+  }
+}
