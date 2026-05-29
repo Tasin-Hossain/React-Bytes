@@ -13,7 +13,7 @@ const CARDS = [
     title: 'Interactive Tools',
     desc: 'Three free tools to play with components and grab the code.',
     span: 3,
-    visual: <Tools/>
+    visual: <Tools />
   },
   {
     title: 'Huge Component Collection',
@@ -43,7 +43,7 @@ const CARDS = [
     title: 'Perfect for AI Coding',
     desc: 'Use with modern AI tools like Cursor, Copilot, and v0 to generate, tweak, and ship components faster.',
     span: 3,
-    visual: <AiCoding/>
+    visual: <AiCoding />
   }
 ];
 
@@ -87,11 +87,7 @@ const Features = () => {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{
-                duration: 0.5,
-                delay: i * 0.07,
-                ease: [0.21, 0.47, 0.32, 0.98]
-              }}
+              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
               <div className="h-45 pb-4 w-full flex items-center justify-center relative overflow-hidden">
                 {card.visual}
