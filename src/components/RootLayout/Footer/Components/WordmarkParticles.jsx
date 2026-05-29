@@ -73,7 +73,7 @@ export const WordmarkParticles = () => {
   return (
     <div
       ref={wrapRef}
-      className="relative overflow-hidden select-none w-full wordmark-wrap"
+      className="app-container relative overflow-hidden select-none w-full wordmark-wrap"
       style={{ height: 'clamp(3rem, 10vw, 10rem)' }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
@@ -95,7 +95,7 @@ export const WordmarkParticles = () => {
             // background: 'var(--wordmark-gradient)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
-            WebkitTextStroke: "2px var(--wordmark-color)",
+            WebkitTextStroke: '2px var(--wordmark-color)',
             color: 'transparent'
           }}
         >

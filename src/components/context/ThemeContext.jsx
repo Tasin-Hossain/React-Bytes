@@ -12,14 +12,11 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = (e) => {
+  const toggleTheme = e => {
     const x = e?.clientX ?? window.innerWidth / 2;
     const y = e?.clientY ?? window.innerHeight / 2;
 
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
+    const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
 
     const newTheme = theme === 'dark' ? 'light' : 'dark';
 
@@ -56,13 +53,7 @@ export const ThemeProvider = ({ children }) => {
     setTimeout(() => style.remove(), 600);
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
-
-
 
 export default ThemeContext;

@@ -2,12 +2,11 @@ import { FaXTwitter, FaYoutube, FaGithub } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import { WordmarkParticles } from './Components/WordmarkParticles';
 
-
 const socialLinks = [
   {
     label: 'GitHub',
     icon: <FaGithub size={18} />,
-    to: "https://github.com/Tasin-Hossain/React-Bytes",
+    to: 'https://github.com/Tasin-Hossain/React-Bytes',
     bg: 'bg-gray-900'
   },
   {
@@ -21,7 +20,6 @@ const socialLinks = [
     icon: <FaYoutube size={18} />,
     to: '#',
     bg: 'bg-red-500'
-
   }
 ];
 

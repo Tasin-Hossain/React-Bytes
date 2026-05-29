@@ -10,7 +10,6 @@ import { RiMenu4Line } from 'react-icons/ri';
 import { MdOutlineClose } from 'react-icons/md';
 import { useTheme } from '../../../hooks/useTheme';
 
-
 const NAV_LINKS = [
   { label: 'Docs', to: '/docs' },
   { label: 'Components', to: '/components' },
@@ -116,9 +115,7 @@ const Header = () => {
                 <i key={i} className={`point point-${i + 1}`}></i>
               ))}
             </div>
-            <span className="relative z-2 flex items-center justify-center gap-1.5 text-white ">
-              Community
-            </span>
+            <span className="relative z-2 flex items-center justify-center gap-1.5 text-white ">Community</span>
           </button>
 
           {/* Mobile hamburger */}
