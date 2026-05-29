@@ -1,3 +1,4 @@
+// ThemeContext.jsx
 import { createContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext();
@@ -15,9 +16,6 @@ export const ThemeProvider = ({ children }) => {
   const toggleTheme = e => {
     const x = e?.clientX ?? window.innerWidth / 2;
     const y = e?.clientY ?? window.innerHeight / 2;
-
-    const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
-
     const newTheme = theme === 'dark' ? 'light' : 'dark';
 
     if (!document.startViewTransition) {
@@ -25,12 +23,20 @@ export const ThemeProvider = ({ children }) => {
       return;
     }
 
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+  
     const style = document.createElement('style');
     style.textContent = `
       ::view-transition-old(root),
       ::view-transition-new(root) {
         animation: none;
         mix-blend-mode: normal;
+        width: 100vw !important;
+        height: 100vh !important;
       }
       ::view-transition-new(root) {
         clip-path: circle(0px at ${x}px ${y}px);
@@ -44,16 +50,23 @@ export const ThemeProvider = ({ children }) => {
     `;
     document.head.appendChild(style);
 
-    document.startViewTransition(() => {
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      setTheme(newTheme);
-    });
 
-    setTimeout(() => style.remove(), 600);
+    requestAnimationFrame(() => {
+      const transition = document.startViewTransition(() => {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        setTheme(newTheme);
+      });
+
+      transition.finished.finally(() => style.remove());
+    });
   };
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export default ThemeContext;
