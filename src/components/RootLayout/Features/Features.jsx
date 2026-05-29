@@ -5,7 +5,7 @@ import Explore from './Components/Explore';
 import Marquee from './Components/Marquee';
 import Tools from './Components/Tools';
 import './Features.css';
-import { motion } from 'framer-motion';
+
 
 // Card Data
 const CARDS = [
@@ -65,8 +65,8 @@ const Features = () => {
         <h2 className="title">What&apos;s inside</h2>
 
         <div className="grid grid-cols-12 gap-4">
-          {CARDS.map((card, i) => (
-            <motion.div
+          {CARDS.map((card) => (
+            <div
               key={card.title}
               className={`
                 bg-(--bg-card)
@@ -84,10 +84,6 @@ const Features = () => {
                 hover:-translate-y-0.5
                 ${getColClass(card.span)}
               `}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
               <div className="h-45 pb-4 w-full flex items-center justify-center relative overflow-hidden">
                 {card.visual}
@@ -99,7 +95,7 @@ const Features = () => {
 
                 <p className="text-sm text-(--text-muted) leading-6">{card.desc}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
