@@ -6,8 +6,9 @@
   --bg-button: #1f1f1f;
 
   --border-primary: #1f1f1f;
-  --border-secondary: #ffffff0e;
-  --border-button: #2a2a2a;
+  --border-secondary: #ffffff0f;
+  --border-button: #343434;
+  --border-orbit: #ffffff10;
 
   --brand-primary: #a855f7;
   --brand-accent: #b497cf;
@@ -23,45 +24,40 @@
   --transition-fast: 0.15s ease;
   --transition-base: 0.2s ease;
   --transition-slow: 0.3s ease;
-  
+
   --wordmark-color: #ffffff;
-  --wordmark-gradient: linear-gradient(to top, #d35af8, #d35af8, #7a5af8,#7a5af8);
+  --wordmark-gradient: linear-gradient(to top, #d35af8, #d35af8, #7a5af8, #7a5af8);
 }
 
 :root[data-theme='light'] {
-  
-  --bg: #ffffff;
+  --bg: #f5f5f5;
   --bg-card: #ffffff;
   --bg-elevated: #00000014;
   --bg-hover: #00000014;
-  --bg-button: #00000014;
+  --bg-button: #f0ecec;
 
   --border-primary: #565656ae;
   --border-secondary: #86868635;
   --border-button: #0a0a0a21;
-  
+  --border-orbit: #00000029;
+
   --color-primary: #a855f7;
   --color-accent: #8b5cf6;
   --color-accent-muted: #b497cf;
-  
-  
+
   --text-primary: #000000;
   --text-secondary: #3f3f46;
   --text-muted: #737373;
   --text-dimmed: #a1a1aa;
   --text-link: #000000;
-  
-  
+
   --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.08);
   --shadow-primary: 0 2px 8px rgba(168, 85, 247, 0.25);
 
-  
   --transition-fast: 0.15s ease;
   --transition-base: 0.2s ease;
   --transition-slow: 0.3s ease;
-  
+
   --wordmark-color: #111111;
- --wordmark-gradient: linear-gradient(to top, #d35af8, #d35af8, #7a5af8,#7a5af8);
-} 
-
-
+  --wordmark-gradient: linear-gradient(to top, #d35af8, #d35af8, #7a5af8, #7a5af8);
+}
