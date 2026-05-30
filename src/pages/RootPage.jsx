@@ -1,9 +1,9 @@
-import Features from '../components/RootLayout/Features/Features';
-import Footer from '../components/RootLayout/Footer/Footer';
-import Header from '../components/RootLayout/Header/Header';
-import Hero from '../components/RootLayout/Hero/Hero';
-import NeedLaunch from '../components/RootLayout/BuildFast/BuildFast';
-import Reviews from '../components/RootLayout/Reviews/Reviews';
+import Features from '../components/landing/Features/Features';
+import Footer from '../components/landing/Footer/Footer';
+import Header from '../components/landing/Header/Header';
+import Hero from '../components/landing/Hero/Hero';
+import NeedLaunch from '../components/landing/BuildFast/BuildFast';
+import Reviews from '../components/landing/Reviews/Reviews';
 
 const RootPage = () => {
   return (
