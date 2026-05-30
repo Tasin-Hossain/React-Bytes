@@ -86,7 +86,7 @@ function ReviewRow({ reviews, direction }) {
   // duplicate for seamless loop
   const doubled = [...reviews, ...reviews];
   return (
-    <div className="overflow-hidden w-full">
+    <div className="overflow-hidden py-1 w-full">
       <div className={direction === 'right' ? 'reviews-row-right' : 'reviews-row-left'}>
         {doubled.map((r, i) => (
           <ReviewCard key={`${r.handle}-${i}`} review={r} />
