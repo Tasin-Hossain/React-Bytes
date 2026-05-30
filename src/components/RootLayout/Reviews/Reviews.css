@@ -1,0 +1,26 @@
+@keyframes scroll-right {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-left {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.reviews-row-right {
+  display: flex;
+  width: max-content;
+  animation: scroll-right 40s linear infinite;
+}
+
+.reviews-row-left {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 40s linear infinite;
+}
+
+.reviews-row-right:hover,
+.reviews-row-left:hover {
+  animation-play-state: paused;
+}
