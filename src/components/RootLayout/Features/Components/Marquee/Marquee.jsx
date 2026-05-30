@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import '../Features.css';
+import './Marquee.css';
 
 const Marquee = () => {
   const toSlug = s => s.toLowerCase().replace(/\s+/g, '-');

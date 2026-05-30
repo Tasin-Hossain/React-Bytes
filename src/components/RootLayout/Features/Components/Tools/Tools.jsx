@@ -1,10 +1,10 @@
-import Logo from '../../../../assets/logos/logo.png';
-import DarkLogo from '../../../../assets/logos/dark-logo.svg';
-
-import { useTheme } from '../../../../hooks/useTheme';
+import Logo from '../../../../../assets/logos/logo.png';
+import DarkLogo from '../../../../../assets/logos/dark-logo.svg';
+import { useTheme } from '../../../../../hooks/useTheme';
 import { LuImage, LuShapes } from 'react-icons/lu';
 import { IoColorWandSharp } from 'react-icons/io5';
 import { BiText } from 'react-icons/bi';
+import './Tools.css'
 
 const Tools = () => {
   const { theme } = useTheme();
