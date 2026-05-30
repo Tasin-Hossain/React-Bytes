@@ -1,0 +1,202 @@
+/* ════════════════════════════════════════════
+   CARD TRANSITIONS
+════════════════════════════════════════════ */
+.slide-enter {
+  animation: slideUpIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.slide-exit {
+  animation: slideUpOut 0.38s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+@keyframes slideUpIn {
+  from { opacity: 0; transform: translateY(56px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0px)  scale(1);    }
+}
+@keyframes slideUpOut {
+  from { opacity: 1; transform: translateY(0px)   scale(1);    }
+  to   { opacity: 0; transform: translateY(-48px) scale(0.97); }
+}
+
+/* ════════════════════════════════════════════
+   CONTENT STAGGER
+════════════════════════════════════════════ */
+.content-enter       { animation: contentFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+.content-enter-delay { animation: contentFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.08s both; }
+.illus-enter         { animation: illustrationIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+
+@keyframes contentFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes illustrationIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ════════════════════════════════════════════
+   SHARED KEYFRAMES
+════════════════════════════════════════════ */
+@keyframes shimmer {
+  0%,100% { opacity: 0.45; }
+  50%     { opacity: 1;    }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px);  }
+  50%     { transform: translateY(-9px); }
+}
+@keyframes popIn {
+  from { transform: scale(0) rotate(-15deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);  opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes fillIn {
+  from { opacity: 0; transform: scaleX(0); transform-origin: left; }
+  to   { opacity: 1; transform: scaleX(1); transform-origin: left; }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0   rgba(255,255,255,0.15); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 8px rgba(255,255,255,0);    }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0   rgba(255,255,255,0);    }
+}
+
+.anim-shimmer       { animation: shimmer    2.2s ease-in-out infinite;            }
+.anim-shimmer-delay { animation: shimmer    2.2s ease-in-out 0.4s infinite;       }
+.anim-float         { animation: float      3.2s ease-in-out infinite;            }
+.anim-popin         { animation: popIn      0.45s cubic-bezier(0.34,1.56,0.64,1) 0.3s both; }
+.anim-pulse-ring    { animation: pulse-ring 2.4s ease-in-out infinite;            }
+
+/* ════════════════════════════════════════════
+   SLIDE 01
+════════════════════════════════════════════ */
+.build-bar-1 { animation: fillIn    0.4s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
+.build-bar-2 { animation: fillIn    0.4s cubic-bezier(0.22,1,0.36,1) 0.5s  both; }
+
+@keyframes revealBtn {
+  from { opacity: 0; transform: scaleX(0.4) translateY(4px); }
+  to   { opacity: 1; transform: scaleX(1)   translateY(0);   }
+}
+.build-btn { animation: revealBtn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.72s both; }
+
+.build-card-0 { animation: fadeInUp 0.35s ease-out 0.9s  both; }
+.build-card-1 { animation: fadeInUp 0.35s ease-out 1.0s  both; }
+.build-card-2 { animation: fadeInUp 0.35s ease-out 1.1s  both; }
+.build-card-3 { animation: fadeInUp 0.35s ease-out 1.2s  both; }
+.build-card-4 { animation: fadeInUp 0.35s ease-out 1.3s  both; }
+.build-card-5 { animation: fadeInUp 0.35s ease-out 1.4s  both; }
+.build-check  { animation: popIn    0.45s cubic-bezier(0.34,1.56,0.64,1) 1.28s both; }
+
+/* ════════════════════════════════════════════
+   SLIDE 02
+════════════════════════════════════════════ */
+@keyframes sliderFill {
+  from { width: 0; }
+  to   { width: var(--fill-w); }
+}
+.build-s2-icon  { animation: fadeInUp    0.35s ease-out 0.2s both; }
+.build-s2-card  { animation: fadeInUp    0.4s  cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.build-s2-sl-0  { animation: sliderFill 0.5s  cubic-bezier(0.22,1,0.36,1) 0.6s  both; }
+.build-s2-sl-1  { animation: sliderFill 0.5s  cubic-bezier(0.22,1,0.36,1) 0.8s  both; }
+.build-s2-sl-2  { animation: sliderFill 0.5s  cubic-bezier(0.22,1,0.36,1) 1.0s  both; }
+
+/* ════════════════════════════════════════════
+   SLIDE 03 — orbit rings
+════════════════════════════════════════════ */
+.s3-center { animation: s3NodeIn 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.2s both; }
+@keyframes s3NodeIn {
+  from { opacity: 0; transform: translate(-50%,-50%) scale(0.3); }
+  to   { opacity: 1; transform: translate(-50%,-50%) scale(1);   }
+}
+
+.s3-spin-cw  { animation: s3SpinCW  20s linear infinite; }
+.s3-spin-ccw { animation: s3SpinCCW 30s linear infinite; }
+@keyframes s3SpinCW  { to { transform: rotate(360deg);  } }
+@keyframes s3SpinCCW { to { transform: rotate(-360deg); } }
+
+.s3-icon-ccw-20 { animation: s3IconCCW20 20s linear infinite; }
+@keyframes s3IconCCW20 { to { transform: rotate(-360deg); } }
+
+.s3-icon-cw-30 { animation: s3IconCW30 30s linear infinite; }
+@keyframes s3IconCW30 { to { transform: rotate(360deg); } }
+
+/* ════════════════════════════════════════════
+   SLIDE 04 — responsive browser
+   Breakpoints inside animation:
+     desktop  400px → tablet 250px → mobile 160px
+   On small screens the max is clamped by the container
+════════════════════════════════════════════ */
+.s4-browser {
+  /* clamp: never wider than 90% of its container */
+  width: min(400px, 90%);
+  height: 280px;
+  animation: s4Resize 9s cubic-bezier(0.22,1,0.36,1) 0.4s infinite;
+}
+@keyframes s4Resize {
+  0%,28%     { width: min(400px, 90%); }
+  33%,61%    { width: min(250px, 80%); }
+  66%,94%    { width: min(160px, 65%); }
+  99%,100%   { width: min(400px, 90%); }
+}
+
+.s4-cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+  animation: s4CardsLayout 9s cubic-bezier(0.22,1,0.36,1) 0.4s infinite;
+}
+.s4-card { height: 50px; }
+@keyframes s4CardsLayout {
+  0%,61%   { grid-template-columns: repeat(3,1fr); }
+  66%,94%  { grid-template-columns: 1fr;           }
+  99%,100% { grid-template-columns: repeat(3,1fr); }
+}
+
+.s4-label-wrap {
+  opacity: 0;
+  animation: s4LabelAppear 0.4s ease 0.8s forwards;
+}
+@keyframes s4LabelAppear { to { opacity: 1; } }
+
+.s4-lbl { opacity: 0; }
+.s4-lbl-desktop { animation: s4ShowD 9s 0.4s infinite; }
+@keyframes s4ShowD {
+  0%,28%   { opacity: 1; }
+  31%,96%  { opacity: 0; }
+  99%,100% { opacity: 1; }
+}
+.s4-lbl-tablet { animation: s4ShowT 9s 0.4s infinite; }
+@keyframes s4ShowT {
+  0%,30%   { opacity: 0; }
+  33%,61%  { opacity: 1; }
+  64%,100% { opacity: 0; }
+}
+.s4-lbl-mobile { animation: s4ShowM 9s 0.4s infinite; }
+@keyframes s4ShowM {
+  0%,63%   { opacity: 0; }
+  66%,94%  { opacity: 1; }
+  97%,100% { opacity: 0; }
+}
+
+.s4-bar-1   { animation: s4HeroBar1 9s cubic-bezier(0.22,1,0.36,1) 0.4s infinite; }
+.s4-bar-2   { animation: s4HeroBar2 9s cubic-bezier(0.22,1,0.36,1) 0.4s infinite; }
+.s4-btn-wrap{ animation: s4HeroBtn  9s cubic-bezier(0.22,1,0.36,1) 0.4s infinite; }
+
+@keyframes s4HeroBar1 {
+  0%,28%   { width: 128px; }
+  33%,61%  { width: 90px;  }
+  66%,94%  { width: 55px;  }
+  99%,100% { width: 128px; }
+}
+@keyframes s4HeroBar2 {
+  0%,28%   { width: 96px;  }
+  33%,61%  { width: 68px;  }
+  66%,94%  { width: 38px;  }
+  99%,100% { width: 96px;  }
+}
+@keyframes s4HeroBtn {
+  0%,28%   { width: 80px; height: 24px; }
+  33%,61%  { width: 60px; height: 22px; }
+  66%,94%  { width: 36px; height: 18px; }
+  99%,100% { width: 80px; height: 24px; }
+}
