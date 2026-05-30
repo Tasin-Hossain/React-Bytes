@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import './Reviews.css';
-
+import { motion } from 'framer-motion';
 const REVIEWS = [
   {
     name: 'shadcn',
@@ -100,12 +100,24 @@ const Reviews = () => {
   return (
     <section className="app-container py-1 overflow-hidden">
       {/* heading */}
-      <div className="text-center">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
         <h2 className="title">Loved by developers</h2>
-      </div>
+      </motion.div>
 
-      {/* rows — full bleed but faded on sides */}
-      <div className="relative">
+      {/* rows */}
+      <motion.div
+        className="relative"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      >
         {/* left fade */}
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 sm:w-40 z-10 bg-linear-to-r from-(--bg) to-transparent" />
         {/* right fade */}
@@ -116,7 +128,7 @@ const Reviews = () => {
           <ReviewRow reviews={ROW2} direction="left" />
           <ReviewRow reviews={ROW3} direction="right" />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

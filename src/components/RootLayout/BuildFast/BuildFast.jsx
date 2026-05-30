@@ -161,13 +161,28 @@ function BuildFastInner() {
   );
 }
 
-export default function BuildFast() {
+// BuildFast function ta ei rokom hobe
+export default function NeedLaunch() {
   const { ref, inView } = useInView(0.2);
 
   return (
     <section className="app-container px-4 sm:px-5 py-10" ref={ref}>
-      <h2 className="title pb-5">Build faster, design better</h2>
-      {inView && <BuildFastInner />}
+      <motion.h2
+        className="title pb-5"
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
+        Build faster, design better
+      </motion.h2>
+
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      >
+        {inView && <BuildFastInner />}
+      </motion.div>
     </section>
   );
 }
