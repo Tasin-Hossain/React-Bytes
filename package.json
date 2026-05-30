@@ -10,6 +10,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.35.0",
+    "@emotion/react": "^11.14.0",
     "@tailwindcss/vite": "^4.3.0",
     "framer-motion": "^12.40.0",
     "prettier": "^3.8.3",
