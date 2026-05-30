@@ -2,12 +2,10 @@ import { useRef, useState, useEffect } from 'react';
 import AiCoding from './Components/AiCoding/AiCoding';
 import BlockElements from './Components/BlockElements/BlockElements';
 import BuiltWorkflow from './Components/BuiltWorkflow/BuiltWorkflow';
-import Explore from './Components/Explore/Explore';
 import Marquee from './Components/Marquee/Marquee';
 import Tools from './Components/Tools/Tools';
 import { motion } from 'framer-motion';
 
-// ── Lazy card wrapper — mounts visual only when card enters viewport ──
 function LazyCard({ card, colClass, index }) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -58,25 +56,24 @@ function LazyCard({ card, colClass, index }) {
   );
 }
 
-// Card data — Visual is a component reference, not JSX
 const CARDS = [
-  {
-    title: 'Interactive Tools',
-    desc: 'Three free tools to play with components and grab the code.',
-    span: 3,
-    Visual: Tools,
-  },
   {
     title: 'Huge Component Collection',
     desc: 'Ready-made animations, effects, layouts, and UI blocks so you can skip repetitive work and build faster.',
-    span: 5,
+    span: 6,
     Visual: Marquee,
   },
   {
-    title: 'Easy to Explore',
-    desc: 'Everything is grouped neatly into categories, making it simple to find what you need quickly.',
+    title: 'Block Elements',
+    desc: 'Pre-built layout blocks and flexible sections to speed up page building and design workflows.',
+    span: 6,
+    Visual: BlockElements,
+  },
+  {
+    title: 'Interactive Tools',
+    desc: 'Three free tools to play with components and grab the code.',
     span: 4,
-    Visual: Explore,
+    Visual: Tools,
   },
   {
     title: 'Built for Every Workflow',
@@ -85,21 +82,17 @@ const CARDS = [
     Visual: BuiltWorkflow,
   },
   {
-    title: 'Block Elements',
-    desc: 'Pre-built layout blocks and flexible sections to speed up page building and design workflows.',
-    span: 5,
-    Visual: BlockElements,
-  },
-  {
     title: 'Perfect for AI Coding',
     desc: 'Use with modern AI tools like Cursor, Copilot, and v0 to generate, tweak, and ship components faster.',
-    span: 3,
+    span: 4,
     Visual: AiCoding,
   },
 ];
 
+// span=6 → 50/50 (col-span-12 mobile, col-span-6 tablet+)
+// span=4 → 3 equal columns (col-span-12 mobile, col-span-6 tablet, col-span-4 desktop)
 const getColClass = span => {
-  if (span === 5) return 'col-span-12 sm:col-span-6 lg:col-span-5';
+  if (span === 6) return 'col-span-12 sm:col-span-6';
   if (span === 4) return 'col-span-12 sm:col-span-6 lg:col-span-4';
   return 'col-span-12 sm:col-span-6 lg:col-span-3';
 };
