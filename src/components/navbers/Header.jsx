@@ -11,7 +11,7 @@ import { useStars } from '../../hooks/useStarts';
 import { useTheme } from '../../hooks/useTheme';
 
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// Constants 
 const PREFS_CLOSE_DELAY = 150;
 
 // Categories that belong under the "Docs" nav item
@@ -90,7 +90,7 @@ const SearchButton = ({ onClick }) => (
   </button>
 );
 
-// ─── Preferences dropdown ─────────────────────────────────────────────────────
+// Preferences dropdown
 const PreferencesMenu = ({ isOpen }) => (
   <div
     className="absolute top-full right-0 pt-2 z-1000 transition-all duration-200"
@@ -118,7 +118,7 @@ const PreferencesMenu = ({ isOpen }) => (
   </div>
 );
 
-// ─── Main Header ──────────────────────────────────────────────────────────────
+// Main Header
 const Header = () => {
   const location               = useLocation();
   const stars                  = useStars();
