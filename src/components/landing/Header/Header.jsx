@@ -38,7 +38,7 @@ const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-(--bg) ">
+    <header className=" sticky top-0 z-50 w-full bg-(--bg) ">
       <div className="app-container flex items-center gap-4 py-4 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
