@@ -144,7 +144,7 @@ const Header = () => {
 
   return (
     <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 w-full bg-(--bg) border-b border-(--border-secondary)/60 backdrop-blur-sm">
-      <div className="header-container flex items-center gap-4 h-14.25 px-4 w-full">
+      <div className="-container flex items-center gap-4 h-14.25 px-4 w-full">
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
