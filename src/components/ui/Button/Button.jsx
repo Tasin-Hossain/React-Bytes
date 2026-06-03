@@ -1,6 +1,11 @@
 import './Button.css';
 
-const Button = ({ text = 'Community', className, ...props }) => {
+const Button = ({
+  text = 'Community',
+  icon,
+  className = '',
+  ...props
+}) => {
   return (
     <button
       type="button"
@@ -12,7 +17,11 @@ const Button = ({ text = 'Community', className, ...props }) => {
           <i key={i} className={`point point-${i + 1}`}></i>
         ))}
       </div>
-      <span className="relative z-2 flex items-center justify-center gap-1.5 text-white ">{text}</span>
+
+      <span className="relative z-2 flex items-center justify-center gap-1.5 text-white">
+        {text}
+        {icon && <span className="flex items-center">{icon}</span>}
+      </span>
     </button>
   );
 };
