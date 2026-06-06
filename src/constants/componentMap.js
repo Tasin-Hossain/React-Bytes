@@ -3,7 +3,7 @@ const componentMap = {
   // ── get-started ────────────────────────────────────────────────────────────
   'get-started/introduction': () => import('../docs/Introduction.jsx'),
   'get-started/installation': () => import('../docs/Installation.jsx'),
-  'get-started/mcp':          () => import('../docs/McpServer.jsx'),
+
 
   // ── text-animations ────────────────────────────────────────────────────────
   'text-animations/split-text': () => import('../demo/TextAnimations/SplitTextDemo.jsx'),
