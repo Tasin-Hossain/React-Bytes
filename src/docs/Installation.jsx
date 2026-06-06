@@ -3,32 +3,23 @@ import { Link } from "react-router";
 import Button from "../components/ui/Button/Button";
 import { FaArrowRightLong } from "react-icons/fa6";
 
-const variants = [
-  { id: "js-css",      label: "JS / CSS",      langCode: "JS",  styleCode: "CSS", lang: "JavaScript", styling: "Plain CSS" },
-  { id: "js-tailwind", label: "JS / Tailwind",  langCode: "JS",  styleCode: "TW",  lang: "JavaScript", styling: "Tailwind" },
-  { id: "ts-css",      label: "TS / CSS",       langCode: "TS",  styleCode: "CSS", lang: "TypeScript", styling: "Plain CSS" },
-  { id: "ts-tailwind", label: "TS / Tailwind",  langCode: "TS",  styleCode: "TW",  lang: "TypeScript", styling: "Tailwind" },
-];
-
-const getManualSteps = (v) => [
+const getManualSteps = () => [
   {
     title: "1. Install dependencies",
     description: "Most components rely on these packages. Install them once for your project.",
-    code: v.styling === "Tailwind"
-      ? `npm install framer-motion gsap\nnpm install -D tailwindcss`
-      : `npm install framer-motion gsap`,
+    code: `npm install framer-motion gsap`,
     language: "bash",
   },
   {
     title: "2. Copy the component",
-    description: `Browse the component you want, select the ${v.label} tab on the component page, click 'Copy Code', and paste it into your project's components folder.`,
+    description: `Browse the component you want, click 'Copy Code', and paste it into your project's components folder.`,
     code: null,
   },
   {
     title: "3. Import & use",
     description: "Import the component and drop it into your page.",
     code: `import Aurora from './components/Aurora';\n\nexport default function App() {\n  return <Aurora colorStops={['#3A29FF','#FF94B4','#FF3232']} />;\n}`,
-    language: v.lang === "TypeScript" ? "tsx" : "jsx",
+    language: "jsx",
   },
 ];
 
@@ -61,22 +52,23 @@ const CodeBlock = ({ code, language }) => {
   );
 };
 
-const ExternalLink = ({ href, children }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-(--brand) underline underline-offset-2 hover:opacity-80 transition-opacity"
-  >
-    {children}
-  </a>
-);
+const ExternalLink = ({ href, children }) => {
+  return (
+    <Link
+      to={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-(--brand) underline underline-offset-2 hover:opacity-80 transition-opacity"
+    >
+      {children}
+    </Link>
+  );
+};
 
-const CLIContent = ({ variant }) => {
-  const shadcnCmd = `npx shadcn@latest add https://reactbits.dev/r/SplitText-${variant.langCode}-${variant.styleCode}`;
+const CLIContent = () => {
+  const shadcnCmd = `npx shadcn@latest add https://reactbits.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`;
   return (
     <div className="space-y-8">
-      {/* Steps header */}
       <section>
         <h2 className="title-two">Steps</h2>
         <p className="leading-relaxed text-(--text-muted)">
@@ -88,18 +80,14 @@ const CLIContent = ({ variant }) => {
         </p>
       </section>
 
-      {/* Installation */}
       <section>
         <h2 className="title-two">Installation</h2>
         <p className="leading-relaxed text-(--text-muted) mb-5">
-          Below are example commands for the <span className="text-(--text-primary) font-medium">SplitText</span> component.
-          Replace placeholders to fit your stack.
+          Run the command below and replace the placeholders to fit your stack.
         </p>
-
         <CodeBlock code={shadcnCmd} language="bash" />
       </section>
 
-      {/* Combination table */}
       <section>
         <p className="text-sm text-(--text-muted) mb-3">
           <span className="text-(--text-primary) font-medium">&lt;LANGUAGE&gt;</span> +{" "}
@@ -124,8 +112,8 @@ const CLIContent = ({ variant }) => {
   );
 };
 
-const ManualContent = ({ variant }) => {
-  const steps = getManualSteps(variant);
+const ManualContent = () => {
+  const steps = getManualSteps();
   return (
     <div className="space-y-8">
       {steps.map(({ title, description, code, language }) => (
@@ -141,9 +129,6 @@ const ManualContent = ({ variant }) => {
 
 const Installation = () => {
   const [activeMethod, setActiveMethod] = useState("CLI");
-  const [activeVariant, setActiveVariant] = useState("js-css");
-
-  const variant = variants.find((v) => v.id === activeVariant);
 
   return (
     <div className="max-w-3xl mx-auto px-6 text-(--text-primary)">
@@ -163,7 +148,7 @@ const Installation = () => {
       </div>
 
       {/* Method Cards */}
-      <div className="mb-8">
+      <div className="mb-10">
         <p className="text-sm text-(--text-muted) mb-4">Click the cards below to change your preferred method.</p>
         <div className="grid grid-cols-2 gap-4">
           {[
@@ -203,43 +188,20 @@ const Installation = () => {
         </div>
       </div>
 
-      {/* Variant Selector */}
-      <div className="mb-10">
-        <p className="text-sm text-(--text-muted) mb-3">Select your preferred language and styling:</p>
-        <div className="grid grid-cols-4 gap-3">
-          {variants.map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => setActiveVariant(id)}
-              className={`py-3 px-2 rounded-lg border text-sm font-medium transition-all duration-200 cursor-pointer text-center ${
-                activeVariant === id
-                  ? "border-(--brand) text-(--brand) bg-(--bg-card)"
-                  : "border-(--border-secondary) text-(--text-muted) bg-(--bg-card) hover:border-(--border-primary) hover:text-(--text-primary)"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Dynamic content */}
       <div className="mb-10">
-        {activeMethod === "CLI"
-          ? <CLIContent variant={variant} />
-          : <ManualContent variant={variant} />
-        }
+        {activeMethod === "CLI" ? <CLIContent /> : <ManualContent />}
       </div>
 
-      {/* Requirements note */}
+      {/* Requirements */}
       <section className="mb-10 rounded-md border border-(--border-secondary) bg-(--bg-card) p-5">
         <h3 className="font-semibold text-(--text-primary) mb-2 text-sm uppercase tracking-wider">
           Requirements
         </h3>
         <ul className="space-y-2">
           {[
-            { label: "React", value: "18 or later" },
-            { label: "Node.js", value: "16+" },
+            { label: "React",        value: "18 or later" },
+            { label: "Node.js",      value: "16+" },
             { label: "Tailwind CSS", value: "Optional, some components use it" },
           ].map(({ label, value }) => (
             <li key={label} className="flex items-center gap-3 text-sm">
