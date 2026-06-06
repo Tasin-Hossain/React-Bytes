@@ -1,0 +1,41 @@
+import useComponentProps from "../../../hooks/useComponentProps";
+import { FaArrowRotateLeft } from "react-icons/fa6";
+
+/**
+ * PreviewTab
+ * Dark preview box with optional replay (↺) button.
+ *
+ * Props:
+ *   children   — the live component preview
+ *   showReplay — show replay button (default true)
+ *   minHeight  — tailwind class e.g. "min-h-64" (default)
+ */
+const PreviewTab = ({ children, showReplay = true, minHeight = 'min-h-90' }) => {
+  const { replay } = useComponentProps();
+
+  return (
+    <div
+  className={`relative rounded-md border border-(--border-secondary) bg-(--bg-white)/3
+    flex items-center justify-center ${minHeight} mb-6 overflow-hidden`}
+>
+      {showReplay && (
+        <RefreshButton onClick={replay} />
+      )}
+      {children}
+    </div>
+  );
+};
+
+export const RefreshButton = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    title="Replay"
+    className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center z-100
+      rounded-md border border-(--border-button) bg-(--bg-button) 
+      text-(--text-muted) hover:text-(--text-primary) transition-all duration-150 cursor-pointer"
+  >
+    <FaArrowRotateLeft />
+  </button>
+);
+
+export default PreviewTab;
