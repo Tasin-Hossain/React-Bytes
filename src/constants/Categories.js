@@ -1,5 +1,6 @@
 export const NEW = [
   'Split Text',
+  'MouseRepel Dots'
 
 
 ];
@@ -15,7 +16,6 @@ export const CATEGORIES = [
     name: 'Text Animations',
     subcategories: [
       'Split Text',
-      'Blur Text',
     ]
   },
   {
@@ -28,15 +28,13 @@ export const CATEGORIES = [
     name: 'Components',
     subcategories: [
       'Animated List',
-      'Scroll Stack',
 
     ]
   },
   {
     name: 'Backgrounds',
     subcategories: [
-      'Liquid Ether',
-      'Prism',
+      'MouseRepel Dots',
     ]
   }
 ];
