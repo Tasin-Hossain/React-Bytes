@@ -65,7 +65,8 @@
   }
 
   p {
-    color: var(--text-secondary);
+    color: var(--text-muted);
+    font-size: 14px;
   }
 
   a {
@@ -129,6 +130,18 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+  .header-container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .sidebar-container{
+    background: var(--bg);
+    padding: 30px 2em;
+    display: flex;
+    min-height: 100vh;
+  }
 
   @media (min-width: 768px) {
   }
@@ -145,6 +158,13 @@
     letter-spacing: -0.02em;
     font-weight: 500;
     text-align: center;
+  }
+  .title-two {
+    font-size: clamp(28px, 4vw, 30px);
+    margin: 0 0 15px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
   }
 
   @keyframes fadeDown {
