@@ -11,9 +11,9 @@ import { MdOutlineClose } from 'react-icons/md';
 import { useTheme } from '../../../hooks/useTheme';
 
 const NAV_LINKS = [
-  { label: 'Docs', to: '/docs' },
-  { label: 'Components', to: '/components' },
-  { label: 'Blocks', to: '/blocks' },
+  { label: 'Docs', to: '/get-started/introduction' },
+  { label: 'Components', to: '/text-animations/magnetic-text' },
+  { label: 'Blocks', to: '/blocks/header' },
   { label: 'Tools', to: '/tools' }
 ];
 
