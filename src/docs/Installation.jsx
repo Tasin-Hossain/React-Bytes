@@ -66,7 +66,7 @@ const ExternalLink = ({ href, children }) => {
 };
 
 const CLIContent = () => {
-  const shadcnCmd = `npx shadcn@latest add https://reactbits.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`;
+  const shadcnCmd = `npx shadcn@latest add https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`;
   return (
     <div className="space-y-8">
       <section>
