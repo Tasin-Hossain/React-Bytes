@@ -3,14 +3,12 @@ const componentMap = {
   // ── get-started ────────────────────────────────────────────────────────────
   'get-started/introduction': () => import('../docs/Introduction.jsx'),
   'get-started/installation': () => import('../docs/Installation.jsx'),
+  'get-started/all-components': () => import('../docs/AllComponents.jsx'),
 
 
   // ── text-animations ────────────────────────────────────────────────────────
-  'text-animations/split-text': () => import('../demo/TextAnimations/SplitTextDemo.jsx'),
+  'text-animations/magnetic-text': () => import('../demo/TextAnimations/MagneticTextDemo.jsx'),
 
-  'animations/animated-content': () => import('../demo/TextAnimations/SplitTextDemo.jsx'),
-  
-  'components/animated-list': () => import('../demo/TextAnimations/SplitTextDemo.jsx'),
 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
 

@@ -1,5 +1,5 @@
 export const NEW = [
-  'Split Text',
+  'Magnetic Text',
   'MouseRepel Dots'
 
 
@@ -10,12 +10,12 @@ export const UPDATED = ['Animated Content','Blur Text'];
 export const CATEGORIES = [
   {
     name: 'Get Started',
-    subcategories: ['Introduction', 'Installation', 'MCP', 'Index']
+    subcategories: ['Introduction', 'Installation', 'MCP', 'All Components']
   },
   {
     name: 'Text Animations',
     subcategories: [
-      'Split Text',
+      'Magnetic Text',
     ]
   },
   {
