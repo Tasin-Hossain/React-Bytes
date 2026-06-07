@@ -126,7 +126,7 @@ const MagneticTextInner = () => {
       <div className="flex items-center justify-between gap-4 mb-5">
         <h1 className="title mb-0">Magnetic Text</h1>
         <div className="flex items-center gap-2">
-          <FavoriteButton />
+          <FavoriteButton favKey="text-animations/magnetic-text"/>
           <CopyPromptButton text={usageCode} />
         </div>
       </div>

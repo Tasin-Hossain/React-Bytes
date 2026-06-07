@@ -55,7 +55,7 @@ const MouseRepelDotsInner = () => {
       <div className="flex items-center justify-between gap-4 mb-5">
         <h1 className="title mb-0">Mouse Repel Dots</h1>
         <div className="flex items-center gap-2">
-          <FavoriteButton />
+          <FavoriteButton favKey='backgrounds/mouserepel-dots'/>
           <CopyPromptButton text={usageCode} />
         </div>
       </div>
