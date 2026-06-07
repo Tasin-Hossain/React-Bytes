@@ -291,7 +291,7 @@ const Category = memo(
                     Updated
                   </span>
                 )}
-                {isFavorited && <RiHeartFill className="shrink-0 text-(--brand) ml-1" size={10} />}
+                {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={14} />}
               </div>
             </Link>
           ))}
