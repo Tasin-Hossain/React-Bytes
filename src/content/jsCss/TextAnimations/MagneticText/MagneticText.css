@@ -1,0 +1,53 @@
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Bebas Neue', sans-serif;
+  padding: 0 2rem;
+}
+
+.line {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.subtitle {
+  margin-top: 1rem;
+}
+
+.char {
+  display: inline-block;
+  user-select: none;
+  will-change: transform;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.cursorDot {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+}
+
+.cursorRing {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ffffff;
+  opacity: 0.4;
+}
