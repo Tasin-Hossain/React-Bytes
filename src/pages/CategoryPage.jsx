@@ -3,14 +3,16 @@ import { useParams } from 'react-router';
 import { componentMap } from '../constants/componentMap';
 // import { LoaderDemo } from '../components/common/Loader/Loader';
 
-import ComponentsSkeleton from '../components/common/Loader/Skeletons';
+import ComponentsSkeleton from '../components/common/Skeleton/ComponentsSkeleton';
+import { IntroductionSkeleton } from '../components/common/Skeleton/IntroductionSkeleton';
+
 
 const CategoryPage = () => {
   const { category, subcategory } = useParams();
   const key = `${category}/${subcategory}`;
 
   const [Component, setComponent] = useState(null);
-  const [loading, setLoading]     = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -25,14 +27,13 @@ const CategoryPage = () => {
     }
 
     loader()
-      .then((mod) => setComponent(() => mod.default))
+      .then(mod => setComponent(() => mod.default))
       .finally(() => setLoading(false));
   }, [key]);
 
   if (loading) {
-    return (
-      <ComponentsSkeleton/>
-    );
+    const isDocPage = subcategory === 'introduction' || subcategory === 'installation';
+    return isDocPage ? <IntroductionSkeleton /> : <ComponentsSkeleton />;
   }
 
   if (!Component) {
