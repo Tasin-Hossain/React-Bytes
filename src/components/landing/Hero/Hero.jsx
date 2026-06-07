@@ -189,7 +189,7 @@ export default function HeroSection() {
           className="flex items-center justify-center gap-3 flex-wrap"
           style={{ animation: 'fadeUp 0.7s 0.3s ease both', opacity: 0 }}
         >
-          <Link to="/get-started/introduction">
+          <Link to="/text-animations/magnetic-text">
             <Button text="Browse Components" className="py-2 px-4" />
           </Link>
         </div>
