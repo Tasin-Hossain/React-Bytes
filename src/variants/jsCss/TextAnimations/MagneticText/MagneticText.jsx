@@ -1,9 +1,8 @@
 const code = `
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import styles from "./MagneticText.css"; // see companion CSS below
+import "./MagneticText.css";
 
-/* ── helpers ─────────────────────────────────────────────── */
 function interpolateColor(colors, t) {
   if (!colors || colors.length === 0) return "#ffffff";
   if (colors.length === 1) return colors[0];
@@ -28,66 +27,37 @@ function interpolateColor(colors, t) {
   )},\${Math.round(b1 + (b2 - b1) * frac)})\`;
 }
 
-/* ── MagneticChar ────────────────────────────────────────── */
 function MagneticChar({
-  char,
-  index,
-  totalChars,
-  fontSize,
-  baseColor,
-  letterSpacing,
-  gap,
-  magnetRadius,
-  magnetStrength,
-  attractDuration,
-  returnDuration,
-  hoverColors,
-  entranceAnim,
-  entranceStagger,
-  entranceDuration,
-  entranceDelay,
+  char, index, totalChars, fontSize, baseColor, letterSpacing, gap,
+  magnetRadius, magnetStrength, attractDuration, returnDuration, hoverColors,
+  entranceAnim, entranceStagger, entranceDuration, entranceDelay,
 }) {
   const ref = useRef(null);
 
-  /* entrance animation */
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (entranceAnim === "none") {
-      gsap.set(el, { opacity: 1 });
-      return;
-    }
+    if (entranceAnim === "none") { gsap.set(el, { opacity: 1 }); return; }
     const delay = entranceDelay + index * entranceStagger;
     const fromMap = {
-      fadeUp: { y: 60, opacity: 0 },
-      scaleIn: { scale: 0, opacity: 0, rotation: gsap.utils.random(-20, 20) },
+      fadeUp:    { y: 60, opacity: 0 },
+      scaleIn:   { scale: 0, opacity: 0, rotation: gsap.utils.random(-20, 20) },
       slideLeft: { x: -60, opacity: 0 },
-      blur: { filter: "blur(24px)", opacity: 0, scale: 1.3 },
+      blur:      { filter: "blur(24px)", opacity: 0, scale: 1.3 },
     };
     const toMap = {
-      fadeUp: { y: 0, opacity: 1, ease: "expo.out" },
-      scaleIn: { scale: 1, opacity: 1, rotation: 0, ease: "back.out(2)" },
+      fadeUp:    { y: 0, opacity: 1, ease: "expo.out" },
+      scaleIn:   { scale: 1, opacity: 1, rotation: 0, ease: "back.out(2)" },
       slideLeft: { x: 0, opacity: 1, ease: "expo.out" },
-      blur: { filter: "blur(0px)", opacity: 1, scale: 1, ease: "expo.out" },
+      blur:      { filter: "blur(0px)", opacity: 1, scale: 1, ease: "expo.out" },
     };
-    gsap.fromTo(
-      el,
-      fromMap[entranceAnim] ?? fromMap.fadeUp,
-      {
-        ...(toMap[entranceAnim] ?? toMap.fadeUp),
-        duration: entranceDuration,
-        delay,
-      }
-    );
-  }, [
-    entranceAnim,
-    entranceDelay,
-    entranceStagger,
-    entranceDuration,
-    index,
-  ]);
+    gsap.fromTo(el, fromMap[entranceAnim] ?? fromMap.fadeUp, {
+      ...(toMap[entranceAnim] ?? toMap.fadeUp),
+      duration: entranceDuration,
+      delay,
+    });
+  }, [entranceAnim, entranceDelay, entranceStagger, entranceDuration, index]);
 
-  /* magnetic mouse tracking */
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -98,50 +68,22 @@ function MagneticChar({
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < magnetRadius) {
         const eased = ((magnetRadius - dist) / magnetRadius) ** 2;
-        const color = interpolateColor(
-          hoverColors,
-          index / Math.max(totalChars - 1, 1)
-        );
-        gsap.to(el, {
-          x: dx * eased * magnetStrength,
-          y: dy * eased * magnetStrength,
-          color,
-          duration: attractDuration,
-          ease: "power2.out",
-          overwrite: "auto",
-        });
+        const color = interpolateColor(hoverColors, index / Math.max(totalChars - 1, 1));
+        gsap.to(el, { x: dx * eased * magnetStrength, y: dy * eased * magnetStrength, color, duration: attractDuration, ease: "power2.out", overwrite: "auto" });
       } else {
-        gsap.to(el, {
-          x: 0,
-          y: 0,
-          color: baseColor,
-          duration: returnDuration,
-          ease: "elastic.out(1,0.4)",
-          overwrite: "auto",
-        });
+        gsap.to(el, { x: 0, y: 0, color: baseColor, duration: returnDuration, ease: "elastic.out(1,0.4)", overwrite: "auto" });
       }
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, [
-    index,
-    totalChars,
-    magnetRadius,
-    magnetStrength,
-    attractDuration,
-    returnDuration,
-    hoverColors,
-    baseColor,
-  ]);
+  }, [index, totalChars, magnetRadius, magnetStrength, attractDuration, returnDuration, hoverColors, baseColor]);
 
   return (
     <span
       ref={ref}
-      className={styles.char}
+      className="magnetic-char"
       style={{
-        fontSize,
-        color: baseColor,
-        letterSpacing,
+        fontSize, color: baseColor, letterSpacing,
         marginRight: gap,
         opacity: entranceAnim === "none" ? 1 : 0,
       }}
@@ -151,136 +93,102 @@ function MagneticChar({
   );
 }
 
-/* ── MagneticCursor ──────────────────────────────────────── */
-function MagneticCursor() {
-  const dotRef = useRef(null);
+function MagneticCursor({ containerRef }) {
+  const dotRef  = useRef(null);
   const ringRef = useRef(null);
 
   useEffect(() => {
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const dot       = dotRef.current;
+    const ring      = ringRef.current;
+    const container = containerRef?.current;
+    if (!dot || !ring || !container) return;
     const onMove = (e) => {
-      gsap.to(dot, {
-        left: e.clientX,
-        top: e.clientY,
-        duration: 0.06,
-        ease: "none",
-      });
-      gsap.to(ring, {
-        left: e.clientX,
-        top: e.clientY,
-        duration: 0.18,
-        ease: "power2.out",
-      });
+      const rect = container.getBoundingClientRect();
+      gsap.to(dot,  { left: e.clientX - rect.left, top: e.clientY - rect.top, duration: 0.06,  ease: "none" });
+      gsap.to(ring, { left: e.clientX - rect.left, top: e.clientY - rect.top, duration: 0.18, ease: "power2.out" });
     };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+    const onEnter = () => gsap.to([dot, ring], { opacity: 1, duration: 0.15 });
+    const onLeave = () => gsap.to([dot, ring], { opacity: 0, duration: 0.15 });
+    container.addEventListener("mousemove", onMove);
+    container.addEventListener("mouseenter", onEnter);
+    container.addEventListener("mouseleave", onLeave);
+    return () => {
+      container.removeEventListener("mousemove", onMove);
+      container.removeEventListener("mouseenter", onEnter);
+      container.removeEventListener("mouseleave", onLeave);
+    };
+  }, [containerRef]);
 
   return (
     <>
-      <div ref={dotRef} className={styles.cursorDot} />
-      <div ref={ringRef} className={styles.cursorRing} />
+      <div ref={dotRef}  className="magnetic-cursor-dot" />
+      <div ref={ringRef} className="magnetic-cursor-ring" />
     </>
   );
 }
 
-/* ── MagneticText (default export) ──────────────────────── */
 export default function MagneticText({
-  // text
-  text = "ATTRACT",
-  subtitle = "PULL · PUSH · REPEL",
-  // typography
-  fontSize = "clamp(40px, 13vw, 85px)",
-  subtitleSize = "22px",
-  letterSpacing = "0.05em",
-  // colors
-  textColor = "var(--text-primary)",
-  subtitleColor = "var(--text-muted)",
-  hoverColors = ["#ff6b6b", "#f7c948", "#4ecdc4", "#a78bfa"],
-  // animation
-  magnetRadius = 120,
-  magnetStrength = 0.55,
+  text            = "ATTRACT",
+  subtitle        = "PULL · PUSH · REPEL",
+  fontSize        = "clamp(40px, 13vw, 85px)",
+  subtitleSize    = "22px",
+  letterSpacing   = "0.05em",
+  textColor       = "var(--text-primary)",
+  subtitleColor   = "var(--text-muted)",
+  hoverColors     = ["#ff6b6b", "#f7c948", "#4ecdc4", "#a78bfa"],
+  magnetRadius    = 120,
+  magnetStrength  = 0.55,
   attractDuration = 0.25,
-  returnDuration = 0.6,
-  entranceAnim = "fadeUp",
-  entranceStagger = 0.04,
+  returnDuration  = 0.6,
+  entranceAnim     = "fadeUp",
+  entranceStagger  = 0.04,
   entranceDuration = 0.7,
-  entranceDelay = 0.1,
-  // visibility
-  showCursor = true,
+  entranceDelay    = 0.1,
+  showCursor   = true,
   showSubtitle = true,
-  // layout
   align = "center",
-  gap = "0px",
+  gap   = "0px",
 }) {
+  const containerRef = useRef(null);
   const mainChars = [...text];
-  const subChars = [...subtitle];
+  const subChars  = [...subtitle];
 
   const alignStyle = {
-    left: { alignItems: "flex-start", textAlign: "left" },
-    center: { alignItems: "center", textAlign: "center" },
-    right: { alignItems: "flex-end", textAlign: "right" },
+    left:   { alignItems: "flex-start", textAlign: "left" },
+    center: { alignItems: "center",     textAlign: "center" },
+    right:  { alignItems: "flex-end",   textAlign: "right" },
   }[align] ?? { alignItems: "center", textAlign: "center" };
 
-  const justifyContent =
-    { left: "flex-start", center: "center", right: "flex-end" }[align] ??
-    "center";
+  const justifyContent = { left: "flex-start", center: "center", right: "flex-end" }[align] ?? "center";
 
   const sharedCharProps = {
-    magnetRadius,
-    magnetStrength,
-    attractDuration,
-    returnDuration,
-    hoverColors,
-    entranceAnim,
-    entranceStagger,
-    entranceDuration,
-    entranceDelay,
-    gap,
+    magnetRadius, magnetStrength, attractDuration, returnDuration,
+    hoverColors, entranceAnim, entranceStagger, entranceDuration, entranceDelay, gap,
   };
 
   return (
     <div
-      className={styles.wrapper}
-      style={{ cursor: showCursor ? "none" : "default", ...alignStyle }}
+      ref={containerRef}
+      className="magnetic-wrapper"
+      style={{ ...alignStyle, cursor: showCursor ? "none" : "default" }}
     >
-      {showCursor && <MagneticCursor />}
+      {showCursor && <MagneticCursor containerRef={containerRef} />}
 
-      {/* main text */}
-      <div className={styles.line} style={{ justifyContent }}>
+      <div className="magnetic-line" style={{ justifyContent }}>
         {mainChars.map((ch, i) => (
-          <MagneticChar
-            key={i}
-            char={ch}
-            index={i}
-            totalChars={mainChars.length}
-            fontSize={fontSize}
-            baseColor={textColor}
-            letterSpacing={letterSpacing}
-            {...sharedCharProps}
-          />
+          <MagneticChar key={i} char={ch} index={i} totalChars={mainChars.length}
+            fontSize={fontSize} baseColor={textColor} letterSpacing={letterSpacing}
+            {...sharedCharProps} />
         ))}
       </div>
 
-      {/* subtitle */}
       {showSubtitle && (
-        <div className={\`\${styles.line} \${styles.subtitle}\`} style={{ justifyContent }}>
+        <div className="magnetic-line" style={{ justifyContent, marginTop: "1rem" }}>
           {subChars.map((ch, i) => (
-            <MagneticChar
-              key={i}
-              char={ch}
-              index={i}
-              totalChars={subChars.length}
-              fontSize={subtitleSize}
-              baseColor={subtitleColor}
-              letterSpacing="0.08em"
+            <MagneticChar key={i} char={ch} index={i} totalChars={subChars.length}
+              fontSize={subtitleSize} baseColor={subtitleColor} letterSpacing="0.08em"
               {...sharedCharProps}
-              entranceDelay={
-                entranceDelay + mainChars.length * entranceStagger + 0.1
-              }
-            />
+              entranceDelay={entranceDelay + mainChars.length * entranceStagger + 0.1} />
           ))}
         </div>
       )}
