@@ -24,7 +24,7 @@ export default function ComponentsSkeleton() {
       </div>
 
       {/* ── Preview panel ── */}
-      <Bone className="w-full h-44 rounded-xl mb-4" />
+      <Bone className="w-full h-90 rounded-md mb-4" />
 
       {/* ── Customize section ── */}
       <div className="flex flex-col gap-2.5 mb-8">

@@ -30,7 +30,7 @@ export const RefreshButton = ({ onClick }) => (
   <button
     onClick={onClick}
     title="Replay"
-    className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center z-100
+    className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center
       rounded-md border border-(--border-button) bg-(--bg-button) 
       text-(--text-muted) hover:text-(--text-primary) transition-all duration-150 cursor-pointer"
   >
