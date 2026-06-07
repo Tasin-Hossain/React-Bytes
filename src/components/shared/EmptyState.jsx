@@ -1,5 +1,6 @@
-import { Button } from "@chakra-ui/react";
+
 import { useNavigate } from "react-router";
+import Button from "../ui/Button/Button";
 
 export const EmptyState = () => {
   const navigate = useNavigate();
