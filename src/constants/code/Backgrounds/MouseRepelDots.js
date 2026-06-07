@@ -1,7 +1,7 @@
-import JS_CSS_CODE      from '../../../content/jsCss/Backgrounds/mouseRapeldots/MouseRepelDots';
-import JS_TAILWIND_CODE from '../../../content/jsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots';
-import TS_CSS_CODE      from '../../../content/tsCss/Backgrounds/mouseRapeldots/MouseRepelDots';
-import TS_TAILWIND_CODE from '../../../content/tsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots';
+import JS_CSS_CODE      from '../../../variants/jsCss/Backgrounds/mouseRapeldots/MouseRepelDots';
+import JS_TAILWIND_CODE from '../../../variants/jsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots';
+import TS_CSS_CODE      from '../../../variants/tsCss/Backgrounds/mouseRapeldots/MouseRepelDots';
+import TS_TAILWIND_CODE from '../../../variants/tsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots';
 
 // ── Usage (live-generated from customize props) ───────────────────────────────
 export const getUsageCode = (
