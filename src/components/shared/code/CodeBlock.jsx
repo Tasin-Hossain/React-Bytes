@@ -26,11 +26,33 @@ const reactBytesTheme = {
 const CopyButton = ({ text = '' }) => {
   const [copied, setCopied] = useState(false);
 
+  const fallbackCopy = (str) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = str;
+    textarea.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Copy failed', e);
+    }
+    document.body.removeChild(textarea);
+  };
+
   const handleCopy = () => {
     const str = typeof text === 'string' ? text : String(text ?? '');
-    navigator.clipboard.writeText(str);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(str).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(() => fallbackCopy(str));
+    } else {
+      fallbackCopy(str);
+    }
   };
 
   return (
@@ -41,7 +63,7 @@ const CopyButton = ({ text = '' }) => {
         text-(--text-muted) hover:text-(--text-primary)
         transition-all duration-150 cursor-pointer"
     >
-      {copied ? <FaCheck  size={15} /> : <LuCopy size={15} />}
+      {copied ? <FaCheck size={15} /> : <LuCopy size={15} />}
     </button>
   );
 };
@@ -95,7 +117,7 @@ const CodeBlock = ({ code, language = 'jsx' }) => {
 
       {/* ── fade + Expand button */}
       {needsClamp && !expanded && (
-        <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none bg-[linear-gradient(to_top,var(--bg)_30%,transparent_100%)]" >
+        <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none bg-[linear-gradient(to_top,var(--bg)_30%,transparent_100%)]">
           <div className="absolute bottom-4 right-4 pointer-events-auto">
             <button
               onClick={() => setExpanded(true)}
@@ -120,7 +142,7 @@ const CodeBlock = ({ code, language = 'jsx' }) => {
             text-sm text-(--text-muted) hover:text-(--text-primary)
             transition-all duration-150 cursor-pointer"
         >
-           Collapse
+          Collapse
         </button>
       )}
     </div>

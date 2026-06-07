@@ -14,10 +14,10 @@ const INSTALL_TABS = ['shadcn'];
 const PACKAGE_MANAGERS = ['yarn dlx', 'npx', 'pnpm dlx', 'bunx --bun'];
 const COMMANDS = {
   shadcn: {
-    'yarn dlx': 'yarn dlx shadcn@latest add @react-bytes/MouseRepelDots-TS-TW',
-    npx: 'npx shadcn@latest add @react-bytes/MouseRepelDots-TS-TW',
-    'pnpm dlx': 'pnpm dlx shadcn@latest add @react-bytes/MouseRepelDots-TS-TW',
-    'bunx --bun': 'bunx --bun shadcn@latest add @react-bytes/MouseRepelDots-TS-TW'
+    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
+    npx: 'npx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
+    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
+    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW'
   },
   jsrepo: {
     'yarn dlx': 'yarn dlx jsrepo@latest add @react-bytes/MouseRepelDots',
@@ -156,11 +156,15 @@ export default function HeroSection() {
           style={{ animation: 'fadeDown 0.6s ease both' }}
         >
           <div className="flex items-center justify-center gap-2">
-            <Button text="New Components" />
-            <button className="btn gap-2 bg-transparent border-none text-xs">
-              MouseRepelDots
-              <FaArrowRightLong size={12} />
-            </button>
+            <Link to={'/backgrounds/mouserepel-dots'}>
+              <Button text="New Components" />
+            </Link>
+            <Link to={'/backgrounds/mouserepel-dots'}>
+              <button className="btn gap-2 bg-transparent border-none text-xs">
+                MouseRepelDots
+                <FaArrowRightLong size={12} />
+              </button>
+            </Link>
           </div>
         </div>
 
