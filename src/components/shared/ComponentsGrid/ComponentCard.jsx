@@ -92,7 +92,7 @@ const ComponentCard = ({ item, onRemove }) => {
         </div>
 
         <div className="px-3.5 py-3">
-          <p className="text-sm font-medium text-(--text-primary) truncate">{item.name}</p>
+          <p className="text-sm font-medium text-(--text-primary) truncate mb-2">{item.name}</p>
           <p className="text-xs text-(--text-muted) mt-0.5">{item.category}</p>
         </div>
       </div>
