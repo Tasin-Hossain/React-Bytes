@@ -1,21 +1,13 @@
 import useComponentProps from "../../../hooks/useComponentProps";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 
-/**
- * PreviewTab
- * Dark preview box with optional replay (↺) button.
- *
- * Props:
- *   children   — the live component preview
- *   showReplay — show replay button (default true)
- *   minHeight  — tailwind class e.g. "min-h-64" (default)
- */
-const PreviewTab = ({ children, showReplay = true, minHeight = 'min-h-90' }) => {
+
+const PreviewTab = ({ children, showReplay = true, minHeight = 'min-h-90!' }) => {
   const { replay } = useComponentProps();
 
   return (
     <div
-  className={`relative rounded-md border border-(--border-secondary) bg-(--bg-white)/3
+  className={`relative rounded-md border border-(--border-secondary) bg-(--bg-white)/3 z-10
     flex items-center justify-center ${minHeight} mb-6 overflow-hidden`}
 >
       {showReplay && (
