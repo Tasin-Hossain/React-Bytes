@@ -1,8 +1,8 @@
-import JS_CSS_CODE      from '../../../content/jsCss/TextAnimations/MagneticText/MagneticText';
-import CSS_CODE         from '../../../content/jsCss/TextAnimations/MagneticText/MagneticText.css?raw';
-import JS_TAILWIND_CODE from '../../../content/jsTailwind/TextAnimations/MagneticText/MagneticText';
-import TS_CSS_CODE      from '../../../content/tsCss/TextAnimations/MagneticText/MagneticText';
-import TS_TAILWIND_CODE from '../../../content/tsTailwind/TextAnimations/MagneticText/MagneticText';
+import JS_CSS_CODE      from '../../../variants/jsCss/TextAnimations/MagneticText/MagneticText';
+import CSS_CODE         from '../../../variants/jsCss/TextAnimations/MagneticText/MagneticText.css?raw';
+import JS_TAILWIND_CODE from '../../../variants/jsTailwind/TextAnimations/MagneticText/MagneticText';
+import TS_CSS_CODE      from '../../../variants/tsCss/TextAnimations/MagneticText/MagneticText';
+import TS_TAILWIND_CODE from '../../../variants/tsTailwind/TextAnimations/MagneticText/MagneticText';
 
 export const getUsageCode = (
   {

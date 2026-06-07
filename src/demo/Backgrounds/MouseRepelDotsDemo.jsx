@@ -18,8 +18,8 @@ import CodeTab from '../../components/shared/code/CodeTab';
 
 
 import PreviewColorPickerCustom from '../../components/shared/preview/PreviewColorPicker';
-import MouseRepelDotsPreview from '../../components/previews/Backgrounds/MouseRepelDotspreview';
 import ComponentPropsProvider from '../../components/context/ComponentPropsProvider';
+import MouseRepelDots from '../../content/Backgrounds/MouseRepelDots';
 
 
 
@@ -39,7 +39,7 @@ const INITIAL_PROPS = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 const MouseRepelDotsInner = () => {
-  const { props, setProps, langTab, styleTab } = useComponentProps();
+  const { props, setProps, langTab, styleTab ,animKey} = useComponentProps();
 
   const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
   const shadcnCmds = getShadcnCmds(variant);
@@ -65,7 +65,7 @@ const MouseRepelDotsInner = () => {
         preview={
           <>
             <PreviewTab>
-              <MouseRepelDotsPreview />
+              <MouseRepelDots key={animKey} {...props} />
             </PreviewTab>
 
             <Customize>

@@ -1,8 +1,8 @@
+// pages/TextAnimations/MagneticTextDemo.jsx
+
 import { getUsageCode, CODE_VARIANTS, CSS_CODE } from '../../constants/code/TextAnimations/MagneticText';
 import CodeBlock from '../../components/shared/code/CodeBlock';
 import { PropsTable } from '../../components/shared/preview/PropsTable';
-
-import MagneticTextPreview from '../../components/previews/TextAnimations/MagneticTextPreview';
 
 import { dep, PROPS_DATA, PKG_CMDS, getShadcnCmds } from '../../config/TextAnimations/MagneticText';
 
@@ -23,28 +23,29 @@ import PreviewTab from '../../components/shared/preview/PreviewTab';
 import Customize from '../../components/shared/preview/Customize';
 import CodeTab from '../../components/shared/code/CodeTab';
 import ComponentPropsProvider from '../../components/context/ComponentPropsProvider';
+import MagneticText from '../../content/TextAnimations/MagneticText';
 
 // ─────────────────────────────────────────────────────────────────────────────
 const ENTRANCE_OPTIONS = [
-  { value: 'fadeUp',    label: 'Fade Up' },
-  { value: 'scaleIn',   label: 'Scale In' },
+  { value: 'fadeUp', label: 'Fade Up' },
+  { value: 'scaleIn', label: 'Scale In' },
   { value: 'slideLeft', label: 'Slide Left' },
-  { value: 'blur',      label: 'Blur' },
-  { value: 'none',      label: 'None' },
+  { value: 'blur', label: 'Blur' },
+  { value: 'none', label: 'None' }
 ];
 
 const ALIGN_OPTIONS = [
   { value: 'center', label: 'Center' },
-  { value: 'left',   label: 'Left' },
-  { value: 'right',  label: 'Right' },
+  { value: 'left', label: 'Left' },
+  { value: 'right', label: 'Right' }
 ];
 
 const FONT_SIZE_OPTIONS = [
   { value: 'clamp(40px, 13vw, 85px)', label: 'Default (clamp)' },
-  { value: '64px',  label: '64px' },
-  { value: '80px',  label: '80px' },
-  { value: '96px',  label: '96px' },
-  { value: '112px', label: '112px' },
+  { value: '64px', label: '64px' },
+  { value: '80px', label: '80px' },
+  { value: '96px', label: '96px' },
+  { value: '112px', label: '112px' }
 ];
 
 const SUBTITLE_SIZE_OPTIONS = [
@@ -54,15 +55,15 @@ const SUBTITLE_SIZE_OPTIONS = [
   { value: '20px', label: '20px' },
   { value: '22px', label: '22px' },
   { value: '26px', label: '26px' },
-  { value: '30px', label: '30px' },
+  { value: '30px', label: '30px' }
 ];
 
 const LETTER_SPACING_OPTIONS = [
-  { value: '0em',     label: '0em' },
-  { value: '0.05em',  label: '0.05em' },
-  { value: '0.1em',   label: '0.1em' },
-  { value: '0.15em',  label: '0.15em' },
-  { value: '-0.03em', label: '-0.03em' },
+  { value: '0em', label: '0em' },
+  { value: '0.05em', label: '0.05em' },
+  { value: '0.1em', label: '0.1em' },
+  { value: '0.15em', label: '0.15em' },
+  { value: '-0.03em', label: '-0.03em' }
 ];
 
 const GAP_OPTIONS = [
@@ -70,46 +71,40 @@ const GAP_OPTIONS = [
   { value: '2px', label: '2px' },
   { value: '4px', label: '4px' },
   { value: '6px', label: '6px' },
-  { value: '8px', label: '8px' },
+  { value: '8px', label: '8px' }
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
 const INITIAL_PROPS = {
-  // text
-  text:             'ATTRACT',
-  subtitle:         'PULL · PUSH · REPEL',
-  // typography
-  fontSize:         'clamp(40px, 13vw, 85px)',
-  subtitleSize:     '22px',
-  letterSpacing:    '0.05em',
-  // colors
-  textColor:        '#a757f7',
-  subtitleColor:    '#a757f7',
-  hoverColors:      ['#ff6b6b', '#f7c948', '#4ecdc4', '#a78bfa'],
-  // animation
-  magnetRadius:     120,
-  magnetStrength:   0.55,
-  attractDuration:  0.25,
-  returnDuration:   0.6,
-  entranceAnim:     'fadeUp',
-  entranceStagger:  0.04,
+  text: 'ATTRACT',
+  subtitle: 'PULL · PUSH · REPEL',
+  fontSize: 'clamp(40px, 13vw, 85px)',
+  subtitleSize: '22px',
+  letterSpacing: '0.05em',
+  textColor: '#a757f7',
+  subtitleColor: '#a757f7',
+  hoverColors: ['#ff6b6b', '#f7c948', '#4ecdc4', '#a78bfa'],
+  magnetRadius: 120,
+  magnetStrength: 0.55,
+  attractDuration: 0.25,
+  returnDuration: 0.6,
+  entranceAnim: 'fadeUp',
+  entranceStagger: 0.04,
   entranceDuration: 0.7,
-  entranceDelay:    0.1,
-  // visibility
-  showCursor:       true,
-  showSubtitle:     true,
-  // layout
-  align:            'center',
-  gap:              '0px',
+  entranceDelay: 0.1,
+  showCursor: true,
+  showSubtitle: true,
+  align: 'center',
+  gap: '0px'
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
 const MagneticTextInner = () => {
-  const { props, setProps, replay, langTab, styleTab } = useComponentProps();
+  const { props, setProps, replay, animKey, langTab, styleTab } = useComponentProps();
 
-  const variant    = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
+  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
   const shadcnCmds = getShadcnCmds(variant);
-  const usageCode  = getUsageCode(props, langTab);
+  const usageCode = getUsageCode(props, langTab);
 
   const handlePropChange = key => val => {
     setProps({ [key]: val });
@@ -126,7 +121,7 @@ const MagneticTextInner = () => {
       <div className="flex items-center justify-between gap-4 mb-5">
         <h1 className="title mb-0">Magnetic Text</h1>
         <div className="flex items-center gap-2">
-          <FavoriteButton favKey="text-animations/magnetic-text"/>
+          <FavoriteButton favKey="text-animations/magnetic-text" />
           <CopyPromptButton text={usageCode} />
         </div>
       </div>
@@ -136,13 +131,13 @@ const MagneticTextInner = () => {
         preview={
           <>
             <PreviewTab>
-              <MagneticTextPreview />
+              <MagneticText key={animKey} {...props} />
             </PreviewTab>
 
             <Customize>
               {/* Row 0 – Text inputs */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
-                <PreviewInput title="Main Text"     value={props.text}     onChange={handlePropChange('text')} />
+                <PreviewInput title="Main Text" value={props.text} onChange={handlePropChange('text')} />
                 <PreviewInput title="Subtitle Text" value={props.subtitle} onChange={handlePropChange('subtitle')} />
               </div>
 
@@ -158,14 +153,18 @@ const MagneticTextInner = () => {
                   label="Stagger (s)"
                   value={props.entranceStagger}
                   onChange={handlePropChange('entranceStagger')}
-                  min={0} max={0.15} step={0.01}
+                  min={0}
+                  max={0.15}
+                  step={0.01}
                   display={props.entranceStagger.toFixed(2)}
                 />
                 <PreviewSlider
                   label="Duration (s)"
                   value={props.entranceDuration}
                   onChange={handlePropChange('entranceDuration')}
-                  min={0.1} max={2} step={0.1}
+                  min={0.1}
+                  max={2}
+                  step={0.1}
                   display={props.entranceDuration.toFixed(1)}
                 />
               </div>
@@ -176,20 +175,26 @@ const MagneticTextInner = () => {
                   label="Magnet Radius (px)"
                   value={props.magnetRadius}
                   onChange={handleMagneticChange('magnetRadius')}
-                  min={40} max={300} step={10}
+                  min={40}
+                  max={300}
+                  step={10}
                 />
                 <PreviewSlider
                   label="Magnet Strength"
                   value={props.magnetStrength}
                   onChange={handleMagneticChange('magnetStrength')}
-                  min={0} max={1} step={0.05}
+                  min={0}
+                  max={1}
+                  step={0.05}
                   display={props.magnetStrength.toFixed(2)}
                 />
                 <PreviewSlider
                   label="Attract Duration (s)"
                   value={props.attractDuration}
                   onChange={handleMagneticChange('attractDuration')}
-                  min={0.05} max={1} step={0.05}
+                  min={0.05}
+                  max={1}
+                  step={0.05}
                   display={props.attractDuration.toFixed(2)}
                 />
               </div>
@@ -200,7 +205,9 @@ const MagneticTextInner = () => {
                   label="Return Duration (s)"
                   value={props.returnDuration}
                   onChange={handleMagneticChange('returnDuration')}
-                  min={0.1} max={2} step={0.1}
+                  min={0.1}
+                  max={2}
+                  step={0.1}
                   display={props.returnDuration.toFixed(1)}
                 />
                 <div className="sm:col-span-2">
@@ -242,12 +249,7 @@ const MagneticTextInner = () => {
                   onChange={handlePropChange('align')}
                   options={ALIGN_OPTIONS}
                 />
-                <PreviewSelect
-                  label="Gap"
-                  value={props.gap}
-                  onChange={handlePropChange('gap')}
-                  options={GAP_OPTIONS}
-                />
+                <PreviewSelect label="Gap" value={props.gap} onChange={handlePropChange('gap')} options={GAP_OPTIONS} />
                 <PreviewColorPicker
                   title="Text Color"
                   value={props.textColor}
@@ -266,7 +268,9 @@ const MagneticTextInner = () => {
                   label="Entrance Delay (s)"
                   value={props.entranceDelay}
                   onChange={handlePropChange('entranceDelay')}
-                  min={0} max={1} step={0.05}
+                  min={0}
+                  max={1}
+                  step={0.05}
                   display={props.entranceDelay.toFixed(2)}
                 />
                 <PreviewSwitch
@@ -287,7 +291,6 @@ const MagneticTextInner = () => {
             </Customize>
 
             <PropsTable PROPS_DATA={PROPS_DATA} />
-
             <Dependencies dependencies={dep} />
           </>
         }
