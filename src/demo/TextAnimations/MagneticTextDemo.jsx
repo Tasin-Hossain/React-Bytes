@@ -1,10 +1,10 @@
 // pages/TextAnimations/MagneticTextDemo.jsx
 
-import { getUsageCode, CODE_VARIANTS, CSS_CODE } from '../../constants/code/TextAnimations/MagneticText';
+
 import CodeBlock from '../../components/shared/code/CodeBlock';
 import { PropsTable } from '../../components/shared/preview/PropsTable';
 
-import { dep, PROPS_DATA, PKG_CMDS, getShadcnCmds } from '../../config/TextAnimations/MagneticText';
+import { dep, PROPS_DATA, PKG_CMDS, getShadcnCmds, ENTRANCE_OPTIONS, FONT_SIZE_OPTIONS, SUBTITLE_SIZE_OPTIONS, LETTER_SPACING_OPTIONS, ALIGN_OPTIONS, GAP_OPTIONS, INITIAL_PROPS, MagneticTextPrompt, CODE_VARIANTS, CSS_CODE } from '../../config/TextAnimations/MagneticText';
 
 import FavoriteButton from '../../components/ui/Button/FavoriteButton';
 import CopyPromptButton from '../../components/ui/Button/CopyPromptButton';
@@ -24,79 +24,10 @@ import Customize from '../../components/shared/preview/Customize';
 import CodeTab from '../../components/shared/code/CodeTab';
 import ComponentPropsProvider from '../../components/context/ComponentPropsProvider';
 import MagneticText from '../../content/TextAnimations/MagneticText';
+import { getUsageCode } from '../../constants/code/TextAnimations/MagneticText';
 
-// ─────────────────────────────────────────────────────────────────────────────
-const ENTRANCE_OPTIONS = [
-  { value: 'fadeUp', label: 'Fade Up' },
-  { value: 'scaleIn', label: 'Scale In' },
-  { value: 'slideLeft', label: 'Slide Left' },
-  { value: 'blur', label: 'Blur' },
-  { value: 'none', label: 'None' }
-];
 
-const ALIGN_OPTIONS = [
-  { value: 'center', label: 'Center' },
-  { value: 'left', label: 'Left' },
-  { value: 'right', label: 'Right' }
-];
 
-const FONT_SIZE_OPTIONS = [
-  { value: 'clamp(40px, 13vw, 85px)', label: 'Default (clamp)' },
-  { value: '64px', label: '64px' },
-  { value: '80px', label: '80px' },
-  { value: '96px', label: '96px' },
-  { value: '112px', label: '112px' }
-];
-
-const SUBTITLE_SIZE_OPTIONS = [
-  { value: '14px', label: '14px' },
-  { value: '16px', label: '16px' },
-  { value: '18px', label: '18px' },
-  { value: '20px', label: '20px' },
-  { value: '22px', label: '22px' },
-  { value: '26px', label: '26px' },
-  { value: '30px', label: '30px' }
-];
-
-const LETTER_SPACING_OPTIONS = [
-  { value: '0em', label: '0em' },
-  { value: '0.05em', label: '0.05em' },
-  { value: '0.1em', label: '0.1em' },
-  { value: '0.15em', label: '0.15em' },
-  { value: '-0.03em', label: '-0.03em' }
-];
-
-const GAP_OPTIONS = [
-  { value: '0px', label: '0px' },
-  { value: '2px', label: '2px' },
-  { value: '4px', label: '4px' },
-  { value: '6px', label: '6px' },
-  { value: '8px', label: '8px' }
-];
-
-// ─────────────────────────────────────────────────────────────────────────────
-const INITIAL_PROPS = {
-  text: 'ATTRACT',
-  subtitle: 'PULL · PUSH · REPEL',
-  fontSize: 'clamp(40px, 13vw, 85px)',
-  subtitleSize: '22px',
-  letterSpacing: '0.05em',
-  textColor: '#a757f7',
-  subtitleColor: '#a757f7',
-  hoverColors: ['#ff6b6b', '#f7c948', '#4ecdc4', '#a78bfa'],
-  magnetRadius: 120,
-  magnetStrength: 0.55,
-  attractDuration: 0.25,
-  returnDuration: 0.6,
-  entranceAnim: 'fadeUp',
-  entranceStagger: 0.04,
-  entranceDuration: 0.7,
-  entranceDelay: 0.1,
-  showCursor: true,
-  showSubtitle: true,
-  align: 'center',
-  gap: '0px'
-};
 
 // ─────────────────────────────────────────────────────────────────────────────
 const MagneticTextInner = () => {
@@ -105,6 +36,7 @@ const MagneticTextInner = () => {
   const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
   const shadcnCmds = getShadcnCmds(variant);
   const usageCode = getUsageCode(props, langTab);
+
 
   const handlePropChange = key => val => {
     setProps({ [key]: val });
@@ -122,7 +54,7 @@ const MagneticTextInner = () => {
         <h1 className="title mb-0">Magnetic Text</h1>
         <div className="flex items-center gap-2">
           <FavoriteButton favKey="text-animations/magnetic-text" />
-          <CopyPromptButton text={usageCode} />
+          <CopyPromptButton text={MagneticTextPrompt}/>
         </div>
       </div>
 
