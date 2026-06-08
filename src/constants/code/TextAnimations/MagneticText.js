@@ -1,9 +1,3 @@
-import JS_CSS_CODE      from '../../../variants/jsCss/TextAnimations/MagneticText/MagneticText';
-import CSS_CODE         from '../../../variants/jsCss/TextAnimations/MagneticText/MagneticText.css?raw';
-import JS_TAILWIND_CODE from '../../../variants/jsTailwind/TextAnimations/MagneticText/MagneticText';
-import TS_CSS_CODE      from '../../../variants/tsCss/TextAnimations/MagneticText/MagneticText';
-import TS_TAILWIND_CODE from '../../../variants/tsTailwind/TextAnimations/MagneticText/MagneticText';
-
 export const getUsageCode = (
   {
     text,
@@ -62,15 +56,3 @@ const App${typeAnnotation} = () => (
 export default App;`;
 };
 
-export { CSS_CODE };
-export { JS_CSS_CODE };
-export { JS_TAILWIND_CODE };
-export { TS_CSS_CODE };
-export { TS_TAILWIND_CODE };
-
-export const CODE_VARIANTS = {
-  'js-css':      JS_CSS_CODE,
-  'js-tailwind': JS_TAILWIND_CODE,
-  'ts-css':      TS_CSS_CODE,
-  'ts-tailwind': TS_TAILWIND_CODE,
-};
