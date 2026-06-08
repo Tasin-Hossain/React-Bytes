@@ -1,10 +1,25 @@
 // pages/TextAnimations/MagneticTextDemo.jsx
 
-
 import CodeBlock from '../../components/shared/code/CodeBlock';
 import { PropsTable } from '../../components/shared/preview/PropsTable';
 
-import { dep, PROPS_DATA, PKG_CMDS, getShadcnCmds, ENTRANCE_OPTIONS, FONT_SIZE_OPTIONS, SUBTITLE_SIZE_OPTIONS, LETTER_SPACING_OPTIONS, ALIGN_OPTIONS, GAP_OPTIONS, INITIAL_PROPS, MagneticTextPrompt, CODE_VARIANTS, CSS_CODE } from '../../config/TextAnimations/MagneticText';
+import {
+  dep,
+  PROPS_DATA,
+  PKG_CMDS,
+  getShadcnCmds,
+  ENTRANCE_OPTIONS,
+  FONT_SIZE_OPTIONS,
+  SUBTITLE_SIZE_OPTIONS,
+  LETTER_SPACING_OPTIONS,
+  ALIGN_OPTIONS,
+  GAP_OPTIONS,
+  INITIAL_PROPS,
+  MagneticTextPrompt,
+  CODE_VARIANTS,
+  CSS_CODE,
+  AUTHOR_NAME
+} from '../../config/TextAnimations/MagneticText';
 
 import FavoriteButton from '../../components/ui/Button/FavoriteButton';
 import CopyPromptButton from '../../components/ui/Button/CopyPromptButton';
@@ -25,9 +40,7 @@ import CodeTab from '../../components/shared/code/CodeTab';
 import ComponentPropsProvider from '../../components/context/ComponentPropsProvider';
 import MagneticText from '../../content/TextAnimations/MagneticText';
 import { getUsageCode } from '../../constants/code/TextAnimations/MagneticText';
-
-
-
+import CraftedBy from '../../components/navbers/CraftedBy';
 
 // ─────────────────────────────────────────────────────────────────────────────
 const MagneticTextInner = () => {
@@ -36,7 +49,6 @@ const MagneticTextInner = () => {
   const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
   const shadcnCmds = getShadcnCmds(variant);
   const usageCode = getUsageCode(props, langTab);
-
 
   const handlePropChange = key => val => {
     setProps({ [key]: val });
@@ -54,7 +66,7 @@ const MagneticTextInner = () => {
         <h1 className="title mb-0">Magnetic Text</h1>
         <div className="flex items-center gap-2">
           <FavoriteButton favKey="text-animations/magnetic-text" />
-          <CopyPromptButton text={MagneticTextPrompt}/>
+          <CopyPromptButton text={MagneticTextPrompt} />
         </div>
       </div>
 
@@ -237,6 +249,8 @@ const MagneticTextInner = () => {
           />
         }
       />
+      {/* Footer */}
+          <CraftedBy name={AUTHOR_NAME} />
     </div>
   );
 };
