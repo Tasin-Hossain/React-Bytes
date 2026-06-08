@@ -1,6 +1,8 @@
 import MagneticTextPrompt from '../../prompts/TextAnimations/MagneticText.txt?raw';
 export { MagneticTextPrompt };
 
+export const AUTHOR_NAME = 'Mohammad Tasin';
+
 export const ENTRANCE_OPTIONS = [
   { value: 'fadeUp', label: 'Fade Up' },
   { value: 'scaleIn', label: 'Scale In' },
