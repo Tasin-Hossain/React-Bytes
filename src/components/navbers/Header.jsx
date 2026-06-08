@@ -36,7 +36,7 @@ const NAV_LINKS = [
   },
   {
     label: 'Components',
-    to: '/components/animated-list',
+    to: '/text-animations/magnetic-text',
     isActive: (path) => {
       const category = path.split('/')[1];
       return COMPONENTS_CATEGORIES.includes(category);
@@ -100,18 +100,18 @@ const PreferencesMenu = ({ isOpen }) => (
       transform: isOpen ? 'translateY(0)' : 'translateY(-8px)',
     }}
   >
-    <div className="bg-(--bg-card) border border-(--border-secondary) rounded-2xl p-3 min-w-45">
-      <p className="text-[12px] font-semibold text-(--text-muted) mb-1 px-1">Preferences</p>
+    <div className="bg-(--bg-card) border border-(--border-secondary) rounded-md p-3 min-w-45">
+      <p className="text-sm font-semibold text-(--text-muted) mb-1 px-1">Preferences</p>
       <div className="flex flex-col gap-1">
         <div className="h-px bg-(--border-secondary) my-1" />
         <Link
           to="/favorites"
-          className="flex items-center gap-2 p-2 rounded-xl hover:bg-(--bg-elevated) transition-colors duration-150 no-underline"
+          className="flex items-center gap-2 p-2 rounded-md hover:bg-(--bg-elevated) transition-colors duration-150 no-underline"
         >
           <span className="flex items-center justify-center w-6 h-6 rounded-md bg-(--accent)">
-            <RiHeartLine size={12} className="text-(--text-muted)" />
+            <RiHeartLine size={16} className="text-(--text-muted)" />
           </span>
-          <span className="text-[13px] text-(--text-muted)">Favorites</span>
+          <span className="text-sm text-(--text-muted)">Favorites</span>
         </Link>
       </div>
     </div>
