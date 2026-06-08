@@ -62,7 +62,7 @@ const ExternalLink = ({ href, children }) => (
     to={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="text-(--brand) underline underline-offset-2 hover:opacity-80 transition-opacity"
+    className="text-(--brand) underline-offset-2 hover:opacity-80 transition-opacity"
   >
     {children}
   </Link>
