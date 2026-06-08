@@ -168,10 +168,9 @@ const MCP = () => {
         <div className="rounded-md border border-(--border-secondary) bg-(--bg-card) p-6 flex items-center justify-between gap-4">
           <div>
             <p className="text-xs text-(--text-primary) uppercase tracking-widest mb-1">Next</p>
-            <p className="font-semibold text-(--text-muted)">Components</p>
           </div>
-          <Link to="/components">
-            <Button text="Browse Components" icon={<FaArrowRightLong />} />
+          <Link to="/get-started/all-components">
+            <Button text="All Components" icon={<FaArrowRightLong />} />
           </Link>
         </div>
 

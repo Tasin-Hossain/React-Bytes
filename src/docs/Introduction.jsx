@@ -64,7 +64,6 @@ const Introduction = () => {
         <div className="rounded-md border border-(--border-secondary) bg-(--bg-card) p-6 flex items-center justify-between gap-4">
           <div>
             <p className="text-xs text-(--text-primary) uppercase tracking-widest mb-1">Next</p>
-            <p className="font-semibold text-(--text-muted)">Installation</p>
           </div>
           <Link to="/get-started/installation">
             <Button text="Installation" icon={<FaArrowRightLong />} />
