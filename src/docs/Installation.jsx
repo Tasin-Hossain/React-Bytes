@@ -73,7 +73,7 @@ const CLIContent = () => {
           Use a one-time command to pull any component directly into your project.
         </p>
         <p className="mt-3 leading-relaxed text-(--text-muted)">
-          React Bits uses <ExternalLink href="https://ui.shadcn.com/">shadcn</ExternalLink> for CLI installation — it
+          React Bytes uses <ExternalLink href="https://ui.shadcn.com/">shadcn</ExternalLink> for CLI installation — it
           fetches the component source directly into your project.
         </p>
       </section>
@@ -140,11 +140,11 @@ const Installation = () => {
           </p>
           <h1 className="title-two">Installation</h1>
           <p className="mb-4 leading-relaxed">
-            React Bits offers two ways to add components to your project — a CLI for quick automated installs, or a
+            React Bytes offers two ways to add components to your project — a CLI for quick automated installs, or a
             manual approach where you copy and paste the code directly.
           </p>
           <p className="leading-relaxed">
-            Both methods give you full ownership of the code. There's no runtime dependency on React Bits — once it's in
+            Both methods give you full ownership of the code. There's no runtime dependency on React Bytes — once it's in
             your project, it's yours to modify freely.
           </p>
         </div>

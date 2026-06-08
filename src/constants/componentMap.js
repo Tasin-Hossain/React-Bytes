@@ -3,6 +3,7 @@ const componentMap = {
   // ── get-started ────────────────────────────────────────────────────────────
   'get-started/introduction': () => import('../docs/Introduction.jsx'),
   'get-started/installation': () => import('../docs/Installation.jsx'),
+  'get-started/mcp': () => import('../docs/MCP.jsx'),
   'get-started/all-components': () => import('../docs/AllComponents.jsx'),
 
 
