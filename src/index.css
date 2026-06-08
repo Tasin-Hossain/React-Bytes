@@ -199,7 +199,7 @@
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
@@ -208,5 +208,5 @@
 ::-webkit-scrollbar-thumb {
   background-color: var(--brand);
   border-radius: 3px;
-}
+} */
 
