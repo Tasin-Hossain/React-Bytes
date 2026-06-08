@@ -47,7 +47,7 @@ const AllComponents = () => {
     <>
       <title>All Components | React Bytes</title>
 
-      <div className="w-full px-4 sm:px-6 py-6 sm:py-8 text-(--text-primary) flex flex-col overflow-hidden">
+      <div className="w-full px-4 sm:px-6  text-(--text-primary) flex flex-col overflow-hidden">
 
         <div className="flex flex-col gap-4 mb-6 sm:mb-8 min-w-0">
           <h1 className="title-two shrink-0">All Components</h1>
