@@ -22,13 +22,14 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
 const FILES = [
-  'src/content/jsCss/Backgrounds/mouseRapeldots/MouseRepelDots.jsx',
-  'src/content/jsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots.jsx',
-  'src/content/tsCss/Backgrounds/mouseRapeldots/MouseRepelDots.tsx',
-  'src/content/tsTailwind/Backgrounds/mouseRapeldots/MouseRepelDots.tsx',
+  'src/variants/jsCss/TextAnimations/MagneticText/MagneticText.jsx',
+  'src/variants/jsTailwind/TextAnimations/MagneticText/MagneticText.jsx',
+  'src/variants/tsCss/TextAnimations/MagneticText/MagneticText.tsx',
+  'src/variants/tsTailwind/TextAnimations/MagneticText/MagneticText.tsx',
 ];
 
 FILES.forEach((relPath) => {
+  // eslint-disable-next-line no-undef
   const fullPath = resolve(process.cwd(), relPath);
 
   let source;
