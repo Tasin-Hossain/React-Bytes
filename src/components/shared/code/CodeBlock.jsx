@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Highlight } from 'prism-react-renderer';
 import { LuCopy } from "react-icons/lu";
 import { FaCheck } from 'react-icons/fa6';
@@ -23,8 +23,19 @@ const reactBytesTheme = {
   ],
 };
 
-const CopyButton = ({ text = '' }) => {
+const CopyButton = ({ text = '', scrollRef }) => {
   const [copied, setCopied] = useState(false);
+  const btnRef = useRef(null);
+
+  useEffect(() => {
+    const el = scrollRef?.current;
+    if (!el || !btnRef.current) return;
+    const onScroll = () => {
+      btnRef.current.style.transform = `translateX(${el.scrollLeft}px)`;
+    };
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [scrollRef]);
 
   const fallbackCopy = (str) => {
     const textarea = document.createElement('textarea');
@@ -57,6 +68,7 @@ const CopyButton = ({ text = '' }) => {
 
   return (
     <button
+      ref={btnRef}
       onClick={handleCopy}
       className="absolute top-3 right-3 z-10 h-8 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md
         border border-(--border-button) bg-(--bg-button)
@@ -70,6 +82,7 @@ const CopyButton = ({ text = '' }) => {
 
 const CodeBlock = ({ code, language = 'jsx' }) => {
   const [expanded, setExpanded] = useState(false);
+  const scrollRef = useRef(null);
 
   const safeCode = typeof code === 'string' ? code : JSON.stringify(code, null, 2) ?? '';
 
@@ -88,9 +101,9 @@ const CodeBlock = ({ code, language = 'jsx' }) => {
       </div>
 
       {/* ── highlighted code */}
-      <div className="relative overflow-x-auto">
+      <div ref={scrollRef} className="relative overflow-x-auto">
 
-        <CopyButton text={safeCode} />
+        <CopyButton text={safeCode} scrollRef={scrollRef} />
 
         <Highlight theme={reactBytesTheme} code={visible} language={language}>
           {({ className, tokens, getLineProps, getTokenProps }) => (
