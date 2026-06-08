@@ -182,7 +182,7 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
   const hueColor = hsvToHex(hsv.h, 1, 1);
 
   return (
-    <div ref={wrapRef} style={{ position: 'relative' }}>
+    <div ref={wrapRef} className='relative'>
       {/* Trigger */}
       <button
         type="button"
@@ -190,7 +190,7 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
         className="w-full flex items-center justify-between gap-2 bg-(--bg-elevated)
     border border-(--border-secondary) rounded-md px-3 py-2 cursor-pointer transition-colors duration-150"
       >
-        <span className="text-[12px]  text-(--text-muted)">{title}</span>
+        <span className="text-[12px]  text-(--text-muted) truncate">{title}</span>
         <span className="flex items-center gap-1.5">
           <span className="w-5 h-5 rounded shrink-0" style={{ background: currentHex }} />
           <input
