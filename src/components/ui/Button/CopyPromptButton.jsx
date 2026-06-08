@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { LuCopy, LuCopyCheck } from "react-icons/lu";
-
+import { LuCopy } from "react-icons/lu";
+import { FaCheck } from "react-icons/fa6";
 const CopyPromptButton = ({ text = '' }) => {
   const [copied, setCopied] = useState(false);
 
@@ -17,8 +17,8 @@ const CopyPromptButton = ({ text = '' }) => {
         border border-(--border-button) bg-(--bg-button) text-(--text-muted)
         hover:text-(--text-primary) transition-all duration-150 cursor-pointer"
     >
-      {copied ? <LuCopyCheck size={18}/> : <LuCopy size={18}/>}
-      {copied ? 'Copied!' : 'Copy Prompt'}
+      {copied ? <FaCheck  size={18}/> : <LuCopy size={18}/>}
+      {copied ? 'Copied' : 'Copy Prompt'}
     </button>
   );
 };
