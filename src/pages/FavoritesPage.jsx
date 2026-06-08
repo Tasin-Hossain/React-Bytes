@@ -66,7 +66,7 @@ const Favorites = () => {
     <>
       <title>Favorites | React Bytes</title>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-(--text-primary) flex flex-col">
+      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-(--text-primary) flex flex-col">
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 sm:mb-8">
           <h1 className="title-two shrink-0">Favorites</h1>
