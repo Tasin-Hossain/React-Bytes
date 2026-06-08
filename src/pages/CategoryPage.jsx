@@ -5,6 +5,7 @@ import { componentMap } from '../constants/componentMap';
 
 import ComponentsSkeleton from '../components/common/Skeleton/ComponentsSkeleton';
 import { IntroductionSkeleton } from '../components/common/Skeleton/IntroductionSkeleton';
+import AllComponentsSkeleton from '../components/common/Skeleton/AllComponentsSkeleton';
 
 
 const CategoryPage = () => {
@@ -32,9 +33,11 @@ const CategoryPage = () => {
   }, [key]);
 
   if (loading) {
-    const isDocPage = subcategory === 'introduction' || subcategory === 'installation';
-    return isDocPage ? <IntroductionSkeleton /> : <ComponentsSkeleton />;
-  }
+  const isDocPage = subcategory === 'introduction' || subcategory === 'installation';
+  const isAllComponents = subcategory === 'all-components';
+  if (isAllComponents) return <AllComponentsSkeleton />;
+  return isDocPage ? <IntroductionSkeleton /> : <ComponentsSkeleton />;
+}
 
   if (!Component) {
     return (
