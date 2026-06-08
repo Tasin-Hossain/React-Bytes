@@ -151,7 +151,7 @@ export default function MouseRepelDots({
   return (
     <canvas
       ref={canvasRef}
-      className={`block w-full min-h-max pointer-events-none ${className}`}
+      className={`block w-full  pointer-events-none ${className}`}
     />
   );
 }
