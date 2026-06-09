@@ -1,15 +1,21 @@
+import { useState } from 'react';
 import Ads from '../navbers/Ads';
 import Header from '../navbers/Header';
 import Sidebar from '../navbers/Sidebar';
 
 export function SidebarLayout({ children }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <main className="bg-(--bg) min-h-screen">
-      <Header />
+      <Header onMenuClick={() => setDrawerOpen(prev => !prev)} />
 
       <div className="flex pt-14.25">
         {/* Left sidebar */}
-        <Sidebar onSearchOpen={() => {}} />
+        <Sidebar
+          isDrawerOpen={drawerOpen}
+          onDrawerClose={() => setDrawerOpen(false)}
+        />
 
         {/* Main content — fills all remaining space when ads hidden */}
         <div
