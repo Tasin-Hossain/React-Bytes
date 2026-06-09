@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router';
 import { FaGithub } from 'react-icons/fa';
-import { RiSearchLine, RiUser3Line, RiHeartLine } from 'react-icons/ri';
+import { RiSearchLine, RiUser3Line, RiHeartLine, RiMenuLine } from 'react-icons/ri';
 
 import Logo from '../../assets/logos/logo.png';
 import DarkLogo from '../../assets/logos/dark-logo.png';
@@ -9,15 +9,13 @@ import DarkLogo from '../../assets/logos/dark-logo.png';
 import { GITHUB_URL } from '../../constants/site';
 import { useStars } from '../../hooks/useStarts';
 import { useTheme } from '../../hooks/useTheme';
+import SearchModal from '../common/SearchModal';
 
-
-// Constants 
+// Constants
 const PREFS_CLOSE_DELAY = 150;
 
-// Categories that belong under the "Docs" nav item
 const DOCS_CATEGORIES = ['get-started'];
 
-// Categories that belong under the "Components" nav item
 const COMPONENTS_CATEGORIES = [
   'text-animations',
   'animations',
@@ -54,7 +52,29 @@ const NAV_LINKS = [
   },
 ];
 
-// ─── SearchButton 
+// ThemeToggleIcon — shared between desktop and mobile
+const ThemeToggleIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="size-4 text-(--text-primary)"
+  >
+    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M12 3l0 18" />
+    <path d="M12 9l4.65 -4.65" />
+    <path d="M12 14.3l7.37 -7.37" />
+    <path d="M12 19.6l8.85 -8.85" />
+  </svg>
+);
+
+// SearchButton
 const SearchButton = ({ onClick }) => (
   <button
     onClick={onClick}
@@ -118,14 +138,15 @@ const PreferencesMenu = ({ isOpen }) => (
   </div>
 );
 
-// Main Header
-const Header = () => {
+// Main Header — handles both desktop and mobile top bar
+const Header = ({ onMenuClick }) => {
   const location               = useLocation();
   const stars                  = useStars();
   const { theme, toggleTheme } = useTheme();
   const isDark                 = theme === 'dark';
 
-  const [prefsOpen, setPrefsOpen] = useState(false);
+  const [prefsOpen, setPrefsOpen]   = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const prefsTimeout = useRef(null);
 
   const formattedStars = useMemo(
@@ -143,95 +164,99 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 w-full bg-(--bg) border-b border-(--border-secondary)/60 backdrop-blur-sm">
-      <div className="-container flex items-center gap-4 h-14.25 px-4 w-full">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-(--bg) border-b border-(--border-secondary)/60 backdrop-blur-sm">
+        <div className=" flex items-center gap-4 h-14.25 px-4 w-full">
 
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-7 h-7 flex items-center justify-center hover:rotate-50 transition-transform duration-300">
-            <img src={isDark ? Logo : DarkLogo} alt="Logo" />
-          </div>
-          <span className="tracking-wide text-[15px] text-(--text-primary)">React Bytes</span>
-        </Link>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <div className="w-7 h-7 flex items-center justify-center hover:rotate-50 transition-transform duration-300">
+              <img src={isDark ? Logo : DarkLogo} alt="Logo" />
+            </div>
+            <span className="tracking-wide text-[15px] text-(--text-primary)">React Bytes</span>
+          </Link>
 
-        {/* Divider */}
-        <span className="text-(--text-muted) px-1">|</span>
+          {/* Divider — desktop only */}
+          <span className="hidden md:block text-(--text-muted) px-1">|</span>
 
-        {/* Nav */}
-        <nav className="flex items-center gap-1">
-          {NAV_LINKS.map(({ label, to, isActive }) => (
-            <Link
-              key={label}
-              to={to}
-              className={`px-3 py-1.5 rounded-md text-sm transition-colors duration-150 no-underline
-                text-(--text-primary)
-                ${isActive(location.pathname) ? 'bg-(--bg-hover)' : 'hover:bg-(--bg-hover)'}`}
+          {/* Nav — desktop only */}
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map(({ label, to, isActive }) => (
+              <Link
+                key={label}
+                to={to}
+                className={`px-3 py-1.5 rounded-md text-sm transition-colors duration-150 no-underline
+                  text-(--text-primary)
+                  ${isActive(location.pathname) ? 'bg-(--bg-hover)' : 'hover:bg-(--bg-hover)'}`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right side */}
+          <div className="ml-auto flex items-center gap-2">
+
+            {/* Search — shown on both, but collapses on mobile */}
+            <SearchButton onClick={() => setSearchOpen(true)} />
+
+            {/* Preferences — desktop only */}
+            <div
+              className="relative hidden md:block"
+              onMouseEnter={handlePrefsEnter}
+              onMouseLeave={handlePrefsLeave}
             >
-              {label}
+              <button
+                className="flex items-center justify-center w-9 h-9 rounded-md
+                  bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
+                  transition-colors duration-150 cursor-pointer"
+              >
+                <RiUser3Line size={16} className="text-(--text-primary)" />
+              </button>
+              <PreferencesMenu isOpen={prefsOpen} />
+            </div>
+
+            {/* GitHub — desktop only */}
+            <Link
+              to={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-1.5 px-2.5 h-9 rounded-md
+                bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
+                transition-colors duration-150 no-underline"
+            >
+              <FaGithub size={17} className="text-(--text-primary)" />
+              <span className="text-xs text-(--text-muted)">{formattedStars}</span>
             </Link>
-          ))}
-        </nav>
 
-        {/* Right side */}
-        <div className="ml-auto flex items-center gap-2">
-
-          <SearchButton />
-
-          {/* Preferences */}
-          <div
-            className="relative"
-            onMouseEnter={handlePrefsEnter}
-            onMouseLeave={handlePrefsLeave}
-          >
+            {/* Theme toggle — both */}
             <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
               className="flex items-center justify-center w-9 h-9 rounded-md
                 bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
                 transition-colors duration-150 cursor-pointer"
             >
-              <RiUser3Line size={16} className="text-(--text-primary)" />
+              <ThemeToggleIcon />
             </button>
-            <PreferencesMenu isOpen={prefsOpen} />
-          </div>
 
-          {/* GitHub */}
-          <Link
-            to={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-2.5 h-9 rounded-md
-              bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
-              transition-colors duration-150 no-underline"
-          >
-            <FaGithub size={17} className="text-(--text-primary)" />
-            <span className="text-xs text-(--text-muted)">{formattedStars}</span>
-          </Link>
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="flex items-center justify-center w-9 h-9 rounded-md
-              bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
-              transition-colors duration-150 cursor-pointer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" strokeWidth="2"
-              strokeLinecap="round" strokeLinejoin="round"
-              className="size-4 text-(--text-primary)"
+            {/* Hamburger menu — mobile only */}
+            <button
+              onClick={onMenuClick}
+              aria-label="Open Menu"
+              className="flex md:hidden items-center justify-center w-9 h-9 rounded-md
+                bg-(--bg) border border-(--border-secondary) hover:bg-(--bg-hover)
+                transition-colors duration-150 cursor-pointer"
             >
-              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-              <path d="M12 3l0 18" />
-              <path d="M12 9l4.65 -4.65" />
-              <path d="M12 14.3l7.37 -7.37" />
-              <path d="M12 19.6l8.85 -8.85" />
-            </svg>
-          </button>
+              <RiMenuLine size={16} className="text-(--text-primary)" />
+            </button>
 
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   );
 };
 
