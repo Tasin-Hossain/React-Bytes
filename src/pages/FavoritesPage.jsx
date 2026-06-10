@@ -13,8 +13,11 @@ const slug = str => str.replace(/\s+/g, '-').toLowerCase();
 const SKIP_CATEGORIES = ['Get Started'];
 
 const getSaved = () => {
-  try { return JSON.parse(localStorage.getItem('savedComponents') || '[]'); }
-  catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem('savedComponents') || '[]');
+  } catch {
+    return [];
+  }
 };
 
 const buildComponentMap = () => {
@@ -64,10 +67,10 @@ const Favorites = () => {
 
   return (
     <>
-      <title>Favorites | React Bytes</title>
+
+        <title>React Bytes - Favorites</title>
 
       <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-(--text-primary) flex flex-col">
-
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 sm:mb-8">
           <h1 className="title-two shrink-0">Favorites</h1>
 
@@ -85,11 +88,7 @@ const Favorites = () => {
             </InputGroup>
 
             <div className="shrink-0">
-              <CategoryDropdown
-                value={categoryFilter}
-                onChange={setCategoryFilter}
-                options={ALL_CATEGORIES}
-              />
+              <CategoryDropdown value={categoryFilter} onChange={setCategoryFilter} options={ALL_CATEGORIES} />
             </div>
           </div>
         </div>
