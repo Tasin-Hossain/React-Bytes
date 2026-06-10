@@ -6,10 +6,13 @@ import VariantSwitcher from './VariantSwitcher';
 
 const CodeTab = ({ pkgCmds, shadcnCmds, usageCode, codeVariants, cssCode, tailwindNote, CodeBlock }) => {
   const { langTab, setLangTab, styleTab, setStyleTab } = useComponentProps();
-  const [installTab, setInstallTab] = useState(pkgCmds ? 'cli' : 'manual');
+
+  const hasManual = pkgCmds && Object.keys(pkgCmds).some(k => pkgCmds[k]?.length);
+  const hasCli = shadcnCmds && Object.keys(shadcnCmds).some(k => shadcnCmds[k]?.length);
+
+  const [installTab, setInstallTab] = useState(hasManual ? 'manual' : 'cli');
   const [pkgTab, setPkgTab] = useState('npm');
 
-  // Normalize styleTab → always 'css' or 'tailwind' regardless of provider value
   const normalizedStyle = styleTab === 'tw' || styleTab === 'tailwind' ? 'tailwind' : 'css';
   const activeVariantKey = `${langTab}-${normalizedStyle}`;
   const activeCode = codeVariants?.[activeVariantKey] ?? '';
@@ -23,19 +26,27 @@ const CodeTab = ({ pkgCmds, shadcnCmds, usageCode, codeVariants, cssCode, tailwi
           <div className="flex items-center gap-1">
             <SubTabButton
               active={installTab === 'cli'}
-              onClick={() => pkgCmds && setInstallTab('cli')}
-              disabled={!pkgCmds}
-              className={!pkgCmds ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''}
+              onClick={() => hasCli && setInstallTab('cli')}
+              disabled={!hasCli}
+              className={!hasCli ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''}
             >
               CLI
             </SubTabButton>
-            <SubTabButton active={installTab === 'manual'} onClick={() => setInstallTab('manual')}>
+            <SubTabButton
+              active={installTab === 'manual'}
+              onClick={() => hasManual && setInstallTab('manual')}
+              disabled={!hasManual}
+              className={!hasManual ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''}
+            >
               Manual
             </SubTabButton>
           </div>
         </div>
         <PkgTabs active={pkgTab} onChange={setPkgTab} />
-        <CodeBlock code={installTab === 'cli' ? (pkgCmds?.[pkgTab] ?? '') : shadcnCmds[pkgTab]} language="bash" />
+        <CodeBlock
+          code={installTab === 'manual' ? (pkgCmds?.[pkgTab] ?? '') : (shadcnCmds?.[pkgTab] ?? '')}
+          language="bash"
+        />
       </section>
 
       {/* ── Usage (live) ── */}
