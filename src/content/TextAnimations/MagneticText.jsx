@@ -155,8 +155,8 @@ export default function MagneticText({
   fontSize,                          // optional override
   subtitleSize,                      // optional override
   letterSpacing    = "0.05em",
-  textColor        = "var(--text-primary)",
-  subtitleColor    = "var(--text-muted)",
+  textColor        = "#ffffff",
+  subtitleColor    = "#ffffff",
   hoverColors      = ["#ff6b6b", "#f7c948", "#4ecdc4", "#a78bfa"],
   magnetRadius,                      // optional override
   magnetStrength   = 0.55,
