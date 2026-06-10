@@ -1,7 +1,5 @@
 export const NEW = [
   'Magnetic Text',
-  'MouseRepel Dots'
-
 
 ];
 export const UPDATED = ['Animated Content','Blur Text'];
@@ -21,20 +19,19 @@ export const CATEGORIES = [
   {
     name: 'Animations',
     subcategories: [
-      'Animated Content',
+      '',
     ]
   },
   {
     name: 'Components',
     subcategories: [
-      'Animated List',
-
+      '',
     ]
   },
   {
     name: 'Backgrounds',
     subcategories: [
-      'MouseRepel Dots',
+      '',
     ]
   }
 ];
