@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "React-Bytes",
+  "homepage": "http://localhost:5173",
+  "items": [
+    {
+      "name":"MagneticText-JS-CSS",
+      "title": "MagneticText",
+      "description": "",
+      "type": "registry:component",
+      "dependencies": ["gsap@^3.15.0"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/variants/jsCss/TextAnimations/MagneticText/MagneticText.jsx",
+          "type": "registry:component",
+          "target": "components/MagneticText/MagneticText.jsx"
+        }
+      ]
+    }
+  ]
+}
