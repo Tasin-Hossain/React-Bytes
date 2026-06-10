@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { componentMap } from '../constants/componentMap';
-// import { LoaderDemo } from '../components/common/Loader/Loader';
 
 import ComponentsSkeleton from '../components/common/Skeleton/ComponentsSkeleton';
 import { IntroductionSkeleton } from '../components/common/Skeleton/IntroductionSkeleton';
 import AllComponentsSkeleton from '../components/common/Skeleton/AllComponentsSkeleton';
-
 
 const CategoryPage = () => {
   const { category, subcategory } = useParams();
@@ -14,6 +12,22 @@ const CategoryPage = () => {
 
   const [Component, setComponent] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const getPageTitle = () => {
+    return subcategory
+      .split('-')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+  };
+
+  const pageTitle = getPageTitle();
+
+  useEffect(() => {
+    document.title = `React Bits - ${pageTitle}`;
+    return () => {
+      document.title = 'React Bytes — Free Animated React Components';
+    };
+  }, [pageTitle]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -33,11 +47,11 @@ const CategoryPage = () => {
   }, [key]);
 
   if (loading) {
-  const isDocPage = subcategory === 'introduction' || subcategory === 'installation';
-  const isAllComponents = subcategory === 'all-components';
-  if (isAllComponents) return <AllComponentsSkeleton />;
-  return isDocPage ? <IntroductionSkeleton /> : <ComponentsSkeleton />;
-}
+    const isDocPage = subcategory === 'introduction' || subcategory === 'installation';
+    const isAllComponents = subcategory === 'all-components';
+    if (isAllComponents) return <AllComponentsSkeleton />;
+    return isDocPage ? <IntroductionSkeleton /> : <ComponentsSkeleton />;
+  }
 
   if (!Component) {
     return (
