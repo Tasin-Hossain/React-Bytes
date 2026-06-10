@@ -23,7 +23,7 @@ const CategoryPage = () => {
   const pageTitle = getPageTitle();
 
   useEffect(() => {
-    document.title = `React Bits - ${pageTitle}`;
+    document.title = `React Bytes - ${pageTitle}`;
     return () => {
       document.title = 'React Bytes — Free Animated React Components';
     };
