@@ -225,6 +225,7 @@ const AccordionCategory = memo(({ category, onClose, location, pendingActivePath
                 }`}
             >
               <span className="truncate flex-1">{sub}</span>
+              {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
               {isNew && (
                 <span className="shrink-0 text-[9px] font-bold px-1.5 py-px rounded-md bg-linear-to-r from-purple-500 to-violet-500 text-white">
                   New
@@ -235,7 +236,6 @@ const AccordionCategory = memo(({ category, onClose, location, pendingActivePath
                   Updated
                 </span>
               )}
-              {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
             </button>
           ))}
         </div>
