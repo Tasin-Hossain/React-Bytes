@@ -9,6 +9,7 @@ const componentMap = {
 
   // ── text-animations ────────────────────────────────────────────────────────
   'text-animations/magnetic-text': () => import('../demo/TextAnimations/MagneticTextDemo.jsx'),
+  'text-animations/curtain-text': () => import('../demo/TextAnimations/CurtainTextDemo.jsx'),
 
 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
