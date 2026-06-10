@@ -77,8 +77,6 @@ const MCP = () => {
 
   return (
     <>
-      <title>MCP Server | React Bytes</title>
-
       <div className="max-w-3xl mx-auto px-6 text-(--text-primary)">
 
         {/* Header */}

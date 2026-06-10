@@ -5,7 +5,6 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 const Introduction = () => {
   return (
     <>
-      <title>Introducation | React Bytes</title>
       <div className="max-w-3xl mx-auto px-6 text-(--text-primary)">
         {/* Header */}
         <div className="mb-10">

@@ -45,8 +45,6 @@ const AllComponents = () => {
 
   return (
     <>
-      <title>All Components | React Bytes</title>
-
       <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-autopx-4 sm:px-6  text-(--text-primary) flex flex-col overflow-hidden">
 
         <div className="flex flex-col gap-4 mb-6 sm:mb-8 min-w-0">
