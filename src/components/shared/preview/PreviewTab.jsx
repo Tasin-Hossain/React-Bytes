@@ -1,19 +1,18 @@
 import useComponentProps from "../../../hooks/useComponentProps";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 
-
 const PreviewTab = ({ children, showReplay = true, minHeight = 'min-h-90!' }) => {
-  const { replay } = useComponentProps();
+  const { replay, animKey } = useComponentProps(); 
 
   return (
     <div
-  className={`relative rounded-md border border-(--border-secondary) bg-(--bg-white)/3 z-10
-    flex items-center justify-center ${minHeight} mb-6 overflow-hidden`}
->
-      {showReplay && (
-        <RefreshButton onClick={replay} />
-      )}
-      {children}
+      className={`relative rounded-md border border-(--border-secondary) bg-(--bg-white)/3 z-10
+        flex items-center justify-center ${minHeight} mb-6 overflow-hidden`}
+    >
+      {showReplay && <RefreshButton onClick={replay} />}
+      <div key={animKey} className="contents"> 
+        {children}
+      </div>
     </div>
   );
 };
