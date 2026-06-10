@@ -1,5 +1,6 @@
 export const NEW = [
   'Magnetic Text',
+  'Curtain text'
 
 ];
 export const UPDATED = ['Animated Content','Blur Text'];
@@ -14,6 +15,7 @@ export const CATEGORIES = [
     name: 'Text Animations',
     subcategories: [
       'Magnetic Text',
+      'Curtain text'
     ]
   },
   {
