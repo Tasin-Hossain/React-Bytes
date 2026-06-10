@@ -9,12 +9,12 @@ const RootPage = () => {
   return (
     <>
       <section>
-        <title>React Bytes - Free Animated & Block UI Components For React</title>
+          <title>React Bytes - Free Animated React Components</title>
         <Header />
         <Hero />
         <Features />
-        <NeedLaunch/>
-        <Reviews/>
+        <NeedLaunch />
+        <Reviews />
         <Footer />
       </section>
     </>
