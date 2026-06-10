@@ -6,29 +6,17 @@ function hsvToHex(h, s, v) {
   const m = v - c;
   let r, g, b;
   if (h < 60) {
-    r = c;
-    g = x;
-    b = 0;
+    r = c; g = x; b = 0;
   } else if (h < 120) {
-    r = x;
-    g = c;
-    b = 0;
+    r = x; g = c; b = 0;
   } else if (h < 180) {
-    r = 0;
-    g = c;
-    b = x;
+    r = 0; g = c; b = x;
   } else if (h < 240) {
-    r = 0;
-    g = x;
-    b = c;
+    r = 0; g = x; b = c;
   } else if (h < 300) {
-    r = x;
-    g = 0;
-    b = c;
+    r = x; g = 0; b = c;
   } else {
-    r = c;
-    g = 0;
-    b = x;
+    r = c; g = 0; b = x;
   }
   const toHex = n =>
     Math.round((n + m) * 255)
@@ -74,13 +62,17 @@ const SWATCH_PRESETS = [
   '#000000'
 ];
 
-export default function PreviewColorPickerCustom({ title, color, onChange }) {
+const isValidHex = val => /^#[0-9a-fA-F]{6}$/.test(val);
+
+export default function PreviewColorPicker({ title, color, value, onChange }) {
+  const resolvedColor = color ?? value;
+
   const [hsv, setHsv] = useState(() => {
-    if (color && color.length >= 7) return hexToHsv(color);
+    if (isValidHex(resolvedColor)) return hexToHsv(resolvedColor);
     return { h: 270, s: 0.65, v: 0.97 };
   });
-  const [, setTextVal] = useState(() => {
-    if (color && color.length >= 7) return color;
+  const [textVal, setTextVal] = useState(() => {
+    if (isValidHex(resolvedColor)) return resolvedColor;
     return hsvToHex(270, 0.65, 0.97);
   });
   const [open, setOpen] = useState(false);
@@ -89,13 +81,13 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
   const wrapRef = useRef(null);
 
   useEffect(() => {
-    if (color && color.length >= 7) {
-      const next = hexToHsv(color);
+    if (isValidHex(resolvedColor)) {
+      const next = hexToHsv(resolvedColor);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setHsv(next);
-      setTextVal(color);
+      setTextVal(resolvedColor);
     }
-  }, [color]);
+  }, [resolvedColor]);
 
   const emitColor = useCallback(
     (h, s, v) => {
@@ -171,7 +163,7 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
   const handleTextChange = e => {
     const val = e.target.value;
     setTextVal(val);
-    if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    if (isValidHex(val)) {
       const next = hexToHsv(val);
       setHsv(next);
       onChange?.(val);
@@ -190,13 +182,13 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
         className="w-full flex items-center justify-between gap-2 bg-(--bg-elevated)
     border border-(--border-secondary) rounded-md px-3 py-2 cursor-pointer transition-colors duration-150"
       >
-        <span className="text-[12px]  text-(--text-muted) truncate">{title}</span>
+        <span className="text-[12px] text-(--text-muted) truncate">{title}</span>
         <span className="flex items-center gap-1.5">
           <span className="w-5 h-5 rounded shrink-0" style={{ background: currentHex }} />
           <input
-            className="text-[13px] text-(--text-primary)  border-none outline-none w-18 cursor-pointer text-right"
+            className="text-[13px] text-(--text-primary) border-none outline-none w-18 cursor-pointer text-right"
             type="text"
-            value={currentHex} 
+            value={textVal}
             onChange={handleTextChange}
             onClick={e => e.stopPropagation()}
             maxLength={7}
@@ -297,7 +289,9 @@ export default function PreviewColorPickerCustom({ title, color, onChange }) {
                   height: 20,
                   borderRadius: 4,
                   border:
-                    currentHex.toLowerCase() === c.toLowerCase() ? '2px solid #fff' : '1px solid var(--border-primary)',
+                    currentHex.toLowerCase() === c.toLowerCase()
+                      ? '2px solid #fff'
+                      : '1px solid var(--border-primary)',
                   background: c,
                   cursor: 'pointer',
                   padding: 0
