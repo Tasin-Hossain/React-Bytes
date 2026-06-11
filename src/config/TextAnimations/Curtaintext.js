@@ -126,8 +126,8 @@ export { TS_CSS_CODE };
 export { TS_TAILWIND_CODE };
 
 export const CODE_VARIANTS = {
-  'JS-CSS':      JS_CSS_CODE,
-  'JS-TW': JS_TAILWIND_CODE,
-  'TS-CSS':      TS_CSS_CODE,
-  'TS-TW': TS_TAILWIND_CODE,
+  'js':      JS_CSS_CODE,
+  'js-tailwind': JS_TAILWIND_CODE,
+  'ts-css':      TS_CSS_CODE,
+  'ts-tailwind': TS_TAILWIND_CODE,
 };
