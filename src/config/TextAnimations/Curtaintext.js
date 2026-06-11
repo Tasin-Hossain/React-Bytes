@@ -107,6 +107,12 @@ export const getShadcnCmds = (variant) => ({
   bun:  `bunx shadcn@latest add https://reactbits.dev/r/CurtainText-${variant}`,
 });
 
+export const getJsrepoCmds = (variant) => ({
+  pnpm: `pnpm dlx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+  npm:  `npx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+  yarn: `yarn jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+  bun:  `bunx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+});
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/CurtainText/CurtainText';
 import JS_TAILWIND_CODE from '../../variants/jsTailwind/TextAnimations/CurtainText/CurtainText';
