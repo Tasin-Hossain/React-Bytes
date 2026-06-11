@@ -1,0 +1,172 @@
+## Integrate the <CurtainText /> component from React Bits
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: CurtainText
+### Variant: JavaScript + Tailwind
+### Dependencies: none
+
+---
+
+### Usage Example
+```jsx
+import CurtainText from './CurtainText'
+
+<CurtainText
+  text="CURTAIN"
+  direction="up"
+  baseColor="#ffffff"
+  activeColor="#a889c7"
+  fontClass="font-black"
+  fontSize="clamp(1.5rem, 6vw, 5rem)"
+  textClassName=""
+  activeClassName=""
+  tracking="tracking-widest"
+  staggerMs={60}
+  durationMs={400}
+  easing="cubic-bezier(.77,0,.18,1)"
+  resetOnLeave={true}
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "CURTAIN" | The text to display. Each character animates independently. |
+| direction | string | "up" | Curtain direction. Options: "up" | "down" |
+| baseColor | string | "#ffffff" | Color of the original text layer. |
+| activeColor | string | "#a889c7" | Color of the revealed (hover) text layer. |
+| fontClass | string | "font-black" | Tailwind font-weight class applied to both layers. |
+| fontSize | string | undefined | Optional CSS font size. If textClassName contains a text-* class, this is ignored. Defaults to clamp(1.5rem, 6vw, 5rem). |
+| textClassName | string | "" | Extra Tailwind classes for the base text layer. If it contains a text-* class, fontSize is ignored. |
+| activeClassName | string | "" | Extra Tailwind classes for the active layer. Falls back to textClassName if not provided. |
+| tracking | string | "tracking-widest" | Tailwind letter-spacing class applied to both layers. |
+| staggerMs | number | 60 | Delay in milliseconds between each character's animation. |
+| durationMs | number | 400 | Duration in milliseconds of the curtain transition. |
+| easing | string | "cubic-bezier(.77,0,.18,1)" | CSS transition easing for the curtain animation. |
+| resetOnLeave | boolean | true | If true, reverses animation on mouse leave. If false, animation replays fresh on each hover. |
+| className | string | "" | Extra Tailwind classes on the root <span> wrapper. |
+
+---
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { useState, useCallback, useRef } from "react";
+
+export default function CurtainText({
+  text          = "CURTAIN",
+  direction     = "up",
+  baseColor     = "#ffffff",
+  activeColor   = "#a889c7",
+  fontClass     = "font-black",
+  fontSize,
+  textClassName = "",
+  activeClassName = "",
+  tracking      = "tracking-widest",
+  staggerMs     = 60,
+  durationMs    = 400,
+  easing        = "cubic-bezier(.77,0,.18,1)",
+  resetOnLeave  = true,
+  className     = "",
+}) {
+  const [triggered, setTriggered] = useState(false);
+  const [animKey, setAnimKey]     = useState(0);
+  const timerRef                  = useRef(null);
+
+  const exitY  = direction === "up" ? "-100%" : "100%";
+  const enterY = direction === "up" ? "100%"  : "-100%";
+
+  const hasTailwindFontSize   = /\btext-\S+/.test(textClassName);
+  const resolvedFontSize      = hasTailwindFontSize ? undefined : (fontSize ?? "clamp(1.5rem, 6vw, 5rem)");
+  const resolvedActiveClass   = activeClassName || textClassName;
+
+  const handleEnter = useCallback(() => {
+    if (!resetOnLeave) {
+      setTriggered(false);
+      setAnimKey(k => k + 1);
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setTriggered(true), 20);
+    } else {
+      setTriggered(true);
+    }
+  }, [resetOnLeave]);
+
+  const handleLeave = useCallback(() => {
+    if (resetOnLeave) setTriggered(false);
+  }, [resetOnLeave]);
+
+  const getTransitionStyle = (delay) => ({
+    transitionProperty:       "transform",
+    transitionDuration:       `${durationMs}ms`,
+    transitionTimingFunction: easing,
+    transitionDelay:          `${delay}ms`,
+  });
+
+  const style = {
+    base: (delay) => ({
+      ...(resolvedFontSize && { fontSize: resolvedFontSize }),
+      color:      baseColor,
+      willChange: "transform",
+      transform:  triggered ? `translateY(${exitY})` : "translateY(0%)",
+      ...getTransitionStyle(delay),
+    }),
+    active: (delay) => ({
+      ...(resolvedFontSize && { fontSize: resolvedFontSize }),
+      color:      activeColor,
+      willChange: "transform",
+      transform:  triggered ? "translateY(0%)" : `translateY(${enterY})`,
+      ...getTransitionStyle(delay),
+    }),
+  };
+
+  const classes = `inline-flex flex-wrap select-none cursor-default ${className}`;
+
+  return (
+    <span
+      key={animKey}
+      className={classes}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      {text.split("").map((char, i) => {
+        const isSpace = char === " ";
+        const delay   = i * staggerMs;
+
+        return (
+          <span
+            key={i}
+            className="relative overflow-hidden leading-none"
+            style={isSpace ? { width: "0.3em" } : undefined}
+          >
+            <span
+              className={`block ${fontClass} ${tracking} ${textClassName}`}
+              style={style.base(delay)}
+            >
+              {isSpace ? "\u00A0" : char}
+            </span>
+            <span
+              className={`absolute inset-0 flex items-center justify-center ${fontClass} ${tracking} ${resolvedActiveClass}`}
+              style={style.active(delay)}
+              aria-hidden="true"
+            >
+              {isSpace ? "\u00A0" : char}
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+```
+
+---
+
+### Integration Instructions
+1. No external dependencies required — only React and Tailwind CSS.
+2. Copy the component source above into ./CurtainText.jsx in your project.
+3. Import and render using the usage example above as a starting point.
+4. fontSize is optional — if textClassName contains a Tailwind text-* class, fontSize is automatically ignored to avoid conflicts.
+5. Set resetOnLeave={false} if you want the animation to replay fresh on every hover instead of reversing on mouse leave.
+6. Adjust baseColor, activeColor, direction, staggerMs, and durationMs to customize the curtain effect.
