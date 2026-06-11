@@ -40,7 +40,7 @@ import DemoBuilder from '../../components/layout/DemoBuilder';
 const CurtainTextInner = () => {
   const { props, setProps, replay, animKey, langTab, styleTab } = useComponentProps();
 
-  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
+  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'TW'}`;
   const shadcnCmds = getShadcnCmds(variant);
   const jsRepoCmds = getJsrepoCmds(variant);
   const usageCode = getUsageCode(props, langTab);
