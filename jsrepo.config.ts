@@ -68,13 +68,13 @@ export default defineConfig({
 function folderForVariant(variant: string): string {
   switch (variant) {
     case 'JS-CSS':
-      return 'jsCss';
+      return 'JS-CSS';
     case 'JS-TW':
-      return 'jsTailwind';
+      return 'JS-TW';
     case 'TS-CSS':
-      return 'tsCss';
+      return 'TS-CSS';
     case 'TS-TW':
-      return 'tsTailwind';
+      return 'TS-TW';
     default:
       return variant;
   }
@@ -113,7 +113,7 @@ function defineComponent({
     dependencies,
     files: [
       {
-        path: `src/variants/${folderForVariant(variant)}/${category}/${title}/${title}.${extForVariant(variant)}`
+        path: `public/${folderForVariant(variant)}/${category}/${title}/${title}.${extForVariant(variant)}`
       }
     ]
   }));
