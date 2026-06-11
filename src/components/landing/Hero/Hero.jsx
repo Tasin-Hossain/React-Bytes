@@ -9,21 +9,22 @@ import Button from '../../ui/Button/Button';
 import './Hero.css';
 import { Link } from 'react-router';
 import CustomDropdown from '../../common/CustomDropdown';
+import CurtainText from '../../../content/TextAnimations/CurtainText';
 
-const INSTALL_TABS = ['shadcn'];
+const INSTALL_TABS = ['shadcn','jsrepo'];
 const PACKAGE_MANAGERS = ['yarn dlx', 'npx', 'pnpm dlx', 'bunx --bun'];
 const COMMANDS = {
   shadcn: {
-    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
-    npx: 'npx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
-    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW',
-    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.dev/r/MouseRepelDots-JS-TW'
+    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    npx: 'npx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS'
   },
   jsrepo: {
-    'yarn dlx': 'yarn dlx jsrepo@latest add @react-bytes/MouseRepelDots',
-    npx: 'npx jsrepo@latest add @react-bytes/MouseRepelDots',
-    'pnpm dlx': 'pnpm dlx jsrepo@latest add @react-bytes/MouseRepelDots',
-    'bunx --bun': 'bunx --bun jsrepo@latest add @react-bytes/MouseRepelDots'
+    'yarn dlx': 'yarn dlx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    npx: 'npx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    'pnpm dlx': 'pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
+    'bunx --bun': 'bunx --bun jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS'
   }
 };
 
@@ -58,7 +59,7 @@ function GetStartedSection() {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`
-                  px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px
+                  px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px cursor-pointer
                   ${
                     activeTab === tab
                       ? 'border-(--text-primary) text-(--text-primary)'
@@ -170,13 +171,18 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1
-          className="text-5xl md:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center"
+          className="group  text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
           style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
         >
           Build Faster With{' '}
-          <span className="inline-block text-transparent bg-clip-text bg-linear-to-r from-[#7a5af8] via-[#d35af8] to-[#7a5af8] bg-size-[300%_300%] animate-gradient">
-            React Bytes
-          </span>
+          <CurtainText
+            text="React Bytes"
+            className='mt-3 md:mt-0  lg:mt-0'
+            activeClassName="text-(--text-primary)!"
+            textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
+            fontClass="font-medium"
+
+          />
         </h1>
 
         {/* Subtext */}
