@@ -63,8 +63,54 @@ const ExternalLink = ({ href, children }) => {
   );
 };
 
+const LanguageStyleList = () => (
+  <ul className="space-y-2">
+    {[
+      { combo: 'JS-CSS', desc: 'JavaScript + Plain CSS' },
+      { combo: 'JS-TW', desc: 'JavaScript + Tailwind' },
+      { combo: 'TS-CSS', desc: 'TypeScript + Plain CSS' },
+      { combo: 'TS-TW', desc: 'TypeScript + Tailwind' }
+    ].map(({ combo, desc }) => (
+      <li key={combo} className="flex items-center gap-3 text-sm">
+        <span className="w-1.5 h-1.5 rounded-full bg-(--brand) shrink-0" />
+        <span className="font-mono font-medium text-(--brand)">{combo}</span>
+        <span className="text-(--text-muted)">— {desc}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+const CLI_TOOLS = [
+  {
+    id: 'shadcn',
+    label: 'shadcn',
+    href: 'https://ui.shadcn.com/',
+    command: `npx shadcn@latest add https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
+    blurb: (
+      <>
+        React Bytes uses <ExternalLink href="https://ui.shadcn.com/">shadcn</ExternalLink> for CLI installation — it
+        fetches the component source directly into your project.
+      </>
+    )
+  },
+  {
+    id: 'jsrepo',
+    label: 'jsrepo',
+    href: 'https://jsrepo.dev/',
+    command: `npx jsrepo@latest add shadcn:https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
+    blurb: (
+      <>
+        React Bytes is also compatible with <ExternalLink href="https://jsrepo.dev/">jsrepo</ExternalLink> — it can
+        fetch components from the same shadcn-compatible registry.
+      </>
+    )
+  }
+];
+
 const CLIContent = () => {
-  const shadcnCmd = `npx shadcn@latest add https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`;
+  const [activeTool, setActiveTool] = useState('shadcn');
+  const tool = CLI_TOOLS.find((t) => t.id === activeTool);
+
   return (
     <div className="space-y-8">
       <section>
@@ -72,18 +118,33 @@ const CLIContent = () => {
         <p className="leading-relaxed text-(--text-muted)">
           Use a one-time command to pull any component directly into your project.
         </p>
-        <p className="mt-3 leading-relaxed text-(--text-muted)">
-          React Bytes uses <ExternalLink href="https://ui.shadcn.com/">shadcn</ExternalLink> for CLI installation — it
-          fetches the component source directly into your project.
-        </p>
+        <p className="mt-3 leading-relaxed text-(--text-muted)">{tool.blurb}</p>
       </section>
 
       <section>
         <h2 className="title-two">Installation</h2>
-        <p className="leading-relaxed text-(--text-muted) mb-5">
-          Run the command below and replace the placeholders to fit your stack.
+        <p className="leading-relaxed text-(--text-muted) mb-4">
+          Pick a tool and run the command below, replacing the placeholders to fit your stack.
         </p>
-        <CodeBlock code={shadcnCmd} language="bash" />
+
+        {/* Tool toggle */}
+        <div className="inline-flex rounded-md border border-(--border-secondary) bg-(--bg-card) p-1 mb-5">
+          {CLI_TOOLS.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTool(id)}
+              className={`px-4 py-1.5 rounded text-sm font-medium transition-colors cursor-pointer ${
+                activeTool === id
+                  ? 'bg-(--brand) text-(--bg-primary)'
+                  : 'text-(--text-muted) hover:text-(--text-primary)'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <CodeBlock code={tool.command} language="bash" />
       </section>
 
       <section>
@@ -91,20 +152,7 @@ const CLIContent = () => {
           <span className="text-(--text-primary) font-medium">&lt;LANGUAGE&gt;</span> +{' '}
           <span className="text-(--text-primary) font-medium">&lt;STYLE&gt;</span> combinations:
         </p>
-        <ul className="space-y-2">
-          {[
-            { combo: 'JS-CSS', desc: 'JavaScript + Plain CSS' },
-            { combo: 'JS-TW', desc: 'JavaScript + Tailwind' },
-            { combo: 'TS-CSS', desc: 'TypeScript + Plain CSS' },
-            { combo: 'TS-TW', desc: 'TypeScript + Tailwind' }
-          ].map(({ combo, desc }) => (
-            <li key={combo} className="flex items-center gap-3 text-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-(--brand) shrink-0" />
-              <span className="font-mono font-medium text-(--brand)">{combo}</span>
-              <span className="text-(--text-muted)">— {desc}</span>
-            </li>
-          ))}
-        </ul>
+        <LanguageStyleList />
       </section>
     </div>
   );
@@ -125,8 +173,52 @@ const ManualContent = () => {
   );
 };
 
+const METHODS = [
+  {
+    id: 'Manual',
+    icon: (
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="8" y="8" width="13" height="13" rx="2" />
+        <path d="M3 16V5a2 2 0 0 1 2-2h11" />
+      </svg>
+    ),
+    content: <ManualContent />
+  },
+  {
+    id: 'CLI',
+    icon: (
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="3" width="20" height="18" rx="2" />
+        <path d="M7 9l4 4-4 4" />
+        <path d="M13 17h4" />
+      </svg>
+    ),
+    content: <CLIContent />
+  }
+];
+
 const Installation = () => {
   const [activeMethod, setActiveMethod] = useState('CLI');
+
+  const activeContent = METHODS.find((m) => m.id === activeMethod)?.content;
 
   return (
     <>
@@ -151,45 +243,7 @@ const Installation = () => {
         <div className="mb-10">
           <p className="text-sm text-(--text-muted) mb-4">Click the cards below to change your preferred method.</p>
           <div className="grid grid-cols-2 gap-4">
-            {[
-              {
-                id: 'Manual',
-                icon: (
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="8" y="8" width="13" height="13" rx="2" />
-                    <path d="M3 16V5a2 2 0 0 1 2-2h11" />
-                  </svg>
-                )
-              },
-              {
-                id: 'CLI',
-                icon: (
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="2" y="3" width="20" height="18" rx="2" />
-                    <path d="M7 9l4 4-4 4" />
-                    <path d="M13 17h4" />
-                  </svg>
-                )
-              }
-            ].map(({ id, icon }) => (
+            {METHODS.map(({ id, icon }) => (
               <button
                 key={id}
                 onClick={() => setActiveMethod(id)}
@@ -207,7 +261,7 @@ const Installation = () => {
         </div>
 
         {/* Dynamic content */}
-        <div className="mb-10">{activeMethod === 'CLI' ? <CLIContent /> : <ManualContent />}</div>
+        <div className="mb-10">{activeContent}</div>
 
         {/* Requirements */}
         <section className="mb-10 rounded-md border border-(--border-secondary) bg-(--bg-card) p-5">
