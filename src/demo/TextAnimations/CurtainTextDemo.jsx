@@ -16,7 +16,8 @@ import {
   INITIAL_PROPS,
   CurtainTextPrompt,
   CODE_VARIANTS,
-  AUTHOR_NAME
+  AUTHOR_NAME,
+  getJsrepoCmds
 } from '../../config/TextAnimations/Curtaintext';
 
 import PreviewSelect from '../../components/shared/preview/PreviewSelect';
@@ -41,6 +42,7 @@ const CurtainTextInner = () => {
 
   const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
   const shadcnCmds = getShadcnCmds(variant);
+  const jsRepoCmds = getJsrepoCmds(variant);
   const usageCode = getUsageCode(props, langTab);
 
   // Props that trigger a replay (text / layout changes re-mount the component)
@@ -132,6 +134,7 @@ const CurtainTextInner = () => {
       // CodeTab props
       pkgCmds={PKG_CMDS}
       shadcnCmds={shadcnCmds}
+      jsrepoCmds={jsRepoCmds}
       usageCode={usageCode}
       codeVariants={CODE_VARIANTS}
       CodeBlock={CodeBlock}
