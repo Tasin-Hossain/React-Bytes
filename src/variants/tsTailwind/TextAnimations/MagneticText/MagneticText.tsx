@@ -1,34 +1,55 @@
-const code = `import { useRef, useEffect } from 'react';
+const code = `// TS-TW variant
+import { useRef, useEffect, useState, useCallback, CSSProperties } from 'react';
 import gsap from 'gsap';
 
+/* ── helpers ─────────────────────────────────────────────── */
 function interpolateColor(colors: string[], t: number): string {
   if (!colors || colors.length === 0) return '#ffffff';
   if (colors.length === 1) return colors[0];
-
   const parse = (hex: string): [number, number, number] => {
     const h = hex.replace('#', '');
     return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
   };
-
   const scaled = t * (colors.length - 1);
   const lo = Math.floor(scaled);
   const hi = Math.min(lo + 1, colors.length - 1);
   const frac = scaled - lo;
   const [r1, g1, b1] = parse(colors[lo]);
   const [r2, g2, b2] = parse(colors[hi]);
-  return \`rgb(\${Math.round(r1 + (r2 - r1) * frac)},\${Math.round(
-    g1 + (g2 - g1) * frac
-  )},\${Math.round(b1 + (b2 - b1) * frac)})\`;
+  return \`rgb(\${Math.round(r1 + (r2 - r1) * frac)},\${Math.round(g1 + (g2 - g1) * frac)},\${Math.round(b1 + (b2 - b1) * frac)})\`;
 }
 
-const ALIGN_ITEMS: Record<string, string> = { left: 'items-start', center: 'items-center', right: 'items-end' };
-const TEXT_ALIGN: Record<string, string> = { left: 'text-left', center: 'text-center', right: 'text-right' };
-const JUSTIFY_CONTENT: Record<string, string> = {
-  left: 'justify-start',
-  center: 'justify-center',
-  right: 'justify-end'
-};
+type Align = 'left' | 'center' | 'right';
+type EntranceAnim = 'fadeUp' | 'scaleIn' | 'slideLeft' | 'blur' | 'none';
 
+const ALIGN_ITEMS = { left: 'items-start', center: 'items-center', right: 'items-end' };
+const TEXT_ALIGN = { left: 'text-left', center: 'text-center', right: 'text-right' };
+const JUSTIFY_CONTENT = { left: 'justify-start', center: 'justify-center', right: 'justify-end' };
+
+/* ── useResponsiveFontSize ───────────────────────────────── */
+function useResponsiveFontSize(containerRef: React.RefObject<HTMLDivElement | null>) {
+  const [size, setSize] = useState({ main: 'clamp(40px,13vw,85px)', subtitle: '22px', magnetRadius: 120 });
+
+  const compute = useCallback(() => {
+    const w = containerRef.current?.offsetWidth ?? window.innerWidth;
+    if (w < 360) setSize({ main: 'clamp(28px,9vw,40px)', subtitle: '13px', magnetRadius: 60 });
+    else if (w < 480) setSize({ main: 'clamp(32px,10vw,52px)', subtitle: '14px', magnetRadius: 70 });
+    else if (w < 640) setSize({ main: 'clamp(36px,11vw,64px)', subtitle: '16px', magnetRadius: 85 });
+    else if (w < 768) setSize({ main: 'clamp(40px,12vw,72px)', subtitle: '18px', magnetRadius: 100 });
+    else setSize({ main: 'clamp(40px,13vw,85px)', subtitle: '22px', magnetRadius: 120 });
+  }, [containerRef]);
+
+  useEffect(() => {
+    compute();
+    const ro = new ResizeObserver(compute);
+    if (containerRef.current) ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, [compute, containerRef]);
+
+  return size;
+}
+
+/* ── MagneticChar ────────────────────────────────────────── */
 interface MagneticCharProps {
   char: string;
   index: number;
@@ -42,10 +63,11 @@ interface MagneticCharProps {
   attractDuration: number;
   returnDuration: number;
   hoverColors: string[];
-  entranceAnim: string;
+  entranceAnim: EntranceAnim;
   entranceStagger: number;
   entranceDuration: number;
   entranceDelay: number;
+  charClassName?: string;
 }
 
 function MagneticChar({
@@ -64,7 +86,8 @@ function MagneticChar({
   entranceAnim,
   entranceStagger,
   entranceDuration,
-  entranceDelay
+  entranceDelay,
+  charClassName = ''
 }: MagneticCharProps) {
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -76,13 +99,13 @@ function MagneticChar({
       return;
     }
     const delay = entranceDelay + index * entranceStagger;
-    const fromMap: Record<string, object> = {
+    const fromMap = {
       fadeUp: { y: 60, opacity: 0 },
       scaleIn: { scale: 0, opacity: 0, rotation: gsap.utils.random(-20, 20) },
       slideLeft: { x: -60, opacity: 0 },
       blur: { filter: 'blur(24px)', opacity: 0, scale: 1.3 }
     };
-    const toMap: Record<string, object> = {
+    const toMap = {
       fadeUp: { y: 0, opacity: 1, ease: 'expo.out' },
       scaleIn: { scale: 1, opacity: 1, rotation: 0, ease: 'back.out(2)' },
       slideLeft: { x: 0, opacity: 1, ease: 'expo.out' },
@@ -129,37 +152,35 @@ function MagneticChar({
     return () => window.removeEventListener('mousemove', onMove);
   }, [index, totalChars, magnetRadius, magnetStrength, attractDuration, returnDuration, hoverColors, baseColor]);
 
+  const hasTailwindFontSize = /\\btext-\\S+/.test(charClassName);
+
+  const style: CSSProperties = {
+    ...(!hasTailwindFontSize && { fontSize }),
+    color: baseColor,
+    fontFamily: 'inherit',
+    letterSpacing,
+    marginRight: gap,
+    opacity: entranceAnim === 'none' ? 1 : 0
+  };
+
+  const classes = \`inline-block select-none will-change-transform leading-none \${charClassName}\`;
+
   return (
-    <span
-      ref={ref}
-      className="inline-block select-none will-change-transform"
-      style={{
-        fontSize,
-        color: baseColor,
-        lineHeight: 1,
-        fontFamily: 'inherit',
-        letterSpacing,
-        marginRight: gap,
-        opacity: entranceAnim === 'none' ? 1 : 0
-      }}
-    >
+    <span ref={ref} style={style} className={classes}>
       {char === ' ' ? '\\u00A0' : char}
     </span>
   );
 }
 
-interface MagneticCursorProps {
-  containerRef: React.RefObject<HTMLDivElement | null>;
-}
-
-function MagneticCursor({ containerRef }: MagneticCursorProps) {
+/* ── MagneticCursor ──────────────────────────────────────── */
+function MagneticCursor({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    const container = containerRef?.current;
+    const dot = dotRef.current,
+      ring = ringRef.current,
+      container = containerRef?.current;
     if (!dot || !ring || !container) return;
     const onMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -178,21 +199,30 @@ function MagneticCursor({ containerRef }: MagneticCursorProps) {
     };
   }, [containerRef]);
 
-  const base =
-    'absolute pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-[9999] opacity-0 left-[-100px] top-[-100px]';
   return (
     <>
-      <div ref={dotRef} className={\`\${base} w-1.5 h-1.5 bg-white\`} />
-      <div ref={ringRef} className={\`\${base} w-7 h-7 border border-white opacity-40\`} />
+      <div
+        ref={dotRef}
+        className="absolute pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-9999 opacity-0 w-1.5 h-1.5 bg-white"
+        style={{ left: '-100px', top: '-100px' }}
+      />
+      <div
+        ref={ringRef}
+        className="absolute pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-9999 opacity-0 w-7 h-7 border border-white/40"
+        style={{ left: '-100px', top: '-100px' }}
+      />
     </>
   );
 }
 
-export interface MagneticTextProps {
+/* ── MagneticText ────────────────────────────────────────── */
+interface MagneticTextProps {
   text?: string;
   subtitle?: string;
   fontSize?: string;
   subtitleSize?: string;
+  textClassName?: string;
+  subtitleClassName?: string;
   letterSpacing?: string;
   textColor?: string;
   subtitleColor?: string;
@@ -201,26 +231,29 @@ export interface MagneticTextProps {
   magnetStrength?: number;
   attractDuration?: number;
   returnDuration?: number;
-  entranceAnim?: string;
+  entranceAnim?: EntranceAnim;
   entranceStagger?: number;
   entranceDuration?: number;
   entranceDelay?: number;
   showCursor?: boolean;
   showSubtitle?: boolean;
-  align?: 'left' | 'center' | 'right';
+  align?: Align;
   gap?: string;
+  className?: string;
 }
 
 export default function MagneticText({
   text = 'ATTRACT',
   subtitle = 'PULL · PUSH · REPEL',
-  fontSize = 'clamp(40px, 13vw, 85px)',
-  subtitleSize = '22px',
+  fontSize,
+  subtitleSize,
+  textClassName = '',
+  subtitleClassName = '',
   letterSpacing = '0.05em',
-  textColor = 'var(--text-primary)',
-  subtitleColor = 'var(--text-muted)',
+  textColor = '#ffffff',
+  subtitleColor = '#ffffff',
   hoverColors = ['#ff6b6b', '#f7c948', '#4ecdc4', '#a78bfa'],
-  magnetRadius = 120,
+  magnetRadius,
   magnetStrength = 0.55,
   attractDuration = 0.25,
   returnDuration = 0.6,
@@ -231,9 +264,16 @@ export default function MagneticText({
   showCursor = true,
   showSubtitle = true,
   align = 'center',
-  gap = '0px'
+  gap = '0px',
+  className = ''
 }: MagneticTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const responsive = useResponsiveFontSize(containerRef);
+
+  const resolvedMain = fontSize ?? responsive.main;
+  const resolvedSub = subtitleSize ?? responsive.subtitle;
+  const resolvedRadius = magnetRadius ?? responsive.magnetRadius;
+
   const mainChars = [...text];
   const subChars = [...subtitle];
 
@@ -241,8 +281,15 @@ export default function MagneticText({
   const textAlign = TEXT_ALIGN[align] ?? 'text-center';
   const justify = JUSTIFY_CONTENT[align] ?? 'justify-center';
 
+  const style: CSSProperties = {
+    fontFamily: "'Bebas Neue', sans-serif",
+    cursor: showCursor ? 'none' : 'default'
+  };
+
+  const classes = \`relative flex flex-col \${alignItems} \${textAlign} justify-center w-full h-full px-4 sm:px-6 md:px-8 py-8 sm:py-10 md:py-12 \${className}\`;
+
   const sharedCharProps = {
-    magnetRadius,
+    magnetRadius: resolvedRadius,
     magnetStrength,
     attractDuration,
     returnDuration,
@@ -255,11 +302,7 @@ export default function MagneticText({
   };
 
   return (
-    <div
-      ref={containerRef}
-      className={\`relative flex flex-col \${alignItems} \${textAlign} justify-center w-full py-12 px-8\`}
-      style={{ fontFamily: "'Bebas Neue', sans-serif", cursor: showCursor ? 'none' : 'default' }}
-    >
+    <div ref={containerRef} style={style} className={classes}>
       {showCursor && <MagneticCursor containerRef={containerRef} />}
 
       <div className={\`relative z-10 flex flex-wrap \${justify}\`}>
@@ -269,25 +312,27 @@ export default function MagneticText({
             char={ch}
             index={i}
             totalChars={mainChars.length}
-            fontSize={fontSize}
+            fontSize={resolvedMain}
             baseColor={textColor}
             letterSpacing={letterSpacing}
+            charClassName={textClassName}
             {...sharedCharProps}
           />
         ))}
       </div>
 
       {showSubtitle && (
-        <div className={\`flex flex-wrap \${justify} mt-4 z-10\`}>
+        <div className={\`flex flex-wrap \${justify} mt-2 sm:mt-3 md:mt-4 z-10\`}>
           {subChars.map((ch, i) => (
             <MagneticChar
               key={i}
               char={ch}
               index={i}
               totalChars={subChars.length}
-              fontSize={subtitleSize}
+              fontSize={resolvedSub}
               baseColor={subtitleColor}
               letterSpacing="0.08em"
+              charClassName={subtitleClassName}
               {...sharedCharProps}
               entranceDelay={entranceDelay + mainChars.length * entranceStagger + 0.1}
             />
