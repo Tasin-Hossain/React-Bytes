@@ -1,22 +1,71 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "React-Bytes",
-  "homepage": "http://localhost:5173",
-  "items": [
-    {
-      "name":"MagneticText-JS-CSS",
-      "title": "MagneticText",
-      "description": "",
-      "type": "registry:component",
-      "dependencies": ["gsap@^3.15.0"],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/variants/jsCss/TextAnimations/MagneticText/MagneticText.jsx",
-          "type": "registry:component",
-          "target": "components/MagneticText/MagneticText.jsx"
-        }
-      ]
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry.json",
+	"name": "@react-bytes",
+	"homepage": "http://localhost:5173",
+	"items": [
+		{
+			"name": "CurtainText-JS-CSS",
+			"title": "CurtainText",
+			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CurtainText.jsx"
+				}
+			]
+		},
+		{
+			"name": "CurtainText-JS-TW",
+			"title": "CurtainText",
+			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CurtainText.jsx"
+				}
+			]
+		},
+		{
+			"name": "CurtainText-TS-CSS",
+			"title": "CurtainText",
+			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CurtainText.tsx"
+				}
+			]
+		},
+		{
+			"name": "CurtainText-TS-TW",
+			"title": "CurtainText",
+			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CurtainText.tsx"
+				}
+			]
+		}
+	]
 }
