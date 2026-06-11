@@ -80,15 +80,15 @@ export const PROPS_DATA = [
   { name: 'text',             type: 'string',   def: '"ATTRACT"',                                 desc: 'Main display text.' },
   { name: 'subtitle',         type: 'string',   def: '"PULL · PUSH · REPEL"',                     desc: 'Sub text rendered below the main text.' },
   // TYPOGRAPHY
-  { name: 'fontSize',         type: 'string',   def: '"clamp(40px, 13vw, 85px)"',                 desc: 'Font size for the main text (supports clamp).' },
-  { name: 'subtitleSize',     type: 'string',   def: '"22px"',                                    desc: 'Font size for the subtitle.' },
+  { name: 'fontSize',         type: 'string',   def: 'undefined (responsive)',                    desc: 'Font size for the main text (supports clamp). Defaults to responsive value based on container width.' },
+  { name: 'subtitleSize',     type: 'string',   def: 'undefined (responsive)',                    desc: 'Font size for the subtitle. Defaults to responsive value based on container width.' },
   { name: 'letterSpacing',    type: 'string',   def: '"0.05em"',                                  desc: 'Letter-spacing for the main text.' },
   // COLORS
-  { name: 'textColor',        type: 'string',   def: '"#a757f7"',                     desc: 'Base color of the main text.' },
-  { name: 'subtitleColor',    type: 'string',   def: '"#a757f7"',                       desc: 'Color of the subtitle text.' },
+  { name: 'textColor',        type: 'string',   def: '"#ffffff"',                                 desc: 'Base color of the main text.' },
+  { name: 'subtitleColor',    type: 'string',   def: '"#ffffff"',                                 desc: 'Color of the subtitle text.' },
   { name: 'hoverColors',      type: 'string[]', def: '["#ff6b6b","#f7c948","#4ecdc4","#a78bfa"]', desc: 'Color array interpolated across characters on hover.' },
   // ANIMATION
-  { name: 'magnetRadius',     type: 'number',   def: '120',                                       desc: 'Radius in px within which characters are attracted.' },
+  { name: 'magnetRadius',     type: 'number',   def: 'undefined (responsive)',                    desc: 'Radius in px within which characters are attracted. Defaults to responsive value based on container width.' },
   { name: 'magnetStrength',   type: 'number',   def: '0.55',                                      desc: 'How far characters move toward the cursor (0–1).' },
   { name: 'attractDuration',  type: 'number',   def: '0.25',                                      desc: 'Duration (s) of the attract tween.' },
   { name: 'returnDuration',   type: 'number',   def: '0.6',                                       desc: 'Duration (s) of the return tween.' },
@@ -102,6 +102,10 @@ export const PROPS_DATA = [
   // LAYOUT
   { name: 'align',            type: 'string',   def: '"center"',                                  desc: 'Text alignment: "left" | "center" | "right".' },
   { name: 'gap',              type: 'string',   def: '"0px"',                                     desc: 'Gap (marginRight) between individual characters.' },
+  // CLASSNAMES
+  { name: 'textClassName',     type: 'string',  def: '""',                                        desc: 'Extra Tailwind/CSS classes applied to each main text character span.' },
+  { name: 'subtitleClassName', type: 'string',  def: '""',                                        desc: 'Extra Tailwind/CSS classes applied to each subtitle character span.' },
+  { name: 'className',         type: 'string',  def: '""',                                        desc: 'Extra classes applied to the root container div.' },
 ];
 
 export const dep = ['gsap'];
@@ -119,15 +123,21 @@ export const getShadcnCmds = (variant) => ({
   yarn: `yarn shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
   bun:  `bunx shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
 });
+export const getJsrepoCmds = (variant) => ({
+  pnpm: `pnpm dlx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+  npm:  `npx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+  yarn: `yarn jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+  bun:  `bunx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+});
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/MagneticText/MagneticText';
-import CSS_CODE         from '../../variants/jsCss/TextAnimations/MagneticText/MagneticText.css?raw';
+
 import JS_TAILWIND_CODE from '../../variants/jsTailwind/TextAnimations/MagneticText/MagneticText';
 import TS_CSS_CODE      from '../../variants/tsCss/TextAnimations/MagneticText/MagneticText';
 import TS_TAILWIND_CODE from '../../variants/tsTailwind/TextAnimations/MagneticText/MagneticText';
 
 
-export { CSS_CODE };
+
 export { JS_CSS_CODE };
 export { JS_TAILWIND_CODE };
 export { TS_CSS_CODE };

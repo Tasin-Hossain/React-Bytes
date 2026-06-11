@@ -17,8 +17,8 @@ import {
   INITIAL_PROPS,
   MagneticTextPrompt,
   CODE_VARIANTS,
-  CSS_CODE,
   AUTHOR_NAME,
+  getJsrepoCmds,
 } from '../../config/TextAnimations/MagneticText';
 
 import PreviewSelect from '../../components/shared/preview/PreviewSelect';
@@ -43,8 +43,9 @@ import DemoBuilder from '../../components/layout/DemoBuilder';
 const MagneticTextInner = () => {
   const { props, setProps, replay, animKey, langTab, styleTab } = useComponentProps();
 
-  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'Tailwind'}`;
+  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'TW'}`;
   const shadcnCmds = getShadcnCmds(variant);
+  const jsRepoCmds = getJsrepoCmds(variant);
   const usageCode = getUsageCode(props, langTab);
 
   const handlePropChange = key => val => {
@@ -230,9 +231,9 @@ const MagneticTextInner = () => {
       // CodeTab props
       pkgCmds={PKG_CMDS}
       shadcnCmds={shadcnCmds}
+      jsrepoCmds={jsRepoCmds}
       usageCode={usageCode}
       codeVariants={CODE_VARIANTS}
-      cssCode={CSS_CODE}
       CodeBlock={CodeBlock}
     />
   );
