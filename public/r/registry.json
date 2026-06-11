@@ -4,13 +4,75 @@
 	"homepage": "http://localhost:5173",
 	"items": [
 		{
-			"name": "CurtainText-JS-CSS",
-			"title": "CurtainText",
-			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"name": "Magnetictext-JS-CSS",
+			"title": "Magnetictext",
+			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
 			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Magnetictext.jsx"
+				}
+			]
+		},
+		{
+			"name": "Magnetictext-JS-TW",
+			"title": "Magnetictext",
+			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Magnetictext.jsx"
+				}
+			]
+		},
+		{
+			"name": "Magnetictext-TS-CSS",
+			"title": "Magnetictext",
+			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Magnetictext.tsx"
+				}
+			]
+		},
+		{
+			"name": "Magnetictext-TS-TW",
+			"title": "Magnetictext",
+			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Magnetictext.tsx"
+				}
+			]
+		},
+		{
+			"name": "CurtainText-JS-CSS",
+			"title": "CurtainText",
+			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"type": "registry:component",
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -24,9 +86,7 @@
 			"title": "CurtainText",
 			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
 			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -40,9 +100,7 @@
 			"title": "CurtainText",
 			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
 			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -56,9 +114,7 @@
 			"title": "CurtainText",
 			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
 			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
