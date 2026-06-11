@@ -101,17 +101,17 @@ export const PKG_CMDS = {
 }; 
 
 export const getShadcnCmds = (variant) => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  npm:  `npx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
 });
 
 export const getJsrepoCmds = (variant) => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbits.dev/r/CurtainText-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/CurtainText/CurtainText';
@@ -126,8 +126,8 @@ export { TS_CSS_CODE };
 export { TS_TAILWIND_CODE };
 
 export const CODE_VARIANTS = {
-  'js-css':      JS_CSS_CODE,
-  'js-tailwind': JS_TAILWIND_CODE,
-  'ts-css':      TS_CSS_CODE,
-  'ts-tailwind': TS_TAILWIND_CODE,
+  'JS-CSS':      JS_CSS_CODE,
+  'JS-TW': JS_TAILWIND_CODE,
+  'TS-CSS':      TS_CSS_CODE,
+  'TS-TW': TS_TAILWIND_CODE,
 };
