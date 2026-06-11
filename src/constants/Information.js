@@ -32,7 +32,7 @@ export const componentMetadata = {
 
   'TextAnimations/CurtainText': {
     name: 'CurtainText',
-    description: 'Text that magnetically follows the cursor with smooth spring physics.',
+    description: 'A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.',
     category: 'TextAnimations',
     dependencies: ['gsap@^3.15.0'],
     docsUrl: 'http://localhost:5173/text-animations/curtain-text',
