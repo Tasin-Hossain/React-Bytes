@@ -17,6 +17,7 @@ export default function DemoBuilder({
   // CodeTab props
   pkgCmds,
   shadcnCmds,
+  jsrepoCmds,
   usageCode,
   codeVariants,
   cssCode,
@@ -49,6 +50,7 @@ export default function DemoBuilder({
           <CodeTab
             pkgCmds={pkgCmds}
             shadcnCmds={shadcnCmds}
+            jsrepoCmds={jsrepoCmds}
             usageCode={usageCode}
             codeVariants={codeVariants}
             cssCode={cssCode}
