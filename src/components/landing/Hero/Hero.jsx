@@ -126,7 +126,7 @@ function GetStartedSection() {
 export default function HeroSection() {
   const [params, setParams] = useState(MOUSE_REPEL_DEFAULTS);
   const [popupOpen, setPopupOpen] = useState(false);
-
+    const [hovered, setHovered] = useState(false);
   function handleParamChange(key, val) {
     setParams(prev => ({ ...prev, [key]: val }));
   }
@@ -171,19 +171,21 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1
-          className="group  text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
-          style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
-        >
-          Build Faster With{' '}
-          <CurtainText
-            text="React Bytes"
-            className='mt-3 md:mt-0  lg:mt-0'
-            activeClassName="text-(--text-primary)!"
-            textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
-            fontClass="font-medium"
-
-          />
-        </h1>
+  className="text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
+  style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
+  onMouseEnter={() => setHovered(true)}
+  onMouseLeave={() => setHovered(false)}
+>
+  Build Faster With{' '}
+  <CurtainText
+    text="React Bytes"
+    externalTrigger={hovered}
+    className='mt-3 md:mt-0 lg:mt-0'
+    activeClassName="text-(--text-primary)!"
+    textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
+    fontClass="font-medium"
+  />
+</h1>
 
         {/* Subtext */}
         <p
