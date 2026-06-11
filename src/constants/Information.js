@@ -28,13 +28,22 @@ export const VARIANTS = ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'];
  */
 export const componentMetadata = {
 
- 
+ 'TextAnimations/Magnetictext': {
+    name: 'Magnetictext',
+    description:
+  'Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.',
+    category: 'TextAnimations',
+    dependencies: ['gsap@^3.15.0'],
+    docsUrl: 'http://localhost:5173/text-animations/magnetic-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   'TextAnimations/CurtainText': {
     name: 'CurtainText',
     description: 'A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.',
     category: 'TextAnimations',
-    dependencies: ['gsap@^3.15.0'],
+    dependencies: [],
     docsUrl: 'http://localhost:5173/text-animations/curtain-text',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
