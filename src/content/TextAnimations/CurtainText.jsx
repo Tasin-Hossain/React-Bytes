@@ -15,10 +15,13 @@ export default function CurtainText({
   easing          = "cubic-bezier(.77,0,.18,1)",
   resetOnLeave    = true,
   className       = "",
+  externalTrigger
 }) {
   const [triggered, setTriggered] = useState(false);
   const [animKey, setAnimKey]     = useState(0);
   const timerRef                  = useRef(null);
+
+  const isTriggered = externalTrigger !== undefined ? externalTrigger : triggered;
 
   const exitY  = direction === "up" ? "-100%" : "100%";
   const enterY = direction === "up" ? "100%"  : "-100%";
@@ -32,7 +35,6 @@ export default function CurtainText({
     ? { backgroundSize: "200% 200%", backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent" }
     : {};
 
-
   const resolvedActiveClass = activeClassName || textClassName;
   const hasActiveGradient   = /\bbg-gradient\S*/.test(resolvedActiveClass) || /\bfrom-\S+/.test(resolvedActiveClass);
   const hasActiveAnim       = hasActiveGradient && /\banimate-\S+/.test(resolvedActiveClass);
@@ -41,7 +43,7 @@ export default function CurtainText({
     : hasActiveGradient
     ? { backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent" }
     : {};
-
+  
   const handleEnter = useCallback(() => {
     if (!resetOnLeave) {
       setTriggered(false);
@@ -89,7 +91,7 @@ export default function CurtainText({
                 ...(!hasGradient && { color: baseColor }),
                 ...gradientStyle,
                 ...getTransitionStyle(delay),
-                transform:  triggered ? `translateY(${exitY})` : "translateY(0%)",
+                transform:  isTriggered ? `translateY(${exitY})` : "translateY(0%)",
                 willChange: "transform",
               }}
             >
@@ -104,7 +106,7 @@ export default function CurtainText({
                 ...(!hasActiveGradient && { color: activeColor }),
                 ...activeGradientStyle,
                 ...getTransitionStyle(delay),
-                transform:  triggered ? "translateY(0%)" : `translateY(${enterY})`,
+                transform:  isTriggered ? "translateY(0%)" : `translateY(${enterY})`,
                 willChange: "transform",
               }}
               aria-hidden="true"
