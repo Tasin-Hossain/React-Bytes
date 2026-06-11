@@ -22,10 +22,10 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
 const FILES = [
-  'src/variants/jsCss/TextAnimations/MagneticText/MagneticText.jsx',
-  'src/variants/jsTailwind/TextAnimations/MagneticText/MagneticText.jsx',
-  'src/variants/tsCss/TextAnimations/MagneticText/MagneticText.tsx',
-  'src/variants/tsTailwind/TextAnimations/MagneticText/MagneticText.tsx',
+  'src/variants/jsCss/TextAnimations/CurtainText/CurtainText.jsx',
+  'src/variants/jsTailwind/TextAnimations/CurtainText/CurtainText.jsx',
+  'src/variants/tsCss/TextAnimations/CurtainText/CurtainText.tsx',
+  'src/variants/tsTailwind/TextAnimations/CurtainText/CurtainText.tsx',
 ];
 
 FILES.forEach((relPath) => {
