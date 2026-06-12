@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 import CustomDropdown from '../../common/CustomDropdown';
 import CurtainText from '../../../content/TextAnimations/CurtainText';
 
-const INSTALL_TABS = ['shadcn','jsrepo'];
+const INSTALL_TABS = ['shadcn', 'jsrepo'];
 const PACKAGE_MANAGERS = ['yarn dlx', 'npx', 'pnpm dlx', 'bunx --bun'];
 const COMMANDS = {
   shadcn: {
@@ -126,7 +126,7 @@ function GetStartedSection() {
 export default function HeroSection() {
   const [params, setParams] = useState(MOUSE_REPEL_DEFAULTS);
   const [popupOpen, setPopupOpen] = useState(false);
-    const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState(false);
   function handleParamChange(key, val) {
     setParams(prev => ({ ...prev, [key]: val }));
   }
@@ -153,16 +153,16 @@ export default function HeroSection() {
       <div className="relative z-10 flex flex-col gap-4 items-center justify-start px-6 md:px-0 pt-15 md:mb-0">
         {/* Badge */}
         <div
-          className="mb-10 px-1 py-1 rounded-md border border-(--border-secondary) bg-(--bg-card) text-xs tracking-wide transition-all duration-200"
+          className="mb-10 px-1 py-0.5 rounded-lg border border-(--border-secondary) bg-(--bg-card) text-xs tracking-wide transition-all duration-200"
           style={{ animation: 'fadeDown 0.6s ease both' }}
         >
           <div className="flex items-center justify-center gap-2">
-            <Link to={'/backgrounds/mouserepel-dots'}>
+            <Link to={'/text-animations/curtain-text'}>
               <Button text="New Components" />
             </Link>
-            <Link to={'/backgrounds/mouserepel-dots'}>
-              <button className="btn gap-2 bg-transparent border-none text-xs">
-                MouseRepelDots
+            <Link to={'/text-animations/curtain-text'}>
+              <button className="btn gap-2 bg-transparent border-none text- text-[11px]">
+                CURTAIN
                 <FaArrowRightLong size={12} />
               </button>
             </Link>
@@ -171,21 +171,21 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1
-  className="text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
-  style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
-  onMouseEnter={() => setHovered(true)}
-  onMouseLeave={() => setHovered(false)}
->
-  Build Faster With{' '}
-  <CurtainText
-    text="React Bytes"
-    externalTrigger={hovered}
-    className='mt-3 md:mt-0 lg:mt-0'
-    activeClassName="text-(--text-primary)!"
-    textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
-    fontClass="font-medium"
-  />
-</h1>
+          className="text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
+          style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          Build Faster With{' '}
+          <CurtainText
+            text="React Bytes"
+            externalTrigger={hovered}
+            className="mt-3 md:mt-0 lg:mt-0"
+            activeClassName="text-(--text-primary)!"
+            textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
+            fontClass="font-medium"
+          />
+        </h1>
 
         {/* Subtext */}
         <p
