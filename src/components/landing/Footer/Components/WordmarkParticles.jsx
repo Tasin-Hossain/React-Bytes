@@ -95,7 +95,7 @@ export const WordmarkParticles = () => {
             // background: 'var(--wordmark-gradient)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
-            WebkitTextStroke: '2px var(--wordmark-color)',
+            WebkitTextStroke: '2px var(--brand)',
             color: 'transparent'
           }}
         >
