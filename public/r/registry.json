@@ -122,6 +122,70 @@
 					"path": "CurtainText.tsx"
 				}
 			]
+		},
+		{
+			"name": "CursorTrail-JS-CSS",
+			"title": "CursorTrail",
+			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"type": "registry:component",
+			"dependencies": [
+				"motion@^12.40.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CursorTrail.jsx"
+				}
+			]
+		},
+		{
+			"name": "CursorTrail-JS-TW",
+			"title": "CursorTrail",
+			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"type": "registry:component",
+			"dependencies": [
+				"motion@^12.40.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CursorTrail.jsx"
+				}
+			]
+		},
+		{
+			"name": "CursorTrail-TS-CSS",
+			"title": "CursorTrail",
+			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"type": "registry:component",
+			"dependencies": [
+				"motion@^12.40.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CursorTrail.tsx"
+				}
+			]
+		},
+		{
+			"name": "CursorTrail-TS-TW",
+			"title": "CursorTrail",
+			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"type": "registry:component",
+			"dependencies": [
+				"motion@^12.40.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "CursorTrail.tsx"
+				}
+			]
 		}
 	]
 }
