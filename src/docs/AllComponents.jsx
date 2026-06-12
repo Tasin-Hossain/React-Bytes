@@ -6,6 +6,8 @@ import { CATEGORIES } from '../constants/Categories';
 import { Input, InputGroup } from '../components/ui/Input/Input';
 import CategoryDropdown from '../components/shared/CategoryDropdown';
 import ComponentCard from '../components/shared/ComponentsGrid/ComponentCard';
+import LazyRender from '../components/common/LazyRender';
+
 
 const slug = str => str.replace(/\s+/g, '-').toLowerCase();
 const SKIP_CATEGORIES = ['Get Started'];
@@ -45,7 +47,7 @@ const AllComponents = () => {
 
   return (
     <>
-      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-autopx-4 sm:px-6  text-(--text-primary) flex flex-col overflow-hidden">
+      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 text-(--text-primary) flex flex-col overflow-hidden">
 
         <div className="flex flex-col gap-4 mb-6 sm:mb-8 min-w-0">
           <h1 className="title-two shrink-0">All Components</h1>
@@ -81,7 +83,9 @@ const AllComponents = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4">
             {filtered.map(item => (
-              <ComponentCard key={item.videoKey} item={item} />
+              <LazyRender key={item.videoKey}>
+                <ComponentCard item={item} />
+              </LazyRender>
             ))}
           </div>
         )}
