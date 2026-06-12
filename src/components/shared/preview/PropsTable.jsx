@@ -15,14 +15,14 @@ export const PropsTable = ({ PROPS_DATA }) => (
         <tbody>
           {PROPS_DATA.map((p) => (
             <tr key={p.name} className="border-b border-(--border-secondary) last:border-0">
-              <td className="px-4 py-2.5">
+              <td className="px-4 py-3">
                 <code className="text-(--text-muted) bg-(--bg-button) border border-(--border-button) px-1.5 py-0.5 rounded text-xs">{p.name}</code>
               </td>
-              <td className="px-4 py-2.5 text-(--text-muted)">{p.type}</td>
-              <td className="px-4 py-2.5">
+              <td className="px-4 py-3 text-(--text-muted) w-50">{p.type}</td>
+              <td className="px-4 py-3 w-50">
                 <code className="text-(--text-muted) bg-(--bg-button) border border-(--border-button) px-1.5 py-0.5 rounded text-xs">{p.def}</code>
               </td>
-              <td className="px-4 py-2.5 text-(--text-muted)">{p.desc}</td>
+              <td className="px-4 py-3 text-(--text-muted) text-xs">{p.desc}</td>
             </tr>
           ))}
         </tbody>
@@ -46,7 +46,7 @@ export const PropsTable = ({ PROPS_DATA }) => (
               {p.def}
             </code>
           </div>
-          <div className="text-[13px] text-(--text-muted)">{p.desc}</div>
+          <div className="text-[13px]  text-(--text-muted)">{p.desc}</div>
         </div>
       ))}
     </div>
