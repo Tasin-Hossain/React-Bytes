@@ -9,9 +9,9 @@ const PreviewInput = ({
   const handleChange = (e) => onChange?.(e.target.value);
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full h-9! select-none">
       <div
-        className="relative h-10 rounded-md bg-(--bg-elevated) border border-(--border-secondary)
+        className="relative h-9 rounded-md bg-(--bg-elevated) border border-(--border-secondary)
           overflow-hidden cursor-default opacity-100 data-[disabled=true]:opacity-35
           data-[disabled=true]:pointer-events-none"
         data-disabled={isDisabled}
