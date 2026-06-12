@@ -14,10 +14,10 @@ import CursorTrail from './CursorTrail'
 
 <CursorTrail
   trailText="✦"
-  color="#a889c7"
+  color="#ffffff"
   colors={undefined}
   style="fade"
-  spacing={30}
+  spacing={50}
   minSize={20}
   maxSize={48}
   exitDuration={0.4}
@@ -36,10 +36,10 @@ import CursorTrail from './CursorTrail'
 |------|------|---------|-------------|
 | children | node | — | The content rendered inside the cursor trail container. Always sits above the trail particles. |
 | trailText | string | "✦" | Character(s) used as trail particles. Each character in the string is cycled through. |
-| color | string | "#a889c7" | Single color used for all particles (used if `colors` is not provided). |
+| color | string | "#ffffff" | Single color used for all particles (used if `colors` is not provided). |
 | colors | string[] | undefined | Optional array of colors. Particles cycle through these colors instead of using a single `color`. |
 | style | string | "fade" | Animation style. Options: "fade" \| "float" \| "scatter" \| "shrink" \| "spin" |
-| spacing | number | 30 | Minimum mouse-movement distance (in px) before a new trail particle is spawned. Lower = denser trail, higher = sparser trail. |
+| spacing | number | 50 | Minimum mouse-movement distance (in px) before a new trail particle is spawned. Lower = denser trail, higher = sparser trail. |
 | minSize | number | 20 | Minimum font size (px) for particles. |
 | maxSize | number | 48 | Maximum font size (px) for particles. |
 | exitDuration | number | 0.4 | Duration (in seconds) of the particle exit/fade-out animation. |
@@ -59,10 +59,10 @@ import { motion, AnimatePresence } from 'motion/react';
 const CursorTrail = ({
   children,
   trailText = '✦',
-  color = '#a889c7',
+  color = '#ffffff',
   colors,
   style = 'fade',
-  spacing = 30,
+  spacing = 50,
   minSize = 20,
   maxSize = 48,
   exitDuration = 0.4,
@@ -92,7 +92,7 @@ const CursorTrail = ({
       const rnd = () =>
         randomFloat ? { rx: Math.random() * 10 - 5, ry: Math.random() * 10 - 5, rr: Math.random() * 20 - 10 } : {};
 
-      // randomFloat off হলে সব particle একই (mid) size, on হলে random size
+      // If randomFloat is off, all particles use the same (mid) size; if on, size is randomized
       const getSize = () => (randomFloat ? minSize + Math.random() * (maxSize - minSize) : (minSize + maxSize) / 2);
 
       if (next.length === 0) {
