@@ -2,14 +2,16 @@
 import CurtainTextPrompt from '../../prompts/TextAnimations/CurtainText.txt?raw';
 export { CurtainTextPrompt };
 
-// ─── Author ───────────────────────────────────────────────────────────────────
+// ─── Author 
 export const AUTHOR_NAME = 'Mohammad Tasin';
 
-// ─── Select Options ───────────────────────────────────────────────────────────
+// ─── Select Options
 
 export const DIRECTION_OPTIONS = [
   { value: 'up',   label: 'Up'   },
   { value: 'down', label: 'Down' },
+  { value: 'right', label: 'Right' },
+  { value: 'left', label: 'Left' },
 ];
 
 export const FONT_SIZE_OPTIONS = [
@@ -64,13 +66,13 @@ export const INITIAL_PROPS = {
   align:         'center',
 };
 
-// ─── Props Documentation ─────────────────────────────────────────────────────
+// ─── Props Documentation 
 
 export const PROPS_DATA = [
   // TEXT
   { name: 'text',           type: 'string',        def: '"CURTAIN"',                    desc: 'The text to display.'                                                  },
   // ANIMATION
-  { name: 'direction',      type: '"up" | "down"', def: '"up"',                         desc: 'Direction chars slide OUT on hover. Reveal enters from opposite.'      },
+  { name: 'direction',      type: '"up" | "down" | "left" | "right"', def: '"up"',                         desc: 'Direction chars slide OUT on hover. Reveal enters from opposite.'      },
   { name: 'resetOnLeave',   type: 'boolean',       def: 'true',                         desc: 'If false, the animation stays in its hovered state once triggered.'    },
   { name: 'staggerMs',      type: 'number',        def: '60',                           desc: 'Delay (ms) added per character for the stagger effect.'                },
   { name: 'durationMs',     type: 'number',        def: '400',                          desc: 'Duration (ms) of each character\'s slide transition.'                  },
