@@ -4,7 +4,7 @@ const PreviewSwitch = ({ label = '', value = false, isDisabled = false, onChange
   };
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full h-9! select-none">
       <button
         type="button"
         role="switch"
@@ -20,7 +20,7 @@ const PreviewSwitch = ({ label = '', value = false, isDisabled = false, onChange
           }
         }}
         className={[
-          'relative w-full h-10 flex items-center',
+          'relative w-full h-9 flex items-center',
           'rounded-md border border-(--border-secondary)',
           'bg-(--bg-elevated) cursor-pointer outline-none touch-none',
           'focus-visible:outline-2 focus-visible:outline-(--bg-white)/20',
