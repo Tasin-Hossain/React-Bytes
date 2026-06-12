@@ -30,8 +30,7 @@ export const componentMetadata = {
 
  'TextAnimations/Magnetictext': {
     name: 'Magnetictext',
-    description:
-  'Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.',
+    description:'Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.',
     category: 'TextAnimations',
     dependencies: ['gsap@^3.15.0'],
     docsUrl: 'http://localhost:5173/text-animations/magnetic-text',
@@ -48,6 +47,17 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+
+  'TextAnimations/CursorTrail': {
+    name: 'CursorTrail',
+    description:'Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.',
+    category: 'TextAnimations',
+    dependencies: ['motion@^12.40.0'],
+    docsUrl: 'http://localhost:5173/text-animations/cursor-trail',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
 
 };
 
