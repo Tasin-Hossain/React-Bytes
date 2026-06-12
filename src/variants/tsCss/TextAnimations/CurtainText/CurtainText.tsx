@@ -1,40 +1,47 @@
 const code = `// TS-CSS variant
 import { useState, useCallback, useRef, CSSProperties } from "react";
 
-type Direction = "up" | "down";
+type Direction = "up" | "down" | "left" | "right";
 
 interface CurtainTextProps {
-  text?:         string;
-  direction?:    Direction;
-  baseColor?:    string;
-  activeColor?:  string;
-  fontWeight?:   string | number;
-  fontSize?:     string;
-  letterSpacing?: string;
-  staggerMs?:    number;
-  durationMs?:   number;
-  easing?:       string;
-  resetOnLeave?: boolean;
-  className?:    string;
+  text?:            string;
+  direction?:       Direction;
+  baseColor?:       string;
+  activeColor?:     string;
+  fontWeight?:      string | number;
+  fontSize?:        string;
+  letterSpacing?:   string;
+  staggerMs?:       number;
+  durationMs?:      number;
+  easing?:          string;
+  resetOnLeave?:    boolean;
+  className?:       string;
+  externalTrigger?: boolean;
 }
 
 export default function CurtainText({
-  text          = "CURTAIN",
-  direction     = "up",
-  baseColor     = "#ffffff",
-  activeColor   = "#a889c7",
-  fontWeight    = "900",
-  fontSize      = "clamp(1.5rem, 6vw, 5rem)",
-  letterSpacing = "0.1em",
-  staggerMs     = 60,
-  durationMs    = 400,
-  easing        = "cubic-bezier(.77,0,.18,1)",
-  resetOnLeave  = true,
-  className     = "",
+  text            = "CURTAIN",
+  direction       = "up",
+  baseColor       = "#ffffff",
+  activeColor     = "#a889c7",
+  fontWeight      = "900",
+  fontSize        = "clamp(1.5rem, 6vw, 5rem)",
+  letterSpacing   = "0.1em",
+  staggerMs       = 60,
+  durationMs      = 400,
+  easing          = "cubic-bezier(.77,0,.18,1)",
+  resetOnLeave    = true,
+  className       = "",
+  externalTrigger,
 }: CurtainTextProps) {
   const [triggered, setTriggered] = useState(false);
   const [animKey, setAnimKey]     = useState(0);
   const timerRef                  = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isTriggered = externalTrigger !== undefined ? externalTrigger : triggered;
+
+  const isBarrel  = direction === "right" || direction === "left";
+  const barrelDir = direction === "left" ? 1 : -1;
 
   const exitY  = direction === "up" ? "-100%" : "100%";
   const enterY = direction === "up" ? "100%"  : "-100%";
@@ -55,11 +62,19 @@ export default function CurtainText({
   }, [resetOnLeave]);
 
   const getTransitionStyle = (delay: number): CSSProperties => ({
-    transitionProperty:       "transform",
+    transitionProperty:       "transform, opacity",
     transitionDuration:       \`\${durationMs}ms\`,
     transitionTimingFunction: easing,
     transitionDelay:          \`\${delay}ms\`,
   });
+
+  const BARREL_Z = "60px";
+  const barrelBaseTransform   = isTriggered
+    ? \`perspective(400px) rotateY(\${barrelDir * -90}deg) translateZ(\${BARREL_Z})\`
+    : \`perspective(400px) rotateY(0deg) translateZ(0px)\`;
+  const barrelActiveTransform = isTriggered
+    ? \`perspective(400px) rotateY(0deg) translateZ(0px)\`
+    : \`perspective(400px) rotateY(\${barrelDir * 90}deg) translateZ(\${BARREL_Z})\`;
 
   const style = {
     wrapper: {
@@ -68,33 +83,43 @@ export default function CurtainText({
       userSelect: "none",
       cursor:     "default",
     } as CSSProperties,
-    char: {
+    char: (isSpace: boolean): CSSProperties => ({
       position:   "relative",
       overflow:   "hidden",
       lineHeight: 1,
-    } as CSSProperties,
+      ...(isSpace  && { width: "0.3em" }),
+      ...(isBarrel && { transformStyle: "preserve-3d" as const }),
+    }),
     base: (delay: number): CSSProperties => ({
-      display:       "block",
+      display:            "block",
       fontSize,
       fontWeight,
       letterSpacing,
-      color:         baseColor,
-      willChange:    "transform",
-      transform:     triggered ? \`translateY(\${exitY})\` : "translateY(0%)",
+      color:              baseColor,
+      willChange:         "transform",
+      backfaceVisibility: "hidden" as const,
+      transform:          isBarrel
+        ? barrelBaseTransform
+        : (isTriggered ? \`translateY(\${exitY})\` : "translateY(0%)"),
+      ...(isBarrel && { opacity: isTriggered ? 0 : 1 }),
       ...getTransitionStyle(delay),
     }),
     active: (delay: number): CSSProperties => ({
-      position:       "absolute",
-      inset:          0,
-      display:        "flex",
-      alignItems:     "center",
-      justifyContent: "center",
+      position:           "absolute",
+      inset:              0,
+      display:            "flex",
+      alignItems:         "center",
+      justifyContent:     "center",
       fontSize,
       fontWeight,
       letterSpacing,
-      color:          activeColor,
-      willChange:     "transform",
-      transform:      triggered ? "translateY(0%)" : \`translateY(\${enterY})\`,
+      color:              activeColor,
+      willChange:         "transform",
+      backfaceVisibility: "hidden" as const,
+      transform:          isBarrel
+        ? barrelActiveTransform
+        : (isTriggered ? "translateY(0%)" : \`translateY(\${enterY})\`),
+      ...(isBarrel && { opacity: isTriggered ? 1 : 0 }),
       ...getTransitionStyle(delay),
     }),
   };
@@ -114,13 +139,7 @@ export default function CurtainText({
         const delay   = i * staggerMs;
 
         return (
-          <span
-            key={i}
-            style={{
-              ...style.char,
-              ...(isSpace && { width: "0.3em" }),
-            }}
-          >
+          <span key={i} style={style.char(isSpace)}>
             <span style={style.base(delay)}>
               {isSpace ? "\\u00A0" : char}
             </span>
