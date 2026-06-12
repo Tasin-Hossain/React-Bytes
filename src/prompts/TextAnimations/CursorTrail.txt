@@ -1,0 +1,238 @@
+## Integrate the <CursorTrail /> component from React Bits
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: CursorTrail
+### Variant: JavaScript + Tailwind
+### Dependencies: motion (Framer Motion)
+
+---
+
+### Usage Example
+```jsx
+import CursorTrail from './CursorTrail'
+
+<CursorTrail
+  trailText="✦"
+  color="#a889c7"
+  colors={undefined}
+  style="fade"
+  spacing={30}
+  minSize={20}
+  maxSize={48}
+  exitDuration={0.4}
+  removalInterval={30}
+  maxPoints={12}
+  followMouseDirection={false}
+  randomFloat={true}
+  className=""
+>
+  <YourContent />
+</CursorTrail>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | node | — | The content rendered inside the cursor trail container. Always sits above the trail particles. |
+| trailText | string | "✦" | Character(s) used as trail particles. Each character in the string is cycled through. |
+| color | string | "#a889c7" | Single color used for all particles (used if `colors` is not provided). |
+| colors | string[] | undefined | Optional array of colors. Particles cycle through these colors instead of using a single `color`. |
+| style | string | "fade" | Animation style. Options: "fade" \| "float" \| "scatter" \| "shrink" \| "spin" |
+| spacing | number | 30 | Minimum mouse-movement distance (in px) before a new trail particle is spawned. Lower = denser trail, higher = sparser trail. |
+| minSize | number | 20 | Minimum font size (px) for particles. |
+| maxSize | number | 48 | Maximum font size (px) for particles. |
+| exitDuration | number | 0.4 | Duration (in seconds) of the particle exit/fade-out animation. |
+| removalInterval | number | 30 | Interval (in ms) at which stale particles are checked and removed when the mouse stops moving. |
+| maxPoints | number | 12 | Maximum number of trail particles rendered at once. |
+| followMouseDirection | boolean | false | If true, particles rotate to align with the direction of mouse movement. |
+| randomFloat | boolean | true | If true, particles get randomized size, drift (x/y), and rotation wobble animations. If false, particles use a fixed mid-size and static rotation based on direction. |
+| className | string | "" | Extra Tailwind classes on the root container `<div>`. |
+
+---
+
+### Full Component Source
+```jsx
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+
+const CursorTrail = ({
+  children,
+  trailText = '✦',
+  color = '#a889c7',
+  colors,
+  style = 'fade',
+  spacing = 30,
+  minSize = 20,
+  maxSize = 48,
+  exitDuration = 0.4,
+  removalInterval = 30,
+  maxPoints = 12,
+  followMouseDirection = false,
+  randomFloat = true,
+  className = ''
+}) => {
+  const [trail, setTrail] = useState([]);
+  const containerRef = useRef(null);
+  // eslint-disable-next-line react-hooks/purity
+  const lastMoveTime = useRef(Date.now());
+  const idCounter = useRef(0);
+  const trailChars = [...trailText];
+  const palette = colors ?? [color];
+
+  const handleMouseMove = e => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    setTrail(prev => {
+      const next = [...prev];
+
+      const rnd = () =>
+        randomFloat ? { rx: Math.random() * 10 - 5, ry: Math.random() * 10 - 5, rr: Math.random() * 20 - 10 } : {};
+
+      // randomFloat off হলে সব particle একই (mid) size, on হলে random size
+      const getSize = () => (randomFloat ? minSize + Math.random() * (maxSize - minSize) : (minSize + maxSize) / 2);
+
+      if (next.length === 0) {
+        const idx = idCounter.current++;
+        next.push({
+          id: idx,
+          x: mouseX,
+          y: mouseY,
+          angle: 0,
+          ch: trailChars[idx % trailChars.length],
+          col: palette[idx % palette.length],
+          sz: getSize(),
+          ...rnd()
+        });
+      } else {
+        const last = next[next.length - 1];
+        const dx = mouseX - last.x;
+        const dy = mouseY - last.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist >= spacing) {
+          const angle = followMouseDirection ? (Math.atan2(dy, dx) * 180) / Math.PI : 0;
+          const steps = Math.floor(dist / spacing);
+          for (let i = 1; i <= steps; i++) {
+            const t = (spacing * i) / dist;
+            const idx = idCounter.current++;
+            next.push({
+              id: idx,
+              x: last.x + dx * t,
+              y: last.y + dy * t,
+              angle,
+              ch: trailChars[idx % trailChars.length],
+              col: palette[idx % palette.length],
+              sz: getSize(),
+              ...rnd()
+            });
+          }
+        }
+      }
+
+      return next.length > maxPoints ? next.slice(next.length - maxPoints) : next;
+    });
+
+    lastMoveTime.current = Date.now();
+  };
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.addEventListener('mousemove', handleMouseMove);
+    return () => el.removeEventListener('mousemove', handleMouseMove);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      if (Date.now() - lastMoveTime.current > 100) setTrail(p => (p.length > 0 ? p.slice(1) : p));
+    }, removalInterval);
+    return () => clearInterval(iv);
+  }, [removalInterval]);
+
+  const getAnimate = item => {
+    const base = { opacity: 1, scale: 1 };
+    if (style === 'float') return { ...base, y: -40 };
+    // eslint-disable-next-line react-hooks/purity
+    if (style === 'scatter') return { ...base, x: (Math.random() - 0.5) * 80, y: (Math.random() - 0.5) * 80 };
+    if (randomFloat)
+      return {
+        ...base,
+        x: [0, item.rx ?? 0, 0],
+        y: [0, item.ry ?? 0, 0],
+        rotate: [item.angle, item.angle + (item.rr ?? 0), item.angle]
+      };
+    return { ...base, rotate: item.angle };
+  };
+
+  const getExit = item => {
+    if (style === 'shrink') return { opacity: 0, scale: 0 };
+    if (style === 'spin') return { opacity: 0, rotate: item.angle + 180 };
+    return { opacity: 0, scale: 0 };
+  };
+
+  const getTransition = () => {
+    const base = {
+      opacity: { duration: exitDuration, ease: 'easeOut' },
+      scale: { duration: exitDuration * 0.5 }
+    };
+    if (randomFloat && style === 'fade')
+      return {
+        ...base,
+        x: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
+        y: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
+        rotate: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' }
+      };
+    return base;
+  };
+
+  return (
+    <div ref={containerRef} className={`relative isolate ${className}`}>
+      {/* Actual content - sits ABOVE the trail */}
+      <div className="relative z-10">{children}</div>
+
+      {/* Trail particles - sit BELOW the content */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <AnimatePresence>
+          {trail.map(item => (
+            <motion.span
+              key={item.id}
+              initial={{ opacity: 0, scale: 0.5, rotate: item.angle }}
+              animate={getAnimate(item)}
+              exit={getExit(item)}
+              transition={getTransition()}
+              className="absolute -translate-x-1/2 -translate-y-1/2 font-black leading-none select-none whitespace-nowrap"
+              style={{
+                left: item.x,
+                top: item.y,
+                fontSize: item.sz,
+                color: item.col
+              }}
+            >
+              {item.ch}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+export default CursorTrail;
+```
+
+---
+
+### Integration Instructions
+1. Install the dependency: `npm install motion`
+2. Copy the component source above into ./CursorTrail.jsx in your project.
+3. Import and wrap the section of your UI where you want the cursor trail effect using the usage example above as a starting point.
+4. The `children` content always renders above the trail particles (z-10), while particles render behind it (z-0) and are `pointer-events: none`, so they never block interaction.
+5. Use `colors` (array) instead of `color` if you want particles to cycle through multiple colors.
+6. Adjust `spacing` to control the gap between particles — lower values create a denser trail, higher values create a sparser trail.
+7. Set `followMouseDirection={true}` together with `randomFloat={false}` if you want particles to visually rotate in the direction of mouse movement.
+8. Choose `style` ("fade" | "float" | "scatter" | "shrink" | "spin") to change how particles animate in and exit.
