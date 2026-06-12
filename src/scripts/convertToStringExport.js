@@ -1,32 +1,20 @@
-/**
- * Run this ONCE in your project root:
- *   node convertToStringExport.js
- *
- * What it does:
- *   Reads each content variant file, wraps the entire source
- *   in a template-literal string, and re-exports it as default.
- *
- * Before:
- *   import { useRef } from 'react';
- *   ...
- *   export default SplitText;
- *
- * After:
- *   const code = `import { useRef } from 'react';
- *   ...
- *   export default SplitText;`;
- *   export default code;
- */
-
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 
-const FILES = [
-  'src/variants/jsCss/TextAnimations/MagneticText/MagneticText.jsx',
-  'src/variants/jsTailwind/TextAnimations/MagneticText/MagneticText.jsx',
-  'src/variants/tsCss/TextAnimations/MagneticText/MagneticText.tsx',
-  'src/variants/tsTailwind/TextAnimations/MagneticText/MagneticText.tsx',
-];
+function findFiles(dir, exts = ['.jsx', '.tsx']) {
+  let results = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) {
+      results = results.concat(findFiles(fullPath, exts));
+    } else if (exts.some((ext) => entry.name.endsWith(ext))) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
+const FILES = findFiles('src/variants');
 
 FILES.forEach((relPath) => {
   // eslint-disable-next-line no-undef
@@ -40,17 +28,15 @@ FILES.forEach((relPath) => {
     return;
   }
 
-  // Already converted — skip
   if (source.trimStart().startsWith('const code = `')) {
     console.log(`✓  Already converted: ${relPath}`);
     return;
   }
 
-  // Escape backticks and ${} inside the source so they don't break the template literal
   const escaped = source
-    .replace(/\\/g, '\\\\')   // escape existing backslashes first
-    .replace(/`/g, '\\`')     // escape backticks
-    .replace(/\$\{/g, '\\${'); // escape template expressions
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$\{/g, '\\${');
 
   const output = `const code = \`${escaped}\`;\nexport default code;\n`;
 
