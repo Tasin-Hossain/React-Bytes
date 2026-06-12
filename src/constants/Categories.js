@@ -15,7 +15,8 @@ export const CATEGORIES = [
     name: 'Text Animations',
     subcategories: [
       'Magnetic Text',
-      'Curtain text'
+      'Curtain text',
+      'Cursor Trail'
     ]
   },
   {
