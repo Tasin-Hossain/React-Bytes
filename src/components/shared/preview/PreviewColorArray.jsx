@@ -154,14 +154,14 @@ const PreviewColorArray = ({ title = 'hoverColors', colors, onChange }) => {
   const hueColor   = hsvToHex(hsv.h, 1, 1);
 
   return (
-    <div ref={wrapRef} className="relative">
+    <div ref={wrapRef} className="relative h-9! w-full">
 
       {/* Trigger row — same pattern as PreviewColorPickerCustom */}
       <button
         type="button"
         onClick={() => setPickerOpen(o => !o)}
-        className="w-full flex items-center justify-between gap-2 bg-(--bg-elevated)
-          border border-(--border-secondary) rounded-md px-3 py-2.5 cursor-pointer
+        className="w-full h-9! flex items-center justify-between gap-2 bg-(--bg-elevated)
+          border border-(--border-secondary) rounded-md px-3 cursor-pointer
           transition-colors duration-150"
       >
         <span className="text-[12px] text-(--text-muted)">{title}</span>
