@@ -372,6 +372,4 @@ const MouseRepelDots = memo(({
   );
 });
 
-MouseRepelDots.displayName = 'MouseRepelDots';
-
 export default MouseRepelDots;
