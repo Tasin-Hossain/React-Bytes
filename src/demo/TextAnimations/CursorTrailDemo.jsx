@@ -56,6 +56,7 @@ const CursorTrailInner = () => {
       title="Cursor Trail"
       favKey="text-animations/cursor-trail"
       prompt={CursorTrailPrompt}
+      childrenClassname="w-full"
       PreviewComponent={
         <CursorTrail key={animKey} {...props} className="w-full h-full min-h-100">
           <div className="w-full h-full min-h-100 flex items-center justify-center">
