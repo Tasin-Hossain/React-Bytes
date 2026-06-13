@@ -1,15 +1,15 @@
 export const MOUSE_REPEL_DEFAULTS = {
   dotRadius : 0.6,
-  dotSpacing : 22,
+  dotSpacing : 25,
 
   // physics
-  repelRadius : 80,
-  force : 5.5,
+  repelRadius : 20,
+  force : 7.0,
   springK : 0.07,
   damping : 0.72,
 
   // sizing
-  maxDotSize : 6,
+  maxDotSize : 4.0,
 
   // colors
   dotColor : '#7a5af8',
@@ -20,16 +20,16 @@ export const MOUSE_REPEL_DEFAULTS = {
   gradientTo : null,
 
   // extra effects
-  bulgeOnly : false,
+  bulgeOnly : true,
   bulgeStrength : 30,
-  waveAmplitude : 0,
+  waveAmplitude : 10,
 
   // sparkle
   // 'off' | 'random' | 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top'  | 'line-left' | 'line-right' | 'wave-horizontal' | 'wave-vertical'| 'diagonal-tl-br' | 'diagonal-br-tl' | 'pulse' | 'ripple'
-  sparkleMode : 'off',
+  sparkleMode : 'ripple',
   sparkleColor : '#d35af8',
   sparkleSize :1.6,
-  sparkleSpeed : 0.4,
+  sparkleSpeed : 0.2,
   sparkleDensity : 0.015,
 };
 
@@ -48,7 +48,7 @@ export const MOUSE_REPEL_PARAM_META = [
     key: 'dotSpacing',
     label: 'dotSpacing',
     type: 'number',
-    min: 5,
+    min: 20,
     max: 60,
     step: 1,
     scrollStep: 1,
