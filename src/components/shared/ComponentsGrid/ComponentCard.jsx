@@ -55,7 +55,7 @@ const ComponentCard = ({ item, onRemove }) => {
     >
       <div
         className="
-          group relative rounded-md overflow-hidden
+          group relative rounded-md overflow-hidden h-50 flex flex-col justify-center
           border border-(--border-secondary) bg-(--bg-card) cursor-pointer
           transition-all duration-200
           hover:scale-[1.02] active:scale-[0.99]
