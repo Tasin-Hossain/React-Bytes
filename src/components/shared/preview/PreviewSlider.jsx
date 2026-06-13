@@ -116,7 +116,7 @@ const PreviewSlider = ({
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         onKeyDown={handleKeyDown}
-        className={`relative h-10 rounded-lg border border-(--border-secondary) bg-(--bg-elevated)
+        className={`relative h-9 rounded-lg border border-(--border-secondary) bg-(--bg-elevated)
           overflow-hidden touch-none outline-none cursor-pointer focus-visible:outline-2 focus-visible:outline-(--bg-white)/20
           ${isDisabled ? 'opacity-35 pointer-events-none' : ''}`}
       >
