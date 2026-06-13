@@ -34,7 +34,7 @@ export const CATEGORIES = [
   {
     name: 'Backgrounds',
     subcategories: [
-      '',
+      'MouseRepel Dots',
     ]
   }
 ];
