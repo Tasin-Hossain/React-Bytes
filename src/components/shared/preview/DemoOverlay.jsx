@@ -11,7 +11,7 @@ const DemoOverlay = () => {
   return (
     <div className="absolute inset-0 flex flex-col pointer-events-none z-10 overflow-hidden">
       {/* Rounded floating navbar */}
-      <div className="m-4 sm:m-6 px-4 sm:px-6 py-3 rounded-md backdrop-blur-md bg-(--bg-white)/5 border border-(--border-secondary) flex items-center justify-between">
+      <div className="m-4 sm:m-6 px-4 sm:px-6 py-2 rounded-md backdrop-blur-md bg-(--bg-white)/5 border border-(--border-secondary) flex items-center justify-between">
         <div className="flex items-center gap-2 text-(--text-primary) font-semibold">
           <div className="w-5 h-5 flex items-center justify-center">
             <img src={isDark ? Logo : DarkLogo} alt="Logo" className="w-full h-full" />
@@ -39,7 +39,7 @@ const DemoOverlay = () => {
           </div>
         </div>
 
-        <h1 className="text-2xl sm:text-4xl md:text-3xl lg:text-5xl font-extrabold text-(--text-primary) max-w-3xl leading-tight">
+        <h1 className="text-2xl sm:text-4xl md:text-3xl lg:text-4xl font-extrabold text-(--text-primary) max-w-3xl leading-tight">
           Build Faster With React Bytes
         </h1>
 
