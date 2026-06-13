@@ -240,7 +240,7 @@ export { TS_CSS_CODE };
 export { TS_TAILWIND_CODE };
 
 export const CODE_VARIANTS = {
-  js: JS_CSS_CODE,
+  'js-css': JS_CSS_CODE,
   'js-tailwind': JS_TAILWIND_CODE,
   'ts-css': TS_CSS_CODE,
   'ts-tailwind': TS_TAILWIND_CODE
