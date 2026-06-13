@@ -1,6 +1,7 @@
 import magneticText from '../assets/videos/TextAnimations/magnetic-text.mp4';
 import curtainText from '../assets/videos/TextAnimations/curtain-text.mp4';
 import cursorTrail from '../assets/videos/TextAnimations/cursor-trail.mp4';
+import mouseRepelDots from '../assets/videos/Backgrounds/mouse-repel-dots.mp4';
 
 export const COMPONENT_VIDEOS = {
   'text-animations/magnetic-text': magneticText,
@@ -8,7 +9,7 @@ export const COMPONENT_VIDEOS = {
   'text-animations/cursor-trail': cursorTrail,
   'animations/animated-content':   null,
   'components/animated-list':      null,
-  'backgrounds/mouserepel-dots':   null,
+  'backgrounds/mouserepel-dots':   mouseRepelDots,
 };
 
 // 'text-animations/magnetic-text': '/videos/magnetic-text.mp4',
