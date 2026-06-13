@@ -9,6 +9,9 @@ export default function DemoBuilder({
   favKey,
   prompt,
   PreviewComponent,
+  showReplay,
+  demoContent,
+  onToggleDemoContent,
   customize,
   dependencies,
   propsTable,
@@ -22,6 +25,7 @@ export default function DemoBuilder({
   codeVariants,
   cssCode,
   CodeBlock,
+  childrenClassname,
 }) {
   return (
     <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto text-(--text-primary) relative">
@@ -37,7 +41,7 @@ export default function DemoBuilder({
       <TabsLayout
         preview={
           <>
-            <PreviewTab>
+            <PreviewTab childrenClassname={childrenClassname}  showReplay={showReplay} demoContent={demoContent} onToggleDemoContent={onToggleDemoContent}>
               {PreviewComponent}
             </PreviewTab>
 
