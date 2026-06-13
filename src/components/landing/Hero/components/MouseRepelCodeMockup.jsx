@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { MOUSE_REPEL_PARAM_META } from '../constants/mouseRepelConfig';
 
-// ── Audio 
 const audioCtx = typeof window !== 'undefined'
   ? new (window.AudioContext || window.webkitAudioContext)()
   : null;
@@ -19,7 +18,7 @@ function playTick(up = true) {
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
     osc.start(audioCtx.currentTime);
     osc.stop(audioCtx.currentTime + 0.08);
-  } catch {}
+  } catch { /* empty */ }
 }
 
 function fmt(value, meta) {
@@ -32,7 +31,6 @@ function clamp(val, min, max) {
   return Math.min(max, Math.max(min, val));
 }
 
-// ── Mini Live Preview (mobile only) 
 function MiniPreview({ params }) {
   const canvasRef = useRef(null);
   const propsRef = useRef(params);
@@ -64,7 +62,12 @@ function MiniPreview({ params }) {
     let animId;
 
     function draw() {
-      const { repelRadius, force, springK, damping, dotColor, dotColorMid, dotColorHot, minDotSize, maxDotSize } = propsRef.current;
+      const {
+        repelRadius, force, springK, damping,
+        dotColor, dotColorMid, dotColorHot,
+        dotRadius, maxDotSize
+      } = propsRef.current;
+
       ctx.clearRect(0, 0, W, H);
       dots.forEach(d => {
         const dx = d.x - mouse.x, dy = d.y - mouse.y;
@@ -78,7 +81,7 @@ function MiniPreview({ params }) {
         d.x += d.vx; d.y += d.vy;
         const displaced = Math.sqrt((d.x - d.ox) ** 2 + (d.y - d.oy) ** 2);
         const energy = Math.min(displaced / repelRadius, 1);
-        const r = minDotSize + energy * (maxDotSize - minDotSize);
+        const r = dotRadius + energy * (maxDotSize - dotRadius);
         const alpha = 0.2 + energy * 0.75;
         const color = energy > 0.6 ? dotColorHot : energy > 0.25 ? dotColorMid : dotColor;
         ctx.beginPath(); ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
@@ -117,7 +120,7 @@ function MiniPreview({ params }) {
       <canvas
         ref={canvasRef}
         className="w-full rounded-lg border border-(--border-secondary)"
-        style={{ height: 120, background: 'var(--bg)', cursor: 'crosshair', touchAction: 'none' }}
+        style={{ height: 140, background: 'var(--bg)', cursor: 'crosshair', touchAction: 'none' }}
       />
       <p className="text-[10px] text-(--text-muted) font-mono mt-1.5">
         ☝ touch to preview repel effect
@@ -126,9 +129,10 @@ function MiniPreview({ params }) {
   );
 }
 
-// ── ColorSwatch 
 function ColorSwatch({ value, onChange }) {
   const inputRef = useRef(null);
+  const safeValue = value && value !== 'transparent' ? value : '#000000';
+
   return (
     <span
       className="inline-flex items-center gap-1.5 cursor-pointer select-none"
@@ -136,11 +140,11 @@ function ColorSwatch({ value, onChange }) {
     >
       <span
         className="inline-block w-3 h-3 rounded-[3px] border border-(--border-secondary) shrink-0"
-        style={{ background: value }}
+        style={{ background: safeValue }}
       />
-      <span className="text-[#e879f9]">"{value}"</span>
+      <span className="text-[#e879f9] text-xs sm:text-sm">"{value ?? 'null'}"</span>
       <input
-        ref={inputRef} type="color" value={value}
+        ref={inputRef} type="color" value={safeValue}
         onChange={e => onChange(e.target.value)}
         className="absolute opacity-0 w-0 h-0 pointer-events-none"
         tabIndex={-1}
@@ -149,7 +153,6 @@ function ColorSwatch({ value, onChange }) {
   );
 }
 
-// ── ScrollableValue 
 function ScrollableValue({ meta, value, onChange }) {
   const spanRef = useRef(null);
   const [active, setActive] = useState(false);
@@ -195,10 +198,9 @@ function ScrollableValue({ meta, value, onChange }) {
 
   return (
     <span className="inline-flex items-center gap-0.5">
-      {/* Desktop ±  */}
       <button
         onPointerDown={e => { e.preventDefault(); step(-1); }}
-        className="hidden bg-(--bg-button) cursor-pointer sm:inline-flex w-4 h-4 items-center justify-center rounded text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-white)/10 text-xs leading-none select-none transition-colors"
+        className="inline-flex w-5 h-5 sm:w-4 sm:h-4 items-center justify-center rounded bg-(--bg-button) cursor-pointer text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-white)/10 text-xs leading-none select-none transition-colors"
         tabIndex={-1}
       >−</button>
 
@@ -210,45 +212,64 @@ function ScrollableValue({ meta, value, onChange }) {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         className={`
-          inline-block  cursor-ns-resize select-none rounded px-0.75 transition-colors duration-150 touch-none
+          inline-block cursor-ns-resize select-none rounded px-1 transition-colors duration-150 touch-none
           ${active ? 'bg-(--bg-white)/10 outline outline-[#7a5af8]/60' : ''}
         `}
         title="Scroll or drag to change"
       >
-        <span className="text-[#7dd3fc]">{fmt(value, meta)}</span>
+        <span className="text-[#7dd3fc] text-xs sm:text-sm">{fmt(value, meta)}</span>
       </span>
 
       <button
         onPointerDown={e => { e.preventDefault(); step(1); }}
-        className="hidden bg-(--bg-button) cursor-pointer sm:inline-flex w-4 h-4 items-center justify-center rounded text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-white)/10 text-xs leading-none select-none transition-colors"
-        tabIndex={-1}
-      >+</button>
-
-      {/* Mobile ± */}
-      <button
-        onPointerDown={e => { e.preventDefault(); step(-1); }}
-        className="sm:hidden inline-flex w-6 h-6 items-center justify-center rounded-md bg-(--bg-white)/6 text-(--text-muted) active:bg-(--bg-white)/20 text-sm select-none"
-        tabIndex={-1}
-      >−</button>
-      <button
-        onPointerDown={e => { e.preventDefault(); step(1); }}
-        className="sm:hidden inline-flex w-6 h-6 items-center justify-center rounded-md bg-(--bg-white)/6 text-(--text-muted) active:bg-(--bg-white)/20 text-sm select-none"
+        className="inline-flex w-5 h-5 sm:w-4 sm:h-4 items-center justify-center rounded bg-(--bg-button) cursor-pointer text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-white)/10 text-xs leading-none select-none transition-colors"
         tabIndex={-1}
       >+</button>
     </span>
   );
 }
 
-// ── PropLine 
 function PropLine({ meta, value, onChange }) {
   return (
-    <div className="flex items-center gap-1 leading-7">
-      <span className="pl-8 text-[#93c5fd]">{meta.label}</span>
-      <span className="text-(--text-muted)">=</span>
+    <div className="flex items-center gap-1 leading-7 flex-wrap">
+      <span className="pl-4 sm:pl-8 text-[#93c5fd] text-xs sm:text-sm">{meta.label}</span>
+      <span className="text-(--text-muted) text-xs sm:text-sm">=</span>
+
       {meta.type === 'color' ? (
         <ColorSwatch value={value} onChange={onChange} />
+
+      ) : meta.type === 'boolean' ? (
+        <span className="text-(--text-muted) inline-flex items-center gap-0.5 text-xs sm:text-sm">
+          {'{ '}
+          <span
+            onClick={() => onChange(!value)}
+            className="text-[#7dd3fc] cursor-pointer px-1 rounded hover:bg-(--bg-white)/10 transition-colors select-none"
+            title="Click to toggle"
+          >
+            {String(value)}
+          </span>
+          {' }'}
+        </span>
+
+      ) : meta.type === 'select' ? (
+        <span className="text-(--text-muted) inline-flex items-center gap-0.5 text-xs sm:text-sm">
+          {'{ '}
+          <select
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            className="text-[#e879f9] bg-(--bg) border-none outline-none cursor-pointer font-mono text-xs sm:text-sm max-w-[140px] sm:max-w-none"
+          >
+            {meta.options.map(opt => (
+              <option key={opt} value={opt} style={{ background: 'var(--bg)' }}>
+                "{opt}"
+              </option>
+            ))}
+          </select>
+          {' }'}
+        </span>
+
       ) : (
-        <span className="text-(--text-muted) inline-flex items-center gap-0.5">
+        <span className="text-(--text-muted) inline-flex items-center gap-0.5 text-xs sm:text-sm">
           {'{ '}
           <ScrollableValue meta={meta} value={value} onChange={onChange} />
           {' }'}
@@ -258,7 +279,6 @@ function PropLine({ meta, value, onChange }) {
   );
 }
 
-// ── Main
 export default function MouseRepelCodeMockup({ params, onParamChange, embedded = false }) {
   return (
     <div
@@ -270,20 +290,19 @@ export default function MouseRepelCodeMockup({ params, onParamChange, embedded =
       style={embedded ? {} : { animation: 'fadeUp 0.7s 0.4s ease both', opacity: 0 }}
     >
       {/* Window chrome */}
-      <div className="flex items-center gap-2 px-4 py-4 border-b border-(--border-secondary) bg-(--bg-white)/2">
-        <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-        <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-        <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-        <span className="ml-3 text-xs text-(--text-muted) ">MouseRepelDots.jsx</span>
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-(--border-secondary) bg-(--bg-white)/2">
+        <span className="w-3 h-3 rounded-full bg-[#ff5f57] shrink-0" />
+        <span className="w-3 h-3 rounded-full bg-[#febc2e] shrink-0" />
+        <span className="w-3 h-3 rounded-full bg-[#28c840] shrink-0" />
+        <span className="ml-3 text-xs text-(--text-muted) truncate">MouseRepelDots.jsx</span>
       </div>
 
       {/* Mini preview — mobile only */}
       {embedded && <MiniPreview params={params} />}
 
       {/* Code body */}
-      <div className="px-4 py-4 font-mono text-sm text-(--text-primary) leading-7 overflow-x-auto">
-        {/* import line */}
-        <div>
+      <div className="px-3 sm:px-4 py-4 font-mono text-(--text-primary) leading-7 overflow-x-auto">
+        <div className="text-xs sm:text-sm">
           <span className="text-[#c084fc]">import</span>
           <span className="text-(--text-muted)"> {'{ '}</span>
           <span className="text-[#86efac]">MouseRepelDots</span>
@@ -293,7 +312,7 @@ export default function MouseRepelCodeMockup({ params, onParamChange, embedded =
           <span className="text-(--text-muted)">;</span>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-3 text-xs sm:text-sm">
           <div>
             <span className="text-[#c084fc]">function </span>
             <span className="text-[#86efac]">App</span>
@@ -303,7 +322,7 @@ export default function MouseRepelCodeMockup({ params, onParamChange, embedded =
             <span className="text-[#c084fc]">return </span>
             <span className="text-(--text-muted)">(</span>
           </div>
-          <div className="pl-8">
+          <div className="pl-4 sm:pl-8">
             <span className="text-[#f87171]">{'<'}</span>
             <span className="text-[#86efac]">MouseRepelDots</span>
           </div>
@@ -317,7 +336,7 @@ export default function MouseRepelCodeMockup({ params, onParamChange, embedded =
             />
           ))}
 
-          <div className="pl-8">
+          <div className="pl-4 sm:pl-8">
             <span className="text-[#f87171]">/{'>'}</span>
           </div>
           <div className="pl-4">
