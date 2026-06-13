@@ -1,25 +1,57 @@
 export const MOUSE_REPEL_DEFAULTS = {
-  dotCount: 500,
-  repelRadius: 200,
-  force: 5.5,
-  springK: 0.05,
-  damping: 0.80,
-  minDotSize: 0.6,
-  maxDotSize: 9,
-  dotColor: '#ffffff',
-  dotColorMid: '#d35af8',
-  dotColorHot: '#ffffff',
+  dotRadius : 0.6,
+  dotSpacing : 22,
+
+  // physics
+  repelRadius : 80,
+  force : 5.5,
+  springK : 0.07,
+  damping : 0.72,
+
+  // sizing
+  maxDotSize : 6,
+
+  // colors
+  dotColor : '#7a5af8',
+  dotColorMid : '#d35af8',
+  dotColorHot : '#ffffff',
+  backgroundColor : 'transparent',
+  gradientFrom : null,
+  gradientTo : null,
+
+  // extra effects
+  bulgeOnly : false,
+  bulgeStrength : 30,
+  waveAmplitude : 0,
+
+  // sparkle
+  // 'off' | 'random' | 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top'  | 'line-left' | 'line-right' | 'wave-horizontal' | 'wave-vertical'| 'diagonal-tl-br' | 'diagonal-br-tl' | 'pulse' | 'ripple'
+  sparkleMode : 'off',
+  sparkleColor : '#d35af8',
+  sparkleSize :1.6,
+  sparkleSpeed : 0.4,
+  sparkleDensity : 0.015,
 };
 
 export const MOUSE_REPEL_PARAM_META = [
   {
-    key: 'dotCount',
-    label: 'dotCount',
+    key: 'dotRadius',
+    label: 'dotRadius',
     type: 'number',
-    min: 50,
-    max: 500,
-    step: 10,
-    scrollStep: 10,
+    min: 0.5,
+    max: 10,
+    step: 0.1,
+    scrollStep: 0.1,
+    decimals: 1,
+  },
+  {
+    key: 'dotSpacing',
+    label: 'dotSpacing',
+    type: 'number',
+    min: 5,
+    max: 60,
+    step: 1,
+    scrollStep: 1,
   },
   {
     key: 'repelRadius',
@@ -61,16 +93,6 @@ export const MOUSE_REPEL_PARAM_META = [
     decimals: 2,
   },
   {
-    key: 'minDotSize',
-    label: 'minDotSize',
-    type: 'number',
-    min: 0.5,
-    max: 10,
-    step: 0.1,
-    scrollStep: 0.1,
-    decimals: 1,
-  },
-  {
     key: 'maxDotSize',
     label: 'maxDotSize',
     type: 'number',
@@ -94,5 +116,89 @@ export const MOUSE_REPEL_PARAM_META = [
     key: 'dotColorHot',
     label: 'dotColorHot',
     type: 'color',
+  },
+  {
+    key: 'backgroundColor',
+    label: 'backgroundColor',
+    type: 'color',
+  },
+  {
+    key: 'gradientFrom',
+    label: 'gradientFrom',
+    type: 'color',
+  },
+  {
+    key: 'gradientTo',
+    label: 'gradientTo',
+    type: 'color',
+  },
+  {
+    key: 'bulgeOnly',
+    label: 'bulgeOnly',
+    type: 'boolean',
+  },
+  {
+    key: 'bulgeStrength',
+    label: 'bulgeStrength',
+    type: 'number',
+    min: 0,
+    max: 100,
+    step: 1,
+    scrollStep: 1,
+  },
+  {
+    key: 'waveAmplitude',
+    label: 'waveAmplitude',
+    type: 'number',
+    min: 0,
+    max: 50,
+    step: 1,
+    scrollStep: 1,
+  },
+  {
+    key: 'sparkleMode',
+    label: 'sparkleMode',
+    type: 'select',
+    options: [
+      'off', 'random', 'left-to-right', 'right-to-left',
+      'top-to-bottom', 'bottom-to-top', 'line-left', 'line-right',
+      'wave-horizontal', 'wave-vertical', 'diagonal-tl-br',
+      'diagonal-br-tl', 'pulse', 'ripple'
+    ],
+  },
+  {
+    key: 'sparkleColor',
+    label: 'sparkleColor',
+    type: 'color',
+  },
+  {
+    key: 'sparkleSize',
+    label: 'sparkleSize',
+    type: 'number',
+    min: 0.5,
+    max: 5,
+    step: 0.1,
+    scrollStep: 0.1,
+    decimals: 1,
+  },
+  {
+    key: 'sparkleSpeed',
+    label: 'sparkleSpeed',
+    type: 'number',
+    min: 0.1,
+    max: 2,
+    step: 0.1,
+    scrollStep: 0.1,
+    decimals: 1,
+  },
+  {
+    key: 'sparkleDensity',
+    label: 'sparkleDensity',
+    type: 'number',
+    min: 0.001,
+    max: 0.1,
+    step: 0.001,
+    scrollStep: 0.001,
+    decimals: 3,
   },
 ];
