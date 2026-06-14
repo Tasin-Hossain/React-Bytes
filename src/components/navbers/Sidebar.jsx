@@ -198,9 +198,9 @@ const AccordionCategory = memo(({ category, onClose, location, pendingActivePath
     <div>
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between px-3 py-2.5 text-left"
+        className="w-full flex items-center justify-between pl-6 pr-3 py-2 text-left"
       >
-        <span className={`text-[13px] font-semibold ${hasActive ? 'text-(--brand)' : 'text-(--text-primary)'}`}>
+        <span className={`text-[13px] font-medium ${hasActive ? 'text-(--brand)' : 'text-(--brand)'}`}>
           {category.name}
         </span>
         <RiArrowDownSLine
@@ -213,19 +213,18 @@ const AccordionCategory = memo(({ category, onClose, location, pendingActivePath
         className="overflow-hidden transition-all duration-300"
         style={{ maxHeight: open ? `${items.length * 44}px` : '0px' }}
       >
-        <div className="flex flex-col gap-0.5 pb-1 px-2">
+        <div className="flex flex-col gap-0.5 pb-5 pl-3 bg-">
           {items.map(({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
             <button
               key={path}
               onClick={() => { onNavigation?.(path, sub); onClose?.(); }}
-              className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 rounded-md text-[13px] transition-all duration-150 text-left
+              className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
                 ${isActive
-                  ? 'bg-(--bg-hover) text-(--brand) font-medium'
-                  : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-hover)'
+                  ? 'text-(--brand) font-medium'
+                  : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'
                 }`}
             >
               <span className="truncate flex-1">{sub}</span>
-              {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
               {isNew && (
                 <span className="shrink-0 text-[9px] font-bold px-1.5 py-px rounded-md bg-linear-to-r from-purple-500 to-violet-500 text-white">
                   New
@@ -236,6 +235,7 @@ const AccordionCategory = memo(({ category, onClose, location, pendingActivePath
                   Updated
                 </span>
               )}
+              {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
             </button>
           ))}
         </div>
@@ -359,14 +359,14 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
       {/* Desktop sidebar — same accordion design as mobile */}
       <nav
         ref={containerRef}
-        className="hidden md:block fixed top-14.25 left-0 h-[calc(100vh-57px)] w-62 overflow-y-auto bg-(--bg) border-r border-(--border-secondary) sidebar-scroll"
+        className="hidden md:block fixed top-14.25 left-0 h-[calc(100vh-57px)] w-62 overflow-y-auto bg-(--bg) sidebar-scroll"
         style={{
           maskImage: atBottom ? 'none' : 'linear-gradient(to bottom, black 85%, transparent 100%)',
           WebkitMaskImage: atBottom ? 'none' : 'linear-gradient(to bottom, black 85%, transparent 100%)'
         }}
       >
         <div className="py-4">
-          <FavoritesSection savedSet={savedSet} onClose={null} location={location} />
+
           <div className="mt-1">
             {CATEGORIES.map((cat, i) => (
               <Fragment key={cat.name}>
