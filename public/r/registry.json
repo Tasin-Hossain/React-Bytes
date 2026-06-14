@@ -4,8 +4,8 @@
 	"homepage": "http://localhost:5173",
 	"items": [
 		{
-			"name": "Magnetictext-JS-CSS",
-			"title": "Magnetictext",
+			"name": "MagneticText-JS-CSS",
+			"title": "MagneticText",
 			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
 			"type": "registry:component",
 			"dependencies": [
@@ -15,13 +15,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "Magnetictext.jsx"
+					"path": "MagneticText.jsx"
 				}
 			]
 		},
 		{
-			"name": "Magnetictext-JS-TW",
-			"title": "Magnetictext",
+			"name": "MagneticText-JS-TW",
+			"title": "MagneticText",
 			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
 			"type": "registry:component",
 			"dependencies": [
@@ -31,13 +31,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "Magnetictext.jsx"
+					"path": "MagneticText.jsx"
 				}
 			]
 		},
 		{
-			"name": "Magnetictext-TS-CSS",
-			"title": "Magnetictext",
+			"name": "MagneticText-TS-CSS",
+			"title": "MagneticText",
 			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
 			"type": "registry:component",
 			"dependencies": [
@@ -47,13 +47,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "Magnetictext.tsx"
+					"path": "MagneticText.tsx"
 				}
 			]
 		},
 		{
-			"name": "Magnetictext-TS-TW",
-			"title": "Magnetictext",
+			"name": "MagneticText-TS-TW",
+			"title": "MagneticText",
 			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
 			"type": "registry:component",
 			"dependencies": [
@@ -63,7 +63,7 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "Magnetictext.tsx"
+					"path": "MagneticText.tsx"
 				}
 			]
 		},
@@ -188,8 +188,8 @@
 			]
 		},
 		{
-			"name": "MouseRepelDots-JS-CSS",
-			"title": "MouseRepelDots",
+			"name": "MouserepelDots-JS-CSS",
+			"title": "MouserepelDots",
 			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -197,13 +197,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouseRepelDots.jsx"
+					"path": "MouserepelDots.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouseRepelDots-JS-TW",
-			"title": "MouseRepelDots",
+			"name": "MouserepelDots-JS-TW",
+			"title": "MouserepelDots",
 			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -211,13 +211,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouseRepelDots.jsx"
+					"path": "MouserepelDots.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouseRepelDots-TS-CSS",
-			"title": "MouseRepelDots",
+			"name": "MouserepelDots-TS-CSS",
+			"title": "MouserepelDots",
 			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -225,13 +225,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouseRepelDots.tsx"
+					"path": "MouserepelDots.tsx"
 				}
 			]
 		},
 		{
-			"name": "MouseRepelDots-TS-TW",
-			"title": "MouseRepelDots",
+			"name": "MouserepelDots-TS-TW",
+			"title": "MouserepelDots",
 			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -239,7 +239,7 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouseRepelDots.tsx"
+					"path": "MouserepelDots.tsx"
 				}
 			]
 		}
