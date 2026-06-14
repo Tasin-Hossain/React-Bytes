@@ -248,9 +248,7 @@
 			"title": "MouserepelGrid",
 			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
 			"type": "registry:component",
-			"dependencies": [
-				"ogl@^1.0.11"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -264,9 +262,7 @@
 			"title": "MouserepelGrid",
 			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
 			"type": "registry:component",
-			"dependencies": [
-				"ogl@^1.0.11"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -280,9 +276,7 @@
 			"title": "MouserepelGrid",
 			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
 			"type": "registry:component",
-			"dependencies": [
-				"ogl@^1.0.11"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -296,9 +290,7 @@
 			"title": "MouserepelGrid",
 			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
 			"type": "registry:component",
-			"dependencies": [
-				"ogl@^1.0.11"
-			],
+			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
 				{
