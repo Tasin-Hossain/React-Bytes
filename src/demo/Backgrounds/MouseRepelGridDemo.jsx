@@ -10,12 +10,13 @@ import {
   PROPS_DATA,
   INITIAL_PROPS,
   COLOR_MODE_OPTIONS,
-  GRADIENT_DIRECTION_OPTIONS,
   ANIMATION_MODE_OPTIONS,
   PKG_CMDS,
   getShadcnCmds,
   getJsrepoCmds,
-  AUTHOR_NAME
+  AUTHOR_NAME,
+  GRADIENT_DIR_OPTIONS,
+
 } from '../../config/Backgrounds/MouseRepelGrid';
 
 import PreviewSlider from '../../components/shared/preview/PreviewSlider';
@@ -35,14 +36,12 @@ import CraftedBy from '../../components/navbers/CraftedBy';
 const MouseRepelGridInner = () => {
   const { props, setProps, langTab, styleTab, animKey } = useComponentProps();
 
-  const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'TW'}`;
+  const variant    = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'TW'}`;
   const shadcnCmds = getShadcnCmds(variant);
   const jsrepoCmds = getJsrepoCmds(variant);
-  const usageCode = getUsageCode(props, langTab);
+  const usageCode  = getUsageCode(props, langTab);
 
-  const handlePropChange = key => val => {
-    setProps({ [key]: val });
-  };
+  const handlePropChange = key => val => setProps({ [key]: val });
 
   const handleGradientColorChange = index => val => {
     const updated = [...props.gradientColors];
@@ -87,7 +86,7 @@ const MouseRepelGridInner = () => {
               min={0.5}
               max={5}
               step={0.1}
-              display={props.lineWidth.toFixed(1)}
+              display={(props.lineWidth ?? 1).toFixed(1)}
             />
           </div>
 
@@ -116,7 +115,7 @@ const MouseRepelGridInner = () => {
               min={0.01}
               max={1}
               step={0.01}
-              display={props.easeSpeed.toFixed(2)}
+              display={(props.easeSpeed ?? 0.1).toFixed(2)}
             />
           </div>
 
@@ -129,7 +128,7 @@ const MouseRepelGridInner = () => {
               min={0.01}
               max={0.5}
               step={0.01}
-              display={props.springK.toFixed(2)}
+              display={(props.springK ?? 0.08).toFixed(2)}
             />
             <PreviewSlider
               label="Damping"
@@ -138,7 +137,7 @@ const MouseRepelGridInner = () => {
               min={0.1}
               max={0.99}
               step={0.01}
-              display={props.damping.toFixed(2)}
+              display={(props.damping ?? 0.85).toFixed(2)}
             />
             <PreviewSlider
               label="Wave Amplitude"
@@ -172,13 +171,17 @@ const MouseRepelGridInner = () => {
               min={0.05}
               max={2}
               step={0.05}
-              display={props.ambientNoiseSpeed.toFixed(2)}
+              display={(props.ambientNoiseSpeed ?? 0.3).toFixed(2)}
             />
           </div>
 
-          {/* Row 4 – Diagonals & glow */}
+          {/* Row 4 – Toggles & glow */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
-            <PreviewSwitch label="Diagonals" value={props.diagonals} onChange={handlePropChange('diagonals')} />
+            <PreviewSwitch
+              label="Diagonals"
+              value={props.diagonals}
+              onChange={handlePropChange('diagonals')}
+            />
             <PreviewSlider
               label="Glow Intensity"
               value={props.glowIntensity}
@@ -186,22 +189,39 @@ const MouseRepelGridInner = () => {
               min={0}
               max={2}
               step={0.05}
-              display={props.glowIntensity.toFixed(2)}
+              display={(props.glowIntensity ?? 0.7).toFixed(2)}
             />
+            <PreviewSlider
+              label="Glow Blur"
+              value={props.glowBlur}
+              onChange={handlePropChange('glowBlur')}
+              min={0}
+              max={30}
+              step={1}
+            />
+          </div>
+
+          {/* Row 5 – Glow blur & interaction */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSwitch
               label="Pulse On Click"
               value={props.pulseOnClick}
               onChange={handlePropChange('pulseOnClick')}
             />
-          </div>
-
-          {/* Row 5 – Colors */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+            <PreviewSwitch
+              label="Vignette"
+              value={props.vignette}
+              onChange={handlePropChange('vignette')}
+            />
             <PreviewColorPickerCustom
               title="Line Color"
               value={props.lineColor}
               onChange={handlePropChange('lineColor')}
             />
+          </div>
+
+          {/* Row 6 – Colors */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewColorPickerCustom
               title="Glow Color"
               value={props.glowColor}
@@ -212,36 +232,21 @@ const MouseRepelGridInner = () => {
               value={props.backgroundColor}
               onChange={handlePropChange('backgroundColor')}
             />
-          </div>
-
-          {/* Row 6 – Color mode */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSelect
               label="Color Mode"
               value={props.colorMode}
               onChange={handlePropChange('colorMode')}
               options={COLOR_MODE_OPTIONS}
             />
+          </div>
+
+          {/* Row 7 – Color mode */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSelect
               label="Gradient Direction"
               value={props.gradientDirection}
               onChange={handlePropChange('gradientDirection')}
-              options={GRADIENT_DIRECTION_OPTIONS}
-            />
-            <PreviewSwitch label="Vignette" value={props.vignette} onChange={handlePropChange('vignette')} />
-          </div>
-
-          {/* Row 7 – Gradient colors */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
-            <PreviewColorPickerCustom
-              title="Gradient Start"
-              value={props.gradientColors[0]}
-              onChange={handleGradientColorChange(0)}
-            />
-            <PreviewColorPickerCustom
-              title="Gradient End"
-              value={props.gradientColors[1]}
-              onChange={handleGradientColorChange(1)}
+              options={GRADIENT_DIR_OPTIONS}
             />
             <PreviewSlider
               label="Vignette Strength"
@@ -250,12 +255,31 @@ const MouseRepelGridInner = () => {
               min={0}
               max={1}
               step={0.05}
-              display={props.vignetteStrength.toFixed(2)}
+              display={(props.vignetteStrength ?? 0.6).toFixed(2)}
+            />
+            <PreviewColorPickerCustom
+              title="Gradient Start"
+              value={props.gradientColors[0]}
+              onChange={handleGradientColorChange(0)}
             />
           </div>
 
-          {/* Row 8 – Rainbow */}
+          {/* Row 8 – Gradient colors */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+            <PreviewColorPickerCustom
+              title="Gradient End"
+              value={props.gradientColors[1]}
+              onChange={handleGradientColorChange(1)}
+            />
+            <PreviewSlider
+              label="Wave Speed"
+              value={props.waveSpeed}
+              onChange={handlePropChange('waveSpeed')}
+              min={0.1}
+              max={5}
+              step={0.1}
+              display={(props.waveSpeed ?? 1).toFixed(1)}
+            />
             <PreviewSlider
               label="Rainbow Speed"
               value={props.rainbowSpeed}
@@ -263,8 +287,12 @@ const MouseRepelGridInner = () => {
               min={0}
               max={1}
               step={0.05}
-              display={props.rainbowSpeed.toFixed(2)}
+              display={(props.rainbowSpeed ?? 0.2).toFixed(2)}
             />
+          </div>
+
+          {/* Row 9 – Rainbow */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Rainbow Saturation"
               value={props.rainbowSaturation}
@@ -272,7 +300,7 @@ const MouseRepelGridInner = () => {
               min={0}
               max={1}
               step={0.05}
-              display={props.rainbowSaturation.toFixed(2)}
+              display={(props.rainbowSaturation ?? 0.7).toFixed(2)}
             />
             <PreviewSlider
               label="Rainbow Lightness"
@@ -281,18 +309,18 @@ const MouseRepelGridInner = () => {
               min={0}
               max={1}
               step={0.05}
-              display={props.rainbowLightness.toFixed(2)}
+              display={(props.rainbowLightness ?? 0.6).toFixed(2)}
             />
-          </div>
-
-          {/* Row 9 – Animation */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSelect
               label="Animation Mode"
               value={props.animationMode}
               onChange={handlePropChange('animationMode')}
               options={ANIMATION_MODE_OPTIONS}
             />
+          </div>
+
+          {/* Row 10 – Animation */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Animation Speed"
               value={props.animationSpeed}
@@ -300,7 +328,7 @@ const MouseRepelGridInner = () => {
               min={0.1}
               max={3}
               step={0.1}
-              display={props.animationSpeed.toFixed(1)}
+              display={(props.animationSpeed ?? 1).toFixed(1)}
             />
             <PreviewSlider
               label="Animation Intensity"
@@ -309,7 +337,7 @@ const MouseRepelGridInner = () => {
               min={0}
               max={3}
               step={0.1}
-              display={props.animationIntensity.toFixed(1)}
+              display={(props.animationIntensity ?? 1).toFixed(1)}
             />
           </div>
         </Customize>
@@ -317,14 +345,12 @@ const MouseRepelGridInner = () => {
       propsTable={<PropsTable PROPS_DATA={PROPS_DATA} />}
       dependencies={<Dependencies dependencies={dep} />}
       footer={<CraftedBy name={AUTHOR_NAME} />}
-      // CodeTab props
       pkgCmds={PKG_CMDS}
       shadcnCmds={shadcnCmds}
       jsrepoCmds={jsrepoCmds}
       usageCode={usageCode}
       codeVariants={CODE_VARIANTS}
       CodeBlock={CodeBlock}
-
     />
   );
 };
