@@ -242,6 +242,70 @@
 					"path": "MouserepelDots.tsx"
 				}
 			]
+		},
+		{
+			"name": "MouserepelGrid-JS-CSS",
+			"title": "MouserepelGrid",
+			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"type": "registry:component",
+			"dependencies": [
+				"ogl@^1.0.11"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "MouserepelGrid.jsx"
+				}
+			]
+		},
+		{
+			"name": "MouserepelGrid-JS-TW",
+			"title": "MouserepelGrid",
+			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"type": "registry:component",
+			"dependencies": [
+				"ogl@^1.0.11"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "MouserepelGrid.jsx"
+				}
+			]
+		},
+		{
+			"name": "MouserepelGrid-TS-CSS",
+			"title": "MouserepelGrid",
+			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"type": "registry:component",
+			"dependencies": [
+				"ogl@^1.0.11"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "MouserepelGrid.tsx"
+				}
+			]
+		},
+		{
+			"name": "MouserepelGrid-TS-TW",
+			"title": "MouserepelGrid",
+			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"type": "registry:component",
+			"dependencies": [
+				"ogl@^1.0.11"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "MouserepelGrid.tsx"
+				}
+			]
 		}
 	]
 }
