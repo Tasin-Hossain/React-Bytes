@@ -1,10 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { componentMap } from '../constants/componentMap';
+import { componentMetadata } from '../constants/Information';
 
 import ComponentsSkeleton from '../components/common/Skeleton/ComponentsSkeleton';
 import { IntroductionSkeleton } from '../components/common/Skeleton/IntroductionSkeleton';
 import AllComponentsSkeleton from '../components/common/Skeleton/AllComponentsSkeleton';
+
+const toMetaKey = (category, subcategory) => {
+  const cat = category
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('');
+  const sub = subcategory
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('');
+  return `${cat}/${sub}`;
+};
 
 const CategoryPage = () => {
   const { category, subcategory } = useParams();
@@ -13,21 +26,27 @@ const CategoryPage = () => {
   const [Component, setComponent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const getPageTitle = () => {
-    return subcategory
-      .split('-')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
-  };
-
-  const pageTitle = getPageTitle();
+  const pageTitle = subcategory
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
 
   useEffect(() => {
-    document.title = `React Bytes - ${pageTitle}`;
-    return () => {
-      document.title = 'React Bytes — Free Animated React Components';
-    };
-  }, [pageTitle]);
+    const isDoc = subcategory === 'introduction' || subcategory === 'installation';
+    const title = `React Bytes - ${pageTitle}`;
+
+    let desc;
+    if (isDoc) {
+      desc = `${pageTitle} — Learn how to get started with React Bytes component library.`;
+    } else {
+      const metaKey = toMetaKey(category, subcategory);
+      const meta = componentMetadata[metaKey];
+      desc = meta?.description ?? `${pageTitle} — Interactive animated React component with live preview, props table, and copy-paste code.`;
+    }
+
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+  }, [category, subcategory, pageTitle]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
