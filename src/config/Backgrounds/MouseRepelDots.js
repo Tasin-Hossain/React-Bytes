@@ -3,63 +3,6 @@ export { MouseRepelDotsPrompt };
 
 export const AUTHOR_NAME = 'Mohammad Tasin';
 
-export const DOT_COLOR_OPTIONS = [
-  { value: '#7a5af8', label: 'Violet' },
-  { value: '#3b82f6', label: 'Blue' },
-  { value: '#10b981', label: 'Emerald' },
-  { value: '#f59e0b', label: 'Amber' },
-  { value: '#ef4444', label: 'Red' }
-];
-
-export const REPEL_RADIUS_OPTIONS = [
-  { value: 40, label: '40px' },
-  { value: 80, label: '80px' },
-  { value: 120, label: '120px' },
-  { value: 160, label: '160px' }
-];
-
-export const FORCE_OPTIONS = [
-  { value: 2, label: '2' },
-  { value: 5.5, label: '5.5' },
-  { value: 9, label: '9' },
-  { value: 14, label: '14' }
-];
-
-export const SPRING_K_OPTIONS = [
-  { value: 0.03, label: '0.03' },
-  { value: 0.07, label: '0.07' },
-  { value: 0.12, label: '0.12' },
-  { value: 0.2, label: '0.20' }
-];
-
-export const DAMPING_OPTIONS = [
-  { value: 0.55, label: '0.55' },
-  { value: 0.72, label: '0.72' },
-  { value: 0.85, label: '0.85' },
-  { value: 0.95, label: '0.95' }
-];
-
-export const DOT_SPACING_OPTIONS = [
-  { value: 10, label: '10px' },
-  { value: 22, label: '22px' },
-  { value: 35, label: '35px' },
-  { value: 50, label: '50px' }
-];
-
-export const DOT_RADIUS_OPTIONS = [
-  { value: 1, label: '1px' },
-  { value: 1.6, label: '1.6px' },
-  { value: 2.5, label: '2.5px' },
-  { value: 4, label: '4px' }
-];
-
-export const MAX_DOT_SIZE_OPTIONS = [
-  { value: 3, label: '3px' },
-  { value: 6, label: '6px' },
-  { value: 10, label: '10px' },
-  { value: 16, label: '16px' }
-];
-
 export const SPARKLE_MODE_OPTIONS = [
   { value: 'off', label: 'Off' },
   { value: 'random', label: 'Random' },
