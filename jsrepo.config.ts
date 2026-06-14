@@ -60,7 +60,7 @@ export default defineConfig({
     ].flat()
   },
   paths: {
-    component: './src/component'
+    component: './src/components'
   }
 });
 
