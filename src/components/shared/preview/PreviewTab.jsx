@@ -7,7 +7,7 @@ const PreviewTab = ({
   children,
   childrenClassname,
   showReplay = true,
-  minHeight = 'min-h-100!',
+  minHeight = 'min-h-120!',
   demoContent = false,
   onToggleDemoContent
 }) => {
