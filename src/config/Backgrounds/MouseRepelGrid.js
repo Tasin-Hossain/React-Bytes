@@ -155,10 +155,10 @@ export const getJsrepoCmds = variant => ({
   bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/MouseRepelGrid-${variant}`,
 });
 
-import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/MouseRepelGrid/MouseRepelGrid';
-import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/MouseRepelGrid/MouseRepelGrid';
-import TS_CSS_CODE      from '../../variants/tsCss/Backgrounds/MouseRepelGrid/MouseRepelGrid';
-import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/MouseRepelGrid/MouseRepelGrid';
+import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/MouseRepelGrid/MouseRepelGrid?raw';
+import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/MouseRepelGrid/MouseRepelGrid?raw';
+import TS_CSS_CODE      from '../../variants/tsCss/Backgrounds/MouseRepelGrid/MouseRepelGrid?raw';
+import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/MouseRepelGrid/MouseRepelGrid?raw';
 
 export { JS_CSS_CODE };
 export { JS_TAILWIND_CODE };
