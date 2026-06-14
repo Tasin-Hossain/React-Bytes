@@ -239,11 +239,11 @@ export default function HeroSection() {
           <div className="absolute inset-0 " onClick={() => setPopupOpen(false)} />
 
           {/* Popup panel — fits content, no scroll */}
-          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-(--border-secondary) bg-(--bg) backdrop-blur-xl shadow-2xl overflow-hidden">
+          <div className="relative z-10 w-full max-w-lg rounded-md border border-(--border-secondary) bg-(--bg) backdrop-blur-xl shadow-2xl overflow-hidden">
             {/* Close button only */}
             <button
               onClick={() => setPopupOpen(false)}
-              className="absolute top-3 right-3 z-10 p-1.5 border border-(--border-secondary) cursor-pointer rounded-md hover:bg-(--bg-hover) text-(--text-primary) transition-colors"
+              className="absolute top-2 right-3 z-10 p-1.5 border border-(--border-secondary) cursor-pointer rounded-md hover:bg-(--bg-hover) text-(--text-primary) transition-colors"
             >
               <IoClose size={16} />
             </button>
