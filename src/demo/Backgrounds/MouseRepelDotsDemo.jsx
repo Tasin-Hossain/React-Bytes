@@ -9,9 +9,13 @@ import {
   dep,
   PROPS_DATA,
   INITIAL_PROPS,
-  SPARKLE_MODE_OPTIONS
+  SPARKLE_MODE_OPTIONS,
+  PKG_CMDS,
+  getShadcnCmds,
+  getJsrepoCmds
+
 } from '../../config/Backgrounds/MouseRepelDots';
-import { PKG_CMDS, getShadcnCmds } from '../../config/Backgrounds/MouseRepelDots';
+
 
 import PreviewSlider from '../../components/shared/preview/PreviewSlider';
 import PreviewSelect from '../../components/shared/preview/PreviewSelect';
@@ -31,6 +35,7 @@ const MouseRepelDotsInner = () => {
 
   const variant = `${langTab.toUpperCase()}-${styleTab === 'css' ? 'CSS' : 'TW'}`;
   const shadcnCmds = getShadcnCmds(variant);
+  const jsrepoCmds = getJsrepoCmds(variant);
   const usageCode = getUsageCode(props, langTab);
 
   const handlePropChange = key => val => {
@@ -64,7 +69,7 @@ const MouseRepelDotsInner = () => {
               label="Dot Spacing"
               value={props.dotSpacing}
               onChange={handlePropChange('dotSpacing')}
-              min={5}
+              min={10}
               max={60}
               step={1}
             />
@@ -230,6 +235,7 @@ const MouseRepelDotsInner = () => {
       // CodeTab props
       pkgCmds={PKG_CMDS}
       shadcnCmds={shadcnCmds}
+      jsrepoCmds={jsrepoCmds}
       usageCode={usageCode}
       codeVariants={CODE_VARIANTS}
       CodeBlock={CodeBlock}
