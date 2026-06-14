@@ -29,8 +29,8 @@ export const VARIANTS = ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'];
 export const componentMetadata = {
 
   // Text Animations
- 'TextAnimations/Magnetictext': {
-    name: 'Magnetictext',
+ 'TextAnimations/MagneticText': {
+    name: 'MagneticText',
     description:'Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.',
     category: 'TextAnimations',
     dependencies: ['gsap@^3.15.0'],
@@ -60,8 +60,8 @@ export const componentMetadata = {
   },
 
   // Backgrounds Animations
-  'Backgrounds/MouseRepelDots': {
-    name: 'MouseRepelDots',
+  'Backgrounds/MouserepelDots': {
+    name: 'MouserepelDots',
     description: 'Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.',
     category: 'Backgrounds',
     dependencies: [],
