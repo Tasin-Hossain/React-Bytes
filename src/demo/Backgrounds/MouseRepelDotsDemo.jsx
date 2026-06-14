@@ -12,7 +12,8 @@ import {
   SPARKLE_MODE_OPTIONS,
   PKG_CMDS,
   getShadcnCmds,
-  getJsrepoCmds
+  getJsrepoCmds,
+  AUTHOR_NAME
 
 } from '../../config/Backgrounds/MouseRepelDots';
 
@@ -28,6 +29,7 @@ import PreviewColorPickerCustom from '../../components/shared/preview/PreviewCol
 import ComponentPropsProvider from '../../components/context/ComponentPropsProvider';
 import MouseRepelDots from '../../content/Backgrounds/MouseRepelDots';
 import DemoBuilder from '../../components/layout/DemoBuilder';
+import CraftedBy from '../../components/navbers/CraftedBy';
 
 // ─────────────────────────────────────────────────────────────────────────────
 const MouseRepelDotsInner = () => {
@@ -232,6 +234,7 @@ const MouseRepelDotsInner = () => {
       }
       propsTable={<PropsTable PROPS_DATA={PROPS_DATA} />}
       dependencies={<Dependencies dependencies={dep} />}
+      footer={<CraftedBy name={AUTHOR_NAME} />}
       // CodeTab props
       pkgCmds={PKG_CMDS}
       shadcnCmds={shadcnCmds}
