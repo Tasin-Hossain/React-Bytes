@@ -149,10 +149,10 @@ export const getShadcnCmds = variant => ({
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MouseRepelGrid-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/MouseRepelGrid-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/MouseRepelGrid-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/MouseRepelGrid-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MouserepelGrid-${variant}`,
+  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/MouserepelGrid-${variant}`,
+  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/MouserepelGrid-${variant}`,
+  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/MouserepelGrid-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/MouseRepelGrid/MouseRepelGrid?raw';
