@@ -1,9 +1,10 @@
 export const NEW = [
   'Magnetic Text',
-  'Curtain text'
+  'Curtain text',
+
 
 ];
-export const UPDATED = ['Animated Content','Blur Text'];
+export const UPDATED = ['MouseRepel Grid','Blur Text'];
 
 // Used for main sidebar navigation
 export const CATEGORIES = [
