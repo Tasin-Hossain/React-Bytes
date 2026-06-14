@@ -69,6 +69,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/MouserepelGrid': {
+    name: 'MouserepelGrid',
+    description: 'Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/mouserepel-grid',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
