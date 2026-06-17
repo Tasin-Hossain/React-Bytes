@@ -1,0 +1,230 @@
+## Integrate the <BlinkingSquares /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: BlinkingSquares
+### Variant: JavaScript + Tailwind
+### Dependencies: none (uses native Canvas API)
+
+---
+
+### Usage Example
+```jsx
+import BlinkingSquares from './BlinkingSquares'
+
+<BlinkingSquares
+  direction="right"
+  gridSize={52}
+  squareSize={0.57}
+  fadeStart={0.65}
+  fadeEnd={1.0}
+  falloff={1.25}
+  minBrightness={0.55}
+  twinkleSpeed={1.4}
+  twinkleStrength={0.94}
+  intensity={1.0}
+  opacity={1.0}
+  squareColor="#BB29FF"
+  backgroundColor="transparent"
+  dpr={1.5}
+  className=""
+  style={{}}
+>
+  {/* optional children render above canvas */}
+</BlinkingSquares>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| direction | string | "right" | Direction of the fade/appearance gradient. Options: "right" \| "left" \| "bottom" \| "top" |
+| gridSize | number | 52 | Size of each grid cell in pixels. Controls both spacing and square size. |
+| squareSize | number | 0.57 | Fraction of the cell each square occupies (0–1). Higher = larger squares. |
+| fadeStart | number | 0.65 | Normalized position along the direction axis where squares begin to appear. |
+| fadeEnd | number | 1.0 | Normalized position along the direction axis where squares reach full density. |
+| falloff | number | 1.25 | Power curve controlling how sharply squares fade in (higher = steeper edge). |
+| minBrightness | number | 0.55 | Minimum alpha/brightness of a square at rest (0–1). |
+| twinkleSpeed | number | 1.4 | Speed of the twinkle oscillation cycle. |
+| twinkleStrength | number | 0.94 | How strongly each square pulses in brightness (0 = no twinkle, 1 = full range). |
+| intensity | number | 1.0 | Global brightness multiplier applied on top of per-square values. |
+| opacity | number | 1.0 | Overall opacity multiplier for all squares (0–1). |
+| squareColor | string | "#BB29FF" | Color of all squares (hex). |
+| backgroundColor | string | "transparent" | Canvas background fill. Use "transparent" for no fill. |
+| dpr | number | 1.5 | Device pixel ratio cap for canvas resolution (e.g. 1, 1.5, or 2). |
+| className | string | "" | Additional CSS classes applied to the outer wrapper div. |
+| style | object | {} | Inline styles applied to the outer wrapper div. |
+| children | node | — | Optional child elements rendered above the canvas at z-index 10. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { useEffect, useRef, useCallback } from "react";
+
+const DEFAULTS = {
+  direction:        "right",
+  gridSize:         52,
+  squareSize:       0.57,
+  fadeStart:        0.65,
+  fadeEnd:          1.0,
+  falloff:          1.25,
+  minBrightness:    0.55,
+  twinkleSpeed:     1.4,
+  twinkleStrength:  0.94,
+  intensity:        1.0,
+  opacity:          1.0,
+  squareColor:      "#BB29FF",
+  backgroundColor:  "transparent",
+  dpr:              1.5,
+};
+
+function hex2rgb(h) {
+  const c = h.replace("#", "");
+  return [parseInt(c.slice(0,2),16), parseInt(c.slice(2,4),16), parseInt(c.slice(4,6),16)];
+}
+
+function useBlinkingSquares(canvasRef, cfg) {
+  const squaresRef = useRef([]);
+  const rafRef      = useRef(null);
+  const cfgRef      = useRef(cfg);
+  cfgRef.current    = cfg;
+
+  const build = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const { direction, gridSize, fadeStart, fadeEnd, falloff, minBrightness } = cfgRef.current;
+    const W = canvas._cssW || canvas.offsetWidth  || 800;
+    const H = canvas._cssH || canvas.offsetHeight || 450;
+    const cellSize = gridSize;
+    const cols = Math.ceil(W / cellSize) + 1;
+    const rows = Math.ceil(H / cellSize) + 1;
+    const squares = [];
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const nx = cols > 1 ? c / (cols - 1) : 0;
+        const ny = rows > 1 ? r / (rows - 1) : 0;
+        const t = direction === "right" ? nx : direction === "left" ? 1-nx : direction === "bottom" ? ny : 1-ny;
+        let d = (t - fadeStart) / Math.max(fadeEnd - fadeStart, 0.001);
+        d = Math.pow(Math.max(0, Math.min(1, d)), falloff);
+        if (Math.random() > d) continue;
+        squares.push({ x: c*cellSize, y: r*cellSize, size: cellSize, brightness: minBrightness + Math.random()*(1-minBrightness), phase: Math.random()*Math.PI*2 });
+      }
+    }
+    squaresRef.current = squares;
+  }, [canvasRef]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    function applySize() {
+      const ratio = Math.min(window.devicePixelRatio || 1, cfgRef.current.dpr);
+      const w = canvas.offsetWidth  || 800;
+      const h = canvas.offsetHeight || 450;
+      canvas.width  = Math.round(w * ratio);
+      canvas.height = Math.round(h * ratio);
+      canvas._cssW  = w;
+      canvas._cssH  = h;
+      const ctx = canvas.getContext("2d", { alpha: true });
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      build();
+    }
+
+    applySize();
+    const ro = new ResizeObserver(applySize);
+    ro.observe(canvas);
+    return () => ro.disconnect();
+  }, [canvasRef, build]);
+
+  useEffect(() => { build(); },
+    [cfg.direction, cfg.gridSize, cfg.squareSize, cfg.fadeStart, cfg.fadeEnd, cfg.falloff, cfg.minBrightness]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+
+    function draw(ts) {
+      rafRef.current = requestAnimationFrame(draw);
+      const c = cfgRef.current;
+      const t = ts * 0.001;
+      const [sr, sg, sb] = hex2rgb(c.squareColor);
+      const W = canvas._cssW || canvas.offsetWidth  || 800;
+      const H = canvas._cssH || canvas.offsetHeight || 450;
+
+      ctx.clearRect(0, 0, W, H);
+      if (c.backgroundColor && c.backgroundColor !== "transparent") {
+        ctx.fillStyle = c.backgroundColor;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      const cellSize = c.gridSize;
+      const sz     = cellSize * c.squareSize;
+      const offset = (cellSize - sz) / 2;
+
+      for (const s of squaresRef.current) {
+        const osc     = Math.sin(s.phase + t * c.twinkleSpeed * Math.PI * 2);
+        const twinkle = 1 - c.twinkleStrength * (0.5 - osc * 0.5);
+        const a = Math.min(1, s.brightness * twinkle * c.intensity * c.opacity);
+        ctx.fillStyle = `rgba(${sr},${sg},${sb},${a.toFixed(3)})`;
+        ctx.fillRect(s.x + offset, s.y + offset, sz, sz);
+      }
+    }
+
+    rafRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [canvasRef]);
+}
+
+export default function BlinkingSquares({
+  direction       = DEFAULTS.direction,
+  gridSize        = DEFAULTS.gridSize,
+  squareSize      = DEFAULTS.squareSize,
+  fadeStart       = DEFAULTS.fadeStart,
+  fadeEnd         = DEFAULTS.fadeEnd,
+  falloff         = DEFAULTS.falloff,
+  minBrightness   = DEFAULTS.minBrightness,
+  twinkleSpeed    = DEFAULTS.twinkleSpeed,
+  twinkleStrength = DEFAULTS.twinkleStrength,
+  intensity       = DEFAULTS.intensity,
+  opacity         = DEFAULTS.opacity,
+  squareColor     = DEFAULTS.squareColor,
+  backgroundColor = DEFAULTS.backgroundColor,
+  dpr             = DEFAULTS.dpr,
+  className       = "",
+  style           = {},
+  children,
+}) {
+  const canvasRef = useRef(null);
+  useBlinkingSquares(canvasRef, {
+    direction, gridSize, squareSize, fadeStart, fadeEnd,
+    falloff, minBrightness, twinkleSpeed, twinkleStrength,
+    intensity, opacity, squareColor, backgroundColor, dpr,
+  });
+
+  const classes = `relative overflow-hidden ${className}`;
+
+  return (
+    <div className={classes} style={style}>
+      <canvas ref={canvasRef} className="absolute inset-0 block size-full" />
+      {children && <div className="relative z-10">{children}</div>}
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. No external dependencies required — uses the native Canvas API only.
+2. Copy the component source above into `./BlinkingSquares.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component fills its parent container via `absolute inset-0`. Wrap it in a sized container:
+   ```jsx
+   <div style={{ width: '100%', height: '400px' }}>
+     <BlinkingSquares />
+   </div>
+   ```
+5. The canvas uses a `ResizeObserver` to automatically rebuild the grid on container resize — no manual handling needed.
+6. Props that affect layout (`direction`, `gridSize`, `squareSize`, `fadeStart`, `fadeEnd`, `falloff`, `minBrightness`) trigger a full square rebuild via `build()`. All other props (`twinkleSpeed`, `twinkleStrength`, `intensity`, `opacity`, `squareColor`, `backgroundColor`) update live on the next animation frame via `cfgRef`.
+7. Use `children` to layer UI content above the canvas — it renders inside a `relative z-10` wrapper, so it sits on top of the animation.
+8. Combine `fadeStart={0.0}` and `fadeEnd={0.5}` for a sharp fade covering only the first half of the container.
+9. Set `twinkleStrength={0}` to disable pulsing and render static squares at fixed brightness.
