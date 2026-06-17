@@ -30,7 +30,7 @@ export default function DemoBuilder({
   return (
     <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto text-(--text-primary) relative">
       <div className="flex items-center justify-between gap-4 mb-5">
-        <h1 className="title mb-0">{title}</h1>
+        <h1 className="title-two truncate mb-0">{title}</h1>
 
         <div className="flex items-center gap-2">
           <FavoriteButton favKey={favKey} />
