@@ -78,6 +78,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/BlinkingSquares': {
+    name: 'BlinkingSquares',
+    description: 'Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/blinking-squares',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
