@@ -15,6 +15,7 @@ const componentMap = {
 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
   'backgrounds/mouserepel-grid': () => import('../demo/Backgrounds/MouseRepelGridDemo.jsx'),
+  'backgrounds/blinking-squares': () => import('../demo/Backgrounds/BlinkingSquaresDemo.jsx'),
 
 
 };

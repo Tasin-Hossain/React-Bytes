@@ -37,6 +37,7 @@ export const CATEGORIES = [
     subcategories: [
       'MouseRepel Dots',
       'MouseRepel Grid',
+      'Blinking Squares'
     ]
   }
 ];
