@@ -12,8 +12,8 @@ const RootPage = () => {
           <title>React Bytes - Free Animated React Components</title>
         <Header />
         <Hero />
-        <Features />
         <NeedLaunch />
+        <Features />
         <Reviews />
         <Footer />
       </section>
