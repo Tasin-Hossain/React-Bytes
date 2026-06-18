@@ -38,7 +38,8 @@ export const CATEGORIES = [
       'MouseRepel Dots',
       'MouseRepel Grid',
       'Blinking Squares',
-      'Half Tone'
+      'Half Tone',
+      'vortex'
     ]
   }
 ];
