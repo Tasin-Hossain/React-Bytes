@@ -13,13 +13,13 @@ const SLIDES = [
     Illustration: Slide1Illustration,
   },
   {
-    number: '3',
+    number: '2',
     heading: "A week's work before lunch",
     desc: 'Grab from 100+ ready-made pieces, snap together full layouts, and walk away with a finished product.',
     Illustration: Slide3Illustration,
   },
   {
-    number: '4',
+    number: '3',
     heading: 'Every screen, every pixel',
     desc: 'From a small phone to a wide monitor, each component holds its shape. Tested where your users actually are.',
     Illustration: Slide4Illustration,
