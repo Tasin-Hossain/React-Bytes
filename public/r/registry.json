@@ -354,6 +354,74 @@
 					"path": "BlinkingSquares.tsx"
 				}
 			]
+		},
+		{
+			"name": "HalfTone-JS-CSS",
+			"title": "HalfTone",
+			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "HalfTone.jsx"
+				}
+			]
+		},
+		{
+			"name": "HalfTone-JS-TW",
+			"title": "HalfTone",
+			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "HalfTone.jsx"
+				}
+			]
+		},
+		{
+			"name": "HalfTone-TS-CSS",
+			"title": "HalfTone",
+			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "HalfTone.tsx"
+				}
+			]
+		},
+		{
+			"name": "HalfTone-TS-TW",
+			"title": "HalfTone",
+			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "HalfTone.tsx"
+				}
+			]
 		}
 	]
 }
