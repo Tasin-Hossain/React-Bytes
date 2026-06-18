@@ -47,6 +47,8 @@ const BlinkingSquaresInner = () => {
       title="Blinking Squares"
       favKey="backgrounds/blinking-squares"
       prompt={BlinkingSquaresPrompt}
+      demoContent={props.demoContent}
+      onToggleDemoContent={handlePropChange('demoContent')}
       childrenClassname="w-full"
       PreviewComponent={
         <BlinkingSquares
