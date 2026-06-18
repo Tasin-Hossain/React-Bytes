@@ -37,7 +37,7 @@
   --wordmark-color: #ffffff;
   --bg-card-gradient: linear-gradient(to bottom right, #1a1030, #2d1b4e, #1a1030);
 }
-
+ 
 :root[data-theme='light'] {
   --brand: #d35af8;
   --brand-2: #7a5af8;
@@ -69,7 +69,7 @@
   --shadow-primary: 0 2px 8px rgba(168, 85, 247, 0.25);
 
   --sidebar-width: 220px;
-  --right-panel-width: 300px;
+  --right-panel-width: 280px;
   --content-gap: 2em;
 
   --transition-fast: 0.15s ease;
