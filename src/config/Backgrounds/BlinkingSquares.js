@@ -24,7 +24,7 @@ export const INITIAL_PROPS = {
   twinkleStrength: 1,
   intensity:       1.65,
   opacity:         1.0,
-  squareColor:     "#BB29FF",
+  squareColor:     "#d35af8",
   backgroundColor: "transparent",
   dpr:             1.5,
 };
@@ -99,7 +99,7 @@ export const PROPS_DATA = [
   {
     name: "squareColor",
     type: "string",
-    def:  '"#BB29FF"',
+    def:  '"#d35af8"',
     desc: "Square color in hex.",
   },
   {

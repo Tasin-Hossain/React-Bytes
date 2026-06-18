@@ -55,7 +55,7 @@ export const INITIAL_PROPS = {
   glowBlur:              0,
 
   // Colors
-  lineColor:             '#a855f7',
+  lineColor:             '#d35af8',
   glowColor:             '#b8a0ff',
   backgroundColor:       'transparent',
 
@@ -108,7 +108,7 @@ export const PROPS_DATA = [
   { name: 'glowBlur',              type: 'number',   def: '0',                           desc: 'Canvas shadowBlur radius for a soft bloom effect (0 = disabled).' },
 
   // Colors
-  { name: 'lineColor',             type: 'string',   def: '"#5a4cff"',                   desc: 'Base line colour (hex / rgb / CSS variable).' },
+  { name: 'lineColor',             type: 'string',   def: '"#d35af8"',                   desc: 'Base line colour (hex / rgb / CSS variable).' },
   { name: 'glowColor',             type: 'string',   def: '"#b8a0ff"',                   desc: 'Line colour at maximum glow intensity.' },
   { name: 'backgroundColor',       type: 'string',   def: '"transparent"',               desc: 'Canvas background. Use "transparent" to inherit the parent background.' },
 
