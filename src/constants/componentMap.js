@@ -17,7 +17,7 @@ const componentMap = {
   'backgrounds/mouserepel-grid': () => import('../demo/Backgrounds/MouseRepelGridDemo.jsx'),
   'backgrounds/blinking-squares': () => import('../demo/Backgrounds/BlinkingSquaresDemo.jsx'),
   'backgrounds/half-tone': () => import('../demo/Backgrounds/HalftoneDemo.jsx'),
-  'backgrounds/vortex': () => import('../demo/Backgrounds/Vortex.jsx'),
+  'backgrounds/vortex': () => import('../demo/Backgrounds/VortexDemo.jsx'),
 
 
 };
