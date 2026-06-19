@@ -490,6 +490,74 @@
 					"path": "Vortex.tsx"
 				}
 			]
+		},
+		{
+			"name": "AsciiWave-JS-CSS",
+			"title": "AsciiWave",
+			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "AsciiWave.jsx"
+				}
+			]
+		},
+		{
+			"name": "AsciiWave-JS-TW",
+			"title": "AsciiWave",
+			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "AsciiWave.jsx"
+				}
+			]
+		},
+		{
+			"name": "AsciiWave-TS-CSS",
+			"title": "AsciiWave",
+			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "AsciiWave.tsx"
+				}
+			]
+		},
+		{
+			"name": "AsciiWave-TS-TW",
+			"title": "AsciiWave",
+			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "AsciiWave.tsx"
+				}
+			]
 		}
 	]
 }
