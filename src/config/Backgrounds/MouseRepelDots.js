@@ -22,7 +22,7 @@ export const SPARKLE_MODE_OPTIONS = [
 
 export const INITIAL_PROPS = {
   dotRadius: 1.6,
-  dotSpacing: 22,
+  dotSpacing: 15,
   repelRadius: 80,
   force: 5.5,
   springK: 0.07,
