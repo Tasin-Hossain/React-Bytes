@@ -131,10 +131,10 @@ export const getJsrepoCmds = variant => ({
   bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/AsciiWave-${variant}`,
 });
 
-import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/HalfTone/HalfTone?raw';
-import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/HalfTone/HalfTone?raw';
-import TS_CSS_CODE      from '../../variants/tsCss/Backgrounds/HalfTone/HalfTone?raw';
-import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/HalfTone/HalfTone?raw';
+import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/AsciiWave/AsciiWave?raw';
+import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/AsciiWave/AsciiWave?raw';
+import TS_CSS_CODE      from '../../variants/tsCss/Backgrounds/AsciiWave/AsciiWave?raw';
+import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/AsciiWave/AsciiWave?raw';
 
 export { JS_CSS_CODE, JS_TAILWIND_CODE, TS_CSS_CODE, TS_TAILWIND_CODE };
 
