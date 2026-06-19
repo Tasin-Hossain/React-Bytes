@@ -39,7 +39,8 @@ export const CATEGORIES = [
       'MouseRepel Grid',
       'Blinking Squares',
       'Half Tone',
-      'Vortex'
+      'Vortex',
+      'Ascii Wave'
     ]
   }
 ];

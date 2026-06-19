@@ -18,6 +18,8 @@ const componentMap = {
   'backgrounds/blinking-squares': () => import('../demo/Backgrounds/BlinkingSquaresDemo.jsx'),
   'backgrounds/half-tone': () => import('../demo/Backgrounds/HalftoneDemo.jsx'),
   'backgrounds/vortex': () => import('../demo/Backgrounds/VortexDemo.jsx'),
+  'backgrounds/ascii-wave': () => import('../demo/Backgrounds/AsciiWaveDemo.jsx'),
+
 
 
 };
