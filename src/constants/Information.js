@@ -96,6 +96,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/Vortex': {
+    name: 'Vortex',
+    description: 'An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/vortex',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
