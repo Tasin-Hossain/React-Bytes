@@ -422,6 +422,74 @@
 					"path": "HalfTone.tsx"
 				}
 			]
+		},
+		{
+			"name": "Vortex-JS-CSS",
+			"title": "Vortex",
+			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Vortex.jsx"
+				}
+			]
+		},
+		{
+			"name": "Vortex-JS-TW",
+			"title": "Vortex",
+			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Vortex.jsx"
+				}
+			]
+		},
+		{
+			"name": "Vortex-TS-CSS",
+			"title": "Vortex",
+			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Vortex.tsx"
+				}
+			]
+		},
+		{
+			"name": "Vortex-TS-TW",
+			"title": "Vortex",
+			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Vortex.tsx"
+				}
+			]
 		}
 	]
 }
