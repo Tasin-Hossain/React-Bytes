@@ -11,7 +11,7 @@ import Customize              from '../../components/shared/preview/Customize';
 import CraftedBy              from '../../components/navbers/CraftedBy';
 import DemoBuilder            from '../../components/layout/DemoBuilder';
 
-import Vortex from '../../content/Backgrounds/Vortex';
+
 import {
   AUTHOR_NAME,
   CODE_VARIANTS,
@@ -25,6 +25,8 @@ import {
   VortexPrompt,
 } from '../../config/Backgrounds/Vortex';
 import { getUsageCode } from '../../constants/code/Backgrounds/Vortex';
+import Vortex from '../../content/Backgrounds/vortex';
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 const VortexInner = () => {
