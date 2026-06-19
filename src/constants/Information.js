@@ -105,6 +105,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/AsciiWave': {
+    name: 'AsciiWave',
+    description: 'A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/ascii-wave',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
