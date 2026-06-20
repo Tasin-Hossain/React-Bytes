@@ -40,7 +40,8 @@ export const CATEGORIES = [
       'Blinking Squares',
       'Half Tone',
       'Vortex',
-      'Ascii Wave'
+      'Ascii Wave',
+      'Emoji Wave'
     ]
   }
 ];

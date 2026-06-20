@@ -19,6 +19,7 @@ const componentMap = {
   'backgrounds/half-tone': () => import('../demo/Backgrounds/HalftoneDemo.jsx'),
   'backgrounds/vortex': () => import('../demo/Backgrounds/VortexDemo.jsx'),
   'backgrounds/ascii-wave': () => import('../demo/Backgrounds/AsciiWaveDemo.jsx'),
+  'backgrounds/emoji-wave': () => import('../demo/Backgrounds/EmojiWavedemo.jsx'),
 
 
 
