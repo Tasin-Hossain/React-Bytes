@@ -20,6 +20,7 @@ const componentMap = {
   'backgrounds/vortex': () => import('../demo/Backgrounds/VortexDemo.jsx'),
   'backgrounds/ascii-wave': () => import('../demo/Backgrounds/AsciiWaveDemo.jsx'),
   'backgrounds/emoji-wave': () => import('../demo/Backgrounds/EmojiWavedemo.jsx'),
+  'backgrounds/shapes-dots': () => import('../demo/Backgrounds/ShapesDots.jsx'),
 
 
 

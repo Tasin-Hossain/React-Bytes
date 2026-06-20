@@ -123,6 +123,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/ShapesDots': {
+    name: 'ShapesDots',
+    description: 'A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/shapes-dots',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };

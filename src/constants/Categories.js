@@ -41,7 +41,8 @@ export const CATEGORIES = [
       'Half Tone',
       'Vortex',
       'Ascii Wave',
-      'Emoji Wave'
+      'Emoji Wave',
+      'Shapes Dots'
     ]
   }
 ];
