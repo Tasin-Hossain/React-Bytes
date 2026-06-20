@@ -1,0 +1,422 @@
+## Integrate the <EmojiWave /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: EmojiWave
+### Variant: JavaScript + CSS
+### Dependencies: three, @react-three/fiber
+
+---
+
+### Usage Example
+```jsx
+import EmojiWave from './EmojiWave'
+
+<div style={{ width: '100%', height: '400px' }}>
+  <EmojiWave
+    eomji=" 🌕🌓🌗🌑"
+    color="#ffffff"
+    waveTension={0.5}
+    waveTwist={0.1}
+    invert={false}
+    noiseScale={1.0}
+    elementSize={28.0}
+    speed={1.0}
+    hasCursorInteraction={true}
+    intensity={1.0}
+    interactionIntensity={1.0}
+    className=""
+    bgColor="transparent"
+  />
+</div>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| eomji | string | " 🌕🌓🌗🌑" | Ramp of glyphs (supports emoji and multi-codepoint characters via grapheme splitting) rendered from lowest to highest brightness value. Order matters — first glyph maps to the darkest cells, last to the brightest. Note: this prop is named `eomji`, not `emoji`, in the source — keep the spelling as-is unless you rename it everywhere it's used. |
+| color | string | "#ffffff" | Color of the rendered glyphs (hex). Baked into the character atlas texture, so changing it rebuilds the atlas. Has limited visible effect on full-color emoji glyphs, since emoji render with their own built-in colors regardless of `ctx.fillStyle`. |
+| waveTension | number | 0.5 | Controls the vertical compression/frequency of the wave pattern along the twisted axis. |
+| waveTwist | number | 0.1 | Strength of the angular twist applied to the noise field over time. Higher = more swirl. |
+| invert | boolean | false | Reverses the glyph ramp order, flipping which glyphs represent dark vs. bright cells. |
+| noiseScale | number | 1.0 | Scale of the underlying coordinate space fed into the wave/noise function. Lower = larger, smoother features; higher = busier detail. |
+| elementSize | number | 28.0 | Size in pixels of each glyph cell in the grid. Controls glyph density — smaller values render more, smaller glyphs. Larger default than the plain-character variant since emoji need more room to stay legible. |
+| speed | number | 1.0 | Multiplier on elapsed time, controlling how fast the wave animates. |
+| hasCursorInteraction | boolean | true | Enables a brightness boost in cells near the cursor. Tracked via a document-level mousemove listener. |
+| intensity | number | 1.0 | Multiplier on the combined wave + noise value before it's mapped to a glyph. |
+| interactionIntensity | number | 1.0 | Strength of the cursor's brightness boost when `hasCursorInteraction` is enabled. |
+| className | string | "" | Additional CSS classes applied to the outer wrapper div. |
+| bgColor | string | "transparent" | Canvas/container background. Use "transparent" for no fill (renders with WebGL alpha enabled). |
+
+> Note: unlike the plain-character variant, this component does not expose a `videoUrl` prop. The internal `WavePlane` still contains the video-texture plumbing (`uHasVideo`, `uVideo` uniforms), but since `EmojiWave` never passes a `videoUrl` through, that path stays permanently inactive — `uHasVideo` is always `0`.
+
+### Full Component Source
+```jsx
+// JS-CSS variant
+import { useMemo, useRef, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
+
+function splitGraphemes(str) {
+  if (typeof Intl !== "undefined" && Intl.Segmenter) {
+    const seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+    return Array.from(seg.segment(str), (s) => s.segment);
+  }
+  return Array.from(str);
+}
+
+function buildCharAtlas(characters, color, invert) {
+  const glyphs = splitGraphemes(characters);
+  const chars = invert ? glyphs.slice().reverse() : glyphs;
+  const n = chars.length;
+  const cell = 64;
+  const canvas = document.createElement("canvas");
+  canvas.width = cell * n;
+  canvas.height = cell;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = color;
+  ctx.font = `bold ${cell * 0.8}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", monospace`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  for (let i = 0; i < n; i++) {
+    ctx.fillText(chars[i], i * cell + cell / 2, cell / 2 + cell * 0.05);
+  }
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.needsUpdate = true;
+  return { texture: tex, count: n };
+}
+
+const vertexShader = /* glsl */ `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  precision highp float;
+  varying vec2 vUv;
+
+  uniform vec2 uResolution;
+  uniform float uTime;
+  uniform float uNoiseScale;
+  uniform float uElementSize;
+  uniform float uTension;
+  uniform float uTwist;
+  uniform float uIntensity;
+  uniform float uCharCount;
+  uniform sampler2D uAtlas;
+  uniform vec2 uMouse;
+  uniform float uHasCursor;
+  uniform float uInteractionIntensity;
+  uniform float uHasVideo;
+  uniform sampler2D uVideo;
+  uniform vec2 uVideoRes;
+
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+  }
+
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    float a = hash(i);
+    float b = hash(i + vec2(1.0, 0.0));
+    float c = hash(i + vec2(0.0, 1.0));
+    float d = hash(i + vec2(1.0, 1.0));
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+  }
+
+  void main() {
+    vec2 fragCoord = vUv * uResolution;
+    vec2 grid = vec2(uElementSize);
+    vec2 cell = floor(fragCoord / grid);
+    vec2 cellUv = fract(fragCoord / grid);
+    vec2 cellCenter = (cell + 0.5) * grid;
+
+    vec2 p = cellCenter * (uNoiseScale * 0.01);
+    float twistAngle = uTwist * sin(p.x * 1.3 + uTime * 0.3);
+    vec2 tp = vec2(
+      p.x * cos(twistAngle) - p.y * sin(twistAngle),
+      p.x * sin(twistAngle) + p.y * cos(twistAngle)
+    );
+
+    float wave = sin(tp.x * 2.0 + uTime) * cos(tp.y * uTension * 2.0 - uTime * 0.7);
+    float n = noise(tp * 2.0 + uTime * 0.15) - 0.5;
+    float value = (wave + n) * uIntensity * 0.5 + 0.5;
+
+    if (uHasCursor > 0.5) {
+      float d = distance(cellCenter, uMouse);
+      float falloff = smoothstep(grid.x * 8.0, 0.0, d);
+      value += falloff * uInteractionIntensity;
+    }
+
+    if (uHasVideo > 0.5) {
+      vec2 vUvCoord = vUv;
+      vec3 vcol = texture2D(uVideo, vUvCoord).rgb;
+      float luma = dot(vcol, vec3(0.299, 0.587, 0.114));
+      value = mix(value, luma, 0.85);
+    }
+
+    value = clamp(value, 0.0, 1.0);
+
+    float charIndex = floor(value * (uCharCount - 1.0) + 0.5);
+    vec2 atlasUv = vec2((charIndex + cellUv.x) / uCharCount, cellUv.y);
+    vec4 glyph = texture2D(uAtlas, atlasUv);
+
+    gl_FragColor = vec4(glyph.rgb, glyph.a);
+    if (glyph.a < 0.05) discard;
+  }
+`;
+
+function WavePlane({
+  eomji,
+  color,
+  waveTension,
+  waveTwist,
+  invert,
+  noiseScale,
+  elementSize,
+  speed,
+  hasCursorInteraction,
+  intensity,
+  interactionIntensity,
+  videoUrl,
+}) {
+  const meshRef = useRef();
+  const matRef = useRef();
+  const mouse = useRef(new THREE.Vector2(-9999, -9999));
+  const { size, gl } = useThree();
+
+  const atlas = useMemo(
+    () => buildCharAtlas(eomji, color, invert),
+    [eomji, color, invert]
+  );
+
+  const videoRef = useRef(null);
+  const videoTextureRef = useRef(null);
+
+  useEffect(() => {
+    if (!videoUrl) {
+      videoTextureRef.current = null;
+      return;
+    }
+    const video = document.createElement("video");
+    video.src = videoUrl;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.crossOrigin = "anonymous";
+    video.play().catch(() => {});
+    videoRef.current = video;
+
+    const tex = new THREE.VideoTexture(video);
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    videoTextureRef.current = tex;
+
+    if (matRef.current) {
+      matRef.current.uniforms.uVideo.value = tex;
+      matRef.current.uniforms.uHasVideo.value = 1;
+    }
+
+    return () => {
+      video.pause();
+      tex.dispose();
+      videoTextureRef.current = null;
+    };
+  }, [videoUrl]);
+
+  const mouseActive = useRef(false);
+
+  useEffect(() => {
+    const dom = gl.domElement;
+
+    const handleMove = (e) => {
+      const rect = dom.getBoundingClientRect();
+      const lx = e.clientX - rect.left;
+      const ly = e.clientY - rect.top;
+      if (lx < 0 || ly < 0 || lx > rect.width || ly > rect.height) {
+        mouseActive.current = false;
+        return;
+      }
+      mouse.current.x = lx;
+      mouse.current.y = rect.height - ly;
+      mouseActive.current = true;
+    };
+    const handleLeave = () => {
+      mouseActive.current = false;
+      mouse.current.set(-9999, -9999);
+    };
+
+    document.addEventListener("mousemove", handleMove);
+    dom.addEventListener("mouseleave", handleLeave);
+    return () => {
+      document.removeEventListener("mousemove", handleMove);
+      dom.removeEventListener("mouseleave", handleLeave);
+    };
+  }, [gl, size]);
+
+  useFrame((state) => {
+    if (!matRef.current) return;
+    matRef.current.uniforms.uTime.value = state.clock.elapsedTime * speed;
+    matRef.current.uniforms.uMouse.value.copy(mouse.current);
+    matRef.current.uniforms.uResolution.value.set(size.width, size.height);
+    matRef.current.uniforms.uHasCursor.value =
+      hasCursorInteraction && mouseActive.current ? 1 : 0;
+    if (videoTextureRef.current) videoTextureRef.current.needsUpdate = true;
+  });
+
+  const uniforms = useMemo(
+    () => ({
+      uResolution: { value: new THREE.Vector2(size.width, size.height) },
+      uTime: { value: 0 },
+      uNoiseScale: { value: noiseScale },
+      uElementSize: { value: elementSize },
+      uTension: { value: waveTension },
+      uTwist: { value: waveTwist },
+      uIntensity: { value: intensity },
+      uCharCount: { value: atlas.count },
+      uAtlas: { value: atlas.texture },
+      uMouse: { value: new THREE.Vector2(-9999, -9999) },
+      uHasCursor: { value: hasCursorInteraction ? 1 : 0 },
+      uInteractionIntensity: { value: interactionIntensity },
+      // eslint-disable-next-line react-hooks/refs
+      uHasVideo: { value: videoTextureRef.current ? 1 : 0 },
+      // eslint-disable-next-line react-hooks/refs
+      uVideo: { value: videoTextureRef.current },
+      uVideoRes: { value: new THREE.Vector2(1, 1) },
+    }),
+    [
+      atlas.count,
+      atlas.texture,
+      elementSize,
+      hasCursorInteraction,
+      intensity,
+      interactionIntensity,
+      noiseScale,
+      size.height,
+      size.width,
+      waveTension,
+      waveTwist,
+    ]
+  );
+
+  useEffect(() => {
+    if (!matRef.current) return;
+    matRef.current.uniforms.uNoiseScale.value = noiseScale;
+    matRef.current.uniforms.uElementSize.value = elementSize;
+    matRef.current.uniforms.uTension.value = waveTension;
+    matRef.current.uniforms.uTwist.value = waveTwist;
+    matRef.current.uniforms.uIntensity.value = intensity;
+    matRef.current.uniforms.uHasCursor.value = hasCursorInteraction ? 1 : 0;
+    matRef.current.uniforms.uInteractionIntensity.value = interactionIntensity;
+    matRef.current.uniforms.uAtlas.value = atlas.texture;
+    matRef.current.uniforms.uCharCount.value = atlas.count;
+  }, [
+    noiseScale,
+    elementSize,
+    waveTension,
+    waveTwist,
+    intensity,
+    hasCursorInteraction,
+    interactionIntensity,
+    atlas,
+  ]);
+
+  return (
+    <mesh ref={meshRef}>
+      <planeGeometry args={[Math.max(size.width, 1), Math.max(size.height, 1)]} />
+      <shaderMaterial
+        ref={matRef}
+        transparent
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={uniforms}
+      />
+    </mesh>
+  );
+}
+
+export default function EmojiWave({
+  eomji = " 🌕🌓🌗🌑",
+  color = "#ffffff",
+  waveTension = 0.5,
+  waveTwist = 0.1,
+  invert = false,
+  noiseScale = 1.0,
+  elementSize = 28.0,
+  speed = 1.0,
+  hasCursorInteraction = true,
+  intensity = 1.0,
+  interactionIntensity = 1.0,
+  className = "",
+  bgColor = "transparent",
+}) {
+  const style = {
+    wrapper: { position: "relative", width: "100%", height: "100%", overflow: "hidden" },
+    canvas: {
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      display: "block",
+      background: bgColor === "transparent" ? "transparent" : bgColor,
+    },
+  };
+
+  const classes = `${className}`;
+
+  return (
+    <div style={style.wrapper} className={classes}>
+      <Canvas
+        style={style.canvas}
+        orthographic
+        camera={{ zoom: 1, position: [0, 0, 1] }}
+        gl={{ alpha: bgColor === "transparent", antialias: false }}
+      >
+        <WavePlane
+          eomji={eomji}
+          color={color}
+          waveTension={waveTension}
+          waveTwist={waveTwist}
+          invert={invert}
+          noiseScale={noiseScale}
+          elementSize={elementSize}
+          speed={speed}
+          hasCursorInteraction={hasCursorInteraction}
+          intensity={intensity}
+          interactionIntensity={interactionIntensity}
+        />
+      </Canvas>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependencies before using this component:
+   ```bash
+   npm install three @react-three/fiber
+   ```
+2. Copy the component source above into `./EmojiWave.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component fills its parent container at 100% width/height via inline styles (this is the CSS variant — no Tailwind classes are used). Wrap it in a sized container:
+   ```jsx
+   <div style={{ width: '100%', height: '400px' }}>
+     <EmojiWave />
+   </div>
+   ```
+5. The render plane automatically tracks the `<Canvas>` viewport size via `useThree()`'s `size` — no manual resize handling is needed. The plane's geometry is clamped with `Math.max(size.width, 1)` / `Math.max(size.height, 1)` to avoid zero-size geometry errors during initial mount.
+6. `eomji`, `color`, and `invert` rebuild the glyph atlas texture (via `buildCharAtlas`) whenever they change — keep these stable if you're animating other props frequently, since atlas rebuilds are comparatively expensive. Atlas building uses `Intl.Segmenter` (with a fallback to `Array.from`) to correctly split multi-codepoint emoji into individual grapheme glyphs, instead of breaking on raw UTF-16 code units.
+7. `noiseScale`, `elementSize`, `waveTension`, `waveTwist`, `intensity`, `hasCursorInteraction`, and `interactionIntensity` update live on existing shader uniforms each frame — no rebuild needed.
+8. There is no public `videoUrl` prop on this variant. If you want video-luma-driven brightness like the plain-character variant, you'll need to thread a `videoUrl` prop from `EmojiWave` down into `WavePlane` yourself — the shader and `WavePlane` already support it internally, it's just not wired up at the top level here.
+9. `hasCursorInteraction` listens for `mousemove` at the `document` level (not just the canvas) so the brightness boost engages immediately as the cursor crosses into the container bounds, even at the very edge.
+10. Use `bgColor="transparent"` (default) to render over existing page content; the `<Canvas>` is created with `alpha: true` in that case. Pass any other CSS color string to render an opaque background instead.
+11. `eomji` should be ordered from "darkest"/sparsest to "brightest"/densest glyph — the shader maps wave/noise brightness directly onto this ramp by index. Use `invert` to flip the ramp without reordering the string yourself. Note the prop is spelled `eomji` (not `emoji`) in the source.
+12. The `color` prop has little visible effect here compared to the plain-character variant: most emoji are rendered as full-color glyphs by the browser/OS emoji font, which ignores Canvas `fillStyle`. It will still affect any non-emoji/monochrome glyphs you include in the ramp.
