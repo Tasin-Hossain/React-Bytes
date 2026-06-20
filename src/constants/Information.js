@@ -114,6 +114,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/EmojiWave': {
+    name: 'EmojiWave',
+    description: 'A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/backgrounds/emoji-wave',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
