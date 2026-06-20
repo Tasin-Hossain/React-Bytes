@@ -558,6 +558,74 @@
 					"path": "AsciiWave.tsx"
 				}
 			]
+		},
+		{
+			"name": "EmojiWave-JS-CSS",
+			"title": "EmojiWave",
+			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "EmojiWave.jsx"
+				}
+			]
+		},
+		{
+			"name": "EmojiWave-JS-TW",
+			"title": "EmojiWave",
+			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "EmojiWave.jsx"
+				}
+			]
+		},
+		{
+			"name": "EmojiWave-TS-CSS",
+			"title": "EmojiWave",
+			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "EmojiWave.tsx"
+				}
+			]
+		},
+		{
+			"name": "EmojiWave-TS-TW",
+			"title": "EmojiWave",
+			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "EmojiWave.tsx"
+				}
+			]
 		}
 	]
 }
