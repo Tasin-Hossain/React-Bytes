@@ -24,10 +24,10 @@ const ShapesDots = ({
   children,
 
   cellSize = 40,
-  influenceRadiusVmin = 30,
-  attackTime = 0.5,
-  releaseTime = 0.6,
-  idleScale = 0.09,
+  influenceRadiusVmin = 25,
+  attackTime = 0.05,
+  releaseTime = 0.2,
+  idleScale = 0.10,
   minPeakScale = 1,
   maxPeakScale = 3,
 
@@ -38,14 +38,14 @@ const ShapesDots = ({
   shapes = ["circle", "triangle", "square"],
   colors = DEFAULT_COLORS,
 
-  dpr = 2,
+  dpr = 3,
   opacity = 1,
 
   animationMode = "off",
   animationSpeed = 1,
 
-  overlapGuard = 0.86,
   rotationVariance = 1,
+  overlapGuard = 0.86,
 }) => {
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
@@ -419,7 +419,7 @@ const ShapesDots = ({
       className={`relative overflow-hidden ${className}`}
       style={{ width, height }}
     >
-      <canvas ref={canvasRef} className="block w-full h-full" style={{ cursor: "pointer" }} />
+      <canvas ref={canvasRef} className="block w-full h-full"  />
       {children}
     </div>
   );
