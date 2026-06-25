@@ -180,7 +180,7 @@ export default function PreviewColorPicker({ title, color, value, onChange }) {
         type="button"
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center justify-between gap-2 bg-(--bg-elevated)
-    border border-(--border-secondary) rounded-md px-3 py-2 cursor-pointer transition-colors duration-150"
+    border border-(--border-secondary)! rounded-md px-3 py-2 cursor-pointer transition-colors duration-150"
       >
         <span className="text-[12px] text-(--text-muted) truncate">{title}</span>
         <span className="flex items-center gap-1.5">
@@ -207,10 +207,9 @@ export default function PreviewColorPicker({ title, color, value, onChange }) {
             right: 0,
             zIndex: 50,
             background: 'var(--bg-elevated)',
-            border: '1px solid var(--border-primary)',
+            border: '1px solid var(--border-secondary)',
             borderRadius: 'var(--radius-sm)',
             padding: 12,
-            boxShadow: 'var(--shadow-dropdown)'
           }}
         >
           {/* SV area */}
