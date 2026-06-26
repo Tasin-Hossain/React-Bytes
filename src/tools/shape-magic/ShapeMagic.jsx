@@ -6,6 +6,7 @@ import ExportPanel from './components/ExportPanel';
 
 import { createInitialState, createShape, PRESETS } from './Types';
 import { computeBridges, computeCornerRadii } from './Computebridges';
+import Ads from '../../components/navbers/Ads';
 
 const useHistory = initialState => {
   const [history, setHistory] = useState([initialState]);
@@ -449,7 +450,8 @@ export default function ShapeMagic({ toolSelector }) {
       </div>
 
       {/* Desktop right sidebar — Export */}
-      <div className="w-70 shrink-0 h-full overflow-hidden hidden xl:flex flex-col">
+      <div className=" w-70 shrink-0 h-full overflow-hidden hidden xl:flex flex-col gap-3">
+        <Ads/>
         <ExportPanel {...exportPanelProps} />
       </div>
 
