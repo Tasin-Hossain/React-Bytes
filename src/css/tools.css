@@ -1,0 +1,16 @@
+:root[data-theme='dark'] {
+  --canvas-primary: #1f1f1f;
+
+  --canvas-border: #232323;
+
+  --persets-text: #ffffff;
+}
+ 
+:root[data-theme='light'] {
+  --canvas-primary: #cacaca;
+
+  --canvas-border: #cacaca;
+  
+  --persets-text: #666666;
+
+}
