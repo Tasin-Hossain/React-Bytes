@@ -3,6 +3,8 @@ import RootPage from './pages/RootPage';
 import SidebarLayout from './components/layout/SidebarLayout';
 import CategoryPage from './pages/CategoryPage';
 import FavoritesPage from './pages/FavoritesPage';
+import ToolsPage from './pages/ToolsPage';
+
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
             </SidebarLayout>
           }
         />
+        <Route path="/tools/:toolId?" element={<ToolsPage />} />
       </Routes>
     </>
   );
