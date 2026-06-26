@@ -75,7 +75,7 @@ export const PRESETS = [
     id: 'message',
     name: 'Message',
     radius: 36,
-    build: () => [make(220, 180, 320, 220), make(280, 400, 60, 70)]
+    build: () => [make(220, 180, 320, 220), make(230, 380, 56, 64)]
   },
 
   {
@@ -83,12 +83,12 @@ export const PRESETS = [
     // shaft near its end -> 3 bridges.
     id: 'key',
     name: 'Key',
-    radius: 28,
+    radius: 24,
     build: () => [
-      make(260, 220, 140, 140),
-      make(400, 270, 260, 40),
-      make(560, 310, 30, 40),
-      make(620, 310, 30, 60)
+      make(240, 220, 120, 120),
+      make(360, 264, 320, 32),
+      make(560, 296, 36, 50),
+      make(640, 296, 36, 70)
     ]
   },
 
