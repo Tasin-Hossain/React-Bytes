@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { RiHeartFill, RiArrowDownSLine, RiArrowRightUpLine } from 'react-icons/ri';
 
 import { CATEGORIES, NEW, UPDATED } from '../../constants/Categories';
+import { TOOLS } from '../../constants/Tools';
 
 // Constants
 // const SCROLL_OFFSET = 100;
@@ -20,9 +21,6 @@ const getSavedComponents = () => {
     return [];
   }
 };
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const TOOLS = [];
 
 // Custom Hooks
 const useFavoritesSync = () => {
@@ -68,27 +66,30 @@ const ToolsLinks = ({ onClose, location }) => {
   if (!TOOLS.length) return null;
   return (
     <>
-      <hr className="my-3 border-(--border-secondary)" />
-      <p className="text-[11px] font-semibold tracking-widest uppercase text-(--text-muted) mb-2 px-3">Tools</p>
-      <div className="flex flex-col gap-0.5">
+      <p className="w-full pl-6 text-(--brand) pr-3 py-2 text-left">Tools</p>
+      <div className="flex flex-col gap-0.5 pb-5 pl-3 ">
         {TOOLS.map(tool => (
           <Link
             key={tool.id}
-            to={tool.comingSoon ? '#' : tool.path}
-            onClick={tool.comingSoon ? e => e.preventDefault() : onClose}
-            style={{ opacity: tool.comingSoon ? 0.4 : 1, cursor: tool.comingSoon ? 'not-allowed' : 'pointer' }}
+            to={tool.comingSoon ? '/tools' : tool.path}
+            onClick={onClose}
+            style={{ opacity: tool.comingSoon ? 0.75 : 1 }}
           >
             <div
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-[13px] transition-all duration-150
-                ${location?.pathname === tool.path ? 'text-(--text-primary) bg-(--bg-hover)' : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-hover)'}`}
+              className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
+                ${location?.pathname === tool.path ? 'text-(--brand)' : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'}`}
             >
-              {tool.icon && <tool.icon className="text-purple-500" size={14} />}
-              <span>{tool.label}</span>
-              {tool.comingSoon && (
-                <span className="text-[9px] font-bold px-1.5 py-px rounded-[3px] bg-purple-500/10 text-purple-300 border border-purple-500/30">
-                  Soon
-                </span>
-              )}
+              <div className='w-full flex items-center justify-between'>
+                <div className="flex gap-1 items-center justify-center">
+                  {tool.icon && <tool.icon className="text-(--brand) " size={16} />}
+                  <span className="truncate">{tool.label}</span>
+                </div>
+                {tool.comingSoon && (
+                  <span className="shrink-0 text-[10px] font-bold px-1.5 py-px rounded-md bg-(--bg-button) text-(--text-muted) border border-(--border-button)">
+                    Soon
+                  </span>
+                )}
+              </div>
             </div>
           </Link>
         ))}
@@ -143,18 +144,16 @@ const FavoritesSection = ({ savedSet, onClose, location }) => {
         />
       </button>
 
-      <div
-        className="overflow-hidden transition-all duration-300"
-        style={{ maxHeight: open ? '60px' : '0px' }}
-      >
+      <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: open ? '60px' : '0px' }}>
         <div className="flex flex-col gap-0.5 pb-1 px-1">
           <Link
             to="/favorites"
             onClick={onClose}
             className={`flex items-center gap-2 px-6 py-2 rounded-md text-[13px] transition-all duration-150
-              ${location?.pathname === '/favorites'
-                ? 'text-(--text-primary) bg-(--bg-hover) font-medium'
-                : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-hover)'
+              ${
+                location?.pathname === '/favorites'
+                  ? 'text-(--text-primary) bg-(--bg-hover) font-medium'
+                  : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-hover)'
               }`}
           >
             <RiHeartFill size={12} className="text-(--brand) shrink-0" />
@@ -167,89 +166,98 @@ const FavoritesSection = ({ savedSet, onClose, location }) => {
 };
 
 // AccordionCategory — defaultOpen=true means always starts open
-const AccordionCategory = memo(({ category, onClose, location, pendingActivePath, onNavigation, savedSet, defaultOpen }) => {
-  const [open, setOpen] = useState(defaultOpen ?? true);
+const AccordionCategory = memo(
+  ({ category, onClose, location, pendingActivePath, onNavigation, savedSet, defaultOpen }) => {
+    const [open, setOpen] = useState(defaultOpen ?? true);
 
-  const items = useMemo(
-    () =>
-      category.subcategories.map(sub => {
-        const path = `/${slug(category.name)}/${slug(sub)}`;
-        const activePath = pendingActivePath || location.pathname;
-        const favKey = `${slug(category.name)}/${slug(sub)}`;
-        return {
-          sub, path,
-          isActive: activePath === path,
-          isNew: NEW.includes(sub),
-          isUpdated: UPDATED.includes(sub),
-          isFavorited: savedSet?.has?.(favKey)
-        };
-      }),
-    [category, location.pathname, pendingActivePath, savedSet]
-  );
+    const items = useMemo(
+      () =>
+        category.subcategories.map(sub => {
+          const path = `/${slug(category.name)}/${slug(sub)}`;
+          const activePath = pendingActivePath || location.pathname;
+          const favKey = `${slug(category.name)}/${slug(sub)}`;
+          return {
+            sub,
+            path,
+            isActive: activePath === path,
+            isNew: NEW.includes(sub),
+            isUpdated: UPDATED.includes(sub),
+            isFavorited: savedSet?.has?.(favKey)
+          };
+        }),
+      [category, location.pathname, pendingActivePath, savedSet]
+    );
 
-  const hasActive = items.some(i => i.isActive);
+    const hasActive = items.some(i => i.isActive);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (hasActive) setOpen(true);
-  }, [hasActive]);
+    useEffect(() => {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (hasActive) setOpen(true);
+    }, [hasActive]);
 
-  return (
-    <div>
-      <button
-        onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between pl-6 pr-3 py-2 text-left"
-      >
-        <span className={`text-[13px] font-medium ${hasActive ? 'text-(--brand)' : 'text-(--brand)'}`}>
-          {category.name}
-        </span>
-        <RiArrowDownSLine
-          size={16}
-          className={`text-(--text-muted) transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
+    return (
+      <div>
+        <button
+          onClick={() => setOpen(v => !v)}
+          className="w-full flex items-center justify-between pl-6 pr-3 py-2 text-left"
+        >
+          <span className={`text-[13px] font-medium ${hasActive ? 'text-(--brand)' : 'text-(--brand)'}`}>
+            {category.name}
+          </span>
+          <RiArrowDownSLine
+            size={16}
+            className={`text-(--text-muted) transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          />
+        </button>
 
-      <div
-        className="overflow-hidden transition-all duration-300"
-        style={{ maxHeight: open ? `${items.length * 44}px` : '0px' }}
-      >
-        <div className="flex flex-col gap-0.5 pb-5 pl-3 bg-">
-          {items.map(({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
-            <button
-              key={path}
-              onClick={() => { onNavigation?.(path, sub); onClose?.(); }}
-              className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
-                ${isActive
-                  ? 'text-(--brand) font-medium'
-                  : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'
+        <div
+          className="overflow-hidden transition-all duration-300"
+          style={{ maxHeight: open ? `${items.length * 44}px` : '0px' }}
+        >
+          <div className="flex flex-col gap-0.5 pb-5 pl-3 ">
+            {items.map(({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
+              <button
+                key={path}
+                onClick={() => {
+                  onNavigation?.(path, sub);
+                  onClose?.();
+                }}
+                className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
+                ${
+                  isActive
+                    ? 'text-(--brand) font-medium'
+                    : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'
                 }`}
-            >
-              <span className="truncate flex-1">{sub}</span>
-              {isNew && (
-                <span className="shrink-0 text-[9px] font-bold px-1.5 py-px rounded-md bg-linear-to-r from-purple-500 to-violet-500 text-white">
-                  New
-                </span>
-              )}
-              {isUpdated && (
-                <span className="shrink-0 text-[10px] font-bold px-1.5 py-px rounded-md bg-(--bg-button) text-(--text-muted) border border-(--border-button)">
-                  Updated
-                </span>
-              )}
-              {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
-            </button>
-          ))}
+              >
+                <span className="truncate flex-1">{sub}</span>
+                {isNew && (
+                  <span className="shrink-0 text-[9px] font-bold px-1.5 py-px rounded-md bg-linear-to-r from-purple-500 to-violet-500 text-white">
+                    New
+                  </span>
+                )}
+                {isUpdated && (
+                  <span className="shrink-0 text-[10px] font-bold px-1.5 py-px rounded-md bg-(--bg-button) text-(--text-muted) border border-(--border-button)">
+                    Updated
+                  </span>
+                )}
+                {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 AccordionCategory.displayName = 'AccordionCategory';
 
 // MainDrawer — slides in from LEFT
 const MainDrawer = ({ isOpen, onClose, location, pendingActivePath, onNavigation, savedSet }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   return (
@@ -275,7 +283,7 @@ const MainDrawer = ({ isOpen, onClose, location, pendingActivePath, onNavigation
             className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-(--bg-hover) transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
@@ -366,7 +374,6 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
         }}
       >
         <div className="py-4">
-
           <div className="mt-1">
             {CATEGORIES.map((cat, i) => (
               <Fragment key={cat.name}>
