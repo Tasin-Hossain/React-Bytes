@@ -60,7 +60,7 @@ const CursorTrailInner = () => {
       PreviewComponent={
         <CursorTrail key={animKey} {...props} className="w-full h-full min-h-100">
           <div className="w-full h-full min-h-100 flex items-center justify-center">
-            <p className="text-(--text-muted) text-7xl select-none">Hover here</p>
+            <p className="text-(--text-muted) font-bold opacity-50 text-5xl lg:text-7xl select-none">HOVER ME</p>
           </div>
         </CursorTrail>
       }
