@@ -34,7 +34,7 @@ export const INITIAL_PROPS = {
   duration: 22,
   cardWidth: 165,
   cardHeight: 154,
-  pauseOnHover: true,
+  pauseOnHover: false,
   reverse: false,
   draggable: false,
   autoPlay: true,
