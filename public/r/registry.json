@@ -6,7 +6,7 @@
 		{
 			"name": "MagneticText-JS-CSS",
 			"title": "MagneticText",
-			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"description": "A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -22,7 +22,7 @@
 		{
 			"name": "MagneticText-JS-TW",
 			"title": "MagneticText",
-			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"description": "A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -38,7 +38,7 @@
 		{
 			"name": "MagneticText-TS-CSS",
 			"title": "MagneticText",
-			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"description": "A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -54,7 +54,7 @@
 		{
 			"name": "MagneticText-TS-TW",
 			"title": "MagneticText",
-			"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+			"description": "A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -70,7 +70,7 @@
 		{
 			"name": "CurtainText-JS-CSS",
 			"title": "CurtainText",
-			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"description": "A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -84,7 +84,7 @@
 		{
 			"name": "CurtainText-JS-TW",
 			"title": "CurtainText",
-			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"description": "A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -98,7 +98,7 @@
 		{
 			"name": "CurtainText-TS-CSS",
 			"title": "CurtainText",
-			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"description": "A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -112,7 +112,7 @@
 		{
 			"name": "CurtainText-TS-TW",
 			"title": "CurtainText",
-			"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+			"description": "A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -126,7 +126,7 @@
 		{
 			"name": "CursorTrail-JS-CSS",
 			"title": "CursorTrail",
-			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"description": "A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"motion@^12.40.0"
@@ -142,7 +142,7 @@
 		{
 			"name": "CursorTrail-JS-TW",
 			"title": "CursorTrail",
-			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"description": "A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"motion@^12.40.0"
@@ -158,7 +158,7 @@
 		{
 			"name": "CursorTrail-TS-CSS",
 			"title": "CursorTrail",
-			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"description": "A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"motion@^12.40.0"
@@ -174,7 +174,7 @@
 		{
 			"name": "CursorTrail-TS-TW",
 			"title": "CursorTrail",
-			"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+			"description": "A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"motion@^12.40.0"
@@ -190,7 +190,7 @@
 		{
 			"name": "BlurText-JS-CSS",
 			"title": "BlurText",
-			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"description": "A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -206,7 +206,7 @@
 		{
 			"name": "BlurText-JS-TW",
 			"title": "BlurText",
-			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"description": "A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -222,7 +222,7 @@
 		{
 			"name": "BlurText-TS-CSS",
 			"title": "BlurText",
-			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"description": "A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -238,7 +238,7 @@
 		{
 			"name": "BlurText-TS-TW",
 			"title": "BlurText",
-			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"description": "A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.",
 			"type": "registry:component",
 			"dependencies": [
 				"gsap@^3.15.0"
@@ -252,9 +252,73 @@
 			]
 		},
 		{
+			"name": "RotatingCards-JS-CSS",
+			"title": "RotatingCards",
+			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCards.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCards-JS-TW",
+			"title": "RotatingCards",
+			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCards.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCards-TS-CSS",
+			"title": "RotatingCards",
+			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCards.tsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCards-TS-TW",
+			"title": "RotatingCards",
+			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCards.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouserepelDots-JS-CSS",
 			"title": "MouserepelDots",
-			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
+			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -268,7 +332,7 @@
 		{
 			"name": "MouserepelDots-JS-TW",
 			"title": "MouserepelDots",
-			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
+			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -282,7 +346,7 @@
 		{
 			"name": "MouserepelDots-TS-CSS",
 			"title": "MouserepelDots",
-			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
+			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -296,7 +360,7 @@
 		{
 			"name": "MouserepelDots-TS-TW",
 			"title": "MouserepelDots",
-			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
+			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -310,7 +374,7 @@
 		{
 			"name": "MouserepelGrid-JS-CSS",
 			"title": "MouserepelGrid",
-			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -324,7 +388,7 @@
 		{
 			"name": "MouserepelGrid-JS-TW",
 			"title": "MouserepelGrid",
-			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -338,7 +402,7 @@
 		{
 			"name": "MouserepelGrid-TS-CSS",
 			"title": "MouserepelGrid",
-			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -352,7 +416,7 @@
 		{
 			"name": "MouserepelGrid-TS-TW",
 			"title": "MouserepelGrid",
-			"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -366,7 +430,7 @@
 		{
 			"name": "BlinkingSquares-JS-CSS",
 			"title": "BlinkingSquares",
-			"description": "Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.",
+			"description": "A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -380,7 +444,7 @@
 		{
 			"name": "BlinkingSquares-JS-TW",
 			"title": "BlinkingSquares",
-			"description": "Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.",
+			"description": "A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -394,7 +458,7 @@
 		{
 			"name": "BlinkingSquares-TS-CSS",
 			"title": "BlinkingSquares",
-			"description": "Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.",
+			"description": "A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -408,7 +472,7 @@
 		{
 			"name": "BlinkingSquares-TS-TW",
 			"title": "BlinkingSquares",
-			"description": "Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.",
+			"description": "A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -422,7 +486,7 @@
 		{
 			"name": "HalfTone-JS-CSS",
 			"title": "HalfTone",
-			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"description": "A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -439,7 +503,7 @@
 		{
 			"name": "HalfTone-JS-TW",
 			"title": "HalfTone",
-			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"description": "A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -456,7 +520,7 @@
 		{
 			"name": "HalfTone-TS-CSS",
 			"title": "HalfTone",
-			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"description": "A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -473,7 +537,7 @@
 		{
 			"name": "HalfTone-TS-TW",
 			"title": "HalfTone",
-			"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+			"description": "A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -490,7 +554,7 @@
 		{
 			"name": "Vortex-JS-CSS",
 			"title": "Vortex",
-			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"description": "A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -507,7 +571,7 @@
 		{
 			"name": "Vortex-JS-TW",
 			"title": "Vortex",
-			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"description": "A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -524,7 +588,7 @@
 		{
 			"name": "Vortex-TS-CSS",
 			"title": "Vortex",
-			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"description": "A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -541,7 +605,7 @@
 		{
 			"name": "Vortex-TS-TW",
 			"title": "Vortex",
-			"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+			"description": "A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -558,7 +622,7 @@
 		{
 			"name": "AsciiWave-JS-CSS",
 			"title": "AsciiWave",
-			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -575,7 +639,7 @@
 		{
 			"name": "AsciiWave-JS-TW",
 			"title": "AsciiWave",
-			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -592,7 +656,7 @@
 		{
 			"name": "AsciiWave-TS-CSS",
 			"title": "AsciiWave",
-			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -609,7 +673,7 @@
 		{
 			"name": "AsciiWave-TS-TW",
 			"title": "AsciiWave",
-			"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -626,7 +690,7 @@
 		{
 			"name": "EmojiWave-JS-CSS",
 			"title": "EmojiWave",
-			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -643,7 +707,7 @@
 		{
 			"name": "EmojiWave-JS-TW",
 			"title": "EmojiWave",
-			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -660,7 +724,7 @@
 		{
 			"name": "EmojiWave-TS-CSS",
 			"title": "EmojiWave",
-			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -677,7 +741,7 @@
 		{
 			"name": "EmojiWave-TS-TW",
 			"title": "EmojiWave",
-			"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+			"description": "A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.",
 			"type": "registry:component",
 			"dependencies": [
 				"@react-three/fiber@^9.6.1",
@@ -694,7 +758,7 @@
 		{
 			"name": "ShapesDots-JS-CSS",
 			"title": "ShapesDots",
-			"description": "A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.",
+			"description": "A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -708,7 +772,7 @@
 		{
 			"name": "ShapesDots-JS-TW",
 			"title": "ShapesDots",
-			"description": "A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.",
+			"description": "A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -722,7 +786,7 @@
 		{
 			"name": "ShapesDots-TS-CSS",
 			"title": "ShapesDots",
-			"description": "A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.",
+			"description": "A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],
@@ -736,7 +800,7 @@
 		{
 			"name": "ShapesDots-TS-TW",
 			"title": "ShapesDots",
-			"description": "A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.",
+			"description": "A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.",
 			"type": "registry:component",
 			"dependencies": [],
 			"registryDependencies": [],

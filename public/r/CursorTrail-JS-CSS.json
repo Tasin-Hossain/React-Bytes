@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "CursorTrail-JS-CSS",
 	"title": "CursorTrail",
-	"description": "Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.",
+	"description": "A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.",
 	"type": "registry:component",
 	"files": [
 		{

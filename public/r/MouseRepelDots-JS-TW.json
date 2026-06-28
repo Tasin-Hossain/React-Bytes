@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "MouserepelDots-JS-TW",
 	"title": "MouserepelDots",
-	"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",
+	"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 	"type": "registry:component",
 	"files": [
 		{

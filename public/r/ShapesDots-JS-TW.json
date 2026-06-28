@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "ShapesDots-JS-TW",
 	"title": "ShapesDots",
-	"description": "A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.",
+	"description": "A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.",
 	"type": "registry:component",
 	"files": [
 		{

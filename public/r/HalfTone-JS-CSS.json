@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "HalfTone-JS-CSS",
 	"title": "HalfTone",
-	"description": "A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.",
+	"description": "A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.",
 	"type": "registry:component",
 	"files": [
 		{

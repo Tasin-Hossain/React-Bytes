@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "MagneticText-JS-CSS",
 	"title": "MagneticText",
-	"description": "Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.",
+	"description": "A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.",
 	"type": "registry:component",
 	"files": [
 		{

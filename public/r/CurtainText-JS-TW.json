@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "CurtainText-JS-TW",
 	"title": "CurtainText",
-	"description": "A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.",
+	"description": "A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.",
 	"type": "registry:component",
 	"files": [
 		{

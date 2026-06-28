@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "EmojiWave-TS-TW",
 	"title": "EmojiWave",
-	"description": "A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+	"description": "A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.",
 	"type": "registry:component",
 	"files": [
 		{

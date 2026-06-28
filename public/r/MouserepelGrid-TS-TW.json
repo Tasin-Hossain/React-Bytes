@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "MouserepelGrid-TS-TW",
 	"title": "MouserepelGrid",
-	"description": "Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.",
+	"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 	"type": "registry:component",
 	"files": [
 		{

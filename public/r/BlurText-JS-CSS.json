@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "BlurText-JS-CSS",
 	"title": "BlurText",
-	"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+	"description": "A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.",
 	"type": "registry:component",
 	"files": [
 		{

@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "BlinkingSquares-JS-TW",
 	"title": "BlinkingSquares",
-	"description": "Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.",
+	"description": "A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.",
 	"type": "registry:component",
 	"files": [
 		{

@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "Vortex-JS-CSS",
 	"title": "Vortex",
-	"description": "An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.",
+	"description": "A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.",
 	"type": "registry:component",
 	"files": [
 		{

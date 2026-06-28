@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "AsciiWave-TS-CSS",
 	"title": "AsciiWave",
-	"description": "A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.",
+	"description": "A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.",
 	"type": "registry:component",
 	"files": [
 		{
