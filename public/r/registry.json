@@ -188,6 +188,70 @@
 			]
 		},
 		{
+			"name": "BlurText-JS-CSS",
+			"title": "BlurText",
+			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurText.jsx"
+				}
+			]
+		},
+		{
+			"name": "BlurText-JS-TW",
+			"title": "BlurText",
+			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurText.jsx"
+				}
+			]
+		},
+		{
+			"name": "BlurText-TS-CSS",
+			"title": "BlurText",
+			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurText.tsx"
+				}
+			]
+		},
+		{
+			"name": "BlurText-TS-TW",
+			"title": "BlurText",
+			"description": "Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurText.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouserepelDots-JS-CSS",
 			"title": "MouserepelDots",
 			"description": "Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.",

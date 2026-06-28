@@ -1,0 +1,180 @@
+## Integrate the <BlurText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: BlurText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import BlurText from './BlurText'
+
+<BlurText
+  text="IMPACT"
+  animateBy="letter"
+  from="center"
+  scale={4}
+  blur={8}
+  yOffset={0}
+  duration={0.8}
+  charDelay={0.06}
+  wordDelay={0.15}
+  repeat={false}
+  color="#ffffff"
+  gradient=""
+  fontSize="text-6xl"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "IMPACT" | The text content to animate. Split into letters or words depending on `animateBy`. |
+| animateBy | string | "letter" | Unit of animation. Options: "letter" \| "word". `"letter"` splits `text` into individual characters (via spread, so it's grapheme-naive — see note below); `"word"` splits on whitespace. |
+| from | string | "center" | Stagger origin passed to GSAP's `stagger.from` — controls the order in which letters/words animate in. Accepts any value GSAP's stagger `from` supports (e.g. "center", "start", "end", "edges", "random", or an index). |
+| scale | number | 4 | Starting scale (both X and Y) each letter/word animates in from, settling to `1` (normal size) by the end of the animation. |
+| blur | number | 8 | Starting blur radius in pixels each letter/word animates in from, settling to `0` (sharp) by the end of the animation. |
+| yOffset | number | 0 | Starting vertical offset in pixels each letter/word animates in from, settling to `0` by the end of the animation. |
+| duration | number | 0.8 | Duration in seconds of each individual letter/word's animation (not the whole sequence — staggered starts mean the total runtime is longer). |
+| charDelay | number | 0.06 | Stagger delay in seconds between consecutive letters when `animateBy="letter"`. |
+| wordDelay | number | 0.15 | Stagger delay in seconds between consecutive words when `animateBy="word"`. |
+| repeat | boolean | false | When `true`, the animation loops indefinitely (GSAP `repeat: -1`) with a 1 second pause (`repeatDelay`) between cycles, resetting all letters/words back to their starting blur/scale/opacity/offset before each repeat. |
+| color | string | "#ffffff" | Solid text color (hex or any CSS color string). Ignored if `gradient` is set. |
+| gradient | string | "" | CSS `background-image` value (e.g. a `linear-gradient(...)`) used to fill the text via background-clip instead of a solid `color`. When set, this takes priority over `color`. |
+| fontSize | string | "text-6xl" | Tailwind font-size class applied to each letter/word span. |
+| className | string | "" | Additional CSS classes applied to the outermost wrapper div. |
+
+### Full Component Source
+```jsx
+import { useEffect, useRef, useCallback } from 'react';
+import { gsap } from 'gsap';
+export default function BlurText({
+  text = 'IMPACT',
+  animateBy = 'letter',
+  from = 'center',
+  scale = 4,
+  blur = 8,
+  yOffset = 0,
+  duration = 0.8,
+  charDelay = 0.06,
+  wordDelay = 0.15,
+  repeat = false,
+  color = '#ffffff',
+  gradient = '',
+  fontSize = 'text-6xl',
+  className = ''
+}) {
+  const containerRef = useRef(null);
+  const tlRef = useRef(null);
+  const gradientStyle = gradient
+    ? {
+        backgroundImage: gradient,
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text'
+      }
+    : { color };
+  const words = animateBy === 'word' ? text.split(/\s+/).filter(Boolean) : [];
+  const chars = animateBy === 'letter' ? [...text] : [];
+  const buildTimeline = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const selector = animateBy === 'word' ? '.explode-word' : '.explode-char';
+    const els = container.querySelectorAll(selector);
+    if (!els.length) return;
+    if (tlRef.current) tlRef.current.kill();
+    gsap.set(els, {
+      scaleX: scale,
+      scaleY: scale,
+      opacity: 0,
+      filter: `blur(${blur}px)`,
+      y: yOffset,
+      transformOrigin: '50% 50%'
+    });
+    const staggerDelay = animateBy === 'word' ? wordDelay : charDelay;
+    const tl = gsap.timeline({
+      repeat: repeat ? -1 : 0,
+      repeatDelay: 1.0,
+      onRepeat() {
+        gsap.set(els, {
+          scaleX: scale,
+          scaleY: scale,
+          opacity: 0,
+          filter: `blur(${blur}px)`,
+          y: yOffset
+        });
+      }
+    });
+    tl.to(els, {
+      scaleX: 1,
+      scaleY: 1,
+      opacity: 1,
+      filter: 'blur(0px)',
+      y: 0,
+      stagger: { each: staggerDelay, from },
+      ease: 'expo.out',
+      duration
+    });
+    tlRef.current = tl;
+  }, [animateBy, from, scale, blur, yOffset, duration, charDelay, wordDelay, repeat]);
+  useEffect(() => {
+    buildTimeline();
+    return () => tlRef.current?.kill();
+  }, [buildTimeline]);
+  return (
+    <div className={`flex flex-col items-center gap-6 ${className}`}>
+      <div
+        ref={containerRef}
+        className="flex flex-wrap  items-center justify-center"
+      >
+        {animateBy === 'word'
+          ? words.map((word, i) => (
+              <span
+                key={i}
+                className={`explode-word inline-block font-black tracking-tight leading-none select-none ${fontSize}`}
+                style={{ opacity: 0, ...gradientStyle }}
+              >
+                {word}
+                {i < words.length - 1 && (
+                  <span style={{ display: 'inline-block', minWidth: '0.35em' }}>{'\u00A0'}</span>
+                )}
+              </span>
+            ))
+          : chars.map((char, i) => (
+              <span
+                key={i}
+                className={`explode-char inline-block font-black tracking-tight leading-none select-none ${fontSize}`}
+                style={{
+                  opacity: 0,
+                  minWidth: char === ' ' ? '0.35em' : undefined,
+                  ...gradientStyle
+                }}
+              >
+                {char === ' ' ? '\u00a0' : char}
+              </span>
+            ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./BlurText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. Unlike the Canvas-based components in this set, this component needs no sized wrapper — it sizes itself naturally based on the rendered text and `fontSize`, and doesn't fill a parent container.
+5. The animation timeline is rebuilt from scratch (old timeline `kill()`ed, new one built) any time `animateBy`, `from`, `scale`, `blur`, `yOffset`, `duration`, `charDelay`, `wordDelay`, or `repeat` changes. Note that `text`, `color`, `gradient`, `fontSize`, and `className` are **not** in that dependency list — changing `text` while keeping every other prop the same will re-render new spans, but won't retrigger `buildTimeline`, so newly added letters/words may not get properly initialized into their "from" state before any next rebuild. Treat `text` as effectively static per mount, or force a remount (e.g. via a `key` prop) when it changes.
+6. `animateBy="letter"` splits `text` using `[...text]` (spread on a string) — this is UTF-16-code-unit splitting, not grapheme-aware. Multi-codepoint characters (most emoji, some accented characters, combining marks) may split incorrectly into broken halves. Stick to `animateBy="word"` for any text containing such characters.
+7. `from` controls the stagger order via GSAP's `stagger.from` config — common values are `"start"` (animates left-to-right/first-to-last), `"end"` (last-to-first), `"center"` (outward from the middle, the default), `"edges"` (inward from both ends), and `"random"`. A numeric index targets a specific letter/word as the animation's origin point.
+8. Set `repeat={true}` to loop indefinitely with a fixed 1-second pause between cycles (this delay is hardcoded as `repeatDelay: 1.0` and is not currently exposed as a prop). Each repeat resets letters/words back to their initial `scale`/`blur`/`yOffset`/`opacity={0}` state via `onRepeat` before animating in again.
+9. Use `gradient` (a full CSS `background-image` string, e.g. `"linear-gradient(90deg, #7a5af8, #22c39b)"`) instead of `color` for a gradient-filled text effect. When `gradient` is non-empty it fully overrides `color` — they cannot be combined.
+10. Word mode (`animateBy="word"`) inserts a fixed-width non-breaking space (`minWidth: '0.35em'`) between words so spacing stays stable regardless of font; letter mode preserves literal space characters as non-breaking spaces with the same minimum width treatment.
+11. Spans start with inline `opacity: 0` baked into JSX (to avoid a flash-of-unstyled-text before the timeline's own `gsap.set` runs) — if you swap in your own animation logic, replicate this to avoid a visible flicker of fully-opaque text on first paint.
