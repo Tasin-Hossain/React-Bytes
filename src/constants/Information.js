@@ -31,7 +31,7 @@ export const componentMetadata = {
   // Text Animations
  'TextAnimations/MagneticText': {
     name: 'MagneticText',
-    description:'Interactive GSAP-powered magnetic text with cursor attraction, color transitions, responsive sizing, and customizable entrance animations.',
+    description:'A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.',
     category: 'TextAnimations',
     dependencies: ['gsap@^3.15.0'],
     docsUrl: 'http://localhost:5173/text-animations/magnetic-text',
@@ -41,7 +41,7 @@ export const componentMetadata = {
 
   'TextAnimations/CurtainText': {
     name: 'CurtainText',
-    description: 'A hover-triggered text animation where each character slides out and reveals a new layer underneath, like a curtain being pulled.',
+    description: 'A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.',
     category: 'TextAnimations',
     dependencies: [],
     docsUrl: 'http://localhost:5173/text-animations/curtain-text',
@@ -51,7 +51,7 @@ export const componentMetadata = {
 
   'TextAnimations/CursorTrail': {
     name: 'CursorTrail',
-    description:'Interactive cursor trail animation component that creates floating text or symbol particles following the mouse. Supports custom characters, colors, particle sizing, directional movement, random floating effects, multiple animation styles, and fully customizable trail behavior.',
+    description:'A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.',
     category: 'TextAnimations',
     dependencies: ['motion@^12.40.0'],
     docsUrl: 'http://localhost:5173/text-animations/cursor-trail',
@@ -61,7 +61,7 @@ export const componentMetadata = {
 
   'TextAnimations/BlurText': {
     name: 'BlurText',
-    description:'Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.',
+    description:'A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.',
     category: 'TextAnimations',
     dependencies: [],
     docsUrl: 'http://localhost:5173/text-animations/blur-text',
@@ -69,10 +69,21 @@ export const componentMetadata = {
     tags: []
   },
 
+  // Components
+  'Components/RotatingCards': {
+    name: 'RotatingCards',
+    description:'A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.',
+    category: 'Components',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/components/rotating-cards',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
   // Backgrounds Animations
   'Backgrounds/MouserepelDots': {
     name: 'MouserepelDots',
-    description: 'Interactive dot-grid background where dots repel from the cursor, creating smooth physics-based motion, dynamic scaling, gradients, waves, and sparkle effects.',
+    description: 'A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/mouserepel-dots',
@@ -81,7 +92,7 @@ export const componentMetadata = {
   },
   'Backgrounds/MouserepelGrid': {
     name: 'MouserepelGrid',
-    description: 'Interactive WebGL-powered grid background with mouse repulsion, animated waves, glow effects, gradients, rainbow modes, ambient motion, and dynamic pulse interactions.',
+    description: 'A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/mouserepel-grid',
@@ -90,7 +101,7 @@ export const componentMetadata = {
   },
   'Backgrounds/BlinkingSquares': {
     name: 'BlinkingSquares',
-    description: 'Generate a mesmerizing background of softly twinkling squares with directional fading, customizable glow intensity, and smooth canvas-based performance.',
+    description: 'A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/blinking-squares',
@@ -99,7 +110,7 @@ export const componentMetadata = {
   },
   'Backgrounds/HalfTone': {
     name: 'HalfTone',
-    description: 'A customizable animated halftone background with multiple dot shapes, wave modes, directional motion, and color controls, rendered with React Three Fiber shaders.',
+    description: 'A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/half-tone',
@@ -108,7 +119,7 @@ export const componentMetadata = {
   },
   'Backgrounds/Vortex': {
     name: 'Vortex',
-    description: 'An animated vortex shader background with swirling gradients, customizable colors, noise intensity, and fluid motion effects.',
+    description: 'A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/vortex',
@@ -117,7 +128,7 @@ export const componentMetadata = {
   },
   'Backgrounds/AsciiWave': {
     name: 'AsciiWave',
-    description: 'A dynamic ASCII shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.',
+    description: 'A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/ascii-wave',
@@ -126,7 +137,7 @@ export const componentMetadata = {
   },
   'Backgrounds/EmojiWave': {
     name: 'EmojiWave',
-    description: 'A dynamic Emoji shader background featuring animated wave patterns, customizable characters, cursor interaction, and optional video-to-ASCII conversion.',
+    description: 'A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/emoji-wave',
@@ -135,7 +146,7 @@ export const componentMetadata = {
   },
   'Backgrounds/ShapesDots': {
     name: 'ShapesDots',
-    description: 'A responsive animated shape grid featuring cursor interactions, ripple bursts, multiple animation modes, and customizable colors, shapes, and scaling effects.',
+    description: 'A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.',
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'http://localhost:5173/backgrounds/shapes-dots',
