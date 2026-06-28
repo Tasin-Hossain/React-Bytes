@@ -7,8 +7,8 @@ export const AUTHOR_NAME = 'Mohammad Tasin';
 
 export const INITIAL_PROPS = {
   speed:     0.8,
-  scale:  2.0,
-  colorA:      '#1B0F33',
+  scale:  2.4,
+  colorA:      '#FFFFFF',
   colorB: '#FF5DA2',
   noiseIntensity:     1.5,
   blend:     0.5,
