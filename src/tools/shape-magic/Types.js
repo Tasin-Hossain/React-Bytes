@@ -77,21 +77,6 @@ export const PRESETS = [
     radius: 36,
     build: () => [make(220, 180, 320, 220), make(230, 380, 56, 64)]
   },
-
-  {
-    // Key: a square head, a long thin shaft, and two teeth hanging below the
-    // shaft near its end -> 3 bridges.
-    id: 'key',
-    name: 'Key',
-    radius: 24,
-    build: () => [
-      make(240, 220, 120, 120),
-      make(360, 264, 320, 32),
-      make(560, 296, 36, 50),
-      make(640, 296, 36, 70)
-    ]
-  },
-
   {
     // Folder: a back panel with a smaller tab overhanging above its top-left
     // corner -> 1 bridge.
