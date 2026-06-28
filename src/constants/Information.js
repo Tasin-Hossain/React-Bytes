@@ -59,6 +59,16 @@ export const componentMetadata = {
     tags: []
   },
 
+  'TextAnimations/BlurText': {
+    name: 'BlurText',
+    description:'Animate text with smooth blur, scale, and stagger effects by letter or word using fully customizable GSAP-powered transitions.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'http://localhost:5173/text-animations/blur-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
   // Backgrounds Animations
   'Backgrounds/MouserepelDots': {
     name: 'MouserepelDots',

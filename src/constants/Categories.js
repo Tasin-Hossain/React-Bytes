@@ -16,8 +16,17 @@ export const CATEGORIES = [
     name: 'Text Animations',
     subcategories: [
       'Magnetic Text',
-      'Curtain text',
-      'Cursor Trail'
+      'Curtain Text',
+      'Cursor Trail',
+      'Blur Text',
+      'MeltGlitch Text',
+      'Neon Flicker',
+      'RainDrop Text',
+      'Shatter Text',
+      'Smoke Away',
+      'SparkleDissolve Text',
+      'Spotlight Text',
+      'StaticNoise Text',
     ]
   },
   {
@@ -29,7 +38,7 @@ export const CATEGORIES = [
   {
     name: 'Components',
     subcategories: [
-      '',
+      'Rotating Cards',
     ]
   },
   {
