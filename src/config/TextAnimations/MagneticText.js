@@ -122,16 +122,16 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = (variant) => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  npm:  `npx shadcn@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
 });
 export const getJsrepoCmds = (variant) => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbits.dev/r/MagneticText-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
+  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/MagneticText-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/MagneticText/MagneticText';
