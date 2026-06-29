@@ -99,3 +99,7 @@ public/JS-CSS
 public/JS-TW
 public/TS-CSS
 public/TS-TW
+src/config/config.js
+src/constants/code/constants.js
+src/content/Content.jsx
+src/demo/Demo.jsx
