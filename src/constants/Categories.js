@@ -20,25 +20,20 @@ export const CATEGORIES = [
       'Cursor Trail',
       'Blur Text',
       'MeltGlitch Text',
-      'Neon Flicker',
-      'RainDrop Text',
-      'Shatter Text',
-      'Smoke Away',
-      'SparkleDissolve Text',
-      'Spotlight Text',
-      'StaticNoise Text',
+      
     ]
   },
-  {
-    name: 'Animations',
-    subcategories: [
-      '',
-    ]
-  },
+  // {
+  //   name: 'Animations',
+  //   subcategories: [
+  //     '',
+  //   ]
+  // },
   {
     name: 'Components',
     subcategories: [
       'Rotating Cards',
+      'Rotating Carousel',
     ]
   },
   {

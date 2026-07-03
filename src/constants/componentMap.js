@@ -12,18 +12,12 @@ const componentMap = {
   'text-animations/curtain-text': () => import('../demo/TextAnimations/CurtainTextDemo.jsx'),
   'text-animations/cursor-trail': () => import('../demo/TextAnimations/CursorTrailDemo.jsx'),
   'text-animations/blur-text': () => import('../demo/TextAnimations/BlurTextDemo.jsx'),
-  'text-animations/meltglitch-text': () => import('../demo/TextAnimations/MeltGlitchDemo.jsx'),
-  'text-animations/neon-flicker': () => import('../demo/TextAnimations/NeonFlickerDemo.jsx'),
-  'text-animations/raindrop-text': () => import('../demo/TextAnimations/RainDropDemo.jsx'),
-  'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
-  'text-animations/smoke-away': () => import('../demo/TextAnimations/SmokeAwayDemo.jsx'),
-  'text-animations/sparkledissolve-text': () => import('../demo/TextAnimations/SparkleDissolveDemo.jsx'),
-  'text-animations/spotlight-text': () => import('../demo/TextAnimations/SpotlightDemo.jsx'),
-  'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
+  'text-animations/meltglitch-text': () => import('../demo/TextAnimations/MeltGlitchTextDemo.jsx'),
 
 
   // ── Components
   'components/rotating-cards': () => import('../demo/Components/RotatingCardsDemo.jsx'),
+  'components/rotating-carousel': () => import('../demo/Components/RotatingCarouselDemo.jsx'),
 
   // ── backgrounds 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
