@@ -103,3 +103,4 @@ src/config/config.js
 src/constants/code/constants.js
 src/content/Content.jsx
 src/demo/Demo.jsx
+src/prompts/DemoPrompts.txt
