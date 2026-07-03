@@ -9,7 +9,7 @@ import { BsFillCursorFill } from "react-icons/bs";
 
 const COMPONENTS_JSON = `{
   "registries": {
-    "@react-bytes": "https://reactbytes.dev/r/{name}.json"
+    "@react-bytes": "https://reactbytes.online/r/{name}.json"
   }
 }`;
 
