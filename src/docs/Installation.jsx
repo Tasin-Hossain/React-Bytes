@@ -85,7 +85,7 @@ const CLI_TOOLS = [
     id: 'shadcn',
     label: 'shadcn',
     href: 'https://ui.shadcn.com/',
-    command: `npx shadcn@latest add https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
+    command: `npx shadcn@latest add https://reactbytes.online/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
     blurb: (
       <>
         React Bytes uses <ExternalLink href="https://ui.shadcn.com/">shadcn</ExternalLink> for CLI installation — it
@@ -97,7 +97,7 @@ const CLI_TOOLS = [
     id: 'jsrepo',
     label: 'jsrepo',
     href: 'https://jsrepo.dev/',
-    command: `npx jsrepo@latest add shadcn:https://reactbytes.dev/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
+    command: `npx jsrepo@latest add shadcn:https://reactbytes.online/r/<COMPONENT>-<LANGUAGE>-<STYLE>`,
     blurb: (
       <>
         React Bytes is also compatible with <ExternalLink href="https://jsrepo.dev/">jsrepo</ExternalLink> — it can
