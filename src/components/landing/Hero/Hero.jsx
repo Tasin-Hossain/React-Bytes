@@ -16,16 +16,16 @@ const INSTALL_TABS = ['shadcn', 'jsrepo'];
 const PACKAGE_MANAGERS = ['yarn dlx', 'npx', 'pnpm dlx', 'bunx --bun'];
 const COMMANDS = {
   shadcn: {
-    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    npx: 'npx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.dev/r/MagneticText-JS-CSS'
+    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    npx: 'npx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS'
   },
   jsrepo: {
-    'yarn dlx': 'yarn dlx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    npx: 'npx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    'pnpm dlx': 'pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS',
-    'bunx --bun': 'bunx --bun jsrepo@latest add https://reactbytes.dev/r/MagneticText-JS-CSS'
+    'yarn dlx': 'yarn dlx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    npx: 'npx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    'pnpm dlx': 'pnpm dlx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
+    'bunx --bun': 'bunx --bun jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS'
   }
 };
 
