@@ -1,0 +1,189 @@
+## Integrate the <MeltGlitchText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: MeltGlitchText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import MeltGlitchText from './MeltGlitchText'
+
+<MeltGlitchText
+  text="Glitchy on hover."
+  fontSize={42}
+  fontWeight={800}
+  color="#ffffff"
+  cyanColor="#5ce1ff"
+  magentaColor="#ff5cf0"
+  radius={110}
+  dropAmount={16}
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "Glitchy on hover." | The text content to render. Split into individual characters internally — each character gets its own triple-layer span stack (base + cyan ghost + magenta ghost). |
+| fontSize | number | 42 | Font size in pixels applied to each character's holder span. |
+| fontWeight | number | 800 | Font weight applied to each character's holder span. |
+| color | string | "#ffffff" | Color of the base (top-layer, z-index 3) character. |
+| cyanColor | string | "#5ce1ff" | Color of the cyan chromatic-aberration ghost layer (z-index 1). |
+| magentaColor | string | "#ff5cf0" | Color of the magenta chromatic-aberration ghost layer (z-index 2). |
+| radius | number | 110 | Horizontal pixel radius around the cursor within which characters are influenced. Characters further than this from the cursor X position are fully at rest. |
+| dropAmount | number | 16 | Maximum downward Y displacement in pixels of the base character at full proximity. Ghost layers are displaced more than the base — cyan by 1.9× and magenta by 2.6× this value — creating the chromatic melt spread. |
+| className | string | "" | Additional CSS classes applied to the outer wrapper div. |
+
+### Full Component Source
+```jsx
+import  { useEffect, useRef } from "react";
+import gsap from "gsap";
+
+export default function MeltGlitchText({
+  text = "Glitchy on hover.",
+  fontSize = 42,
+  fontWeight = 800,
+  color = "#ffffff",
+  cyanColor = "#5ce1ff",
+  magentaColor = "#ff5cf0",
+  radius = 110,
+  dropAmount = 16,
+  className = "",
+}) {
+  const wrapRef = useRef(null);
+  const charsRef = useRef([]);
+  const settersRef = useRef([]);
+  const mouseXRef = useRef(-9999);
+  const activeRef = useRef(false);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    wrap.innerHTML = "";
+    charsRef.current = [];
+    settersRef.current = [];
+
+    text.split("").forEach((ch) => {
+      const holder = document.createElement("span");
+      holder.style.display = "inline-block";
+      holder.style.position = "relative";
+      holder.style.fontSize = `${fontSize}px`;
+      holder.style.fontWeight = String(fontWeight);
+
+      const base = document.createElement("span");
+      base.style.position = "relative";
+      base.style.zIndex = "3";
+      base.style.color = color;
+      base.style.display = "inline-block";
+      base.textContent = ch === " " ? "\u00A0" : ch;
+
+      const cyan = document.createElement("span");
+      cyan.style.position = "absolute";
+      cyan.style.left = "0";
+      cyan.style.top = "0";
+      cyan.style.color = cyanColor;
+      cyan.style.opacity = "0";
+      cyan.style.zIndex = "1";
+      cyan.style.filter = "blur(0.5px)";
+      cyan.textContent = ch === " " ? "\u00A0" : ch;
+
+      const magenta = document.createElement("span");
+      magenta.style.position = "absolute";
+      magenta.style.left = "0";
+      magenta.style.top = "0";
+      magenta.style.color = magentaColor;
+      magenta.style.opacity = "0";
+      magenta.style.zIndex = "2";
+      magenta.style.filter = "blur(0.5px)";
+      magenta.textContent = ch === " " ? "\u00A0" : ch;
+
+      holder.appendChild(cyan);
+      holder.appendChild(magenta);
+      holder.appendChild(base);
+      wrap.appendChild(holder);
+
+      charsRef.current.push({ holder, base, cyan, magenta });
+    });
+
+    settersRef.current = charsRef.current.map((c) => ({
+      baseY: gsap.quickTo(c.base, "y", { duration: 0.45, ease: "power3.out" }),
+      cyanY: gsap.quickTo(c.cyan, "y", { duration: 0.65, ease: "power3.out" }),
+      cyanX: gsap.quickTo(c.cyan, "x", { duration: 0.6, ease: "power3.out" }),
+      magY: gsap.quickTo(c.magenta, "y", { duration: 0.8, ease: "power3.out" }),
+      magX: gsap.quickTo(c.magenta, "x", { duration: 0.75, ease: "power3.out" }),
+      cyanOp: gsap.quickTo(c.cyan, "opacity", { duration: 0.35 }),
+      magOp: gsap.quickTo(c.magenta, "opacity", { duration: 0.35 }),
+    }));
+
+    const handleMove = (e) => {
+      mouseXRef.current = e.clientX;
+      activeRef.current = true;
+    };
+    const handleLeave = () => {
+      activeRef.current = false;
+    };
+
+    wrap.addEventListener("mousemove", handleMove);
+    wrap.addEventListener("mouseleave", handleLeave);
+
+    const tick = () => {
+      charsRef.current.forEach((c, i) => {
+        const rect = c.holder.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const dist = mouseXRef.current - cx;
+        const proximity = activeRef.current
+          ? Math.max(0, 1 - Math.abs(dist) / radius)
+          : 0;
+        const eased = Math.sin(proximity * Math.PI * 0.5);
+        const side = dist < 0 ? 1 : -1;
+
+        const s = settersRef.current[i];
+        s.baseY(eased * dropAmount);
+        s.cyanY(eased * dropAmount * 1.9);
+        s.cyanX(side * eased * 4);
+        s.magY(eased * dropAmount * 2.6);
+        s.magX(-side * eased * 4);
+        s.cyanOp(eased * 0.9);
+        s.magOp(eased * 0.9);
+      });
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      wrap.removeEventListener("mousemove", handleMove);
+      wrap.removeEventListener("mouseleave", handleLeave);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [text, fontSize, fontWeight, color, cyanColor, magentaColor, radius, dropAmount]);
+
+  return (
+    <div
+      ref={wrapRef}
+      className={"relative whitespace-nowrap " + className}
+    />
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./MeltGlitchText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component renders as a `whitespace-nowrap` div, so the text will never wrap — place it inside a container that can accommodate the full text width, or override wrapping behavior via `className` with caution (wrapping will break the horizontal-proximity detection since `getBoundingClientRect` is queried per-character using `clientX` coordinates).
+5. The DOM is rebuilt imperatively from scratch inside `useEffect` (via `wrap.innerHTML = ""` followed by manual `createElement` calls) every time any prop changes — the component does not use React-managed JSX for the character spans at all. This means any React-level tooling that inspects children (dev tools, portals, etc.) won't see the character spans; it also means React never diffs or rehydrates the inner HTML.
+6. Each character has three stacked DOM spans: a base layer (z-index 3, `color`), a cyan ghost (z-index 1, `cyanColor`, `blur(0.5px)`), and a magenta ghost (z-index 2, `magentaColor`, `blur(0.5px)`). The ghosts are absolutely positioned at `left:0 top:0` within each holder span, so all three layers share the same inline position at rest.
+7. Position and opacity for all layers are driven by a `requestAnimationFrame` loop (not GSAP's ticker) calling `gsap.quickTo` setters on each frame. `quickTo` is used for its spring-like follow behavior — each layer has a different `duration`, making the cyan and magenta ghosts lag behind the base layer by different amounts, which creates the characteristic smear/melt separation at speed.
+8. The ghost layers move both vertically (Y) and horizontally (X) on hover. The horizontal offset direction is determined by which side of the character the cursor is on (`side = dist < 0 ? 1 : -1`), so the cyan and magenta ghosts always spread in opposite X directions from each other.
+9. Proximity is measured purely on the **horizontal axis** (`e.clientX` vs each character's center X) — vertical cursor position within the component has no effect. This means hovering above or below the text (while still within the element's bounding box) at the same X position will produce the same melt intensity as hovering directly over the character.
+10. Space characters are rendered as `\u00A0` (non-breaking space) on all three layers so they maintain width without collapsing.
+11. All props (`text`, `fontSize`, `fontWeight`, `color`, `cyanColor`, `magentaColor`, `radius`, `dropAmount`) are in the `useEffect` dependency array — any change to any of these triggers a full DOM teardown and rebuild, including new `quickTo` setter instances. This means in-flight animations are cancelled and the component snaps back to rest state on prop change.
