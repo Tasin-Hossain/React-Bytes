@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import RotatingCardsPrompt from '../../prompts/Components/RotatingCards.txt?raw';
 export { RotatingCardsPrompt };
 
@@ -200,17 +201,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  npm: `npx shadcn@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  bun: `bunx shadcn@latest add https://reactbytes.dev/r/RotatingCards-${variant}`
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  npm: `npx shadcn@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  bun: `bunx shadcn@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  npm: `npx jsrepo@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/RotatingCards-${variant}`,
-  bun: `bunx jsrepo@latest add https://reactbytes.dev/r/RotatingCards-${variant}`
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  npm: `npx jsrepo@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`,
+  bun: `bunx jsrepo@latest add ${DOMAIN_URL}/r/RotatingCards-${variant}`
 });
 
 import JS_CSS_CODE from '../../variants/jsCss/Components/RotatingCards/RotatingCards?raw';

@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import BlurTextPrompt from '../../prompts/TextAnimations/BlurText.txt?raw';
 export { BlurTextPrompt };
 
@@ -66,17 +67,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = (variant) => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/BlurText-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
 });
 
 export const getJsrepoCmds = (variant) => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/BlurText-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/BlurText-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/BlurText-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/BlurText/BlurText?raw';

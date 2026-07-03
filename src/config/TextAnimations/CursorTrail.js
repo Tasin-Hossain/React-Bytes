@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import CursorTrailPrompt from '../../prompts/TextAnimations/CursorTrail.txt?raw';
 export { CursorTrailPrompt };
 
@@ -97,17 +98,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = (variant) => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
 });
 
 export const getJsrepoCmds = (variant) => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/CursorTrail-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/CursorTrail-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/CursorTrail/CursorTrail';

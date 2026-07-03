@@ -1,5 +1,6 @@
 // config/Backgrounds/BlinkingSquares.js
 
+import { DOMAIN_URL } from '../../constants/site';
 import VortexPrompt from '../../prompts/Backgrounds/Vortex.txt?raw';
 export { VortexPrompt };
 
@@ -86,17 +87,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/Vortex-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/Vortex-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/Vortex-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/Vortex-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/Vortex/Vortex?raw';

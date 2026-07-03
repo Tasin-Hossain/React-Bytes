@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import EmojiWavePrompt from '../../prompts/Backgrounds/EmojiWave.txt?raw';
 export { EmojiWavePrompt };
 
@@ -112,17 +113,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/EmojiWave-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/EmojiWave-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/EmojiWave/EmojiWave?raw';

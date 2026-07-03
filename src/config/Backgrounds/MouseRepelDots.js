@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import MouseRepelDotsPrompt from '../../prompts/Backgrounds/MouseRepelDots.txt?raw';
 export { MouseRepelDotsPrompt };
 
@@ -159,17 +160,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  npm: `npx shadcn@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  bun: `bunx shadcn@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  npm: `npx shadcn@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  bun: `bunx shadcn@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  npm: `npx jsrepo@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`,
-  bun: `bunx jsrepo@latest add https://reactbytes.dev/r/MouserepelDots-${variant}`
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  npm: `npx jsrepo@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`,
+  bun: `bunx jsrepo@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`
 });
 
 import JS_CSS_CODE from '../../variants/jsCss/Backgrounds/MouseRapeldots/MouseRepelDots';

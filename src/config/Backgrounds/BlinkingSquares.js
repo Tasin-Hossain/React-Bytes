@@ -1,5 +1,6 @@
 // config/Backgrounds/BlinkingSquares.js
 
+import { DOMAIN_URL } from '../../constants/site';
 import BlinkingSquaresPrompt from '../../prompts/Backgrounds/BlinkingSquares.txt?raw';
 export { BlinkingSquaresPrompt as BlinkingSquares };
 
@@ -144,17 +145,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/BlinkingSquares-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/BlinkingSquares-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/BlinkingSquares/BlinkingSquares?raw';

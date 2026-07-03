@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import HalfTonePrompt from '../../prompts/Backgrounds/HalfTone.txt?raw';
 export { HalfTonePrompt };
 
@@ -115,17 +116,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/HalfTone-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/HalfTone-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/Backgrounds/HalfTone/HalfTone?raw';

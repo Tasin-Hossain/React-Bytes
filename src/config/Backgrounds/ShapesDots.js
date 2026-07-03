@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '../../constants/site';
 import ShapesDotsPrompt from '../../prompts/Backgrounds/ShapesDots.txt?raw';
 export { ShapesDotsPrompt };
 
@@ -96,17 +97,17 @@ export const PKG_CMDS = {
 };
 
 export const getShadcnCmds = variant => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  npm: `npx shadcn@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  bun: `bunx shadcn@latest add https://reactbytes.dev/r/ShapesDots-${variant}`
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  npm: `npx shadcn@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  bun: `bunx shadcn@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`
 });
 
 export const getJsrepoCmds = variant => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  npm: `npx jsrepo@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/ShapesDots-${variant}`,
-  bun: `bunx jsrepo@latest add https://reactbytes.dev/r/ShapesDots-${variant}`
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  npm: `npx jsrepo@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`,
+  bun: `bunx jsrepo@latest add ${DOMAIN_URL}/r/ShapesDots-${variant}`
 });
 
 import JS_CSS_CODE from '../../variants/jsCss/Backgrounds/ShapesDots/ShapesDots?raw';

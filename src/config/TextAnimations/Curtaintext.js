@@ -1,4 +1,5 @@
 
+import { DOMAIN_URL } from '../../constants/site';
 import CurtainTextPrompt from '../../prompts/TextAnimations/CurtainText.txt?raw';
 export { CurtainTextPrompt };
 
@@ -103,17 +104,17 @@ export const PKG_CMDS = {
 }; 
 
 export const getShadcnCmds = (variant) => ({
-  pnpm: `pnpm dlx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  npm:  `npx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  yarn: `yarn shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  bun:  `bunx shadcn@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  pnpm: `pnpm dlx shadcn@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  npm:  `npx shadcn@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  yarn: `yarn shadcn@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  bun:  `bunx shadcn@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
 });
 
 export const getJsrepoCmds = (variant) => ({
-  pnpm: `pnpm dlx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  npm:  `npx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  yarn: `yarn jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
-  bun:  `bunx jsrepo@latest add https://reactbytes.dev/r/CurtainText-${variant}`,
+  pnpm: `pnpm dlx jsrepo@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  npm:  `npx jsrepo@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  yarn: `yarn jsrepo@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
+  bun:  `bunx jsrepo@latest add ${DOMAIN_URL}/r/CurtainText-${variant}`,
 });
 
 import JS_CSS_CODE      from '../../variants/jsCss/TextAnimations/CurtainText/CurtainText';
