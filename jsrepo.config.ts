@@ -7,7 +7,7 @@ export default defineConfig({
     name: '@react-bytes',
     description:
       'React Bytes is a free and open source collection of high quality, animated, interactive & fully customizable React components for building stunning, memorable user interfaces.',
-    homepage: 'http://localhost:5173',
+    homepage: 'https://reactbytes.online',
     authors: ['Mohammad Tasin'],
     bugs: 'https://github.com/Tasin-Hossain/React-Bytes/issues',
     repository: 'https://github.com/Tasin-Hossain/React-Bytes',
