@@ -1,0 +1,455 @@
+## Integrate the <RotatingCarousel /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: RotatingCarousel
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import RotatingCarousel from './RotatingCarousel'
+
+<RotatingCarousel
+  images={[
+    "https://picsum.photos/id/37/300/300",
+    "https://picsum.photos/id/38/300/300",
+    "https://picsum.photos/id/39/300/300",
+    "https://picsum.photos/id/40/300/300",
+    "https://picsum.photos/id/42/300/300",
+    "https://picsum.photos/id/43/300/300",
+  ]}
+  faceCount={6}
+  faceWidth={300}
+  faceHeight={300}
+  autoRotate={false}
+  autoRotateSpeed={12}
+  autoRotateDirection={1}
+  draggable={true}
+  dragSensitivity={1}
+  smoothness={0.25}
+  inertia={true}
+  inertiaResistance={7}
+  shadeIntensity={0.85}
+  shadeBase={0.15}
+  pauseAutoRotateOnHover={true}
+  initialRotation={0}
+  faceFit="cover"
+  entranceAnimation={true}
+  entranceType="spin"
+  entranceDuration={0.9}
+  entranceStagger={0.07}
+  entranceEase="back.out(1.4)"
+  filterOnHover={true}
+  defaultFiltered={true}
+  responsive={true}
+  minFaceWidth={120}
+  cardGap={0}
+  className=""
+  cardClassName=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| images | string[] | picsum array | Array of image URLs mapped to faces in order. Loops if fewer images than faces. |
+| faceCount | number | 6 | Number of carousel faces (panels). Clamped internally to 3–12. |
+| faceWidth | number | 300 | Base width of each face in pixels. Used as reference for responsive scaling. |
+| faceHeight | number | 300 | Height of each face in pixels. Aspect ratio is derived from `faceHeight / faceWidth`. |
+| maxFaceWidth | number | faceWidth | Optional cap on face width when `responsive` is true. |
+| minFaceWidth | number | 120 | Minimum face width in pixels when the container shrinks. |
+| responsive | boolean | true | When true, face width scales with the container via ResizeObserver. |
+| cardGap | number | 0 | Extra radius added on top of the computed cylinder radius — increases gap between faces. |
+| draggable | boolean | true | Enables drag-to-rotate via pointer and touch events. |
+| dragSensitivity | number | 1 | Multiplier for drag delta — higher = faster spin per pixel dragged. |
+| shadeIntensity | number | 0.85 | Opacity range applied to faces based on their angle (simulates depth shading). |
+| shadeBase | number | 0.15 | Minimum opacity for the most side-facing (dimmest) face. |
+| autoRotate | boolean | false | When true, the carousel continuously rotates automatically. |
+| autoRotateSpeed | number | 12 | Duration in seconds for one full auto-rotation loop. |
+| autoRotateDirection | number | 1 | Direction of auto-rotation. `1` = forward, `-1` = reverse. |
+| smoothness | number | 0.25 | Duration in seconds of the GSAP tween applied during drag (smooths movement). |
+| inertia | boolean | true | When true, applies a momentum tween after drag release. |
+| inertiaResistance | number | 7 | Multiplier applied to final drag velocity for inertia throw distance. Higher = longer coast. |
+| pauseAutoRotateOnHover | boolean | true | Pauses auto-rotation when the user hovers over the carousel container. |
+| initialRotation | number | 0 | Starting rotationY of the wheel in degrees. |
+| faceFit | string | "cover" | CSS `background-size` value for face images. Options: `"cover"` \| `"contain"` \| `"fill"`. |
+| onFaceChange | function | — | Callback fired when the front-facing face changes. Receives the face index (0-based). |
+| entranceAnimation | boolean | true | Enables a GSAP entrance animation when the carousel mounts. |
+| entranceType | string | "spin" | Style of the entrance animation. Options: `"fade"` \| `"bottom"` \| `"top"` \| `"left"` \| `"right"` \| `"flip"` \| `"spin"` \| `"zoomBlur"` \| `"scatter"` \| `"pop"` |
+| entranceDuration | number | 0.9 | Duration in seconds of each face's entrance tween. |
+| entranceStagger | number | 0.07 | Stagger delay in seconds between each face's entrance tween. |
+| entranceEase | string | "back.out(1.4)" | GSAP ease string for the entrance animation. |
+| filterOnHover | boolean | true | When true, hovering a face toggles its grayscale filter. |
+| defaultFiltered | boolean | true | When true, all faces start grayscale and go full-color on hover. When false, faces start full-color and go grayscale on hover. |
+| className | string | "" | Additional CSS classes applied to the outer container div. |
+| cardClassName | string | "" | Additional CSS classes applied to each face div element. |
+
+### Full Component Source
+```jsx
+import { memo, useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+
+const FILTER_STYLE = "grayscale(100%) brightness(0.55) contrast(1.15)";
+
+function getEntranceVars(type) {
+  switch (type) {
+    case "fade":     return { opacity: 0 };
+    case "bottom":   return { opacity: 0, y: "+=140" };
+    case "top":      return { opacity: 0, y: "-=140" };
+    case "left":     return { opacity: 0, x: "-=180" };
+    case "right":    return { opacity: 0, x: "+=180" };
+    case "flip":     return { opacity: 0, scaleX: 0 };
+    case "spin":     return { opacity: 0, scale: 0, rotation: "+=360" };
+    case "zoomBlur": return { opacity: 0, scale: 2.4, filter: "blur(14px)" };
+    case "scatter":
+      return {
+        opacity: 0,
+        scale: 0.3,
+        x: () => gsap.utils.random(-300, 300),
+        y: () => gsap.utils.random(-300, 300),
+        rotation: () => gsap.utils.random(-180, 180),
+      };
+    case "pop":
+    default:
+      return { opacity: 0, scale: 0, rotation: 0 };
+  }
+}
+
+const RotatingCarousel = memo(function RotatingCarousel({
+  images = [
+    "https://picsum.photos/id/37/300/300",
+    "https://picsum.photos/id/38/300/300",
+    "https://picsum.photos/id/39/300/300",
+    "https://picsum.photos/id/40/300/300",
+    "https://picsum.photos/id/42/300/300",
+    "https://picsum.photos/id/43/300/300",
+  ],
+  faceCount = 6,
+  faceWidth = 300,
+  faceHeight = 300,
+  maxFaceWidth,
+  minFaceWidth = 120,
+  responsive = true,
+  cardGap = 0,
+  draggable = true,
+  dragSensitivity = 1,
+  shadeIntensity = 0.85,
+  shadeBase = 0.15,
+  autoRotate = false,
+  autoRotateSpeed = 12,
+  autoRotateDirection = 1,
+  smoothness = 0.25,
+  inertia = true,
+  inertiaResistance = 7,
+  pauseAutoRotateOnHover = true,
+  initialRotation = 0,
+  faceFit = "cover",
+  onFaceChange,
+  entranceAnimation = true,
+  entranceType = "spin",
+  entranceDuration = 0.9,
+  entranceStagger = 0.07,
+  entranceEase = "back.out(1.4)",
+  filterOnHover = true,
+  defaultFiltered = true,
+  className = "",
+  cardClassName = "",
+}) {
+  const containerRef = useRef(null);
+  const wheelRef = useRef(null);
+  const stageRef = useRef(null);
+  const autoTween = useRef(null);
+  const smoothTween = useRef(null);
+  const facesRef = useRef([]);
+  const isHovering = useRef(false);
+  const lastFace = useRef(null);
+
+  const dragRef = useRef({ active: false, startX: 0, vel: 0 });
+
+  const [filteredFaces, setFilteredFaces] = useState(() => {
+    if (!defaultFiltered) return new Set();
+    const clampedCount = Math.min(Math.max(faceCount, 3), 12);
+    return new Set(Array.from({ length: clampedCount }, (_, i) => i));
+  });
+
+  const aspect = faceHeight / faceWidth;
+  const capWidth = maxFaceWidth || faceWidth;
+
+  const [computedWidth, setComputedWidth] = useState(
+    responsive ? Math.min(faceWidth, capWidth) : faceWidth
+  );
+
+  useEffect(() => {
+    if (!responsive) { setComputedWidth(faceWidth); return; }
+    const el = containerRef.current;
+    if (!el) return;
+    const recalc = (w) => setComputedWidth(Math.max(minFaceWidth, Math.min(w, capWidth)));
+    recalc(el.clientWidth);
+    const ro = new ResizeObserver(entries => recalc(entries[0].contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [responsive, faceWidth, capWidth, minFaceWidth]);
+
+  const computedHeight = Math.round(computedWidth * aspect);
+
+  const setFaceFiltered = (index, value) => {
+    setFilteredFaces(prev => {
+      const next = new Set(prev);
+      value ? next.add(index) : next.delete(index);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    const wheel = wheelRef.current;
+    const stage = stageRef.current;
+    const container = containerRef.current;
+    if (!wheel || !stage || !container) return;
+
+    const clampedCount = Math.min(Math.max(faceCount, 3), 12);
+    const angleStep = 360 / clampedCount;
+    const baseRadius = Math.round((computedWidth / 2) / Math.tan(Math.PI / clampedCount));
+    const radius = Math.max(0, baseRadius + cardGap);
+
+    stage.style.perspective = Math.round(radius * 3.5) + "px";
+
+    wheel.innerHTML = "";
+    facesRef.current = [];
+
+    for (let i = 0; i < clampedCount; i++) {
+      const face = document.createElement("div");
+      face.className = cardClassName ? `rc-face ${cardClassName}` : "rc-face";
+      face.style.cssText = `
+        position:absolute;
+        width:${computedWidth}px;
+        height:${computedHeight}px;
+        background-image:url(${images[i % images.length]});
+        background-size:${faceFit};
+        border-radius:15px;
+        background-position:center;
+        transition:filter 0.25s ease;
+        filter:${filteredFaces.has(i) ? FILTER_STYLE : "none"};
+        pointer-events:auto;
+      `;
+
+      face.addEventListener("pointerenter", () => {
+        if (!filterOnHover) return;
+        face.style.filter = defaultFiltered ? "none" : FILTER_STYLE;
+        setFaceFiltered(i, !defaultFiltered);
+      });
+      face.addEventListener("pointerleave", () => {
+        if (!filterOnHover) return;
+        face.style.filter = defaultFiltered ? FILTER_STYLE : "none";
+        setFaceFiltered(i, defaultFiltered);
+      });
+
+      wheel.appendChild(face);
+      facesRef.current.push(face);
+
+      gsap.set(face, {
+        rotateY: i * angleStep,
+        transformOrigin: `50% 50% -${radius}px`,
+        z: radius,
+        backfaceVisibility: "hidden",
+      });
+    }
+
+    gsap.set(wheel, { rotationY: initialRotation });
+
+    const shade = () => {
+      const rot = gsap.getProperty(wheel, "rotationY");
+      facesRef.current.forEach((f, i) => {
+        const angle = rot + i * angleStep;
+        const w = gsap.utils.wrapYoyo(0, 90, Math.abs(angle % 180));
+        f.style.opacity = shadeBase + (1 - w / 90) * shadeIntensity;
+      });
+      if (onFaceChange) {
+        const normalized = ((-gsap.getProperty(wheel, "rotationY") % 360) + 360) % 360;
+        const nearest = Math.round(normalized / angleStep) % clampedCount;
+        if (nearest !== lastFace.current) {
+          lastFace.current = nearest;
+          onFaceChange(nearest);
+        }
+      }
+    };
+
+    if (entranceAnimation) {
+      gsap.from(facesRef.current, {
+        ...getEntranceVars(entranceType),
+        duration: entranceDuration,
+        ease: entranceEase,
+        stagger: entranceStagger,
+        overwrite: "auto",
+        onUpdate: shade,
+        onComplete: shade,
+      });
+    } else {
+      shade();
+    }
+
+    const onPointerDown = (e) => {
+      if (!draggable) return;
+      dragRef.current.active = true;
+      dragRef.current.startX = e.touches ? e.touches[0].clientX : e.clientX;
+      dragRef.current.vel = 0;
+      autoTween.current?.pause();
+      smoothTween.current?.kill();
+    };
+
+    const onPointerMove = (e) => {
+      if (!dragRef.current.active) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const delta = (clientX - dragRef.current.startX) * dragSensitivity;
+      dragRef.current.vel = delta;
+      smoothTween.current?.kill();
+      smoothTween.current = gsap.to(wheel, {
+        rotationY: `+=${delta}`,
+        duration: smoothness,
+        ease: "power1.out",
+        onUpdate: shade,
+        overwrite: "auto",
+      });
+      dragRef.current.startX = clientX;
+    };
+
+    const onPointerUp = () => {
+      if (!dragRef.current.active) return;
+      dragRef.current.active = false;
+      if (inertia && Math.abs(dragRef.current.vel) > 1) {
+        smoothTween.current?.kill();
+        smoothTween.current = gsap.to(wheel, {
+          rotationY: `+=${dragRef.current.vel * inertiaResistance}`,
+          duration: 1.5,
+          ease: "power3.out",
+          onUpdate: shade,
+          overwrite: "auto",
+        });
+      }
+      if (autoRotate && !isHovering.current) autoTween.current?.resume();
+    };
+
+    const onContainerEnter = () => {
+      isHovering.current = true;
+      if (pauseAutoRotateOnHover) autoTween.current?.pause();
+    };
+    const onContainerLeave = () => {
+      isHovering.current = false;
+      if (pauseAutoRotateOnHover && autoRotate && !dragRef.current.active)
+        autoTween.current?.resume();
+    };
+
+    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("touchstart", onPointerDown, { passive: true });
+    container.addEventListener("pointerenter", onContainerEnter);
+    container.addEventListener("pointerleave", onContainerLeave);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("touchmove", onPointerMove, { passive: true });
+    window.addEventListener("touchend", onPointerUp);
+
+    return () => {
+      autoTween.current?.kill();
+      smoothTween.current?.kill();
+      gsap.killTweensOf(wheel);
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("touchstart", onPointerDown);
+      container.removeEventListener("pointerenter", onContainerEnter);
+      container.removeEventListener("pointerleave", onContainerLeave);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("touchmove", onPointerMove);
+      window.removeEventListener("touchend", onPointerUp);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    images, faceCount, computedWidth, computedHeight, cardGap,
+    draggable, dragSensitivity, shadeBase, shadeIntensity, smoothness,
+    inertia, inertiaResistance, pauseAutoRotateOnHover, initialRotation,
+    faceFit, onFaceChange, entranceAnimation, entranceType, entranceDuration,
+    entranceStagger, entranceEase, filterOnHover, defaultFiltered, cardClassName,
+  ]);
+
+  useEffect(() => {
+    const wheel = wheelRef.current;
+    if (!wheel) return;
+    autoTween.current?.kill();
+    autoTween.current = null;
+    if (autoRotate) {
+      autoTween.current = gsap.to(wheel, {
+        rotationY: `+=${360 * autoRotateDirection}`,
+        duration: autoRotateSpeed,
+        repeat: -1,
+        ease: "none",
+        onUpdate: () => {
+          const rot = gsap.getProperty(wheel, "rotationY");
+          const clampedCount = Math.min(Math.max(faceCount, 3), 12);
+          const angleStep = 360 / clampedCount;
+          facesRef.current.forEach((f, i) => {
+            const angle = rot + i * angleStep;
+            const w = gsap.utils.wrapYoyo(0, 90, Math.abs(angle % 180));
+            f.style.opacity = shadeBase + (1 - w / 90) * shadeIntensity;
+          });
+        },
+      });
+      if (isHovering.current && pauseAutoRotateOnHover) autoTween.current.pause();
+    }
+    return () => { autoTween.current?.kill(); autoTween.current = null; };
+  }, [autoRotate, autoRotateSpeed, autoRotateDirection, faceCount, shadeBase, shadeIntensity, pauseAutoRotateOnHover]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full ${className}`}
+      style={{
+        minHeight: computedHeight,
+        cursor: draggable ? "grab" : "default",
+      }}
+    >
+      <div
+        ref={stageRef}
+        className="absolute left-1/2 top-1/2"
+        style={{
+          width: computedWidth,
+          height: computedHeight,
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <div
+          ref={wheelRef}
+          className="absolute w-full h-full"
+          style={{ transformStyle: "preserve-3d" }}
+        />
+      </div>
+    </div>
+  );
+});
+
+export default RotatingCarousel;
+```
+
+### Integration Instructions
+1. Install required dependencies:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./RotatingCarousel.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component fills its parent via `relative w-full h-full`. Give the parent a fixed height — the component sets `minHeight` to match the computed face height, but a fixed parent height ensures the 3D stage centers correctly:
+   ```jsx
+   <div style={{ width: '100%', height: '400px' }}>
+     <RotatingCarousel />
+   </div>
+   ```
+5. Face DOM elements are built imperatively with `document.createElement` inside a `useEffect` — they are not React-rendered. This is intentional and required for GSAP's `transformOrigin`/`z` 3D positioning to work correctly on each face.
+6. The wheel rebuild `useEffect` and the auto-rotate `useEffect` are intentionally split. The wheel rebuilds when layout/content props change; auto-rotate is a separate, isolated tween that can be started/stopped independently without rebuilding all faces.
+7. When `responsive={true}` (default), face width is recalculated via `ResizeObserver` on the outer container. The cylinder radius is recomputed from `computedWidth`, so the carousel automatically regeometries on resize.
+8. `images` array loops via `images[i % images.length]` — you can pass fewer images than `faceCount` and they will tile across all faces.
+9. `faceCount` is clamped to 3–12 internally. Values outside this range are silently clamped.
+10. `onFaceChange(index)` fires only when the nearest front face actually changes — it will not fire on every animation frame. Use it to sync external UI (e.g. a caption or dot indicator) to the active face.
+11. `defaultFiltered={true}` + `filterOnHover={true}` (default) — all faces start grayscale and reveal color on hover. To invert (all color, grayscale on hover): set `defaultFiltered={false}`.
+12. Set `filterOnHover={false}` to disable all hover filter toggling entirely — faces render at full color at all times.
+13. `entranceType="scatter"` uses `gsap.utils.random` for position and rotation — each mount produces a different animation. All other entrance types are deterministic.
+14. Drag events are attached to the container via `pointerdown`/`touchstart`, with `pointermove`/`pointerup` on `window` — this allows drags that leave the container bounds to continue tracking correctly.

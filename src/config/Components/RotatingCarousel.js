@@ -58,7 +58,7 @@ export const INITIAL_PROPS = {
   entranceDuration: 0.9,
   entranceStagger: 0.07,
   entranceEase: 'back.out(1.4)',
-  filterOnHover: false,
+  filterOnHover: true,
   defaultFiltered: true,
   className: '',
   cardClassName: '',

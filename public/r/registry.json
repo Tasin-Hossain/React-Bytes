@@ -380,6 +380,70 @@
 			]
 		},
 		{
+			"name": "RotatingCarousel-JS-CSS",
+			"title": "RotatingCarousel",
+			"description": "A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCarousel.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCarousel-JS-TW",
+			"title": "RotatingCarousel",
+			"description": "A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCarousel.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCarousel-TS-CSS",
+			"title": "RotatingCarousel",
+			"description": "A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCarousel.tsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingCarousel-TS-TW",
+			"title": "RotatingCarousel",
+			"description": "A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingCarousel.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouserepelDots-JS-CSS",
 			"title": "MouserepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",

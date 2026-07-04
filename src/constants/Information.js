@@ -89,6 +89,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Components/RotatingCarousel': {
+    name: 'RotatingCarousel',
+    description:'A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.',
+    category: 'Components',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/components/rotating-carousel',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   // Backgrounds Animations
   'Backgrounds/MouserepelDots': {
