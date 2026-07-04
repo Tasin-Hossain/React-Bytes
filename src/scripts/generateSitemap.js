@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BASE_URL = "https://reactbytes.dev";
+const BASE_URL = "https://reactbytes.online";
 
 const toSlug = (name) => name.toLowerCase().replace(/\s+/g, "-");
 
