@@ -3,7 +3,7 @@ import Footer from '../components/landing/Footer/Footer';
 import Header from '../components/landing/Header/Header';
 import Hero from '../components/landing/Hero/Hero';
 import NeedLaunch from '../components/landing/BuildFast/BuildFast';
-import Reviews from '../components/landing/Reviews/Reviews';
+// import Reviews from '../components/landing/Reviews/Reviews';
 
 const RootPage = () => {
   return (
@@ -14,7 +14,7 @@ const RootPage = () => {
         <Hero />
         <NeedLaunch />
         <Features />
-        <Reviews />
+        {/* <Reviews /> */}
         <Footer />
       </section>
     </>
