@@ -68,6 +68,16 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/MeltglitchText': {
+    name: 'MeltglitchText',
+    description:'A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/meltglitch-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
 
   // Components
   'Components/RotatingCards': {
