@@ -48,12 +48,6 @@ pids/
 # Next.js export
 next-env.d.ts
 
-# Static generated files
-public/default/
-public/tailwind/
-public/ts/default/
-public/ts/tailwind/
-
 # Config / Generated
 components.json
 components-mcp.json
