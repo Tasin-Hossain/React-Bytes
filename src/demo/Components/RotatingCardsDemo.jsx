@@ -43,7 +43,7 @@ const RotatingCardsInner = () => {
   return (
     <DemoBuilder
       title="Rotating Cards"
-      favKey="carousels/rotating-cards"
+      favKey="components/rotating-cards"
       prompt={RotatingCardsPrompt}
       childrenClassname="w-full"
       PreviewComponent={<RotatingCards {...props} className="w-full min-h-120" />}
