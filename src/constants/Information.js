@@ -68,8 +68,8 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
-  'TextAnimations/MeltglitchText': {
-    name: 'MeltglitchText',
+  'TextAnimations/MeltGlitchText': {
+    name: 'MeltGlitchText',
     description:'A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.',
     category: 'TextAnimations',
     dependencies: [],
