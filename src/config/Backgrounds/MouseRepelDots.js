@@ -173,10 +173,10 @@ export const getJsrepoCmds = variant => ({
   bun: `bunx jsrepo@latest add ${DOMAIN_URL}/r/MouserepelDots-${variant}`
 });
 
-import JS_CSS_CODE from '../../variants/jsCss/Backgrounds/MouseRapeldots/MouseRepelDots?raw';
-import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/MouseRapeldots/MouseRepelDots?raw';
-import TS_CSS_CODE from '../../variants/tsCss/Backgrounds/MouseRapeldots/MouseRepelDots?raw';
-import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/MouseRapeldots/MouseRepelDots?raw';
+import JS_CSS_CODE from '../../variants/jsCss/Backgrounds/MouseRepelDots/MouseRepelDots';
+import JS_TAILWIND_CODE from '../../variants/jsTailwind/Backgrounds/MouseRepelDots/MouseRepelDots';
+import TS_CSS_CODE from '../../variants/tsCss/Backgrounds/MouseRepelDots/MouseRepelDots';
+import TS_TAILWIND_CODE from '../../variants/tsTailwind/Backgrounds/MouseRepelDots/MouseRepelDots';
 
 export { JS_CSS_CODE };
 export { JS_TAILWIND_CODE };
