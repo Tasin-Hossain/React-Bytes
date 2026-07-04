@@ -38,10 +38,6 @@ const MouseRepelGridInner = () => {
 
   const handlePropChange = key => val => setProps({ [key]: val });
 
-  // FIX: minPeakScale and maxPeakScale must never cross over each other —
-  // if min > max, the per-cell random range (min + Math.random() * (max - min))
-  // in ShapesDots.jsx goes negative and breaks the peak sizing. These two
-  // handlers clamp each slider against the other's current value.
   const handleMinPeakScaleChange = val => {
     const clamped = Math.min(val, props.maxPeakScale);
     setProps({ minPeakScale: clamped });
@@ -54,7 +50,7 @@ const MouseRepelGridInner = () => {
   return (
     <DemoBuilder
       title="Shapes Dots"
-      favKey="backgrounds/mouse-repel-grid"
+      favKey="backgrounds/shapes-dots"
       prompt={usageCode}
       showReplay={false}
       demoContent={props.demoContent}
