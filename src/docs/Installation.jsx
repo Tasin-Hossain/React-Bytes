@@ -158,10 +158,10 @@ const CLIContent = ({ toolId }) => {
       <section>
         <h2 className="title-two mb-3">Run the command</h2>
         <PackageManagerTabs active={pm} onChange={setPm} />
-        <p className="leading-relaxed text-(--text-muted) mb-1 text-sm">
-          Swap <span className="text-(--text-primary) font-medium">&lt;COMPONENT&gt;</span>,{' '}
-          <span className="text-(--text-primary) font-medium">&lt;LANGUAGE&gt;</span> and{' '}
-          <span className="text-(--text-primary) font-medium">&lt;STYLE&gt;</span> for the component you picked.
+        <p className="leading-relaxed text-(--text-muted) mb-3 text-sm">
+          Swap <span className="text-(--brand) font-medium">&lt;COMPONENT&gt;</span>,{' '}
+          <span className="text-(--brand) font-medium">&lt;LANGUAGE&gt;</span> and{' '}
+          <span className="text-(--brand) font-medium">&lt;STYLE&gt;</span> for the component you picked.
         </p>
         <CodeBlock code={tool.buildCommand(dlx)} language="bash" />
       </section>
