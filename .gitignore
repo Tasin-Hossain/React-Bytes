@@ -95,7 +95,6 @@ temp/
 # Misc
 .envrc
 
-
 src/config/config.js
 src/constants/code/constants.js
 src/content/Content.jsx
