@@ -40,11 +40,11 @@ const NAV_LINKS = [
       return COMPONENTS_CATEGORIES.includes(category);
     },
   },
-  {
-    label: 'Blocks',
-    to: '/blocks',
-    isActive: (path) => path.startsWith('/blocks'),
-  },
+  // {
+  //   label: 'Blocks',
+  //   to: '/blocks',
+  //   isActive: (path) => path.startsWith('/blocks'),
+  // },
   {
     label: 'Tools',
     to: '/tools',

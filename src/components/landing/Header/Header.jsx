@@ -12,8 +12,8 @@ import { useTheme } from '../../../hooks/useTheme';
 
 const NAV_LINKS = [
   { label: 'Docs', to: '/get-started/introduction' },
-  { label: 'Components', to: '/text-animations/magnetic-text' },
-  { label: 'Blocks', to: '/blocks/header' },
+  { label: 'Components', to: '/text-animations/curtain-text' },
+  // { label: 'Blocks', to: '/', comingSoon: true },
   { label: 'Tools', to: '/tools' }
 ];
 
@@ -52,18 +52,23 @@ const Header = () => {
         <span className="hidden md:flex text-bold px-2">|</span>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map(({ label, to }) => (
+        <nav className="hidden md:flex items-center  gap-1">
+          {NAV_LINKS.map(({ label, to, comingSoon }) => (
             <Link
               key={label}
               to={to}
               onClick={() => setActiveLink(label)}
               className={`
-                px-3 py-1.5 rounded-md text-sm transition-all duration-150
+                px-3 py-1.5 rounded-md text-sm transition-all duration-150 flex items-center justify-center gap-1.5
                 ${activeLink === label ? ' bg-(--bg-hover)' : 'hover:bg-(--bg-hover) '}
               `}
             >
               {label}
+              {comingSoon && (
+                <span className="text-[10px] uppercase px-1.5 py-0.5 rounded-full bg-(--bg-elevated) text-(--text-muted) leading-none">
+                  Soon
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -157,7 +162,7 @@ const Header = () => {
       {/* Mobile Menu — full width, no app-container so it bleeds edge to edge */}
       <div className={`mobile-menu md:hidden ${menuOpen ? 'open' : 'closed'}`}>
         <div className="app-container px-4 pb-4 py-2 border-t border-(--border-secondary) flex flex-col gap-1 ">
-          {NAV_LINKS.map(({ label, to }) => (
+          {NAV_LINKS.map(({ label, to, comingSoon }) => (
             <Link
               key={label}
               to={to}
@@ -171,7 +176,14 @@ const Header = () => {
       ${activeLink === label ? ' bg-(--bg-elevated)' : ' hover:bg-(--bg-elevated)'}
     `}
             >
-              <span>{label}</span>
+              <span className="flex items-center gap-1.5">
+                {label}
+                {comingSoon && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-(--bg-elevated) text-(--text-muted) leading-none">
+                    Soon
+                  </span>
+                )}
+              </span>
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out text-(--text-primary)">
                 <FaLongArrowAltRight />
               </span>
