@@ -27,24 +27,24 @@ const navColumns = [
   {
     title: 'Docs',
     links: [
-      { label: 'Introduction', to: '/docs/introduction' },
-      { label: 'Installation', to: '/docs/installation' },
-      { label: 'Components', to: '/docs/components' },
-      { label: 'Tools', to: '/docs/tools' },
-      { label: 'Blocks', to: '/docs/blocks' }
+      { label: 'Introduction', to: '/get-started/introduction' },
+      { label: 'Installation', to: '/get-started/installation' },
+      { label: 'Components', to: '/get-started/all-components' },
+      { label: 'Tools', to: '/tools' },
+      // { label: 'Blocks', to: '/docs/blocks' }
     ]
   },
   {
     title: 'Site',
     links: [
       { label: 'Home', to: '/' },
-      { label: 'License', to: '/license' },
-      { label: 'FAQs', to: '/faqs' }
+      { label: 'License', to: 'https://github.com/Tasin-Hossain/React-Bytes?tab=License-1-ov-file' },
+      // { label: 'FAQs', to: '/faqs' }
     ]
   },
   {
     title: 'Community',
-    links: [{ label: 'Github', to: 'https://github.com' }]
+    links: [{ label: 'Github', to: 'https://github.com/Tasin-Hossain/React-Bytes' }]
   }
 ];
 
