@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://reactbytes.dev/sitemap.xml
+Sitemap: https://reactbytes.online/sitemap.xml

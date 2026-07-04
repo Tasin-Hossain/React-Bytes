@@ -1,0 +1,52 @@
+# React Bytes
+
+> React Bytes is an open source showcase of creative React components - Text Animations, Components, and Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
+
+Important notes for agents:
+- Components are organized by semantics first: Text Animations, Components, Backgrounds.
+- Each component has 4 variants. All variants are kept in sync when updated.
+- Dependencies vary by component (e.g., gsap, motion). Always check and install dependencies before usage.
+
+## Docs
+- [Homepage](https://reactbytes.online): Landing page, quick presentation of the library.
+- [Introduction](https://reactbytes.online/get-started/introduction): Project mission and principles.
+- [Installation](https://reactbytes.online/get-started/installation): Manual copy and CLI commands (jsrepo, shadcn).
+- [MCP Setup](https://reactbytes.online/get-started/mcp): Set up a MCP server to help you with development.
+- [All Components](https://reactbytes.online/get-started/all-components): Full browsable list of every component.
+
+## CLI
+- shadcn: `npx shadcn@latest add https://reactbytes.online/r/<Component>-<LANG>-<STYLE>`
+  - <LANG>: JS | TS; <STYLE>: CSS | TW
+  - Example: npx shadcn@latest add https://reactbytes.online/r/MagneticText-JS-CSS
+- jsrepo: `npx jsrepo@latest add shadcn:https://reactbytes.online/r/<Component>-<LANG>-<STYLE>`
+  - <LANG>: JS | TS; <STYLE>: CSS | TW
+  - Example: npx jsrepo@latest add shadcn:https://reactbytes.online/r/MagneticText-JS-CSS
+
+Notes:
+- Component page URLs use kebab-case paths like /text-animations/magnetic-text.
+- CLI component identifiers use PascalCase, e.g. MagneticText.
+
+## Text Animations
+- [Magnetic Text](https://reactbytes.online/text-animations/magnetic-text): GSAP-powered magnetic text with interactive cursor attraction, smooth color transitions, and configurable entrance effects.
+- [Curtain Text](https://reactbytes.online/text-animations/curtain-text): Characters slide away on hover to reveal a second text layer in a curtain-style reveal.
+- [Cursor Trail](https://reactbytes.online/text-animations/cursor-trail): Animated floating text or symbol particles that trail the cursor, with configurable colors, motion styles, and particle sizing.
+- [Blur Text](https://reactbytes.online/text-animations/blur-text): GSAP-powered blur, scale, and staggered letter/word reveal animation with adjustable timing and gradients.
+- [MeltGlitch Text](https://reactbytes.online/text-animations/meltglitch-text): GSAP-powered hover effect combining melt distortion and RGB glitch layers with mouse tracking.
+
+## Components
+- [Rotating Cards](https://reactbytes.online/components/rotating-cards): Interactive rotating card component.
+- [Rotating Carousel](https://reactbytes.online/components/rotating-carousel): Interactive rotating carousel component.
+
+## Backgrounds
+- [MouseRepel Dots](https://reactbytes.online/backgrounds/mouserepel-dots): Dot grid background that repels from the cursor.
+- [MouseRepel Grid](https://reactbytes.online/backgrounds/mouserepel-grid): Grid-based background with mouse-repel interaction.
+- [Blinking Squares](https://reactbytes.online/backgrounds/blinking-squares): Animated blinking square grid background.
+- [Half Tone](https://reactbytes.online/backgrounds/half-tone): Halftone-style animated background effect.
+- [Vortex](https://reactbytes.online/backgrounds/vortex): Swirling vortex animated background.
+- [Ascii Wave](https://reactbytes.online/backgrounds/ascii-wave): ASCII-character wave animation background.
+- [Emoji Wave](https://reactbytes.online/backgrounds/emoji-wave): Emoji-based wave animation background.
+- [Shapes Dots](https://reactbytes.online/backgrounds/shapes-dots): Animated dot/shape pattern background.
+
+## Optional
+- [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.
+- [Sitemap](https://reactbytes.online/sitemap.xml): Full site sitemap.
