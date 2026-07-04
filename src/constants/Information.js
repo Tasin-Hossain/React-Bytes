@@ -100,8 +100,8 @@ export const componentMetadata = {
   },
 
   // Backgrounds Animations
-  'Backgrounds/MouserepelDots': {
-    name: 'MouserepelDots',
+  'Backgrounds/MouseRepelDots': {
+    name: 'MouseRepelDots',
     description: 'A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.',
     category: 'Backgrounds',
     dependencies: [],
@@ -109,8 +109,8 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
-  'Backgrounds/MouserepelGrid': {
-    name: 'MouserepelGrid',
+  'Backgrounds/MouseRepelGrid': {
+    name: 'MouseRepelGrid',
     description: 'A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.',
     category: 'Backgrounds',
     dependencies: [],
