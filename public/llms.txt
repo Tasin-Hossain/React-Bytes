@@ -1,11 +1,12 @@
 # React Bytes
 
-> React Bytes is an open source showcase of creative React components - Text Animations, Components, and Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
+> React Bytes is an open source showcase of creative React components - Text Animations, Components, Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
 
 Important notes for agents:
 - Components are organized by semantics first: Text Animations, Components, Backgrounds.
 - Each component has 4 variants. All variants are kept in sync when updated.
 - Dependencies vary by component (e.g., gsap, motion). Always check and install dependencies before usage.
+- This file is auto-generated from src/constants/Information.js. Do not edit it by hand — run `npm run llms` instead.
 
 ## Docs
 - [Homepage](https://reactbytes.online): Landing page, quick presentation of the library.
@@ -27,25 +28,25 @@ Notes:
 - CLI component identifiers use PascalCase, e.g. MagneticText.
 
 ## Text Animations
-- [Magnetic Text](https://reactbytes.online/text-animations/magnetic-text): GSAP-powered magnetic text with interactive cursor attraction, smooth color transitions, and configurable entrance effects.
-- [Curtain Text](https://reactbytes.online/text-animations/curtain-text): Characters slide away on hover to reveal a second text layer in a curtain-style reveal.
-- [Cursor Trail](https://reactbytes.online/text-animations/cursor-trail): Animated floating text or symbol particles that trail the cursor, with configurable colors, motion styles, and particle sizing.
-- [Blur Text](https://reactbytes.online/text-animations/blur-text): GSAP-powered blur, scale, and staggered letter/word reveal animation with adjustable timing and gradients.
-- [MeltGlitch Text](https://reactbytes.online/text-animations/meltglitch-text): GSAP-powered hover effect combining melt distortion and RGB glitch layers with mouse tracking.
+- [MagneticText](https://reactbytes.online/text-animations/magnetic-text): A customizable React magnetic text animation powered by GSAP, featuring interactive cursor attraction, smooth color transitions, responsive sizing, and configurable entrance effects for modern UI designs.
+- [CurtainText](https://reactbytes.online/text-animations/curtain-text): A customizable React text animation where each character slides away on hover to reveal a second text layer, creating a smooth curtain-style reveal effect for modern interfaces.
+- [CursorTrail](https://reactbytes.online/text-animations/cursor-trail): A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.
+- [BlurText](https://reactbytes.online/text-animations/blur-text): A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.
+- [MeltglitchText](https://reactbytes.online/text-animations/meltglitch-text): A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.
 
 ## Components
-- [Rotating Cards](https://reactbytes.online/components/rotating-cards): Interactive rotating card component.
-- [Rotating Carousel](https://reactbytes.online/components/rotating-carousel): Interactive rotating carousel component.
+- [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.
+- [RotatingCarousel](https://reactbytes.online/components/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
 
 ## Backgrounds
-- [MouseRepel Dots](https://reactbytes.online/backgrounds/mouserepel-dots): Dot grid background that repels from the cursor.
-- [MouseRepel Grid](https://reactbytes.online/backgrounds/mouserepel-grid): Grid-based background with mouse-repel interaction.
-- [Blinking Squares](https://reactbytes.online/backgrounds/blinking-squares): Animated blinking square grid background.
-- [Half Tone](https://reactbytes.online/backgrounds/half-tone): Halftone-style animated background effect.
-- [Vortex](https://reactbytes.online/backgrounds/vortex): Swirling vortex animated background.
-- [Ascii Wave](https://reactbytes.online/backgrounds/ascii-wave): ASCII-character wave animation background.
-- [Emoji Wave](https://reactbytes.online/backgrounds/emoji-wave): Emoji-based wave animation background.
-- [Shapes Dots](https://reactbytes.online/backgrounds/shapes-dots): Animated dot/shape pattern background.
+- [MouserepelDots](https://reactbytes.online/backgrounds/mouserepel-dots): A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.
+- [MouserepelGrid](https://reactbytes.online/backgrounds/mouserepel-grid): A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.
+- [BlinkingSquares](https://reactbytes.online/backgrounds/blinking-squares): A customizable React animated square background featuring softly twinkling squares, directional fading, glow effects, adjustable brightness, and high-performance canvas rendering.
+- [HalfTone](https://reactbytes.online/backgrounds/half-tone): A customizable React Three Fiber halftone background featuring animated dot patterns, multiple shape styles, directional wave motion, color controls, and shader-powered WebGL rendering.
+- [Vortex](https://reactbytes.online/backgrounds/vortex): A customizable React Three Fiber vortex background featuring animated swirling gradients, fluid shader motion, adjustable colors, noise intensity, opacity, and WebGL-powered visual effects.
+- [AsciiWave](https://reactbytes.online/backgrounds/ascii-wave): A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.
+- [EmojiWave](https://reactbytes.online/backgrounds/emoji-wave): A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.
+- [ShapesDots](https://reactbytes.online/backgrounds/shapes-dots): A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.
 
 ## Optional
 - [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.
