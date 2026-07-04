@@ -1,4 +1,4 @@
-const code = `// JS-TW variant
+// JS-TW variant
 import { useEffect, useRef, memo } from 'react';
 
 const TWO_PI = Math.PI * 2;
@@ -318,7 +318,7 @@ const MouseRepelDots = memo(({
     };
   }, []);
 
-  const classes = \`relative w-full h-full \${className}\`;
+  const classes = `relative w-full h-full ${className}`;
 
   return (
     <div className={classes} {...rest}>
@@ -331,5 +331,4 @@ const MouseRepelDots = memo(({
   );
 });
 
-export default MouseRepelDots;`;
-export default code;
+export default MouseRepelDots;

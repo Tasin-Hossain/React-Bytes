@@ -1,4 +1,4 @@
-const code = `// JS-CSS variant
+// JS-CSS variant
 import { useEffect, useRef, memo } from 'react';
 
 const TWO_PI = Math.PI * 2;
@@ -323,7 +323,7 @@ const MouseRepelDots = memo(({
     canvas:  { display: 'block', width: '100%', height: '100%', pointerEvents: 'none' },
   };
 
-  const classes = \`\${className}\`;
+  const classes = `${className}`;
 
   return (
     <div style={style.wrapper} className={classes} {...rest}>
@@ -332,5 +332,4 @@ const MouseRepelDots = memo(({
   );
 });
 
-export default MouseRepelDots;`;
-export default code;
+export default MouseRepelDots;
