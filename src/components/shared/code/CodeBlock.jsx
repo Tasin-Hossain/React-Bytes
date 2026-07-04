@@ -95,7 +95,7 @@ const CodeBlock = ({ code, language = 'jsx' }) => {
 
       {/* ── top bar */}
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-(--border-secondary) bg-(--bg-elevated)">
-        <span className="text-xs font-semibold uppercase tracking-widest text-(--text-muted)">
+        <span className="text-xs uppercase tracking-widest text-(--text-muted)">
           {language}
         </span>
       </div>
@@ -107,15 +107,9 @@ const CodeBlock = ({ code, language = 'jsx' }) => {
 
         <Highlight theme={reactBytesTheme} code={visible} language={language}>
           {({ className, tokens, getLineProps, getTokenProps }) => (
-            <pre className={`${className} p-5 pr-14 text-sm leading-relaxed m-0 bg-transparent`}>
+            <pre className={`${className} p-5 pr-14 text-sm font-bold leading-relaxed m-0 bg-transparent`}>
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })} className="table-row">
-                  <span
-                    className="table-cell pr-5 text-right select-none text-[12px] w-8"
-                    style={{ color: 'var(--text-muted)', opacity: 0.4 }}
-                  >
-                    {i + 1}
-                  </span>
                   <span className="table-cell">
                     {line.map((token, j) => (
                       <span key={j} {...getTokenProps({ token })} />
