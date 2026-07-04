@@ -25,7 +25,7 @@ import {
   VortexPrompt,
 } from '../../config/Backgrounds/Vortex';
 import { getUsageCode } from '../../constants/code/Backgrounds/Vortex';
-import Vortex from '../../content/Backgrounds/vortex';
+import Vortex from '../../content/Backgrounds/Vortex';
 
 
 // ─────────────────────────────────────────────────────────────────────────────
