@@ -101,7 +101,7 @@ const MCP = () => {
               components.json
             </span>{' '}
             and register the{' '}
-            <ExternalLink href="https://reactbytes.dev">@react-bytes</ExternalLink> registry:
+            <ExternalLink href="https://reactbytes.online">@react-bytes</ExternalLink> registry:
           </p>
 
           <CodeBlock code={COMPONENTS_JSON} language="json" />
