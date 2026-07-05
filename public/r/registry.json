@@ -316,6 +316,70 @@
 			]
 		},
 		{
+			"name": "NeonFlicker-JS-CSS",
+			"title": "NeonFlicker",
+			"description": "A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "NeonFlicker.jsx"
+				}
+			]
+		},
+		{
+			"name": "NeonFlicker-JS-TW",
+			"title": "NeonFlicker",
+			"description": "A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "NeonFlicker.jsx"
+				}
+			]
+		},
+		{
+			"name": "NeonFlicker-TS-CSS",
+			"title": "NeonFlicker",
+			"description": "A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "NeonFlicker.tsx"
+				}
+			]
+		},
+		{
+			"name": "NeonFlicker-TS-TW",
+			"title": "NeonFlicker",
+			"description": "A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "NeonFlicker.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",

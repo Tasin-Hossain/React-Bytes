@@ -77,6 +77,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/NeonFlicker': {
+    name: 'NeonFlicker',
+    description:'A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/neon-flicker',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

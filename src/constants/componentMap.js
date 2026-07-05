@@ -13,6 +13,8 @@ const componentMap = {
   'text-animations/cursor-trail': () => import('../demo/TextAnimations/CursorTrailDemo.jsx'),
   'text-animations/blur-text': () => import('../demo/TextAnimations/BlurTextDemo.jsx'),
   'text-animations/meltglitch-text': () => import('../demo/TextAnimations/MeltGlitchTextDemo.jsx'),
+  'text-animations/neon-flicker': () => import('../demo/TextAnimations/NeonFlickerDemo.jsx'),
+
 
 
   // ── Components

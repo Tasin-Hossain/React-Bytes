@@ -20,7 +20,8 @@ export const CATEGORIES = [
       'Cursor Trail',
       'Blur Text',
       'MeltGlitch Text',
-      
+      'Neon Flicker',
+
     ]
   },
   // {

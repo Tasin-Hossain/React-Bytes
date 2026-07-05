@@ -1,0 +1,182 @@
+## Integrate the <NeonFlicker /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: NeonFlicker
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import NeonFlicker from './NeonFlicker'
+
+<NeonFlicker
+  text="NEON"
+  color="#00f5ff"
+  glow={undefined}
+  glowSoft={undefined}
+  dim={undefined}
+  minGlow={0}
+  maxGlow={1}
+  charDelay={0.18}
+  repeat={false}
+  fontSize="64px"
+  fontWeight="900"
+  letterSpacing="0.08em"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "NEON" | The text content to render. Split into individual characters via `[...text]` (spread — not grapheme-aware; avoid multi-codepoint emoji). Rendered uppercase via CSS `textTransform`. |
+| color | string | "#00f5ff" | Primary color of each character at full brightness. Also used as the default for `glow`, `glowSoft`, and `dim` if those props are not set. |
+| glow | string | undefined | Color of the glow shadow at maximum intensity. Defaults to `color` if not provided. |
+| glowSoft | string | undefined | Color of the glow shadow at mid intensity (used during the intermediate flicker step, at `(minGlow + maxGlow) / 2`). Defaults to `color` if not provided. |
+| dim | string | undefined | Color of the character and glow at minimum brightness (the resting "off" state between flickers). Defaults to `color` if not provided. |
+| minGlow | number | 0 | Lower bound of the glow intensity range (0–1). Clamped to `[0, maxGlow]` internally. Drives the `textShadow` radius at rest and the floor opacity (`opMin = max(0.05, 0.08 + minGlow * 0.1)`). |
+| maxGlow | number | 1 | Upper bound of the glow intensity range (0–1). Must be ≥ `minGlow`. Drives the `textShadow` radius at peak and the ceiling opacity (`opMax = min(1, 0.6 + maxGlow * 0.4)`). |
+| charDelay | number | 0.18 | Seconds between the start of each successive character's flicker sequence. Controls how staggered the cascade appears across the full text. |
+| repeat | boolean | false | When `true`, the full flicker sequence loops indefinitely (GSAP `repeat: -1`) with a 1.5-second pause (`repeatDelay`) between cycles. |
+| fontSize | string | "64px" | CSS font-size value applied to each character span. |
+| fontWeight | string | "900" | CSS font-weight value applied to each character span. |
+| letterSpacing | string | "0.08em" | CSS letter-spacing applied to each character span. |
+| className | string | "" | Additional CSS classes applied to the outermost wrapper div. |
+
+### Full Component Source
+```jsx
+// JS-CSS variant
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+
+function glowShadow(hexColor, intensity) {
+  if (!hexColor || intensity <= 0) return 'none';
+  return `0 0 ${8 * intensity}px ${hexColor}, 0 0 ${20 * intensity}px ${hexColor}, 0 0 ${40 * intensity}px ${hexColor}`;
+}
+
+export default function NeonFlicker({
+  text = 'NEON',
+  color = '#00f5ff',
+  glow,
+  glowSoft,
+  dim,
+  minGlow = 0,
+  maxGlow = 1,
+  charDelay = 0.18,
+  repeat = false,
+  fontSize = '64px',
+  fontWeight = '900',
+  letterSpacing = '0.08em',
+  className = ''
+}) {
+  const containerRef = useRef(null);
+  const tlRef = useRef(null);
+
+  const glowColor     = glow     ?? color;
+  const glowSoftColor = glowSoft ?? color;
+  const dimColor      = dim      ?? color;
+
+  const min = Math.max(0, Math.min(minGlow, maxGlow));
+  const max = Math.max(min, maxGlow);
+
+  useEffect(() => {
+    const buildTimeline = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const spans = container.querySelectorAll('.neon-char');
+      if (tlRef.current) tlRef.current.kill();
+
+      const shadowMax = glowShadow(glowColor, max);
+      const shadowMid = glowShadow(glowSoftColor, (min + max) / 2);
+      const shadowMin = glowShadow(dimColor, min);
+      const opMin     = Math.max(0.05, 0.08 + min * 0.1);
+      const opMax     = Math.min(1, 0.6 + max * 0.4);
+
+      gsap.set(spans, { opacity: opMin, color: dimColor, textShadow: shadowMin });
+
+      const tl = gsap.timeline({ repeat: repeat ? -1 : 0, repeatDelay: 1.5 });
+
+      spans.forEach((span, i) => {
+        const t = i * charDelay;
+        tl.to(span, { opacity: opMax, color, textShadow: shadowMax, duration: 0.05 }, t);
+        tl.to(span, { opacity: opMin, textShadow: shadowMin, duration: 0.05 }, t + 0.08);
+        tl.to(span, { opacity: opMax, textShadow: shadowMax, duration: 0.04 }, t + 0.13);
+        tl.to(span, { opacity: opMin + (opMax - opMin) * 0.3, textShadow: shadowMid, duration: 0.07 }, t + 0.19);
+        tl.to(span, { opacity: opMax, color, textShadow: shadowMax, duration: 0.1 }, t + 0.28);
+      });
+
+      tlRef.current = tl;
+    };
+
+    buildTimeline();
+    return () => tlRef.current?.kill();
+  }, [text, color, glow, glowSoft, dim, minGlow, maxGlow, charDelay, repeat, glowColor, max, glowSoftColor, min, dimColor]);
+
+  const chars = [...text];
+
+  const style = {
+    outer: {
+      display:       'flex',
+      flexDirection: 'column',
+      alignItems:    'center',
+      gap:           '2rem',
+    },
+    container: {
+      display:        'flex',
+      alignItems:     'center',
+      justifyContent: 'center',
+      flexWrap:       'wrap',
+      gap:            0,
+    },
+    char: (char) => ({
+      display:       'inline-block',
+      fontSize,
+      fontWeight,
+      letterSpacing,
+      textTransform: 'uppercase',
+      userSelect:    'none',
+      fontFamily:    "'Arial Black', sans-serif",
+      color:         dimColor,
+      minWidth:      char === ' ' ? '0.4em' : undefined,
+    }),
+  };
+
+  const classes = `${className}`;
+
+  return (
+    <div style={style.outer} className={classes}>
+      <div ref={containerRef} style={style.container}>
+        {chars.map((char, i) => (
+          <span
+            key={i}
+            className="neon-char"
+            style={style.char(char)}
+          >
+            {char === ' ' ? '\u00a0' : char}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./NeonFlicker.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. This is the CSS variant — all styling is inline via `style` objects. No Tailwind classes are used on the inner elements; `className` only applies to the outermost wrapper div.
+5. Each character's flicker plays as a 5-step GSAP sequence on the shared timeline: flash on → cut to dim → flash on again → mid-glow hold → settle to full on. All five steps are hardcoded in duration (0.05s / 0.05s / 0.04s / 0.07s / 0.1s) and are not exposed as props. Only the stagger offset between characters is controlled by `charDelay`.
+6. The `glow`, `glowSoft`, and `dim` props let you use different hex colors for the three intensity stages of the `textShadow` — e.g. a warm white `glow` at peak, a cooler tint for `glowSoft` mid-flicker, and a deep desaturated tone for `dim` at rest. All three default to `color` if not passed, producing a monochromatic flicker.
+7. `glowShadow()` produces a three-layer `box-shadow`-style `textShadow` string at radii of `8×`, `20×`, and `40×` the `intensity` value in pixels. At `intensity = 0` (i.e. `minGlow = 0` with `dim` unset or same as `color`), the shadow is `"none"`.
+8. `minGlow` and `maxGlow` are sanitized: `min = clamp(minGlow, 0, maxGlow)` and `max = max(min, maxGlow)`. This means passing `minGlow > maxGlow` won't crash — both will resolve to the same clamped value, producing no visible flicker range (all states equal).
+9. The timeline is rebuilt (old killed, new built from scratch) whenever any of the effect's dependencies change — including the derived values `glowColor`, `glowSoftColor`, `dimColor`, `min`, and `max`, which are computed outside the effect and passed in. Changing `color` alone is enough to trigger a full rebuild since all three derived color values re-resolve from it.
+10. `repeat={true}` loops with a hardcoded `repeatDelay: 1.5` seconds — this pause duration is not exposed as a prop.
+11. Text is forced uppercase via CSS `textTransform: 'uppercase'` — passing lowercase `text` will still render uppercase visually. Space characters are rendered as `\u00a0` (non-breaking space) with a `minWidth: '0.4em'` to preserve spacing without collapsing.
+12. The font is hardcoded to `'Arial Black', sans-serif` via inline style — this is not exposed as a prop. Override it via a `className` CSS rule targeting `.neon-char` if needed, though inline styles have higher specificity, so you'd need the `fontFamily` prop added to the component source, or use `!important`.
