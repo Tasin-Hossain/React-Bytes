@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite",
     "start": "concurrently -n \"registry,docs\" -c \"blue,green\" \"npm run registry:dev\" \"vite\"",
-    "build": "npm run registry:build && npm run sitemap && npm run llms && vite build",
+    "build": "npm run registry:build && npm run sitemap && npm run llms && vite build && npm run prerender",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write .",
     "sitemap": "node src/scripts/generateSitemap.js",
     "llms": "node src/scripts/generateLlmsText.js",
     "convert": "node src/scripts/convertToStringExport.js",
     "registry:build": "jsrepo build",
+    "prerender": "node src/scripts/prerender.js",
     "registry:dev": "jsrepo build --watch"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "jsrepo": "^3.7.1",
+    "puppeteer": "^25.3.0",
     "vite": "^8.0.12"
   }
 }
