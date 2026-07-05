@@ -1,6 +1,6 @@
+// JS-CSS variant
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-
 
 export default function SmokeAway({
   text = "VANISH",
@@ -9,6 +9,9 @@ export default function SmokeAway({
   smokeBlur = 8,
   returnEase = "back.out(2)",
   color = "#d35af8",
+  fontSize = "clamp(3.5rem, 8vw, 6rem)",
+  fontWeight = "900",
+  letterSpacing = "-0.02em",
   className = "",
 }) {
   const containerRef = useRef(null);
@@ -16,7 +19,6 @@ export default function SmokeAway({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const spans = container.querySelectorAll(".smoke-char");
     const handlers = [];
 
@@ -31,7 +33,6 @@ export default function SmokeAway({
           ease: "power3.out",
         });
       };
-
       const onLeave = () => {
         gsap.to(s, {
           y: 0,
@@ -42,7 +43,6 @@ export default function SmokeAway({
           ease: returnEase,
         });
       };
-
       s.addEventListener("mouseenter", onEnter);
       s.addEventListener("mouseleave", onLeave);
       handlers.push({ s, onEnter, onLeave });
@@ -56,20 +56,41 @@ export default function SmokeAway({
     };
   }, [text, smokeY, smokeScale, smokeBlur, returnEase]);
 
+  const style = {
+    outer: {
+      display:        "flex",
+      alignItems:     "center",
+      justifyContent: "center",
+    },
+    container: {
+      display:        "flex",
+      alignItems:     "center",
+      justifyContent: "center",
+      flexWrap:       "wrap",
+    },
+    char: (char) => ({
+      display:       "inline-block",
+      fontSize,
+      fontWeight,
+      letterSpacing,
+      lineHeight:    1,
+      cursor:        "pointer",
+      userSelect:    "none",
+      color,
+      minWidth:      char === " " ? "0.35em" : undefined,
+    }),
+  };
+
+  const classes = `${className}`;
+
   return (
-    <div className={`flex items-center justify-center ${className}`}>
-      <div
-        ref={containerRef}
-        className="flex items-center justify-center flex-wrap"
-      >
+    <div style={style.outer} className={classes}>
+      <div ref={containerRef} style={style.container}>
         {[...text].map((char, i) => (
           <span
             key={i}
-            className="smoke-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none cursor-pointer select-none"
-            style={{
-              color,
-              minWidth: char === " " ? "0.35em" : undefined,
-            }}
+            className="smoke-char"
+            style={style.char(char)}
           >
             {char === " " ? "\u00a0" : char}
           </span>

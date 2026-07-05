@@ -86,6 +86,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/SmokeAway': {
+    name: 'SmokeAway',
+    description:'A customizable React smoke text animation featuring GSAP-powered hover effects, character-by-character disappearance, blur transitions, scaling, vertical motion, and smooth restoration for modern UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/smoke-away',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

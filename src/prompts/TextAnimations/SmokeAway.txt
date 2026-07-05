@@ -1,0 +1,133 @@
+## Integrate the <SmokeAway /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: SmokeAway
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import SmokeAway from './SmokeAway'
+
+<SmokeAway
+  text="VANISH"
+  smokeY={-20}
+  smokeScale={1.6}
+  smokeBlur={8}
+  returnEase="back.out(2)"
+  color="#d35af8"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "VANISH" | The text content to render. Split into individual characters via `[...text]` (spread — not grapheme-aware; avoid multi-codepoint emoji). |
+| smokeY | number | -20 | Y offset in pixels each character animates to on hover-enter (negative = upward). Combined with scale and blur to produce the smoke-dissipation feel. |
+| smokeScale | number | 1.6 | Scale each character grows to as it "smokes away" on hover-enter. |
+| smokeBlur | number | 8 | Blur radius in pixels applied to a character as it smokes away on hover-enter. |
+| returnEase | string | "back.out(2)" | GSAP ease string used for the return animation (hover-leave: character snaps back to `y:0, opacity:1, scale:1, blur:0`). The `back.out` default gives a slight overshoot for a springy return feel. The smoke-away direction always uses `"power3.out"` and is not configurable. |
+| color | string | "#d35af8" | CSS color of all characters. |
+| className | string | "" | Additional CSS classes applied to the outermost wrapper div. |
+
+### Full Component Source
+```jsx
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
+export default function SmokeAway({
+  text = "VANISH",
+  smokeY = -20,
+  smokeScale = 1.6,
+  smokeBlur = 8,
+  returnEase = "back.out(2)",
+  color = "#d35af8",
+  className = "",
+}) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const spans = container.querySelectorAll(".smoke-char");
+    const handlers = [];
+
+    spans.forEach((s) => {
+      const onEnter = () => {
+        gsap.to(s, {
+          y: smokeY,
+          opacity: 0,
+          scale: smokeScale,
+          filter: `blur(${smokeBlur}px)`,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      };
+
+      const onLeave = () => {
+        gsap.to(s, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.5,
+          ease: returnEase,
+        });
+      };
+
+      s.addEventListener("mouseenter", onEnter);
+      s.addEventListener("mouseleave", onLeave);
+      handlers.push({ s, onEnter, onLeave });
+    });
+
+    return () => {
+      handlers.forEach(({ s, onEnter, onLeave }) => {
+        s.removeEventListener("mouseenter", onEnter);
+        s.removeEventListener("mouseleave", onLeave);
+      });
+    };
+  }, [text, smokeY, smokeScale, smokeBlur, returnEase]);
+
+  return (
+    <div className={`flex items-center justify-center ${className}`}>
+      <div
+        ref={containerRef}
+        className="flex items-center justify-center flex-wrap"
+      >
+        {[...text].map((char, i) => (
+          <span
+            key={i}
+            className="smoke-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none cursor-pointer select-none"
+            style={{
+              color,
+              minWidth: char === " " ? "0.35em" : undefined,
+            }}
+          >
+            {char === " " ? "\u00a0" : char}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./SmokeAway.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. Unlike the other GSAP text components in this set (BlurText, NeonFlicker), this component is purely **hover-driven** — there is no entrance animation, no autoplay, and no timeline. Each character reacts independently to its own `mouseenter`/`mouseleave` events.
+5. Font size is controlled by Tailwind responsive classes hardcoded in JSX (`text-6xl` on sm/md, `text-8xl` on lg) — these are not exposed as props. Override them by passing a `className` that targets `.smoke-char`, though Tailwind's specificity may require `!` modifiers, or add a `fontSize` prop to the source directly.
+6. The smoke-away animation (`mouseenter`) always uses `ease: "power3.out"` with `duration: 0.4` — neither is configurable via props. Only the return animation's ease (`returnEase`) is exposed.
+7. Each character independently runs its own `gsap.to` calls, so characters can be mid-smoke and mid-return simultaneously as the cursor moves quickly across the text. GSAP will naturally interrupt and redirect an in-progress animation when a new one targets the same element.
+8. Event listeners are attached directly to each `.smoke-char` span (not delegated from the container), and the entire set is torn down and rebuilt in the effect's cleanup whenever `text`, `smokeY`, `smokeScale`, `smokeBlur`, or `returnEase` changes. `color` is intentionally absent from the dependency array — changing `color` prop re-renders the spans (new inline style) but does not re-attach event handlers, which is correct since handlers don't reference `color`.
+9. Space characters are rendered as `\u00a0` with `minWidth: "0.35em"` to preserve spacing. Unlike other characters, space spans still receive `mouseenter`/`mouseleave` handlers — hovering a space gap will trigger the smoke animation on that invisible span (harmless but technically active).
+10. There is no mechanism to reset a character to its visible state programmatically — if a user hovers a character and moves the cursor off the page without triggering `mouseleave`, the character stays invisible. This is a known edge case with per-element `mouseenter`/`mouseleave` listeners on partially overlapping or clipped layouts.

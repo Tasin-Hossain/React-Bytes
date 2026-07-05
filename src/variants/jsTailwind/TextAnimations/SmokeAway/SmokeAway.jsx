@@ -1,6 +1,6 @@
+// JS-TW variant (identical to uploaded source)
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-
 
 export default function SmokeAway({
   text = "VANISH",
@@ -16,7 +16,6 @@ export default function SmokeAway({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const spans = container.querySelectorAll(".smoke-char");
     const handlers = [];
 
@@ -31,7 +30,6 @@ export default function SmokeAway({
           ease: "power3.out",
         });
       };
-
       const onLeave = () => {
         gsap.to(s, {
           y: 0,
@@ -42,7 +40,6 @@ export default function SmokeAway({
           ease: returnEase,
         });
       };
-
       s.addEventListener("mouseenter", onEnter);
       s.addEventListener("mouseleave", onLeave);
       handlers.push({ s, onEnter, onLeave });
@@ -65,7 +62,7 @@ export default function SmokeAway({
         {[...text].map((char, i) => (
           <span
             key={i}
-            className="smoke-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none cursor-pointer select-none"
+            className="smoke-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none cursor-pointer select-none"
             style={{
               color,
               minWidth: char === " " ? "0.35em" : undefined,

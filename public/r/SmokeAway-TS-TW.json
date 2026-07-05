@@ -1,0 +1,18 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "SmokeAway-TS-TW",
+	"title": "SmokeAway",
+	"description": "A customizable React smoke text animation featuring GSAP-powered hover effects, character-by-character disappearance, blur transitions, scaling, vertical motion, and smooth restoration for modern UI designs.",
+	"type": "registry:component",
+	"files": [
+		{
+			"type": "registry:component",
+			"path": "SmokeAway.tsx",
+			"content": "// TS-TW variant\r\nimport { useEffect, useRef, CSSProperties } from \"react\";\r\nimport { gsap } from \"gsap\";\r\n\r\ninterface SmokeAwayProps {\r\n  text?:       string;\r\n  smokeY?:     number;\r\n  smokeScale?: number;\r\n  smokeBlur?:  number;\r\n  returnEase?: string;\r\n  color?:      string;\r\n  className?:  string;\r\n}\r\n\r\nexport default function SmokeAway({\r\n  text = \"VANISH\",\r\n  smokeY = -20,\r\n  smokeScale = 1.6,\r\n  smokeBlur = 8,\r\n  returnEase = \"back.out(2)\",\r\n  color = \"#d35af8\",\r\n  className = \"\",\r\n}: SmokeAwayProps) {\r\n  const containerRef = useRef<HTMLDivElement>(null);\r\n\r\n  useEffect(() => {\r\n    const container = containerRef.current;\r\n    if (!container) return;\r\n    const spans = container.querySelectorAll(\".smoke-char\");\r\n    const handlers: { s: Element; onEnter: () => void; onLeave: () => void }[] = [];\r\n\r\n    spans.forEach((s) => {\r\n      const onEnter = () => {\r\n        gsap.to(s, {\r\n          y: smokeY,\r\n          opacity: 0,\r\n          scale: smokeScale,\r\n          filter: `blur(${smokeBlur}px)`,\r\n          duration: 0.4,\r\n          ease: \"power3.out\",\r\n        });\r\n      };\r\n      const onLeave = () => {\r\n        gsap.to(s, {\r\n          y: 0,\r\n          opacity: 1,\r\n          scale: 1,\r\n          filter: \"blur(0px)\",\r\n          duration: 0.5,\r\n          ease: returnEase,\r\n        });\r\n      };\r\n      s.addEventListener(\"mouseenter\", onEnter);\r\n      s.addEventListener(\"mouseleave\", onLeave);\r\n      handlers.push({ s, onEnter, onLeave });\r\n    });\r\n\r\n    return () => {\r\n      handlers.forEach(({ s, onEnter, onLeave }) => {\r\n        s.removeEventListener(\"mouseenter\", onEnter);\r\n        s.removeEventListener(\"mouseleave\", onLeave);\r\n      });\r\n    };\r\n  }, [text, smokeY, smokeScale, smokeBlur, returnEase]);\r\n\r\n  return (\r\n    <div className={`flex items-center justify-center ${className}`}>\r\n      <div\r\n        ref={containerRef}\r\n        className=\"flex items-center justify-center flex-wrap\"\r\n      >\r\n        {[...text].map((char, i) => (\r\n          <span\r\n            key={i}\r\n            className=\"smoke-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none cursor-pointer select-none\"\r\n            style={{\r\n              color,\r\n              minWidth: char === \" \" ? \"0.35em\" : undefined,\r\n            } as CSSProperties}\r\n          >\r\n            {char === \" \" ? \"\\u00a0\" : char}\r\n          </span>\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n}"
+		}
+	],
+	"registryDependencies": [],
+	"dependencies": [
+		"gsap@^3.15.0"
+	]
+}
