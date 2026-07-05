@@ -6,14 +6,21 @@
         <img src="src/assets/logos/reactbytes-gh-black.svg" alt="react-bytes logo" width="600" hight="300">
   </picture>
 	<br>
-
-**Free, open-source, animated React components for building memorable UIs.**
-
-[Website](https://reactbytes.online) · [Introduction](https://reactbytes.online/get-started/introduction) · [Installation](https://reactbytes.online/get-started/installation) · [All Components](https://reactbytes.online/get-started/all-components) · [MCP Setup](https://reactbytes.online/get-started/mcp)
-
+	<br>
+  <strong>Free, open-source, animated React components for building memorable UIs.**</strong>
+	<br>
+  <sub>Stand out with 20+ free, customizable animations for text, backgrounds, and UI.</sub>
+  <br />
+  <br>
+  <a href="https://github.com/tasin-hossain/react-bytes/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/tasin-hossain/react-bytes"></a>
+  <a href="https://github.com/tasin-hossain/react-bytes/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT+Commons_Clause-magenta"></a>
+  <br>
+  <br>
+  <a href="(https://reactbytes.online/">📖 Introduction</a>  <a href="https://reactbytes.online/get-started/installation">⚡ Installation Start</a>  <a href="https://reactbytes.online/get-started/all-components">👀 All Components</a> <a href="https://reactbytes.online/get-started/mcp">🤖 MCP</a>
 </div>
 
----
+<br />
+
 
 ## About
 
