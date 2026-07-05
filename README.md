@@ -1,6 +1,11 @@
 <div align="center">
-
-# ⚛️ React Bytes
+  <br>
+  <picture>
+        <source media="(prefers-color-scheme: light)" srcset="src/assets/logos/reactbits-gh-black.svg">
+        <source media="(prefers-color-scheme: dark)" srcset="src/assets/logos/reactbits-gh-white.svg">
+        <img src="src/assets/logos/reactbits-gh-black.svg" alt="react-bytes logo" width="600">
+  </picture>
+	<br>
 
 **Free, open-source, animated React components for building memorable UIs.**
 
@@ -61,11 +66,11 @@ React Bytes also ships an MCP-compatible registry so AI editors (Claude Code, Cu
 
 ## Components
 
-| Category | Components |
-|---|---|
-| **Text Animations** | Magnetic Text, Curtain Text, Cursor Trail, Blur Text, MeltGlitch Text |
-| **Components** | Rotating Cards, Rotating Carousel |
-| **Backgrounds** | MouseRepel Dots, MouseRepel Grid, Blinking Squares, Half Tone, Vortex, Ascii Wave, Emoji Wave, Shapes Dots |
+| Category            | Components                                                                                                 |
+| ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Text Animations** | Magnetic Text, Curtain Text, Cursor Trail, Blur Text, MeltGlitch Text                                      |
+| **Components**      | Rotating Cards, Rotating Carousel                                                                          |
+| **Backgrounds**     | MouseRepel Dots, MouseRepel Grid, Blinking Squares, Half Tone, Vortex, Ascii Wave, Emoji Wave, Shapes Dots |
 
 Browse the full, searchable list at [All Components](https://reactbytes.online/get-started/all-components).
 
