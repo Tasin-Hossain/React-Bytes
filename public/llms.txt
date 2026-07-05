@@ -33,6 +33,7 @@ Notes:
 - [CursorTrail](https://reactbytes.online/text-animations/cursor-trail): A customizable React cursor trail component that creates animated floating text or symbol particles with configurable colors, motion styles, particle sizing, and interactive mouse effects.
 - [BlurText](https://reactbytes.online/text-animations/blur-text): A customizable React text animation powered by GSAP, featuring smooth blur, scale, and staggered letter or word reveals with adjustable timing, gradients, and repeat controls.
 - [MeltGlitchText](https://reactbytes.online/text-animations/meltglitch-text): A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.
+- [NeonFlicker](https://reactbytes.online/text-animations/neon-flicker): A customizable React neon text animation featuring GSAP-powered flicker effects, glowing shadows, per-character animations, adjustable glow intensity, custom colors, and looping neon sign effects for modern UI designs.
 
 ## Components
 - [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.

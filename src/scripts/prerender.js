@@ -1,4 +1,3 @@
-import puppeteer from 'puppeteer';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -47,15 +46,34 @@ function startServer() {
   });
 }
 
+async function launchBrowser() {
+  // On Vercel's Linux build machine, use the serverless-compatible Chromium
+  // eslint-disable-next-line no-undef
+  if (process.env.VERCEL) {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    const puppeteerCore = (await import('puppeteer-core')).default;
+    return puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless
+    });
+  }
+
+  // Local dev (Windows/Mac/Linux) — use full puppeteer with its bundled Chromium
+  const puppeteer = (await import('puppeteer')).default;
+  return puppeteer.launch({
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+}
+
 async function prerender() {
   console.log('Starting static server...');
   const server = await startServer();
 
   console.log('Launching headless browser...');
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  const browser = await launchBrowser();
   const page = await browser.newPage();
 
   const routes = getRoutes();
