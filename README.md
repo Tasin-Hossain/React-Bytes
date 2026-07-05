@@ -22,7 +22,7 @@
 <br />
 
 <div align="center">
-  <img src="src/assets/logos/readme-showcase.png" alt="React Bits component showcase" width="1000">
+  <img src="src/assets/logos/readme-showcase-transprate.png" alt="React Bytes component showcase" width="1000">
 </div>
 
 ## About
