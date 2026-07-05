@@ -252,8 +252,8 @@
 			]
 		},
 		{
-			"name": "MeltglitchText-JS-CSS",
-			"title": "MeltglitchText",
+			"name": "MeltGlitchText-JS-CSS",
+			"title": "MeltGlitchText",
 			"description": "A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.",
 			"type": "registry:component",
 			"dependencies": [
@@ -263,13 +263,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MeltglitchText.jsx"
+					"path": "MeltGlitchText.jsx"
 				}
 			]
 		},
 		{
-			"name": "MeltglitchText-JS-TW",
-			"title": "MeltglitchText",
+			"name": "MeltGlitchText-JS-TW",
+			"title": "MeltGlitchText",
 			"description": "A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.",
 			"type": "registry:component",
 			"dependencies": [
@@ -279,13 +279,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MeltglitchText.jsx"
+					"path": "MeltGlitchText.jsx"
 				}
 			]
 		},
 		{
-			"name": "MeltglitchText-TS-CSS",
-			"title": "MeltglitchText",
+			"name": "MeltGlitchText-TS-CSS",
+			"title": "MeltGlitchText",
 			"description": "A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.",
 			"type": "registry:component",
 			"dependencies": [
@@ -295,13 +295,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MeltglitchText.tsx"
+					"path": "MeltGlitchText.tsx"
 				}
 			]
 		},
 		{
-			"name": "MeltglitchText-TS-TW",
-			"title": "MeltglitchText",
+			"name": "MeltGlitchText-TS-TW",
+			"title": "MeltGlitchText",
 			"description": "A customizable React hover text animation featuring GSAP-powered melt effects, RGB glitch layers, interactive mouse tracking, smooth character distortion, and configurable colors, typography, and motion.",
 			"type": "registry:component",
 			"dependencies": [
@@ -311,7 +311,7 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MeltglitchText.tsx"
+					"path": "MeltGlitchText.tsx"
 				}
 			]
 		},
@@ -444,8 +444,8 @@
 			]
 		},
 		{
-			"name": "MouserepelDots-JS-CSS",
-			"title": "MouserepelDots",
+			"name": "MouseRepelDots-JS-CSS",
+			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -453,13 +453,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelDots.jsx"
+					"path": "MouseRepelDots.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelDots-JS-TW",
-			"title": "MouserepelDots",
+			"name": "MouseRepelDots-JS-TW",
+			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -467,13 +467,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelDots.jsx"
+					"path": "MouseRepelDots.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelDots-TS-CSS",
-			"title": "MouserepelDots",
+			"name": "MouseRepelDots-TS-CSS",
+			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -481,13 +481,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelDots.tsx"
+					"path": "MouseRepelDots.tsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelDots-TS-TW",
-			"title": "MouserepelDots",
+			"name": "MouseRepelDots-TS-TW",
+			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -495,13 +495,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelDots.tsx"
+					"path": "MouseRepelDots.tsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelGrid-JS-CSS",
-			"title": "MouserepelGrid",
+			"name": "MouseRepelGrid-JS-CSS",
+			"title": "MouseRepelGrid",
 			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -509,13 +509,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelGrid.jsx"
+					"path": "MouseRepelGrid.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelGrid-JS-TW",
-			"title": "MouserepelGrid",
+			"name": "MouseRepelGrid-JS-TW",
+			"title": "MouseRepelGrid",
 			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -523,13 +523,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelGrid.jsx"
+					"path": "MouseRepelGrid.jsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelGrid-TS-CSS",
-			"title": "MouserepelGrid",
+			"name": "MouseRepelGrid-TS-CSS",
+			"title": "MouseRepelGrid",
 			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -537,13 +537,13 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelGrid.tsx"
+					"path": "MouseRepelGrid.tsx"
 				}
 			]
 		},
 		{
-			"name": "MouserepelGrid-TS-TW",
-			"title": "MouserepelGrid",
+			"name": "MouseRepelGrid-TS-TW",
+			"title": "MouseRepelGrid",
 			"description": "A customizable WebGL-powered React grid background featuring mouse repulsion, animated waves, glowing effects, gradients, rainbow modes, ambient motion, and interactive pulse animations.",
 			"type": "registry:component",
 			"dependencies": [],
@@ -551,7 +551,7 @@
 			"files": [
 				{
 					"type": "registry:component",
-					"path": "MouserepelGrid.tsx"
+					"path": "MouseRepelGrid.tsx"
 				}
 			]
 		},
