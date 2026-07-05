@@ -16,11 +16,14 @@
   <a href="https://github.com/tasin-hossain/react-bytes/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT+Commons_Clause-magenta"></a>
   <br>
   <br>
-  <a href="(https://reactbytes.online/">📖 Introduction</a>  <a href="https://reactbytes.online/get-started/installation">⚡ Installation Start</a>  <a href="https://reactbytes.online/get-started/all-components">👀 All Components</a> <a href="https://reactbytes.online/get-started/mcp">🤖 MCP</a>
+  <a href="https://reactbytes.online/">📖 Introduction</a>  <a href="https://reactbytes.online/get-started/installation">⚡ Installation Start</a>  <a href="https://reactbytes.online/get-started/all-components">👀 All Components</a> <a href="https://reactbytes.online/get-started/mcp">🤖 MCP</a>
 </div>
 
 <br />
 
+<div align="center">
+  <img src="src/assets/logos/readme-showcase.png" alt="React Bits component showcase" width="1000">
+</div>
 
 ## About
 
