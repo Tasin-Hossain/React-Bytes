@@ -38,14 +38,14 @@ export const DROP_AMOUNT_OPTIONS = [
 ];
 
 export const INITIAL_PROPS = {
-  text: 'Glitchy on hover.',
-  fontSize: 42,
+  text: 'GLITCHY ON HOVER',
+  fontSize: 72,
   fontWeight: 800,
   color: '#d35af8',
   cyanColor: '#5ce1ff',
   magentaColor: '#ff5cf0',
   radius: 110,
-  dropAmount: 24
+  dropAmount: 32
 };
 
 export const PROPS_DATA = [

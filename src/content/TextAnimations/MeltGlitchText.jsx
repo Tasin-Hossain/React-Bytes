@@ -1,6 +1,18 @@
-import  { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
+/**
+ * MeltGlitchText
+ * Responsive notes:
+ *  - fontSize scales with the viewport via CSS clamp() instead of a fixed px value.
+ *  - radius / dropAmount scale proportionally to the *actual rendered* font size,
+ *    so the glitch effect feels consistent whether the text is huge on desktop
+ *    or shrunk down on a phone.
+ *  - Pointer Events (not mouse-only) are used so touch/pen devices trigger the
+ *    effect too, with position tracked on drag instead of hover.
+ *  - Text is allowed to wrap on narrow screens instead of forcing nowrap +
+ *    horizontal overflow.
+ */
 export default function MeltGlitchText({
   text = "Glitchy on hover.",
   fontSize = 42,
@@ -18,6 +30,25 @@ export default function MeltGlitchText({
   const mouseXRef = useRef(-9999);
   const activeRef = useRef(false);
   const rafRef = useRef(null);
+  const scaleRef = useRef(1);
+
+  // Track the wrapper's actual rendered font-size (post clamp()) so the
+  // pointer radius and drop amount can be scaled to match.
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap || typeof ResizeObserver === "undefined") return;
+
+    const updateScale = () => {
+      const rendered = parseFloat(getComputedStyle(wrap).fontSize) || fontSize;
+      scaleRef.current = rendered / fontSize;
+    };
+
+    updateScale();
+    const ro = new ResizeObserver(updateScale);
+    ro.observe(wrap);
+
+    return () => ro.disconnect();
+  }, [fontSize]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -31,7 +62,6 @@ export default function MeltGlitchText({
       const holder = document.createElement("span");
       holder.style.display = "inline-block";
       holder.style.position = "relative";
-      holder.style.fontSize = `${fontSize}px`;
       holder.style.fontWeight = String(fontWeight);
 
       const base = document.createElement("span");
@@ -79,34 +109,46 @@ export default function MeltGlitchText({
       magOp: gsap.quickTo(c.magenta, "opacity", { duration: 0.35 }),
     }));
 
-    const handleMove = (e) => {
-      mouseXRef.current = e.clientX;
+    const setPointer = (clientX) => {
+      mouseXRef.current = clientX;
       activeRef.current = true;
     };
-    const handleLeave = () => {
+    const clearPointer = () => {
       activeRef.current = false;
     };
 
-    wrap.addEventListener("mousemove", handleMove);
-    wrap.addEventListener("mouseleave", handleLeave);
+    const handlePointerMove = (e) => setPointer(e.clientX);
+    const handlePointerLeave = () => clearPointer();
+    const handlePointerDown = (e) => setPointer(e.clientX);
+    const handlePointerUp = () => clearPointer();
+
+    wrap.addEventListener("pointermove", handlePointerMove);
+    wrap.addEventListener("pointerleave", handlePointerLeave);
+    wrap.addEventListener("pointerdown", handlePointerDown);
+    wrap.addEventListener("pointerup", handlePointerUp);
+    wrap.addEventListener("pointercancel", clearPointer);
 
     const tick = () => {
+      const scale = scaleRef.current;
+      const scaledRadius = radius * scale;
+      const scaledDrop = dropAmount * scale;
+
       charsRef.current.forEach((c, i) => {
         const rect = c.holder.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const dist = mouseXRef.current - cx;
         const proximity = activeRef.current
-          ? Math.max(0, 1 - Math.abs(dist) / radius)
+          ? Math.max(0, 1 - Math.abs(dist) / scaledRadius)
           : 0;
         const eased = Math.sin(proximity * Math.PI * 0.5);
         const side = dist < 0 ? 1 : -1;
 
         const s = settersRef.current[i];
-        s.baseY(eased * dropAmount);
-        s.cyanY(eased * dropAmount * 1.9);
-        s.cyanX(side * eased * 4);
-        s.magY(eased * dropAmount * 2.6);
-        s.magX(-side * eased * 4);
+        s.baseY(eased * scaledDrop);
+        s.cyanY(eased * scaledDrop * 1.9);
+        s.cyanX(side * eased * 4 * scale);
+        s.magY(eased * scaledDrop * 2.6);
+        s.magX(-side * eased * 4 * scale);
         s.cyanOp(eased * 0.9);
         s.magOp(eased * 0.9);
       });
@@ -115,16 +157,24 @@ export default function MeltGlitchText({
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      wrap.removeEventListener("mousemove", handleMove);
-      wrap.removeEventListener("mouseleave", handleLeave);
+      wrap.removeEventListener("pointermove", handlePointerMove);
+      wrap.removeEventListener("pointerleave", handlePointerLeave);
+      wrap.removeEventListener("pointerdown", handlePointerDown);
+      wrap.removeEventListener("pointerup", handlePointerUp);
+      wrap.removeEventListener("pointercancel", clearPointer);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [text, fontSize, fontWeight, color, cyanColor, magentaColor, radius, dropAmount]);
+  }, [text, fontWeight, color, cyanColor, magentaColor, radius, dropAmount]);
 
   return (
     <div
       ref={wrapRef}
-      className={"relative whitespace-nowrap " + className}
+      className={"relative whitespace-normal wrap-break-word leading-tight touch-none " + className}
+      style={{
+        // Scales between ~55% and 100% of the requested fontSize depending on
+        // viewport width, instead of a fixed px value that overflows on mobile.
+        fontSize: `clamp(${(fontSize * 0.55).toFixed(1)}px, ${(fontSize / 16).toFixed(2)}vw, ${fontSize}px)`,
+      }}
     />
   );
 }
