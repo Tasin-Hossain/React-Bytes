@@ -1,9 +1,9 @@
 <div align="center">
   <br>
   <picture>
-        <source media="(prefers-color-scheme: light)" srcset="src/assets/logos/reactbits-gh-black.svg">
-        <source media="(prefers-color-scheme: dark)" srcset="src/assets/logos/reactbits-gh-white.svg">
-        <img src="src/assets/logos/reactbits-gh-black.svg" alt="react-bytes logo" width="600">
+        <source media="(prefers-color-scheme: light)" srcset="src/assets/logos/reactbytes-gh-black.svg">
+        <source media="(prefers-color-scheme: dark)" srcset="src/assets/logos/reactbytes-gh-white.svg">
+        <img src="src/assets/logos/reactbytes-gh-black.svg" alt="react-bytes logo" width="600">
   </picture>
 	<br>
 
