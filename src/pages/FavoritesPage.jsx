@@ -7,6 +7,7 @@ import { EmptyState } from '../components/shared/EmptyState';
 import { Input, InputGroup } from '../components/ui/Input/Input';
 import CategoryDropdown from '../components/shared/CategoryDropdown';
 import ComponentCard from '../components/shared/ComponentsGrid/ComponentCard';
+import { useSEO } from '../hooks/useSEO';
 
 
 const slug = str => str.replace(/\s+/g, '-').toLowerCase();
@@ -40,6 +41,13 @@ const ALL_CATEGORIES = [
 ];
 
 const Favorites = () => {
+  useSEO({
+    title: 'React Bytes - Favorites',
+    description: 'Your saved React Bytes components, all in one place.',
+    path: '/favorites',
+    noindex: true
+  });
+
   const [savedKeys, setSavedKeys] = useState(getSaved);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All Components');

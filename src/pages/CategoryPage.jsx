@@ -3,9 +3,11 @@ import { useParams } from 'react-router';
 import { componentMap } from '../constants/componentMap';
 import { componentMetadata } from '../constants/Information';
 
+
 import ComponentsSkeleton from '../components/common/Skeleton/ComponentsSkeleton';
 import { IntroductionSkeleton } from '../components/common/Skeleton/IntroductionSkeleton';
 import AllComponentsSkeleton from '../components/common/Skeleton/AllComponentsSkeleton';
+import { useSEO } from '../hooks/useSEO';
 
 const toMetaKey = (category, subcategory) => {
   const cat = category
@@ -31,22 +33,33 @@ const CategoryPage = () => {
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ');
 
-  useEffect(() => {
-    const isDoc = subcategory === 'introduction' || subcategory === 'installation';
-    const title = `React Bytes - ${pageTitle}`;
+  const isDoc = subcategory === 'introduction' || subcategory === 'installation';
+  const seoTitle = `React Bytes - ${pageTitle}`;
 
-    let desc;
-    if (isDoc) {
-      desc = `${pageTitle} — Learn how to get started with React Bytes component library.`;
-    } else {
-      const metaKey = toMetaKey(category, subcategory);
-      const meta = componentMetadata[metaKey];
-      desc = meta?.description ?? `${pageTitle} — Interactive animated React component with live preview, props table, and copy-paste code.`;
-    }
+  let seoDescription;
+  if (isDoc) {
+    seoDescription = `${pageTitle} — Learn how to get started with React Bytes component library.`;
+  } else {
+    const metaKey = toMetaKey(category, subcategory);
+    const meta = componentMetadata[metaKey];
+    seoDescription = meta?.description ?? `${pageTitle} — Interactive animated React component with live preview, props table, and copy-paste code.`;
+  }
 
-    document.title = title;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
-  }, [category, subcategory, pageTitle]);
+  const categoryLabel = category
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+
+  useSEO({
+    title: seoTitle,
+    description: seoDescription,
+    path: `/${category}/${subcategory}`,
+    breadcrumbs: [
+      { name: 'Home', path: '/' },
+      { name: categoryLabel, path: `/${category}` },
+      { name: pageTitle, path: `/${category}/${subcategory}` }
+    ]
+  });
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

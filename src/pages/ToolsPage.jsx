@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { TOOLS } from '../tools/config/toolRegistry';
 import ToolDropdown from '../tools/shared/ToolDropdown';
 import ToolContent from '../tools/shared/ToolContent';
 import ToolsLanding from '../tools/ToolsLanding';
 import Header from '../components/navbers/Header';
+import { useSEO } from '../hooks/useSEO';
 
 
 export default function ToolsPage() {
@@ -15,10 +16,15 @@ export default function ToolsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  useEffect(() => {
-    const tool = TOOLS.find(t => t.id === toolId);
-    document.title = tool ? `React Bytes - ${tool.label}` : 'React Bytes - Tools';
-  }, [toolId]);
+  const tool = TOOLS.find(t => t.id === toolId);
+
+  useSEO({
+    title: tool ? `React Bytes - ${tool.label}` : 'React Bytes - Tools',
+    description: tool
+      ? `${tool.label} — a free online tool by React Bytes for frontend developers.`
+      : 'Free online design and utility tools for frontend developers, built by React Bytes.',
+    path: toolId ? `/tools/${toolId}` : '/tools'
+  });
 
   // No toolId → landing grid
   if (!toolId) return <ToolsLanding />;
