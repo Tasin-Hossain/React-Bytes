@@ -21,7 +21,12 @@ export const CATEGORIES = [
       'Blur Text',
       'MeltGlitch Text',
       'Neon Flicker',
-
+      // 'RainDrop Text',
+      // 'Shatter Text',
+      // 'Smoke Away',
+      // 'SparkleDissolve Text',
+      // 'Spotlight Text',
+      // 'StaticNoise Text',
     ]
   },
   // {

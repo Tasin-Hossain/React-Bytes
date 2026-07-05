@@ -40,6 +40,7 @@ const FakeSlider = ({ label, width = '100%' }) => (
           left: 0,
           top: 0,
           height: '100%',
+          // eslint-disable-next-line react-hooks/purity
           width: `${Math.floor(Math.random() * 40) + 30}%`,
           borderRadius: '99px',
           background:
@@ -51,6 +52,7 @@ const FakeSlider = ({ label, width = '100%' }) => (
         style={{
           position: 'absolute',
           top: '50%',
+          // eslint-disable-next-line react-hooks/purity
           left: `${Math.floor(Math.random() * 40) + 30}%`,
           transform: 'translate(-50%, -50%)',
           width: '10px',
