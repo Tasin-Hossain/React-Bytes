@@ -508,6 +508,62 @@
 			]
 		},
 		{
+			"name": "StaticNoiseText-JS-CSS",
+			"title": "StaticNoiseText",
+			"description": "A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "StaticNoiseText.jsx"
+				}
+			]
+		},
+		{
+			"name": "StaticNoiseText-JS-TW",
+			"title": "StaticNoiseText",
+			"description": "A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "StaticNoiseText.jsx"
+				}
+			]
+		},
+		{
+			"name": "StaticNoiseText-TS-CSS",
+			"title": "StaticNoiseText",
+			"description": "A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "StaticNoiseText.tsx"
+				}
+			]
+		},
+		{
+			"name": "StaticNoiseText-TS-TW",
+			"title": "StaticNoiseText",
+			"description": "A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "StaticNoiseText.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",

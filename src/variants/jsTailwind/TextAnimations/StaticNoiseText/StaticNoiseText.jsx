@@ -1,4 +1,6 @@
-import  { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+// JS-TW variant 
+
+import { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
 
 export default function StaticNoiseText({
   text = 'static noise',
@@ -125,16 +127,15 @@ export default function StaticNoiseText({
   }, [text, fontWeight, color, maxShift, fontSize, containerWidth, wrapLines]);
 
   return (
-    <div ref={containerRef} style={{ width: '100%' }}>
+    <div ref={containerRef} className="w-full">
       <span
         ref={measureRef}
-        className={className}
-        style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none' }}
+        className={`absolute invisible pointer-events-none ${className}`}
         aria-hidden="true"
       >
         {text}
       </span>
-      <canvas ref={canvasRef} style={{ display: 'block', margin: '0 auto' }} />
+      <canvas ref={canvasRef} className="block mx-auto" />
     </div>
   );
 }

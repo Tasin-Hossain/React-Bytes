@@ -1,4 +1,21 @@
-import  { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+
+export interface StaticNoiseTextProps {
+  text?: string;
+  fontWeight?: number;
+  color?: string;
+  intensity?: number;
+  density?: number;
+  maxShift?: number;
+  textStyle?: React.CSSProperties;
+}
+
+interface LineMetric {
+  line: string;
+  width: number;
+  ascent: number;
+  descent: number;
+}
 
 export default function StaticNoiseText({
   text = 'static noise',
@@ -7,15 +24,34 @@ export default function StaticNoiseText({
   intensity = 0.12,
   density = 1,
   maxShift = 45,
-  className = 'text-6xl sm:text-6xl md:text-6xl lg:text-8xl',
-}) {
-  const containerRef = useRef(null);
-  const canvasRef = useRef(null);
-  const measureRef = useRef(null);
+  textStyle,
+}: StaticNoiseTextProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
   const intensityRef = useRef(intensity);
   const densityRef = useRef(density);
-  const [fontSize, setFontSize] = useState(null);
-  const [containerWidth, setContainerWidth] = useState(null);
+  const [fontSize, setFontSize] = useState<number | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const measureStyle: React.CSSProperties = {
+    position: 'absolute',
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    fontSize: viewportWidth >= 1024 ? '6rem' : '3.75rem',
+    lineHeight: 1,
+    fontWeight: 900,
+    ...textStyle,
+  };
 
   useEffect(() => { intensityRef.current = intensity; }, [intensity]);
   useEffect(() => { densityRef.current = density; }, [density]);
@@ -41,10 +77,10 @@ export default function StaticNoiseText({
       ro.disconnect();
       window.removeEventListener('resize', measureFont);
     };
-  }, [className]);
+  }, [viewportWidth]);
 
-  const wrapLines = useCallback((ctx, words, maxWidth) => {
-    const lines = [];
+  const wrapLines = useCallback((ctx: CanvasRenderingContext2D, words: string[], maxWidth: number) => {
+    const lines: string[] = [];
     let current = '';
     for (const word of words) {
       const test = current ? `${current} ${word}` : word;
@@ -64,9 +100,11 @@ export default function StaticNoiseText({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     const off = document.createElement('canvas');
     const offCtx = off.getContext('2d');
+    if (!offCtx) return;
     const font = `${fontWeight} ${fontSize}px sans-serif`;
     offCtx.font = font;
 
@@ -74,7 +112,7 @@ export default function StaticNoiseText({
     const words = text.split(' ');
     const lines = wrapLines(offCtx, words, containerWidth);
 
-    const lineMetrics = lines.map(line => {
+    const lineMetrics: LineMetric[] = lines.map(line => {
       const m = offCtx.measureText(line);
       const ascent = m.actualBoundingBoxAscent || fontSize;
       const descent = m.actualBoundingBoxDescent || fontSize * 0.25;
@@ -102,7 +140,7 @@ export default function StaticNoiseText({
     canvas.width = w + MARGIN * 2;
     canvas.height = h + MARGIN * 2;
 
-    let frameId;
+    let frameId: number;
     const run = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
@@ -126,12 +164,7 @@ export default function StaticNoiseText({
 
   return (
     <div ref={containerRef} style={{ width: '100%' }}>
-      <span
-        ref={measureRef}
-        className={className}
-        style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none' }}
-        aria-hidden="true"
-      >
+      <span ref={measureRef} style={measureStyle} aria-hidden="true">
         {text}
       </span>
       <canvas ref={canvasRef} style={{ display: 'block', margin: '0 auto' }} />

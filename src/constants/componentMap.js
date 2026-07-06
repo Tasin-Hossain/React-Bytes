@@ -17,7 +17,8 @@ const componentMap = {
   'text-animations/smoke-away': () => import('../demo/TextAnimations/SmokeAwayDemo.jsx'),
   'text-animations/spotlight-text': () => import('../demo/TextAnimations/SpotlightDemo.jsx'),
   'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
-
+  // 'text-animations/raindrop-text': () => import('../demo/TextAnimations/RainDropDemo.jsx'),
+  // 'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
 
 
   // ── Components

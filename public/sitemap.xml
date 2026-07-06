@@ -91,18 +91,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://reactbytes.online/text-animations/raindrop-text</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://reactbytes.online/text-animations/shatter-text</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://reactbytes.online/components/rotating-cards</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>

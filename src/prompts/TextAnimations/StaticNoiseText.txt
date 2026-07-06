@@ -1,4 +1,44 @@
-import  { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+## Integrate the <StaticNoiseText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: StaticNoiseText
+### Variant: JavaScript + Tailwind
+### Dependencies: none (uses native Canvas API)
+
+---
+
+### Usage Example
+```jsx
+import StaticNoiseText from './StaticNoiseText'
+
+<StaticNoiseText
+  text="static noise"
+  fontWeight={900}
+  color="#aaaaaa"
+  intensity={0.12}
+  density={1}
+  maxShift={45}
+  className="text-6xl sm:text-6xl md:text-6xl lg:text-8xl"
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "static noise" | The text string to render. Supports multi-word input; text wraps automatically based on container width. |
+| fontWeight | number | 900 | CSS font-weight applied to the rendered text. |
+| color | string | "#aaaaaa" | Fill color of the text (hex). |
+| intensity | number | 0.12 | Fraction of `maxShift` applied as the horizontal glitch offset per scanline (0–1). Higher = wider pixel scatter. |
+| density | number | 1 | Probability (0–1) that any given scanline is affected by the glitch shift on each frame. `1` = all lines shift every frame; `0` = no glitch. |
+| maxShift | number | 45 | Maximum horizontal pixel displacement for a glitched scanline. Scales with `intensity`. |
+| className | string | "text-6xl sm:text-6xl md:text-6xl lg:text-8xl" | Tailwind (or CSS) classes controlling the text size. Applied to a hidden `<span>` that is measured to derive the actual canvas font size. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+
+import { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
 
 export default function StaticNoiseText({
   text = 'static noise',
@@ -20,7 +60,6 @@ export default function StaticNoiseText({
   useEffect(() => { intensityRef.current = intensity; }, [intensity]);
   useEffect(() => { densityRef.current = density; }, [density]);
 
-  // measure actual rendered font-size + track container width for wrapping
   useLayoutEffect(() => {
     const measureFont = () => {
       if (!measureRef.current) return;
@@ -125,16 +164,35 @@ export default function StaticNoiseText({
   }, [text, fontWeight, color, maxShift, fontSize, containerWidth, wrapLines]);
 
   return (
-    <div ref={containerRef} style={{ width: '100%' }}>
+    <div ref={containerRef} className="w-full">
       <span
         ref={measureRef}
-        className={className}
-        style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none' }}
+        className={`absolute invisible pointer-events-none ${className}`}
         aria-hidden="true"
       >
         {text}
       </span>
-      <canvas ref={canvasRef} style={{ display: 'block', margin: '0 auto' }} />
+      <canvas ref={canvasRef} className="block mx-auto" />
     </div>
   );
 }
+```
+
+### Integration Instructions
+1. No external dependencies required — uses the native Canvas API only.
+2. Copy the component source above into `./StaticNoiseText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component is `w-full` and sizes itself to its parent. Place it inside a width-constrained container for best results:
+   ```jsx
+   <div style={{ width: '100%', maxWidth: '800px' }}>
+     <StaticNoiseText text="hello world" />
+   </div>
+   ```
+5. Font size is derived by measuring a hidden `<span>` with the same `className` — this means Tailwind's responsive text classes (`text-4xl md:text-8xl`) work automatically. The canvas rebuilds whenever the measured font size changes.
+6. `intensity` and `density` are read via refs on every animation frame — changing these props updates the effect live without triggering a canvas rebuild or restarting the animation loop.
+7. All other props (`text`, `fontWeight`, `color`, `maxShift`, `className`) trigger a full canvas rebuild and animation restart when changed.
+8. Text wrapping is computed with `ctx.measureText` against `containerWidth`. The container width is tracked via `ResizeObserver` — wrapping reflows automatically on resize without any manual handling.
+9. The canvas is given a horizontal `MARGIN` equal to `maxShift + 10` pixels on each side to accommodate scanlines shifted to their maximum displacement without clipping.
+10. Set `density={0}` to disable the glitch entirely and render static (non-animating) text. Set `density={1}` (default) for maximum glitch coverage across all scanlines.
+11. Set `intensity={0}` to freeze all scanlines in place with zero horizontal shift — effectively the same as `density={0}` but via a different control axis.
+12. Combine low `density` (e.g. `0.08`) with high `maxShift` (e.g. `120`) for a sparse, dramatic scatter effect where only occasional scanlines fly out far.

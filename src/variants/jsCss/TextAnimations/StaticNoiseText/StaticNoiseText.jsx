@@ -1,4 +1,6 @@
-import  { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+// JS-CSS variant
+
+import { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
 
 export default function StaticNoiseText({
   text = 'static noise',
@@ -7,7 +9,7 @@ export default function StaticNoiseText({
   intensity = 0.12,
   density = 1,
   maxShift = 45,
-  className = 'text-6xl sm:text-6xl md:text-6xl lg:text-8xl',
+  textStyle,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -16,6 +18,25 @@ export default function StaticNoiseText({
   const densityRef = useRef(density);
   const [fontSize, setFontSize] = useState(null);
   const [containerWidth, setContainerWidth] = useState(null);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const measureStyle = {
+    position: 'absolute',
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    fontSize: viewportWidth >= 1024 ? '6rem' : '3.75rem',
+    lineHeight: 1,
+    fontWeight: 900,
+    ...textStyle,
+  };
 
   useEffect(() => { intensityRef.current = intensity; }, [intensity]);
   useEffect(() => { densityRef.current = density; }, [density]);
@@ -41,7 +62,7 @@ export default function StaticNoiseText({
       ro.disconnect();
       window.removeEventListener('resize', measureFont);
     };
-  }, [className]);
+  }, [viewportWidth]);
 
   const wrapLines = useCallback((ctx, words, maxWidth) => {
     const lines = [];
@@ -126,12 +147,7 @@ export default function StaticNoiseText({
 
   return (
     <div ref={containerRef} style={{ width: '100%' }}>
-      <span
-        ref={measureRef}
-        className={className}
-        style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none' }}
-        aria-hidden="true"
-      >
+      <span ref={measureRef} style={measureStyle} aria-hidden="true">
         {text}
       </span>
       <canvas ref={canvasRef} style={{ display: 'block', margin: '0 auto' }} />

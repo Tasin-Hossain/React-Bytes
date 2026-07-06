@@ -1,4 +1,23 @@
-import  { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+// TS-TW variant
+
+import { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
+
+export interface StaticNoiseTextProps {
+  text?: string;
+  fontWeight?: number;
+  color?: string;
+  intensity?: number;
+  density?: number;
+  maxShift?: number;
+  className?: string;
+}
+
+interface LineMetric {
+  line: string;
+  width: number;
+  ascent: number;
+  descent: number;
+}
 
 export default function StaticNoiseText({
   text = 'static noise',
@@ -8,14 +27,14 @@ export default function StaticNoiseText({
   density = 1,
   maxShift = 45,
   className = 'text-6xl sm:text-6xl md:text-6xl lg:text-8xl',
-}) {
-  const containerRef = useRef(null);
-  const canvasRef = useRef(null);
-  const measureRef = useRef(null);
+}: StaticNoiseTextProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
   const intensityRef = useRef(intensity);
   const densityRef = useRef(density);
-  const [fontSize, setFontSize] = useState(null);
-  const [containerWidth, setContainerWidth] = useState(null);
+  const [fontSize, setFontSize] = useState<number | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
 
   useEffect(() => { intensityRef.current = intensity; }, [intensity]);
   useEffect(() => { densityRef.current = density; }, [density]);
@@ -43,8 +62,8 @@ export default function StaticNoiseText({
     };
   }, [className]);
 
-  const wrapLines = useCallback((ctx, words, maxWidth) => {
-    const lines = [];
+  const wrapLines = useCallback((ctx: CanvasRenderingContext2D, words: string[], maxWidth: number) => {
+    const lines: string[] = [];
     let current = '';
     for (const word of words) {
       const test = current ? `${current} ${word}` : word;
@@ -64,9 +83,11 @@ export default function StaticNoiseText({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     const off = document.createElement('canvas');
     const offCtx = off.getContext('2d');
+    if (!offCtx) return;
     const font = `${fontWeight} ${fontSize}px sans-serif`;
     offCtx.font = font;
 
@@ -74,7 +95,7 @@ export default function StaticNoiseText({
     const words = text.split(' ');
     const lines = wrapLines(offCtx, words, containerWidth);
 
-    const lineMetrics = lines.map(line => {
+    const lineMetrics: LineMetric[] = lines.map(line => {
       const m = offCtx.measureText(line);
       const ascent = m.actualBoundingBoxAscent || fontSize;
       const descent = m.actualBoundingBoxDescent || fontSize * 0.25;
@@ -102,7 +123,7 @@ export default function StaticNoiseText({
     canvas.width = w + MARGIN * 2;
     canvas.height = h + MARGIN * 2;
 
-    let frameId;
+    let frameId: number;
     const run = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
@@ -125,16 +146,15 @@ export default function StaticNoiseText({
   }, [text, fontWeight, color, maxShift, fontSize, containerWidth, wrapLines]);
 
   return (
-    <div ref={containerRef} style={{ width: '100%' }}>
+    <div ref={containerRef} className="w-full">
       <span
         ref={measureRef}
-        className={className}
-        style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none' }}
+        className={`absolute invisible pointer-events-none ${className}`}
         aria-hidden="true"
       >
         {text}
       </span>
-      <canvas ref={canvasRef} style={{ display: 'block', margin: '0 auto' }} />
+      <canvas ref={canvasRef} className="block mx-auto" />
     </div>
   );
 }
