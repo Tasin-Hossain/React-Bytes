@@ -8,8 +8,6 @@ export const getUsageCode = (
     baseColor,
     spotColor,
     ease,
-
-    className,
   },
   lang = 'js'
 ) => {
@@ -27,7 +25,7 @@ const App${typeAnnotation} = () => (
     baseColor="${baseColor}"
     spotColor="${spotColor}"
     ease="${ease}"
-    className="${className}"
+
   />
 );
  
