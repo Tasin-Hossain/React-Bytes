@@ -95,6 +95,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/SpotlightText': {
+    name: 'SpotlightText',
+    description:'A customizable React spotlight text animation featuring GSAP-powered sequential character highlights, smooth color transitions, adjustable timing, opacity controls, and looping effects for modern UI and hero sections.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/spotlight-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

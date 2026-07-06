@@ -15,11 +15,9 @@ const componentMap = {
   'text-animations/meltglitch-text': () => import('../demo/TextAnimations/MeltGlitchTextDemo.jsx'),
   'text-animations/neon-flicker': () => import('../demo/TextAnimations/NeonFlickerDemo.jsx'),
   'text-animations/smoke-away': () => import('../demo/TextAnimations/SmokeAwayDemo.jsx'),
-  // 'text-animations/raindrop-text': () => import('../demo/TextAnimations/RainDropDemo.jsx'),
-  // 'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
-  // 'text-animations/sparkledissolve-text': () => import('../demo/TextAnimations/SparkleDissolveDemo.jsx'),
-  // 'text-animations/spotlight-text': () => import('../demo/TextAnimations/SpotlightDemo.jsx'),
-  // 'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
+  'text-animations/spotlight-text': () => import('../demo/TextAnimations/SpotlightDemo.jsx'),
+  'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
+
 
 
   // ── Components

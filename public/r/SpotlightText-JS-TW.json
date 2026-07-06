@@ -1,0 +1,18 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "SpotlightText-JS-TW",
+	"title": "SpotlightText",
+	"description": "A customizable React spotlight text animation featuring GSAP-powered sequential character highlights, smooth color transitions, adjustable timing, opacity controls, and looping effects for modern UI and hero sections.",
+	"type": "registry:component",
+	"files": [
+		{
+			"type": "registry:component",
+			"path": "SpotlightText.jsx",
+			"content": "// JS-TW variant (identical to uploaded source)\r\nimport { useCallback, useEffect, useRef } from \"react\";\r\nimport { gsap } from \"gsap\";\r\n\r\nexport default function SpotlightText({\r\n  text = \"SPOTLIGHT\",\r\n  charDelay = 0.09,\r\n  duration = 0.25,\r\n  repeat = false,\r\n  dimOpacity = 0.08,\r\n  baseColor = \"#8a8a86\",\r\n  spotColor = \"#e24b4a\",\r\n  ease = \"power2.out\",\r\n  className = \"\",\r\n}) {\r\n  const containerRef = useRef(null);\r\n  const tlRef = useRef(null);\r\n\r\n  // eslint-disable-next-line react-hooks/exhaustive-deps\r\n  const buildTimeline = useCallback(() => {\r\n    const container = containerRef.current;\r\n    if (!container) return;\r\n    const spans = container.querySelectorAll(\".spot-char\");\r\n\r\n    if (tlRef.current) tlRef.current.kill();\r\n\r\n    gsap.set(spans, { opacity: dimOpacity, color: baseColor });\r\n\r\n    const tl = gsap.timeline({\r\n      repeat: repeat ? -1 : 0,\r\n      repeatDelay: 1.2,\r\n      onRepeat() {\r\n        gsap.set(spans, { opacity: dimOpacity, color: baseColor });\r\n      },\r\n    });\r\n\r\n    spans.forEach((s, i) => {\r\n      const t = i * charDelay;\r\n      tl.to(s, { opacity: 1, color: spotColor, ease, duration }, t);\r\n      tl.to(s, { opacity: 0.7, duration: duration * 0.6 }, t + duration);\r\n      tl.to(s, { opacity: 1, color: baseColor, duration: duration * 0.8 }, t + duration * 1.6);\r\n    });\r\n\r\n    tlRef.current = tl;\r\n  });\r\n\r\n  useEffect(() => {\r\n    buildTimeline();\r\n    return () => tlRef.current?.kill();\r\n  }, [text, charDelay, duration, repeat, dimOpacity, baseColor, spotColor, ease, buildTimeline]);\r\n\r\n  return (\r\n    <div className={`flex flex-col items-center gap-6 ${className}`}>\r\n      <div\r\n        ref={containerRef}\r\n        className=\"flex flex-wrap items-center justify-center\"\r\n      >\r\n        {[...text].map((char, i) => (\r\n          <span\r\n            key={i}\r\n            className=\"spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none select-none\"\r\n            style={{\r\n              opacity: dimOpacity,\r\n              color: baseColor,\r\n              minWidth: char === \" \" ? \"0.35em\" : undefined,\r\n            }}\r\n          >\r\n            {char === \" \" ? \"\\u00a0\" : char}\r\n          </span>\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n}"
+		}
+	],
+	"registryDependencies": [],
+	"dependencies": [
+		"gsap@^3.15.0"
+	]
+}

@@ -1,0 +1,127 @@
+## Integrate the <SpotlightText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: SpotlightText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import SpotlightText from './SpotlightText'
+
+<SpotlightText
+  text="SPOTLIGHT"
+  charDelay={0.09}
+  duration={0.25}
+  repeat={false}
+  dimOpacity={0.08}
+  baseColor="#8a8a86"
+  spotColor="#e24b4a"
+  ease="power2.out"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "SPOTLIGHT" | The text content to render. Split into individual characters via `[...text]` (spread — not grapheme-aware; avoid multi-codepoint emoji). |
+| charDelay | number | 0.09 | Seconds between each character's spotlight flash start. Controls how quickly the lit effect sweeps across the full text. |
+| duration | number | 0.25 | Duration in seconds of the initial spotlight-on step for each character. The subsequent dim-back and color-return steps are derived as `duration * 0.6` and `duration * 0.8` respectively — they scale proportionally and are not independently configurable. |
+| repeat | boolean | false | When `true`, the animation loops indefinitely (GSAP `repeat: -1`) with a 1.2-second pause (`repeatDelay`) between cycles, resetting all spans to `dimOpacity` and `baseColor` before each repeat. |
+| dimOpacity | number | 0.08 | Opacity of each character at rest (before and after its spotlight moment). Also the initial inline `opacity` baked into each span in JSX to prevent a flash-of-full-opacity on first paint. |
+| baseColor | string | "#8a8a86" | Color each character rests at before and after its spotlight flash. |
+| spotColor | string | "#e24b4a" | Color each character briefly flashes to at the peak of its spotlight moment. |
+| ease | string | "power2.out" | GSAP ease applied to the spotlight-on step. The dim-back step (`opacity: 0.7`) and color-return step use no explicit ease (GSAP default `"none"`). |
+| className | string | "" | Additional CSS classes applied to the outermost wrapper div. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { useCallback, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
+export default function SpotlightText({
+  text = "SPOTLIGHT",
+  charDelay = 0.09,
+  duration = 0.25,
+  repeat = false,
+  dimOpacity = 0.08,
+  baseColor = "#8a8a86",
+  spotColor = "#e24b4a",
+  ease = "power2.out",
+  className = "",
+}) {
+  const containerRef = useRef(null);
+  const tlRef = useRef(null);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const buildTimeline = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const spans = container.querySelectorAll(".spot-char");
+    if (tlRef.current) tlRef.current.kill();
+    gsap.set(spans, { opacity: dimOpacity, color: baseColor });
+    const tl = gsap.timeline({
+      repeat: repeat ? -1 : 0,
+      repeatDelay: 1.2,
+      onRepeat() {
+        gsap.set(spans, { opacity: dimOpacity, color: baseColor });
+      },
+    });
+    spans.forEach((s, i) => {
+      const t = i * charDelay;
+      tl.to(s, { opacity: 1, color: spotColor, ease, duration }, t);
+      tl.to(s, { opacity: 0.7, duration: duration * 0.6 }, t + duration);
+      tl.to(s, { opacity: 1, color: baseColor, duration: duration * 0.8 }, t + duration * 1.6);
+    });
+    tlRef.current = tl;
+  });
+
+  useEffect(() => {
+    buildTimeline();
+    return () => tlRef.current?.kill();
+  }, [text, charDelay, duration, repeat, dimOpacity, baseColor, spotColor, ease, buildTimeline]);
+
+  return (
+    <div className={`flex flex-col items-center gap-6 ${className}`}>
+      <div
+        ref={containerRef}
+        className="flex flex-wrap items-center justify-center"
+      >
+        {[...text].map((char, i) => (
+          <span
+            key={i}
+            className="spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none select-none"
+            style={{
+              opacity: dimOpacity,
+              color: baseColor,
+              minWidth: char === " " ? "0.35em" : undefined,
+            }}
+          >
+            {char === " " ? "\u00a0" : char}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./SpotlightText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. Each character's spotlight moment is a 3-step GSAP sequence: flash to `spotColor` at full opacity → dim to `opacity: 0.7` → return to `baseColor` at `opacity: 1`. Step durations are `duration`, `duration * 0.6`, and `duration * 0.8` respectively — only the first step's duration and ease are configurable via props.
+5. **`buildTimeline` re-runs on every render.** `useCallback` is called here with no dependency array (the `eslint-disable-next-line` suppresses the exhaustive-deps warning), meaning it returns a new function reference on every render. Since `buildTimeline` is listed in the `useEffect` dependency array, the effect fires — killing the old timeline and starting a new one — on every render cycle, not just when animation-relevant props change. This is generally fine for a static display component but will cause visible flickering if the parent re-renders frequently (e.g. from unrelated state updates). If this becomes an issue, memoize `buildTimeline` properly with a full dependency array, or remove it from the `useEffect` deps and rely only on the explicit prop deps already listed there.
+6. `dimOpacity` and `baseColor` are baked into each span's inline `style` in JSX (not only set via GSAP) to prevent a flash-of-full-opacity/wrong-color on first paint before the effect runs. This means SSR or pre-hydration renders will show the correct dim state immediately.
+7. Font size is controlled by Tailwind responsive classes hardcoded in JSX (`text-6xl` on sm/md, `text-8xl` on lg) — not exposed as a prop. Override by targeting `.spot-char` in CSS or editing the source directly.
+8. `repeat={true}` loops with a hardcoded `repeatDelay: 1.2` seconds — this pause is not configurable via props.
+9. Space characters are rendered as `\u00a0` with `minWidth: "0.35em"` to preserve spacing.
+10. Unlike BlurText (which uses a `propsRef`-style pattern), this component has no live-update mechanism for animation props — all changes go through a full timeline kill-and-rebuild. Keep this in mind if you plan to drive any of these props from a slider or rapidly updating state.

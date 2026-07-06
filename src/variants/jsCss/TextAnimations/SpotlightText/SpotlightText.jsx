@@ -1,3 +1,4 @@
+// JS-CSS variant
 import { useCallback, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
@@ -10,6 +11,9 @@ export default function SpotlightText({
   baseColor = "#8a8a86",
   spotColor = "#e24b4a",
   ease = "power2.out",
+  fontSize = "clamp(3.5rem, 8vw, 6rem)",
+  fontWeight = "900",
+  letterSpacing = "-0.02em",
   className = "",
 }) {
   const containerRef = useRef(null);
@@ -23,7 +27,6 @@ export default function SpotlightText({
 
     if (tlRef.current) tlRef.current.kill();
 
-    // all chars start dim, at base color
     gsap.set(spans, { opacity: dimOpacity, color: baseColor });
 
     const tl = gsap.timeline({
@@ -36,11 +39,8 @@ export default function SpotlightText({
 
     spans.forEach((s, i) => {
       const t = i * charDelay;
-      // bright flash — fade in and shift to spotlight color
       tl.to(s, { opacity: 1, color: spotColor, ease, duration }, t);
-      // slight dim — like beam passing
       tl.to(s, { opacity: 0.7, duration: duration * 0.6 }, t + duration);
-      // settle back — bright opacity, fade color back to base
       tl.to(s, { opacity: 1, color: baseColor, duration: duration * 0.8 }, t + duration * 1.6);
     });
 
@@ -52,29 +52,43 @@ export default function SpotlightText({
     return () => tlRef.current?.kill();
   }, [text, charDelay, duration, repeat, dimOpacity, baseColor, spotColor, ease, buildTimeline]);
 
+  const style = {
+    outer: {
+      display:       "flex",
+      flexDirection: "column",
+      alignItems:    "center",
+      gap:           "1.5rem",
+    },
+    container: {
+      display:        "flex",
+      flexWrap:       "wrap",
+      alignItems:     "center",
+      justifyContent: "center",
+    },
+    char: (char) => ({
+      display:       "inline-block",
+      fontSize,
+      fontWeight,
+      letterSpacing,
+      lineHeight:    1,
+      userSelect:    "none",
+      opacity:       dimOpacity,
+      color:         baseColor,
+      minWidth:      char === " " ? "0.35em" : undefined,
+    }),
+  };
+
+  const classes = `${className}`;
+
   return (
-    <div className={`flex flex-col items-center gap-6 ${className}`}>
-      {/* Text */}
-      <div
-        ref={containerRef}
-        className="flex flex-wrap items-center justify-center"
-      >
+    <div style={style.outer} className={classes}>
+      <div ref={containerRef} style={style.container}>
         {[...text].map((char, i) => (
-          <span
-            key={i}
-            className="spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none select-none"
-            style={{
-              opacity: dimOpacity,
-              color: baseColor,
-              minWidth: char === " " ? "0.35em" : undefined,
-            }}
-          >
+          <span key={i} className="spot-char" style={style.char(char)}>
             {char === " " ? "\u00a0" : char}
           </span>
         ))}
       </div>
-
-
     </div>
   );
 }

@@ -1,3 +1,4 @@
+// JS-TW variant (identical to uploaded source)
 import { useCallback, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
@@ -23,7 +24,6 @@ export default function SpotlightText({
 
     if (tlRef.current) tlRef.current.kill();
 
-    // all chars start dim, at base color
     gsap.set(spans, { opacity: dimOpacity, color: baseColor });
 
     const tl = gsap.timeline({
@@ -36,11 +36,8 @@ export default function SpotlightText({
 
     spans.forEach((s, i) => {
       const t = i * charDelay;
-      // bright flash — fade in and shift to spotlight color
       tl.to(s, { opacity: 1, color: spotColor, ease, duration }, t);
-      // slight dim — like beam passing
       tl.to(s, { opacity: 0.7, duration: duration * 0.6 }, t + duration);
-      // settle back — bright opacity, fade color back to base
       tl.to(s, { opacity: 1, color: baseColor, duration: duration * 0.8 }, t + duration * 1.6);
     });
 
@@ -54,7 +51,6 @@ export default function SpotlightText({
 
   return (
     <div className={`flex flex-col items-center gap-6 ${className}`}>
-      {/* Text */}
       <div
         ref={containerRef}
         className="flex flex-wrap items-center justify-center"
@@ -62,7 +58,7 @@ export default function SpotlightText({
         {[...text].map((char, i) => (
           <span
             key={i}
-            className="spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none select-none"
+            className="spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none select-none"
             style={{
               opacity: dimOpacity,
               color: baseColor,
@@ -73,8 +69,6 @@ export default function SpotlightText({
           </span>
         ))}
       </div>
-
-
     </div>
   );
 }
