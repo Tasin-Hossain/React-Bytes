@@ -24,8 +24,7 @@ export const CATEGORIES = [
       'Smoke Away',
       'Spotlight Text',
       'StaticNoise Text',
-      'RainDrop Text',
-      'Shatter Text',
+
     ]
   },
   // {
