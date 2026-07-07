@@ -20,7 +20,7 @@
     <meta name="author" content="Mohammad Tasin" />
     <meta
       name="description"
-      content="React Bytes — free, open source library of animated, interactive & customizable React components for building stunning UIs."
+      content="React Bytes - free, open source library of animated, interactive & customizable React components for building stunning UIs."
     />
     <meta
       name="keywords"
@@ -37,9 +37,10 @@
     />
 
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" sizes="16x16 32x32" href="favicon.ico" />
-    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="React Bytes" />
@@ -50,7 +51,7 @@
     <meta property="og:title" content="React Bytes" />
     <meta
       property="og:description"
-      content="React Bytes is a free and open source collection of high quality, animated, interactive & fully customizable React components for building stunning, memorable user interfaces"
+      content="React Bytes - free, open source library of animated, interactive & customizable React components for building stunning UIs."
     />
     <meta property="og:image" content="https://reactbytes.online/og-image.png" />
     <meta property="og:image:alt" content="The React Bytes landing page design, showcasing the logo and a subtitle!" />
@@ -65,7 +66,7 @@
     <meta name="twitter:title" content="React Bytes" />
     <meta
       name="twitter:description"
-      content="React Bytes is a free and open source collection of high quality, animated, interactive & fully customizable React components for building stunning, memorable user interfaces"
+      content="React Bytes - free, open source library of animated, interactive & customizable React components for building stunning UIs."
     />
     <meta name="twitter:image" content="https://reactbytes.online/og-image.png" />
     <meta name="twitter:image:alt" content="The React Bytes landing page design, showcasing the logo and a subtitle!" />
@@ -75,6 +76,19 @@
     <link rel="canonical" href="https://reactbytes.online" />
 
     <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "React Bytes",
+        "alternateName": "ReactBytes",
+        "url": "https://reactbytes.online",
+        "publisher": {
+          "@type": "Person",
+          "name": "Mohammad Tasin"
+        }
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -115,10 +129,30 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "itemListElement": [
-          { "@type": "SiteNavigationElement", "position": 1, "name": "Get Started", "url": "https://reactbytes.online/get-started/introduction" },
-          { "@type": "SiteNavigationElement", "position": 2, "name": "Text Animations", "url": "https://reactbytes.online/text-animations/curtain-text" },
-          { "@type": "SiteNavigationElement", "position": 3, "name": "Components", "url": "https://reactbytes.online/components/rotating-cards" },
-          { "@type": "SiteNavigationElement", "position": 4, "name": "Backgrounds", "url": "https://reactbytes.online/backgrounds/vortex" },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Get Started",
+            "url": "https://reactbytes.online/get-started/introduction"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Text Animations",
+            "url": "https://reactbytes.online/text-animations/curtain-text"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Components",
+            "url": "https://reactbytes.online/components/rotating-cards"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Backgrounds",
+            "url": "https://reactbytes.online/backgrounds/vortex"
+          },
           { "@type": "SiteNavigationElement", "position": 5, "name": "Tools", "url": "https://reactbytes.online/tools" }
         ]
       }
