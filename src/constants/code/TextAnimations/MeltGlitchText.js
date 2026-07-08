@@ -8,7 +8,6 @@ export const getUsageCode = (
     magentaColor,
     radius,
     dropAmount,
-    className,
   },
   lang = 'js'
 ) => {
@@ -26,7 +25,6 @@ const App${typeAnnotation} = () => (
     magentaColor="${magentaColor}"
     radius={${radius}}
     dropAmount={${dropAmount}}
-    className="${className}"
   />
 );
 

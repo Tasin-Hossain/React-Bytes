@@ -12,16 +12,11 @@ export const getUsageCode = (
     durationMs,
     easing,
     resetOnLeave,
-    className,
+
   },
   lang = 'js'
 ) => {
   const typeAnnotation = lang === 'ts' ? ': React.FC' : '';
-
-  // Only include className prop line if a value is provided
-  const classNameLine = className
-    ? `\n    className="${className}"`
-    : '';
 
   return `import CurtainText from "./CurtainText";
 
@@ -37,8 +32,8 @@ const App${typeAnnotation} = () => (
     staggerMs={${staggerMs}}
     durationMs={${durationMs}}
     easing="${easing}"
-    resetOnLeave={${resetOnLeave}}${classNameLine}
-    classname="{classes}"
+    resetOnLeave={${resetOnLeave}}
+
   />
 );
 

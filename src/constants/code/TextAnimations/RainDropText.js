@@ -9,7 +9,6 @@ export const getUsageCode = (
     repeat,
     repeatDelay,
     fontSize,
-    className,
   },
   lang = 'js'
 ) => {
@@ -28,7 +27,6 @@ const App${typeAnnotation} = () => (
     repeat={${repeat}}
     repeatDelay={${repeatDelay}}
     fontSize="${fontSize}"
-    className="${className}"
   />
 );
 

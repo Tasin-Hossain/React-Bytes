@@ -9,7 +9,6 @@ export const getUsageCode = (
     maxGlow,
     charDelay,
     repeat,
-    className,
   },
   lang = 'js'
 ) => {
@@ -28,7 +27,6 @@ const App${typeAnnotation} = () => (
     maxGlow={${maxGlow}}
     charDelay={${charDelay}}
     repeat={${repeat}}
-    className="${className}"
   />
 );
 
