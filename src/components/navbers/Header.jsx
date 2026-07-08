@@ -1,7 +1,8 @@
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useState, useMemo, useRef, useCallback, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 import { FaGithub } from 'react-icons/fa';
 import { RiSearchLine, RiUser3Line, RiHeartLine, RiMenuLine } from 'react-icons/ri';
+import gsap from 'gsap';
 
 import Logo from '../../assets/logos/logo.png';
 import DarkLogo from '../../assets/logos/dark-logo.png';
@@ -10,6 +11,7 @@ import { GITHUB_URL } from '../../constants/site';
 import { useStars } from '../../hooks/useStarts';
 import { useTheme } from '../../hooks/useTheme';
 import SearchModal from '../common/SearchModal';
+import CurtainText from '../../content/TextAnimations/CurtainText';
 
 // Constants
 const PREFS_CLOSE_DELAY = 150;
@@ -149,6 +151,18 @@ const Header = ({ onMenuClick }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const prefsTimeout = useRef(null);
 
+  // nav sliding hover indicator
+  const navContainerRef = useRef(null);
+  const navIndicatorRef = useRef(null);
+  const navBtnRefs = useRef({});
+  const [hoveredLink, setHoveredLink] = useState(null);
+
+  const activeLabel = useMemo(
+    () => NAV_LINKS.find((l) => l.isActive(location.pathname))?.label ?? null,
+    [location.pathname]
+  );
+  const targetLink = hoveredLink ?? activeLabel;
+
   const formattedStars = useMemo(
     () => (stars >= 1000 ? `${(stars / 1000).toFixed(1).replace(/\.0$/, '')}k` : stars),
     [stars]
@@ -162,6 +176,27 @@ const Header = ({ onMenuClick }) => {
   const handlePrefsLeave = useCallback(() => {
     prefsTimeout.current = setTimeout(() => setPrefsOpen(false), PREFS_CLOSE_DELAY);
   }, []);
+
+  // position the sliding indicator under the hovered (or active) nav link
+  useLayoutEffect(() => {
+    const btn = navBtnRefs.current[targetLink];
+    const container = navContainerRef.current;
+    if (!btn || !container || !navIndicatorRef.current) {
+      if (navIndicatorRef.current) gsap.set(navIndicatorRef.current, { opacity: 0 });
+      return;
+    }
+
+    const btnRect = btn.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    gsap.to(navIndicatorRef.current, {
+      x: btnRect.left - containerRect.left,
+      width: btnRect.width,
+      opacity: 1,
+      duration: 0.3,
+      ease: 'power3.out'
+    });
+  }, [targetLink]);
 
   return (
     <>
@@ -180,16 +215,27 @@ const Header = ({ onMenuClick }) => {
           <span className="hidden md:block text-(--text-muted) px-1">|</span>
 
           {/* Nav — desktop only */}
-          <nav className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map(({ label, to, isActive }) => (
+          <nav
+            ref={navContainerRef}
+            onMouseLeave={() => setHoveredLink(null)}
+            className="relative hidden md:flex items-center gap-1"
+          >
+            {/* sliding indicator — follows hover, falls back to active */}
+            <div
+              ref={navIndicatorRef}
+              className="absolute top-0 bottom-0 left-0 rounded-md bg-(--bg-hover) pointer-events-none opacity-0"
+            />
+
+            {NAV_LINKS.map(({ label, to }) => (
               <Link
                 key={label}
                 to={to}
-                className={`px-3 py-1.5 rounded-md text-sm transition-colors duration-150 no-underline
-                  text-(--text-primary)
-                  ${isActive(location.pathname) ? 'bg-(--bg-hover)' : 'hover:bg-(--bg-hover)'}`}
+                ref={(el) => (navBtnRefs.current[label] = el)}
+                onMouseEnter={() => setHoveredLink(label)}
+
               >
-                {label}
+                 <CurtainText  text={label} fontSize={13} className='px-4 py-2.5 cursor-pointer ' textClassName='font-medium! text-(--text-primary)!' tracking staggerMs={0}/>
+
               </Link>
             ))}
           </nav>
