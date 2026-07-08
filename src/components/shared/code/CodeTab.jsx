@@ -57,7 +57,7 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
     >
       <div
         ref={indicatorRef}
-        className="absolute top-1 bottom-1 left-0 rounded bg-(--brand)/10 border border-(--brand)/20 pointer-events-none"
+        className="absolute top-1 bottom-1 left-0 rounded bg-(--bg-button)   pointer-events-none"
       />
 
       {available.map(tool => (
@@ -66,8 +66,8 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
           ref={(el) => (btnRefs.current[tool.value] = el)}
           onClick={() => handleClick(tool.value)}
           onMouseEnter={() => setHovered(tool.value)}
-          className={`relative z-10 flex items-center gap-1.5 px-3.5 py-1 rounded text-sm font-medium capitalize transition-colors cursor-pointer ${
-            targetTab === tool.value ? 'text-(--brand)' : 'text-(--text-muted)'
+          className={`relative z-10 flex items-center gap-1.5 px-3.5 py-1 rounded text-md font-medium capitalize transition-colors cursor-pointer ${
+            targetTab === tool.value ? 'text-(--text-primary)' : 'text-(--text-muted)'
           }`}
         >
           <img src={tool.icon} alt={tool.label} className="w-4 h-4 object-cover rounded-sm" />

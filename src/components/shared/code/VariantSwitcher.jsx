@@ -103,7 +103,7 @@ const PillGroup = ({ options, active, onChange }) => {
     >
       <div
         ref={indicatorRef}
-        className="absolute top-1 bottom-1 left-0 rounded bg-(--bg-button) border border-(--border-button) pointer-events-none"
+        className="absolute top-1 bottom-1 left-0 rounded bg-(--bg-button)  pointer-events-none"
       />
 
       {options.map(({ value, label, icon: Icon }) => (
