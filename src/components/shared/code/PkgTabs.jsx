@@ -38,7 +38,7 @@ const PkgTabs = ({ active, onChange }) => {
     <div
       ref={containerRef}
       onMouseLeave={() => setHovered(null)}
-      className="relative inline-flex items-center rounded-md border border-(--border-secondary) bg-(--bg-button) p-1 mb-2"
+      className="relative inline-flex items-center rounded-md border border-(--border-secondary) bg-(--bg-card) p-1 mb-2"
     >
       {/* sliding indicator — follows hover, falls back to active */}
       <div
@@ -53,7 +53,7 @@ const PkgTabs = ({ active, onChange }) => {
           onClick={() => handleClick(p)}
           onMouseEnter={() => setHovered(p)}
           className={`relative z-10 px-3.5 py-1 rounded text-sm font-medium transition-colors cursor-pointer ${
-            targetTab === p ? 'text-(--brand)' : 'text-(--text) hover:text-(--text-primary)'
+            targetTab === p ? 'text-(--brand)' : 'text-(--text-muted) '
           }`}
         >
           {p}
