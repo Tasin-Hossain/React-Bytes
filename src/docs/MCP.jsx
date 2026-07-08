@@ -79,7 +79,7 @@ const MCP = () => {
   const editor = EDITORS.find((e) => e.id === activeEditor);
 
   return (
-    <div className="max-w-3xl mx-auto px-6 text-(--text-primary)">
+    <div className="max-w-3xl mx-auto text-(--text-primary)">
       {/* Header */}
       <div className="mb-10">
         <p className="text-sm font-medium text-(--brand) leading-relaxed uppercase tracking-wider mb-3">

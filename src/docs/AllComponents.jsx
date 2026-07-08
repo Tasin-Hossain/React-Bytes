@@ -47,7 +47,7 @@ const AllComponents = () => {
 
   return (
     <>
-      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 text-(--text-primary) flex flex-col overflow-hidden">
+      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto  sm:px-6 text-(--text-primary) flex flex-col overflow-hidden">
 
         <div className="flex flex-col gap-4 mb-6 sm:mb-8 min-w-0">
           <h1 className="title-two shrink-0">All Components</h1>
