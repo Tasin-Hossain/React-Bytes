@@ -1,10 +1,11 @@
+// JS-CSS variant 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 
 export default function ShatterText({
   text = "SHATTER PHYSICS",
   className = "",
-  textClassName = "text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-bold",
+  textClassName = "",
   color = "#ffffff",
   trigger = "hover",              // "hover" | "click"
   minY = 30,
@@ -87,16 +88,47 @@ export default function ShatterText({
       : { onMouseEnter: shatter };
 
   return (
-    <h2
-      ref={containerRef}
-      {...eventProps}
-      className={`select-none cursor-pointer flex flex-wrap justify-center px-2 ${textClassName} ${className}`}
-    >
-      {text.split("").map((char, i) => (
-        <span key={i} className="inline-block" style={{ color: idleColor }}>
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </h2>
+    <>
+      <h2
+        ref={containerRef}
+        {...eventProps}
+        className={`shatter-text shatter-text-default ${textClassName} ${className}`}
+      >
+        {text.split("").map((char, i) => (
+          <span key={i} className="shatter-char" style={{ color: idleColor }}>
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </h2>
+
+      <style>{`
+        .shatter-text {
+          user-select: none;
+          cursor: pointer;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+
+        .shatter-text-default {
+          font-size: 3.75rem; /* text-6xl */
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        @media (min-width: 1024px) {
+          .shatter-text-default {
+            font-size: 6rem; /* lg:text-8xl */
+          }
+        }
+
+        .shatter-char {
+          display: inline-block;
+          will-change: transform, opacity;
+        }
+      `}</style>
+    </>
   );
 }

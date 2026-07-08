@@ -122,6 +122,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/ShatterText': {
+    name: 'ShatterText',
+    description:'A customizable React shatter text animation featuring GSAP-powered physics effects, randomized character motion, hover or click triggers, bounce reassembly, and fully adjustable animation controls for modern UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/shatter-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

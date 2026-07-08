@@ -1,12 +1,37 @@
+// TS-TW variant 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
+
+export interface ShatterTextProps {
+  text?: string;
+  className?: string;
+  textClassName?: string;
+  color?: string;
+  trigger?: "hover" | "click";
+  minY?: number;
+  maxY?: number;
+  minX?: number;
+  maxX?: number;
+  minRotation?: number;
+  maxRotation?: number;
+  shatterOpacity?: number;
+  shatterColor?: string;
+  resetColor?: string;
+  fallDuration?: number;
+  reassembleDuration?: number;
+  fallEase?: string;
+  reassembleEase?: string;
+  stagger?: number;
+  reassembleGap?: number;
+  disabled?: boolean;
+}
 
 export default function ShatterText({
   text = "SHATTER PHYSICS",
   className = "",
-  textClassName = "text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-bold",
+  textClassName = "",
   color = "#ffffff",
-  trigger = "hover",              // "hover" | "click"
+  trigger = "hover",
   minY = 30,
   maxY = 55,
   minX = -15,
@@ -23,13 +48,14 @@ export default function ShatterText({
   stagger = 0.012,
   reassembleGap = 0.05,
   disabled = false,
-}) {
-  const containerRef = useRef(null);
-  const spansRef = useRef([]);
-  const isPlayingRef = useRef(false);
+}: ShatterTextProps) {
+  const containerRef = useRef<HTMLHeadingElement | null>(null);
+  const spansRef = useRef<HTMLSpanElement[]>([]);
+  const isPlayingRef = useRef<boolean>(false);
   const idleColor = resetColor || color;
 
   useEffect(() => {
+    if (!containerRef.current) return;
     spansRef.current = Array.from(
       containerRef.current.querySelectorAll("span")
     );
@@ -87,16 +113,47 @@ export default function ShatterText({
       : { onMouseEnter: shatter };
 
   return (
-    <h2
-      ref={containerRef}
-      {...eventProps}
-      className={`select-none cursor-pointer flex flex-wrap justify-center px-2 ${textClassName} ${className}`}
-    >
-      {text.split("").map((char, i) => (
-        <span key={i} className="inline-block" style={{ color: idleColor }}>
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </h2>
+    <>
+      <h2
+        ref={containerRef}
+        {...eventProps}
+        className={`shatter-text shatter-text-default ${textClassName} ${className}`}
+      >
+        {text.split("").map((char, i) => (
+          <span key={i} className="shatter-char" style={{ color: idleColor }}>
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </h2>
+
+      <style>{`
+        .shatter-text {
+          user-select: none;
+          cursor: pointer;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+
+        .shatter-text-default {
+          font-size: 3.75rem; /* text-6xl */
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        @media (min-width: 1024px) {
+          .shatter-text-default {
+            font-size: 6rem; /* lg:text-8xl */
+          }
+        }
+
+        .shatter-char {
+          display: inline-block;
+          will-change: transform, opacity;
+        }
+      `}</style>
+    </>
   );
 }

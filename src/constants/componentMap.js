@@ -18,7 +18,7 @@ const componentMap = {
   'text-animations/spotlight-text': () => import('../demo/TextAnimations/SpotlightDemo.jsx'),
   'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
   'text-animations/raindrop-text': () => import('../demo/TextAnimations/RainDropTextDemo.jsx'),
-  // 'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
+  'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
 
 
   // ── Components

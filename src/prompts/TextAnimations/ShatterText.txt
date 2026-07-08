@@ -1,0 +1,180 @@
+## Integrate the <ShatterText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: ShatterText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import ShatterText from './ShatterText'
+
+<ShatterText
+  text="SHATTER PHYSICS"
+  className=""
+  textClassName="text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-bold"
+  color="#ffffff"
+  trigger="hover"
+  minY={30}
+  maxY={55}
+  minX={-15}
+  maxX={15}
+  minRotation={-90}
+  maxRotation={90}
+  shatterOpacity={0.3}
+  shatterColor="#ff2d78"
+  resetColor={undefined}
+  fallDuration={0.35}
+  reassembleDuration={0.6}
+  fallEase="power2.in"
+  reassembleEase="bounce.out"
+  stagger={0.012}
+  reassembleGap={0.05}
+  disabled={false}
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "SHATTER PHYSICS" | The text to display and animate. Each character shatters independently. |
+| className | string | "" | Additional CSS classes applied to the outer `h2` element. |
+| textClassName | string | "text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-bold" | Tailwind classes controlling font size, weight, and responsive scaling. |
+| color | string | "#ffffff" | Default text color at rest and after reassembly. |
+| trigger | string | "hover" | Interaction that fires the shatter animation. Options: "hover" \| "click" |
+| minY | number | 30 | Minimum vertical drop distance in pixels during shatter. |
+| maxY | number | 55 | Maximum vertical drop distance in pixels during shatter. |
+| minX | number | -15 | Minimum horizontal drift in pixels during shatter (negative = left). |
+| maxX | number | 15 | Maximum horizontal drift in pixels during shatter (positive = right). |
+| minRotation | number | -90 | Minimum rotation in degrees applied to each character during shatter. |
+| maxRotation | number | 90 | Maximum rotation in degrees applied to each character during shatter. |
+| shatterOpacity | number | 0.3 | Opacity of each character at peak shatter displacement (0–1). |
+| shatterColor | string | "#ff2d78" | Color each character transitions to during the shatter phase. |
+| resetColor | string \| undefined | undefined | Color to return to after reassembly. Falls back to `color` if not set. |
+| fallDuration | number | 0.35 | Duration in seconds of the shatter/fall phase per character. |
+| reassembleDuration | number | 0.6 | Duration in seconds of the reassembly bounce per character. |
+| fallEase | string | "power2.in" | GSAP ease applied during the fall/shatter phase. |
+| reassembleEase | string | "bounce.out" | GSAP ease applied during the reassembly phase. |
+| stagger | number | 0.012 | Delay in seconds between each character starting its fall. |
+| reassembleGap | number | 0.05 | Extra delay in seconds added after the last character falls before reassembly begins. |
+| disabled | boolean | false | If true, the trigger event is ignored and no animation plays. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+
+export default function ShatterText({
+  text = "SHATTER PHYSICS",
+  className = "",
+  textClassName = "text-6xl sm:text-6xl md:text-6xl lg:text-8xl font-bold",
+  color = "#ffffff",
+  trigger = "hover",
+  minY = 30,
+  maxY = 55,
+  minX = -15,
+  maxX = 15,
+  minRotation = -90,
+  maxRotation = 90,
+  shatterOpacity = 0.3,
+  shatterColor = "#ff2d78",
+  resetColor,
+  fallDuration = 0.35,
+  reassembleDuration = 0.6,
+  fallEase = "power2.in",
+  reassembleEase = "bounce.out",
+  stagger = 0.012,
+  reassembleGap = 0.05,
+  disabled = false,
+}) {
+  const containerRef = useRef(null);
+  const spansRef = useRef([]);
+  const isPlayingRef = useRef(false);
+  const idleColor = resetColor || color;
+
+  useEffect(() => {
+    spansRef.current = Array.from(
+      containerRef.current.querySelectorAll("span")
+    );
+  }, [text]);
+
+  const shatter = () => {
+    if (disabled || isPlayingRef.current) return;
+    isPlayingRef.current = true;
+
+    const spans = spansRef.current;
+    const tl = gsap.timeline({
+      onComplete: () => {
+        isPlayingRef.current = false;
+      },
+    });
+
+    spans.forEach((span, i) => {
+      tl.to(
+        span,
+        {
+          y: gsap.utils.random(minY, maxY),
+          x: gsap.utils.random(minX, maxX),
+          rotation: gsap.utils.random(minRotation, maxRotation),
+          opacity: shatterOpacity,
+          color: shatterColor,
+          duration: fallDuration,
+          ease: fallEase,
+        },
+        i * stagger
+      );
+    });
+
+    spans.forEach((span) => {
+      tl.to(
+        span,
+        {
+          y: 0,
+          x: 0,
+          rotation: 0,
+          opacity: 1,
+          color: idleColor,
+          duration: reassembleDuration,
+          ease: reassembleEase,
+        },
+        `+=${reassembleGap}`
+      );
+    });
+  };
+
+  const eventProps =
+    trigger === "click"
+      ? { onClick: shatter }
+      : { onMouseEnter: shatter };
+
+  return (
+    <h2
+      ref={containerRef}
+      {...eventProps}
+      className={`select-none cursor-pointer flex flex-wrap justify-center px-2 ${textClassName} ${className}`}
+    >
+      {text.split("").map((char, i) => (
+        <span key={i} className="inline-block" style={{ color: idleColor }}>
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </h2>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency: `npm install gsap`
+2. Copy the component source above into `./ShatterText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component renders each character as an individual `<span>` inside an `h2`. On trigger, a GSAP timeline fires — first scattering all spans with randomised x, y, rotation, and color, then reassembling them back to origin.
+5. The animation is gated by `isPlayingRef` — re-triggering during playback is ignored. The animation must fully complete before it can be fired again.
+6. `resetColor` lets you return to a different color than `color` after reassembly — useful when the resting state changes dynamically (e.g. on active/selected state).
+7. The parent container must have enough overflow space for characters to fall and drift without being clipped. Wrap in a container with `overflow-visible` if characters are getting cut off.
+8. Spaces in `text` are preserved as non-breaking spaces (`\u00A0`) so word gaps are maintained during animation.
+9. For a dark background hero section, pair `color="#ffffff"` with `shatterColor="#ff2d78"` for a high-contrast shatter flash. For light backgrounds, try `color="#111111"` and `shatterColor="#7a5af8"`.
+10. Pass any valid GSAP ease string to `fallEase` or `reassembleEase` — e.g. `"elastic.out(1, 0.3)"` for a springy return or `"expo.in"` for a sharp, fast collapse.

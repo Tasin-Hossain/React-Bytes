@@ -38,6 +38,7 @@ Notes:
 - [SpotlightText](https://reactbytes.online/text-animations/spotlight-text): A customizable React spotlight text animation featuring GSAP-powered sequential character highlights, smooth color transitions, adjustable timing, opacity controls, and looping effects for modern UI and hero sections.
 - [StaticNoiseText](https://reactbytes.online/text-animations/staticnoise-text): A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.
 - [RainDropText](https://reactbytes.online/text-animations/raindrop-text): A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.
+- [ShatterText](https://reactbytes.online/text-animations/shatter-text): A customizable React shatter text animation featuring GSAP-powered physics effects, randomized character motion, hover or click triggers, bounce reassembly, and fully adjustable animation controls for modern UI designs.
 
 ## Components
 - [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.

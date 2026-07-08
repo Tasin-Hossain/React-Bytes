@@ -1,5 +1,6 @@
 export const NEW = [
   'RainDrop Text',
+  'Shatter Text'
 
 ];
 export const UPDATED = [];
@@ -22,7 +23,8 @@ export const CATEGORIES = [
       'Smoke Away',
       'Spotlight Text',
       'StaticNoise Text',
-      'RainDrop Text'
+      'RainDrop Text',
+      'Shatter Text'
 
     ]
   },
