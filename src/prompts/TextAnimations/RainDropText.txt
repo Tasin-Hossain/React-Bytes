@@ -1,0 +1,119 @@
+## Integrate the <RainDropText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: RainDropText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import RainDropText from './RainDropText'
+
+<RainDropText
+  text="RAIN DROP"
+  delay={0.07}
+  duration={0.9}
+  dropHeight={100}
+  ease="bounce.out"
+  color="#111111"
+  repeat={false}
+  repeatDelay={1.2}
+  textClassName="text-5xl sm:text-5xl md:text-6xl lg:text-8xl"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "RAIN DROP" | The text to animate. Each character animates independently. |
+| delay | number | 0.07 | Stagger delay in seconds between each character's animation start. |
+| duration | number | 0.9 | Duration in seconds of each character's drop animation. |
+| dropHeight | number | 100 | Distance in pixels each character falls from above before landing. |
+| ease | string | "bounce.out" | GSAP easing function applied to each character's drop. Any valid GSAP ease string works (e.g. "power2.out", "elastic.out(1, 0.3)"). |
+| color | string | "#111111" | Text color applied inline to every character span. |
+| repeat | boolean | false | If true, the animation loops indefinitely with a pause of repeatDelay between cycles. |
+| repeatDelay | number | 1.2 | Seconds to wait between animation repeats (only relevant when repeat is true). |
+| textClassName | string | "text-5xl sm:text-5xl md:text-6xl lg:text-8xl" | Tailwind classes controlling font size and responsive scaling of the text. |
+| className | string | "" | Additional CSS classes applied to the outer wrapper div. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
+export default function RainDropText({
+  text = "RAIN DROP",
+  delay = 0.07,
+  duration = 0.9,
+  dropHeight = 100,
+  ease = "bounce.out",
+  color = "#111111",
+  repeat = false,
+  repeatDelay = 1.2,
+  textClassName = "text-5xl sm:text-5xl md:text-6xl lg:text-8xl",
+  className = "",
+}) {
+  const containerRef = useRef(null);
+  const tlRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const spans = container.querySelectorAll(".rain-char");
+    if (tlRef.current) tlRef.current.kill();
+    gsap.set(spans, { y: -dropHeight, opacity: 0, scaleY: 1.4 });
+    const tl = gsap.timeline({ repeat: repeat ? -1 : 0, repeatDelay });
+    spans.forEach((span, i) => {
+      tl.fromTo(
+        span,
+        { y: -dropHeight, opacity: 0, scaleY: 1.4 },
+        { y: 0, opacity: 1, scaleY: 1, ease, duration },
+        i * delay
+      );
+    });
+    tlRef.current = tl;
+    return () => tl.kill();
+  }, [text, delay, duration, dropHeight, ease, repeat, repeatDelay]);
+
+  const chars = [...text];
+
+  return (
+    <div className={`flex flex-col items-center gap-6 w-full ${className}`}>
+      <div
+        ref={containerRef}
+        className="flex flex-wrap items-end justify-center overflow-hidden px-2"
+      >
+        {chars.map((char, i) => (
+          <span
+            key={i}
+            className={`rain-char inline-block font-black leading-none tracking-tight select-none ${textClassName}`}
+            style={{
+              display:  "inline-block",
+              color,
+              minWidth: char === " " ? "0.3em" : undefined,
+            }}
+          >
+            {char === " " ? "\u00a0" : char}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. Install the required dependency: `npm install gsap`
+2. Copy the component source above into `./RainDropText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component renders each character of `text` as an individual `<span>` with the class `rain-char`, then animates them via a GSAP timeline on mount.
+5. Any change to `text`, `delay`, `duration`, `dropHeight`, `ease`, `repeat`, or `repeatDelay` kills the existing timeline and starts a fresh animation — no manual reset needed.
+6. The outer container uses `overflow-hidden` to clip characters as they fall in from above. If clipping is visible at the top, increase the parent's top padding or reduce `dropHeight`.
+7. Spaces in `text` are preserved as non-breaking spaces (`\u00a0`) with `minWidth: 0.3em` to maintain word gaps during animation.
+8. Pass any valid GSAP ease string to `ease` — e.g. `"elastic.out(1, 0.3)"` for a springy feel or `"power4.out"` for a fast hard drop.
+9. For a looping hero banner, set `repeat={true}` and tune `repeatDelay` to control the pause between cycles.

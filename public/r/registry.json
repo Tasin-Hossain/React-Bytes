@@ -564,6 +564,70 @@
 			]
 		},
 		{
+			"name": "RainDropText-JS-CSS",
+			"title": "RainDropText",
+			"description": "A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RainDropText.jsx"
+				}
+			]
+		},
+		{
+			"name": "RainDropText-JS-TW",
+			"title": "RainDropText",
+			"description": "A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RainDropText.jsx"
+				}
+			]
+		},
+		{
+			"name": "RainDropText-TS-CSS",
+			"title": "RainDropText",
+			"description": "A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RainDropText.tsx"
+				}
+			]
+		},
+		{
+			"name": "RainDropText-TS-TW",
+			"title": "RainDropText",
+			"description": "A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RainDropText.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",

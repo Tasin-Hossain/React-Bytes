@@ -1,0 +1,18 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "RainDropText-TS-TW",
+	"title": "RainDropText",
+	"description": "A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.",
+	"type": "registry:component",
+	"files": [
+		{
+			"type": "registry:component",
+			"path": "RainDropText.tsx",
+			"content": "// TS-TW variant\r\nimport { useEffect, useRef, CSSProperties } from 'react';\r\nimport { gsap } from 'gsap';\r\n\r\ninterface RainDropTextProps {\r\n  text?: string;\r\n  delay?: number;\r\n  duration?: number;\r\n  dropHeight?: number;\r\n  ease?: string;\r\n  color?: string;\r\n  repeat?: boolean;\r\n  repeatDelay?: number;\r\n  textClassName?: string;\r\n  className?: string;\r\n}\r\n\r\nexport default function RainDropText({\r\n  text = 'RAIN DROP',\r\n  delay = 0.07,\r\n  duration = 0.9,\r\n  dropHeight = 100,\r\n  ease = 'bounce.out',\r\n  color = '#111111',\r\n  repeat = false,\r\n  repeatDelay = 1.2,\r\n  textClassName = 'text-5xl sm:text-5xl md:text-6xl lg:text-8xl',\r\n  className = ''\r\n}: RainDropTextProps) {\r\n  const containerRef = useRef<HTMLDivElement>(null);\r\n  const tlRef = useRef<gsap.core.Timeline | null>(null);\r\n\r\n  useEffect(() => {\r\n    const container = containerRef.current;\r\n    if (!container) return;\r\n\r\n    const spans = container.querySelectorAll('.rain-char');\r\n\r\n    if (tlRef.current) tlRef.current.kill();\r\n\r\n    gsap.set(spans, { y: -dropHeight, opacity: 0, scaleY: 1.4 });\r\n\r\n    const tl = gsap.timeline({ repeat: repeat ? -1 : 0, repeatDelay });\r\n\r\n    spans.forEach((span, i) => {\r\n      tl.fromTo(\r\n        span,\r\n        { y: -dropHeight, opacity: 0, scaleY: 1.4 },\r\n        { y: 0, opacity: 1, scaleY: 1, ease, duration },\r\n        i * delay\r\n      );\r\n    });\r\n\r\n    tlRef.current = tl;\r\n    return () => {\r\n      tl.kill();\r\n    };\r\n  }, [text, delay, duration, dropHeight, ease, repeat, repeatDelay]);\r\n\r\n  const chars = [...text];\r\n\r\n  return (\r\n    <div className={`flex flex-col items-center gap-6 w-full ${className}`}>\r\n      <div ref={containerRef} className=\"flex flex-wrap items-end justify-center overflow-hidden px-2\">\r\n        {chars.map((char, i) => (\r\n          <span\r\n            key={i}\r\n            className={`rain-char inline-block font-black leading-none tracking-tight select-none ${textClassName}`}\r\n            style={\r\n              {\r\n                display: 'inline-block',\r\n                color,\r\n                minWidth: char === ' ' ? '0.3em' : undefined\r\n              } as CSSProperties\r\n            }\r\n          >\r\n            {char === ' ' ? '\\u00a0' : char}\r\n          </span>\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"
+		}
+	],
+	"registryDependencies": [],
+	"dependencies": [
+		"gsap@^3.15.0"
+	]
+}

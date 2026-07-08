@@ -1,10 +1,8 @@
 export const NEW = [
-  'Magnetic Text',
-  'Curtain text',
-
+  'RainDrop Text',
 
 ];
-export const UPDATED = ['MouseRepel Grid','Blur Text'];
+export const UPDATED = [];
 
 // Used for main sidebar navigation
 export const CATEGORIES = [
@@ -24,6 +22,7 @@ export const CATEGORIES = [
       'Smoke Away',
       'Spotlight Text',
       'StaticNoise Text',
+      'RainDrop Text'
 
     ]
   },

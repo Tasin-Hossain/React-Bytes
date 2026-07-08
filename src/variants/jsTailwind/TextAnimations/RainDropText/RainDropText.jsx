@@ -1,3 +1,4 @@
+// JS-TW variant 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
@@ -22,33 +23,22 @@ export default function RainDropText({
 
     const spans = container.querySelectorAll(".rain-char");
 
-    // kill previous timeline
     if (tlRef.current) tlRef.current.kill();
 
     gsap.set(spans, { y: -dropHeight, opacity: 0, scaleY: 1.4 });
 
-    const tl = gsap.timeline({
-      repeat: repeat ? -1 : 0,
-      repeatDelay,
-    });
+    const tl = gsap.timeline({ repeat: repeat ? -1 : 0, repeatDelay });
 
     spans.forEach((span, i) => {
       tl.fromTo(
         span,
         { y: -dropHeight, opacity: 0, scaleY: 1.4 },
-        {
-          y: 0,
-          opacity: 1,
-          scaleY: 1,
-          ease,
-          duration,
-        },
+        { y: 0, opacity: 1, scaleY: 1, ease, duration },
         i * delay
       );
     });
 
     tlRef.current = tl;
-
     return () => tl.kill();
   }, [text, delay, duration, dropHeight, ease, repeat, repeatDelay]);
 
@@ -56,7 +46,6 @@ export default function RainDropText({
 
   return (
     <div className={`flex flex-col items-center gap-6 w-full ${className}`}>
-      {/* Text stage */}
       <div
         ref={containerRef}
         className="flex flex-wrap items-end justify-center overflow-hidden px-2"
@@ -66,7 +55,7 @@ export default function RainDropText({
             key={i}
             className={`rain-char inline-block font-black leading-none tracking-tight select-none ${textClassName}`}
             style={{
-              display: "inline-block",
+              display:  "inline-block",
               color,
               minWidth: char === " " ? "0.3em" : undefined,
             }}
@@ -75,7 +64,6 @@ export default function RainDropText({
           </span>
         ))}
       </div>
-
     </div>
   );
 }
