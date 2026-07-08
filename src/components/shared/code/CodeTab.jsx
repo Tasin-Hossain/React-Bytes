@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
+import gsap from 'gsap';
 import useComponentProps from '../../../hooks/useComponentProps';
 import SubTabButton from '../../ui/Button/SubTabButton';
 import PkgTabs from './PkgTabs';
@@ -12,63 +13,67 @@ const CLI_TOOLS = [
 ];
 
 const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
-  const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const handler = e => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
+  const containerRef = useRef(null);
+  const indicatorRef = useRef(null);
+  const btnRefs = useRef({});
+  const [hovered, setHovered] = useState(null);
 
   const available = CLI_TOOLS.filter(t => (t.value === 'shadcn' ? !!shadcnCmds : !!jsrepoCmds));
 
+  const targetTab = hovered ?? value;
+
+  useLayoutEffect(() => {
+    const btn = btnRefs.current[targetTab];
+    const container = containerRef.current;
+    if (!btn || !container) return;
+
+    const btnRect = btn.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    gsap.to(indicatorRef.current, {
+      x: btnRect.left - containerRect.left,
+      width: btnRect.width,
+      duration: 0.3,
+      ease: 'power3.out'
+    });
+  }, [targetTab, available.length]);
+
   if (available.length <= 1) return null;
 
-  const active = CLI_TOOLS.find(t => t.value === value);
+  const handleClick = (v) => {
+    onChange(v);
+    gsap.fromTo(
+      btnRefs.current[v],
+      { scale: 0.9 },
+      { scale: 1, duration: 0.3, ease: 'back.out(3)' }
+    );
+  };
 
   return (
-    <div ref={ref} className="relative mb-2">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-1.5 px-2.5 h-9 rounded-md border border-(--border-button) bg-(--bg-button) text-sm text-(--text-muted) transition-colors cursor-pointer"
-      >
-        <img src={active?.icon} alt={active?.label} className="w-4 h-4 object-cover rounded-sm" />
-        <span className="capitalize">{active?.label}</span>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          className={`transition-transform ${open ? 'rotate-180' : ''}`}
-        >
-          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+    <div
+      ref={containerRef}
+      onMouseLeave={() => setHovered(null)}
+      className="relative inline-flex items-center rounded-md border border-(--border-secondary) bg-(--bg-card) p-1 mb-2"
+    >
+      <div
+        ref={indicatorRef}
+        className="absolute top-1 bottom-1 left-0 rounded bg-(--brand)/10 border border-(--brand)/20 pointer-events-none"
+      />
 
-      {open && (
-        <div className="p-1 absolute right-0 top-full mt-1 z-50 min-w-30 rounded-md border border-(--border-secondary) bg-(--bg-card) overflow-hidden">
-          {available.map(tool => (
-            <button
-              key={tool.value}
-              onClick={() => {
-                onChange(tool.value);
-                setOpen(false);
-              }}
-              className="flex items-center gap-2 rounded-md w-full px-3 py-2 text-sm hover:bg-(--bg-hover) cursor-pointer transition-colors text-(--text-muted)"
-            >
-              <div className="flex items-center gap-5! w-5">
-                <img src={tool.icon} alt="icons" className="w-full h-5 object-cover" />
-                {/* <span className="font-mono text-xs text-(--brand)">{tool.icon}</span> */}
-              </div>
-              <span className="capitalize">{tool.label}</span>
-              {value === tool.value && <div className="w-1.5 h-1.5 bg-(--brand) rounded-full">{''}</div>}
-            </button>
-          ))}
-        </div>
-      )}
+      {available.map(tool => (
+        <button
+          key={tool.value}
+          ref={(el) => (btnRefs.current[tool.value] = el)}
+          onClick={() => handleClick(tool.value)}
+          onMouseEnter={() => setHovered(tool.value)}
+          className={`relative z-10 flex items-center gap-1.5 px-3.5 py-1 rounded text-sm font-medium capitalize transition-colors cursor-pointer ${
+            targetTab === tool.value ? 'text-(--brand)' : 'text-(--text-muted)'
+          }`}
+        >
+          <img src={tool.icon} alt={tool.label} className="w-4 h-4 object-cover rounded-sm" />
+          {tool.label}
+        </button>
+      ))}
     </div>
   );
 };
@@ -135,7 +140,7 @@ const CodeTab = ({ pkgCmds, shadcnCmds, jsrepoCmds, usageCode, codeVariants, css
       {/* ── Usage (live) ── */}
       <section className="mb-8">
         <h2 className="title-two mb-4">Usage</h2>
-        <CodeBlock code={usageCode} language="jsx" />
+        <CodeBlock showLineNumbers code={usageCode} />
       </section>
 
       {/* ── Code (variant switcher) ── */}
@@ -150,7 +155,7 @@ const CodeTab = ({ pkgCmds, shadcnCmds, jsrepoCmds, usageCode, codeVariants, css
           />
         </div>
 
-        <CodeBlock code={activeCode} language={langTab === 'ts' ? 'tsx' : 'jsx'} />
+        <CodeBlock showLineNumbers code={activeCode} />
 
         {normalizedStyle === 'css' && cssCode && (
           <>
@@ -170,15 +175,15 @@ const CodeTab = ({ pkgCmds, shadcnCmds, jsrepoCmds, usageCode, codeVariants, css
   );
 };
 
-export const CodeExample = ({ label, code, language = 'jsx', CodeBlock }) => (
+export const CodeExample = ({ label, code, CodeBlock }) => (
   <div className="mb-6">
     {label && <SectionLabel>{label}</SectionLabel>}
-    <CodeBlock code={code} language={language} />
+    <CodeBlock code={code} />
   </div>
 );
 
 const SectionLabel = ({ children }) => (
-  <p className="text-[11px]  uppercase tracking-widest font-semibold mt-4 mb-2">{children}</p>
+  <p className="text-[11px] uppercase tracking-widest font-semibold mt-4 mb-2">{children}</p>
 );
 
 export default CodeTab;
