@@ -3,10 +3,12 @@ import useComponentProps from '../../../hooks/useComponentProps';
 import SubTabButton from '../../ui/Button/SubTabButton';
 import PkgTabs from './PkgTabs';
 import VariantSwitcher from './VariantSwitcher';
+import SadCdnImg from '../../../assets/icons/shadcn-favicon.ico';
+import JsrepoImg from '../../../assets/icons/jsrepo-favicon.ico';
 
 const CLI_TOOLS = [
-  { value: 'shadcn', label: 'shadcn', icon: '//' },
-  { value: 'jsrepo', label: 'jsrepo', icon: '>js' },
+  { value: 'shadcn', label: 'shadcn', icon: SadCdnImg },
+  { value: 'jsrepo', label: 'jsrepo', icon: JsrepoImg }
 ];
 
 const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
@@ -14,14 +16,14 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const handler = e => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const available = CLI_TOOLS.filter(t =>
-    t.value === 'shadcn' ? !!shadcnCmds : !!jsrepoCmds
-  );
+  const available = CLI_TOOLS.filter(t => (t.value === 'shadcn' ? !!shadcnCmds : !!jsrepoCmds));
 
   if (available.length <= 1) return null;
 
@@ -33,10 +35,16 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
         onClick={() => setOpen(o => !o)}
         className="flex items-center gap-1.5 px-2.5 h-9 rounded-md border border-(--border-button) bg-(--bg-button) text-sm text-(--text-muted) transition-colors cursor-pointer"
       >
-        <span className="text-(--brand) text-xs ">{active?.icon}</span>
-        <span>{active?.label}</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={`transition-transform ${open ? 'rotate-180' : ''}`}>
-          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <img src={active?.icon} alt={active?.label} className="w-4 h-4 object-cover rounded-sm" />
+        <span className="capitalize">{active?.label}</span>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          className={`transition-transform ${open ? 'rotate-180' : ''}`}
+        >
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
 
@@ -45,18 +53,18 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
           {available.map(tool => (
             <button
               key={tool.value}
-              onClick={() => { onChange(tool.value); setOpen(false); }}
-              className="flex items-center justify-between rounded-md w-full px-3 py-2 text-sm hover:bg-(--bg-hover) cursor-pointer transition-colors text-(--text-muted)"
+              onClick={() => {
+                onChange(tool.value);
+                setOpen(false);
+              }}
+              className="flex items-center gap-2 rounded-md w-full px-3 py-2 text-sm hover:bg-(--bg-hover) cursor-pointer transition-colors text-(--text-muted)"
             >
-              <span className="flex items-center gap-2">
-                <span className="font-mono text-xs text-(--brand)">{tool.icon}</span>
-                <span>{tool.label}</span>
-              </span>
-              {value === tool.value && (
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <path d="M2.5 6.5l3 3 5-5" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              )}
+              <div className="flex items-center gap-5! w-5">
+                <img src={tool.icon} alt="icons" className="w-full h-5 object-cover" />
+                {/* <span className="font-mono text-xs text-(--brand)">{tool.icon}</span> */}
+              </div>
+              <span className="capitalize">{tool.label}</span>
+              {value === tool.value && <div className="w-1.5 h-1.5 bg-(--brand) rounded-full">{''}</div>}
             </button>
           ))}
         </div>
@@ -108,12 +116,7 @@ const CodeTab = ({ pkgCmds, shadcnCmds, jsrepoCmds, usageCode, codeVariants, css
         <div className="flex items-center justify-between ">
           <PkgTabs active={pkgTab} onChange={setPkgTab} />
           {installTab === 'cli' && (
-            <CliToolDropdown
-              value={cliTool}
-              onChange={setCliTool}
-              shadcnCmds={shadcnCmds}
-              jsrepoCmds={jsrepoCmds}
-            />
+            <CliToolDropdown value={cliTool} onChange={setCliTool} shadcnCmds={shadcnCmds} jsrepoCmds={jsrepoCmds} />
           )}
         </div>
 

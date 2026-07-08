@@ -32,6 +32,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+
   }
 
   img,
@@ -202,6 +203,7 @@
 /* sidebar Scrollbar */
 .sidebar-scroll::-webkit-scrollbar {
   width: 4px;
+
 }
 
 .sidebar-scroll::-webkit-scrollbar-track {
@@ -217,6 +219,7 @@
 /* Scrollbar  */
 ::-webkit-scrollbar {
   width: 8px;
+   height: 4px;
 }
 ::-webkit-scrollbar-track {
   background-color: transparent;
