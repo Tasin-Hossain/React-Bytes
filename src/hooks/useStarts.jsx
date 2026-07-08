@@ -4,7 +4,7 @@ import { getStarsCount } from '../utils/getStarsCount';
 
 const CACHE_KEY = 'github_stars_cache';
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
-const DEFAULT_STARS = 24200;
+const DEFAULT_STARS = 0;
 
 export const useStars = () => {
   const [stars, setStars] = useState(DEFAULT_STARS);
