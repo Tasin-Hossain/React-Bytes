@@ -1,6 +1,7 @@
 export const NEW = [
   'RainDrop Text',
-  'Shatter Text'
+  'Shatter Text',
+  'Scroll Stack'
 
 ];
 export const UPDATED = [];
@@ -39,6 +40,7 @@ export const CATEGORIES = [
     subcategories: [
       'Rotating Cards',
       'Rotating Carousel',
+      'Scroll Stack'
     ]
   },
   {

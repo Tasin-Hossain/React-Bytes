@@ -152,6 +152,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Components/ScrollStack': {
+    name: 'ScrollStack',
+    description:'A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.',
+    category: 'Components',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/components/scroll-stack',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   // Backgrounds Animations
   'Backgrounds/MouseRepelDots': {

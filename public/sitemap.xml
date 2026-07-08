@@ -115,6 +115,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://reactbytes.online/components/scroll-stack</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://reactbytes.online/backgrounds/mouserepel-dots</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>

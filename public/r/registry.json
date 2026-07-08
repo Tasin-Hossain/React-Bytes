@@ -820,6 +820,70 @@
 			]
 		},
 		{
+			"name": "ScrollStack-JS-CSS",
+			"title": "ScrollStack",
+			"description": "A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ScrollStack.jsx"
+				}
+			]
+		},
+		{
+			"name": "ScrollStack-JS-TW",
+			"title": "ScrollStack",
+			"description": "A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ScrollStack.jsx"
+				}
+			]
+		},
+		{
+			"name": "ScrollStack-TS-CSS",
+			"title": "ScrollStack",
+			"description": "A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ScrollStack.tsx"
+				}
+			]
+		},
+		{
+			"name": "ScrollStack-TS-TW",
+			"title": "ScrollStack",
+			"description": "A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ScrollStack.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouseRepelDots-JS-CSS",
 			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",

@@ -24,6 +24,7 @@ const componentMap = {
   // ── Components
   'components/rotating-cards': () => import('../demo/Components/RotatingCardsDemo.jsx'),
   'components/rotating-carousel': () => import('../demo/Components/RotatingCarouselDemo.jsx'),
+  'components/scroll-stack': () => import('../demo/Components/ScrollStackDemo.jsx'),
 
   // ── backgrounds 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),

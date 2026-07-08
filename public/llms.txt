@@ -43,6 +43,7 @@ Notes:
 ## Components
 - [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.
 - [RotatingCarousel](https://reactbytes.online/components/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
+- [ScrollStack](https://reactbytes.online/components/scroll-stack): A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.
 
 ## Backgrounds
 - [MouseRepelDots](https://reactbytes.online/backgrounds/mouserepel-dots): A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.
