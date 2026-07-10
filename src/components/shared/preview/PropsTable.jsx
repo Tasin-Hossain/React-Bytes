@@ -25,7 +25,7 @@ export const PropsTable = ({ PROPS_DATA }) => {
       <h2 className="title-two mb-4">Props</h2>
 
       {/* Desktop table */}
-      <div className="hidden lg:block rounded-2xl border border-(--border-secondary) overflow-hidden">
+      <div className="hidden lg:block rounded-md border border-(--border-secondary) overflow-hidden">
         <table className="w-full border-collapse text-[13px]">
           <thead>
             <tr>
