@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
+const normalizeOption = (option) =>
+  typeof option === 'object' && option !== null
+    ? { value: option.value, label: option.label ?? option.value, icon: option.icon }
+    : { value: option, label: option, icon: undefined };
+
 export default function CustomDropdown({
   value,
   onChange,
@@ -20,14 +25,20 @@ export default function CustomDropdown({
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, []);
 
+  const normalized = options.map(normalizeOption);
+  const current = normalized.find((o) => o.value === value);
+
   return (
-    <div ref={ref} className={`relative ${className}`}>
+    <div ref={ref} className={`relative ${className} `}>
       {/* Trigger */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className=" flex items-center gap-2 px-3 py-1.5 rounded-md border border-(--border-secondary) bg-(--bg-card) text-(--text-muted) text-xs hover:text-(--text-secondary) hover:border-(--border-primary) transition-all duration-150 select-none overflow-visible"
+        className=" flex items-center gap-2 px-3 py-2.5 rounded-md border border-(--border-secondary) bg-(--bg-card) text-(--text-muted) text-xs hover:text-(--text-secondary) hover:border-(--border-primary) transition-all duration-150 cursor-pointer overflow-visible"
       >
-        <span>{value}</span>
+        {current?.icon && (
+          <img src={current.icon} alt="" className="w-3.5 h-3.5 object-cover rounded-sm shrink-0" />
+        )}
+        <span className="whitespace-nowrap">{current?.label ?? value}</span>
 
         <svg
           width="10"
@@ -51,32 +62,34 @@ export default function CustomDropdown({
       {/* Dropdown */}
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 z-50! min-w-30 rounded-md border border-(--border-secondary) bg-(--bg-card) overflow-visible"
+          className="absolute right-0 top-full mt-2 z-50! min-w-27 rounded-md border border-(--border-secondary) bg-(--bg-card) overflow-visible "
         >
-
-          <div className="p-1.5 flex flex-col gap-1.5 ">
-            {options.map((option) => (
+          <div className="p-1 flex flex-col gap-1.5 ">
+            {normalized.map((option) => (
               <button
-                key={option}
+                key={option.value}
                 onClick={() => {
-                  onChange(option);
+                  onChange(option.value);
                   setOpen(false);
                 }}
                 className={`w-full text-left flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[11px] cursor-pointer transition-colors duration-100 ${
-                  option === value
+                  option.value === value
                     ? 'text-(--text-primary) bg-(--bg-hover)'
                     : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--bg-hover)'
                 }`}
               >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
-                    option === value
-                      ? 'bg-(--brand)'
-                      : 'bg-(--border-secondary)'
-                  }`}
-                />
-
-                {option}
+                {option.icon ? (
+                  <img src={option.icon} alt="" className="w-3.5 h-3.5 object-cover rounded-sm shrink-0" />
+                ) : (
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
+                      option.value === value
+                        ? 'bg-(--brand)'
+                        : 'bg-(--border-secondary)'
+                    }`}
+                  />
+                )}
+                {option.label}
               </button>
             ))}
           </div>

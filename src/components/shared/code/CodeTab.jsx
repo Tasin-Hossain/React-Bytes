@@ -4,14 +4,17 @@ import useComponentProps from '../../../hooks/useComponentProps';
 import SubTabButton from '../../ui/Button/SubTabButton';
 import PkgTabs from './PkgTabs';
 import VariantSwitcher from './VariantSwitcher';
+
 import SadCdnImg from '../../../assets/icons/shadcn-favicon.ico';
 import JsrepoImg from '../../../assets/icons/jsrepo-favicon.ico';
+import CustomDropdown from '../../common/CustomDropdown';
 
 const CLI_TOOLS = [
   { value: 'shadcn', label: 'shadcn', icon: SadCdnImg },
   { value: 'jsrepo', label: 'jsrepo', icon: JsrepoImg }
 ];
 
+// Desktop/tablet: original GSAP pill switcher — untouched.
 const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
   const containerRef = useRef(null);
   const indicatorRef = useRef(null);
@@ -53,7 +56,7 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
     <div
       ref={containerRef}
       onMouseLeave={() => setHovered(null)}
-      className="relative inline-flex items-center rounded-md border border-(--border-secondary) bg-(--bg-card) p-1 mb-2"
+      className="relative hidden sm:inline-flex items-center rounded-md border border-(--border-secondary) bg-(--bg-card) p-1 mb-2"
     >
       <div
         ref={indicatorRef}
@@ -75,6 +78,21 @@ const CliToolDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
         </button>
       ))}
     </div>
+  );
+};
+
+// Mobile only: dropdown version, same height/width feel as the pill above.
+const CliToolMobileDropdown = ({ value, onChange, shadcnCmds, jsrepoCmds }) => {
+  const available = CLI_TOOLS.filter(t => (t.value === 'shadcn' ? !!shadcnCmds : !!jsrepoCmds));
+  if (available.length <= 1) return null;
+
+  return (
+    <CustomDropdown
+      value={value}
+      onChange={onChange}
+      options={available}
+      className="sm:hidden mb-2"
+    />
   );
 };
 
@@ -121,7 +139,10 @@ const CodeTab = ({ pkgCmds, shadcnCmds, jsrepoCmds, usageCode, codeVariants, css
         <div className="flex items-center justify-between ">
           <PkgTabs active={pkgTab} onChange={setPkgTab} />
           {installTab === 'cli' && (
-            <CliToolDropdown value={cliTool} onChange={setCliTool} shadcnCmds={shadcnCmds} jsrepoCmds={jsrepoCmds} />
+            <>
+              <CliToolDropdown value={cliTool} onChange={setCliTool} shadcnCmds={shadcnCmds} jsrepoCmds={jsrepoCmds} />
+              <CliToolMobileDropdown value={cliTool} onChange={setCliTool} shadcnCmds={shadcnCmds} jsrepoCmds={jsrepoCmds} />
+            </>
           )}
         </div>
 
