@@ -161,6 +161,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Components/ImageCardHover': {
+    name: 'ImageCardHover',
+    description:'A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.',
+    category: 'Components',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/components/magecard-hover',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   // Backgrounds Animations
   'Backgrounds/MouseRepelDots': {

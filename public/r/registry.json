@@ -884,6 +884,70 @@
 			]
 		},
 		{
+			"name": "ImageCardHover-JS-CSS",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.jsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-JS-TW",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.jsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-TS-CSS",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.tsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-TS-TW",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouseRepelDots-JS-CSS",
 			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",

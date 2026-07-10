@@ -1,49 +1,44 @@
-import  { useEffect, useRef } from 'react'
-import * as THREE from 'three'
-import gsap from 'gsap'
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
-/**
- * PlaneHoverImage
- *
- * Three.js + custom shader hover effect (zoom, pixel-displace, RGB-shift)
- * wrapped in a React component, styled with Tailwind.
- *
- * Dependencies:
- *   npm install three gsap
- *
- * Props:
- *   imageUrl          string   - texture url (required)
- *   width             number   - css width of wrapper, default 600
- *   height            number   - css height of wrapper, default 800
- *   backgroundColor   string   - scene background color, default '#111111'
- *   planeWidth        number   - plane geometry width, default 5
- *   planeHeight       number   - plane geometry height, default 7
- *   zoomLevel         number   - hover zoom intensity (0-1), default 0.2
- *   rgbShiftStrength  number   - chromatic-aberration strength on hover, default 0.01
- *   pixelDisplace     number   - vertical pixel-displace strength on hover, default 0.05
- *   hoverInDuration   number   - seconds for hover uniform to tween in/out, default 2
- *   tiltStrength      number   - max tilt rotation factor (xPI/3 * value), default 0.3
- *   scaleStrength     number   - how much mesh scales with vertical mouse pos, default 0.1
- *   followStrength    number   - how much mesh follows mouse.x horizontally, default 1
- *   opacity           number   - base mesh opacity, default 1
- *   cameraFov         number   - camera field of view, default 60
- *   cameraZ           number   - camera distance from plane, default 8
- *   autoRotate        boolean  - slow idle rotation when not hovered, default false
- *   disabled          boolean  - turns off all mouse interaction, default false
- *   className         string   - extra tailwind classes for the wrapper div
- *   onLoad            function - called once the texture has finished loading
- */
-export default function PlaneHoverImage({
+function makePlaceholderTexture() {
+  const c = document.createElement('canvas');
+  c.width = 800;
+  c.height = 1100;
+  const ctx = c.getContext('2d');
+
+  const grad = ctx.createLinearGradient(0, 0, 0, c.height);
+  grad.addColorStop(0, '#5b46b0');
+  grad.addColorStop(1, '#1a1330');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, c.width, c.height);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+  ctx.lineWidth = 3;
+  for (let i = 0; i < 10; i++) {
+    ctx.beginPath();
+    ctx.arc(c.width / 2, c.height / 2, 60 + i * 45, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 70px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('hover me', c.width / 2, c.height / 2 + 25);
+
+  return c.toDataURL();
+}
+
+function PlaneHoverImage({
   imageUrl,
-  width = 600,
-  height = 800,
+  width = 420,
+  height = 560,
   backgroundColor = '#111111',
   planeWidth = 5,
   planeHeight = 7,
   zoomLevel = 0.2,
   rgbShiftStrength = 0.01,
   pixelDisplace = 0.05,
-  hoverInDuration = 2,
   tiltStrength = 0.3,
   scaleStrength = 0.1,
   followStrength = 1,
@@ -52,242 +47,244 @@ export default function PlaneHoverImage({
   cameraZ = 8,
   autoRotate = false,
   disabled = false,
-  className = '',
-  onLoad
+  className = ''
 }) {
-  const canvasRef = useRef(null)
-  const containerRef = useRef(null)
+  const canvasRef = useRef(null);
+  const containerRef = useRef(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    const container = containerRef.current
-    if (!canvas || !container) return
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    const textureLoader = new THREE.TextureLoader()
+    try {
+      const textureLoader = new THREE.TextureLoader();
+      const lerp = (a, b, t) => a + (b - a) * t;
 
-    class PlaneSubject {
-      raycaster = new THREE.Raycaster()
-      scene = null
+      class PlaneSubject {
+        raycaster = new THREE.Raycaster();
+        scene = null;
+        targets = { hover: 0, scaleX: 1, scaleY: 1, posX: 0, rotX: 0, rotY: 0 };
 
-      constructor(scene) {
-        const geometry = new THREE.PlaneBufferGeometry(planeWidth, planeHeight)
-        const material = new THREE.ShaderMaterial({
-          vertexShader: `
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragmentShader: `
-            precision highp float;
-            uniform sampler2D map;
-            uniform float imageAspectRatio;
-            uniform float aspectRatio;
-            uniform float opacity;
-            uniform float hover;
-            uniform float zoomLevel;
-            uniform float rgbShiftStrength;
-            uniform float pixelDisplace;
-            varying vec2 vUv;
+        constructor(scene) {
+          const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
+          const material = new THREE.ShaderMaterial({
+            vertexShader: `
+              varying vec2 vUv;
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              precision highp float;
+              uniform sampler2D map;
+              uniform float imageAspectRatio;
+              uniform float aspectRatio;
+              uniform float opacity;
+              uniform float hover;
+              uniform float zoomLevel;
+              uniform float rgbShiftStrength;
+              uniform float pixelDisplace;
+              varying vec2 vUv;
 
-            float exponentialInOut(float t) {
-              return t == 0.0 || t == 1.0
-                ? t
-                : t < 0.5
-                  ? +0.5 * pow(2.0, (20.0 * t) - 10.0)
-                  : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
-            }
-
-            void main() {
-              vec2 uv = vUv;
-
-              float u = imageAspectRatio / aspectRatio;
-              if (imageAspectRatio > aspectRatio) {
-                u = 1.0 / u;
+              float exponentialInOut(float t) {
+                return t == 0.0 || t == 1.0
+                  ? t
+                  : t < 0.5
+                    ? +0.5 * pow(2.0, (20.0 * t) - 10.0)
+                    : -0.5 * pow(2.0, 10.0 - (t * 20.0)) + 1.0;
               }
 
-              uv.y *= u;
-              uv.y -= (u) / 2.0 - 0.5;
+              void main() {
+                vec2 uv = vUv;
 
-              float hoverLevel = exponentialInOut(min(1.0, (distance(vec2(0.5), uv) * hover) + hover));
-              uv *= 1.0 - zoomLevel * hoverLevel;
-              uv += zoomLevel / 2.0 * hoverLevel;
-              uv = clamp(uv, 0.0, 1.0);
-              vec4 color = texture2D(map, uv);
-              if (hoverLevel > 0.0) {
-                hoverLevel = 1.0 - abs(hoverLevel - 0.5) * 2.0;
-                uv.y += color.r * hoverLevel * pixelDisplace;
-                color = texture2D(map, uv);
-                color.r = texture2D(map, uv + (hoverLevel) * rgbShiftStrength).r;
-                color.g = texture2D(map, uv - (hoverLevel) * rgbShiftStrength).g;
+                float u = imageAspectRatio / aspectRatio;
+                if (imageAspectRatio > aspectRatio) {
+                  u = 1.0 / u;
+                }
+
+                uv.y *= u;
+                uv.y -= (u) / 2.0 - 0.5;
+
+                float hoverLevel = exponentialInOut(min(1.0, (distance(vec2(0.5), uv) * hover) + hover));
+                uv *= 1.0 - zoomLevel * hoverLevel;
+                uv += zoomLevel / 2.0 * hoverLevel;
+                uv = clamp(uv, 0.0, 1.0);
+                vec4 color = texture2D(map, uv);
+                if (hoverLevel > 0.0) {
+                  hoverLevel = 1.0 - abs(hoverLevel - 0.5) * 2.0;
+                  uv.y += color.r * hoverLevel * pixelDisplace;
+                  color = texture2D(map, uv);
+                  color.r = texture2D(map, uv + (hoverLevel) * rgbShiftStrength).r;
+                  color.g = texture2D(map, uv - (hoverLevel) * rgbShiftStrength).g;
+                }
+
+                gl_FragColor = mix(vec4(1.0, 1.0, 1.0, opacity), color, opacity);
               }
-
-              gl_FragColor = mix(vec4(1.0, 1.0, 1.0, opacity), color, opacity);
+            `,
+            uniforms: {
+              map: {
+                value: textureLoader.load(
+                  imageUrl,
+                  (tex) => {
+                    material.uniforms.imageAspectRatio.value = tex.image.width / tex.image.height;
+                  },
+                  undefined,
+                  (err) => setError('texture failed to load: ' + err.message)
+                )
+              },
+              imageAspectRatio: { value: 1.0 },
+              aspectRatio: { value: width / height },
+              opacity: { value: opacity },
+              hover: { value: 0.0 },
+              zoomLevel: { value: zoomLevel },
+              rgbShiftStrength: { value: rgbShiftStrength },
+              pixelDisplace: { value: pixelDisplace }
             }
-          `,
-          uniforms: {
-            map: {
-              value: textureLoader.load(imageUrl, (tex) => {
-                material.uniforms.imageAspectRatio.value = tex.image.width / tex.image.height
-                if (onLoad) onLoad(tex)
-              })
-            },
-            imageAspectRatio: { value: 1.0 },
-            aspectRatio: { value: width / height },
-            opacity: { value: opacity },
-            hover: { value: 0.0 },
-            zoomLevel: { value: zoomLevel },
-            rgbShiftStrength: { value: rgbShiftStrength },
-            pixelDisplace: { value: pixelDisplace }
+          });
+          material.transparent = true;
+          const mesh = new THREE.Mesh(geometry, material);
+
+          scene.add(mesh);
+          this.scene = scene;
+          this.mesh = mesh;
+        }
+
+        update(delta) {
+          if (autoRotate) {
+            this.mesh.rotation.y += delta * 0.15;
           }
-        })
-        material.transparent = true
-        const mesh = new THREE.Mesh(geometry, material)
+          const t = 1 - Math.pow(0.001, delta);
+          const u = this.mesh.material.uniforms;
+          u.hover.value = lerp(u.hover.value, this.targets.hover, Math.min(1, delta * 2));
+          this.mesh.scale.x = lerp(this.mesh.scale.x, this.targets.scaleX, t);
+          this.mesh.scale.y = lerp(this.mesh.scale.y, this.targets.scaleY, t);
+          this.mesh.position.x = lerp(this.mesh.position.x, this.targets.posX, t);
+          this.mesh.rotation.x = lerp(this.mesh.rotation.x, this.targets.rotX, t);
+          this.mesh.rotation.y = lerp(this.mesh.rotation.y, this.targets.rotY, t);
+        }
 
-        scene.add(mesh)
-        this.scene = scene
-        this.mesh = mesh
-      }
+        mouseHandler(mouse, camera) {
+          this.raycaster.setFromCamera(mouse, camera);
+          const intersects = this.raycaster.intersectObjects(this.scene.children);
 
-      update(delta) {
-        if (autoRotate) {
-          this.mesh.rotation.y += delta * 0.15
+          this.targets.hover = intersects.length ? 1 : 0;
+          this.targets.scaleX = 1 - mouse.y * scaleStrength;
+          this.targets.scaleY = 1 - mouse.y * scaleStrength;
+          this.targets.posX = mouse.x * followStrength;
+          this.targets.rotX = -mouse.y * (Math.PI / 3) * tiltStrength;
+          this.targets.rotY = mouse.x * (Math.PI / 3) * tiltStrength;
         }
       }
 
-      mouseHandler(mouse, camera) {
-        const { scene, mesh, raycaster } = this
-        raycaster.setFromCamera(mouse, camera)
-        const intersects = raycaster.intersectObjects(scene.children)
+      class SceneManager {
+        clock = new THREE.Clock();
+        mouse = new THREE.Vector2();
 
-        gsap.to(mesh.material.uniforms.hover, {
-          duration: hoverInDuration,
-          value: intersects.length
-        })
-
-        gsap.to(mesh.scale, {
-          duration: 0.5,
-          x: 1 - mouse.y * scaleStrength,
-          y: 1 - mouse.y * scaleStrength
-        })
-
-        gsap.to(mesh.position, {
-          duration: 0.5,
-          x: mouse.x * followStrength
-        })
-
-        gsap.to(mesh.rotation, {
-          duration: 0.5,
-          x: -mouse.y * (Math.PI / 3) * tiltStrength,
-          y: mouse.x * (Math.PI / 3) * tiltStrength
-        })
-      }
-    }
-
-    class SceneManager {
-      clock = new THREE.Clock()
-      mouse = new THREE.Vector2()
-
-      buildScene() {
-        const scene = new THREE.Scene()
-        scene.background = new THREE.Color(backgroundColor)
-        return scene
-      }
-
-      buildRender({ width, height }) {
-        const renderer = new THREE.WebGLRenderer({
-          canvas,
-          antialias: true,
-          alpha: true
-        })
-        const DPR = window.devicePixelRatio ? window.devicePixelRatio : 1
-        renderer.setPixelRatio(DPR)
-        renderer.setSize(width, height)
-        renderer.outputColorSpace = THREE.SRGBColorSpace
-        return renderer
-      }
-
-      buildCamera({ width, height }) {
-        const aspectRatio = width / height
-        const camera = new THREE.PerspectiveCamera(cameraFov, aspectRatio, 1, 100)
-        camera.position.z = cameraZ
-        return camera
-      }
-
-      createSceneSubjects(scene) {
-        return [new PlaneSubject(scene)]
-      }
-
-      constructor() {
-        this.screenDimensions = {
-          width: canvas.clientWidth,
-          height: canvas.clientHeight
+        buildScene() {
+          const scene = new THREE.Scene();
+          scene.background = new THREE.Color(backgroundColor);
+          return scene;
         }
-        this.scene = this.buildScene()
-        this.renderer = this.buildRender(this.screenDimensions)
-        this.camera = this.buildCamera(this.screenDimensions)
-        this.sceneSubjects = this.createSceneSubjects(this.scene)
+
+        buildRender({ width, height }) {
+          const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+          const DPR = window.devicePixelRatio ? window.devicePixelRatio : 1;
+          renderer.setPixelRatio(DPR);
+          renderer.setSize(width, height);
+          // r128-compatible color pipeline (outputColorSpace/SRGBColorSpace is r152+, didn't exist yet)
+          renderer.outputEncoding = THREE.sRGBEncoding;
+          return renderer;
+        }
+
+        buildCamera({ width, height }) {
+          const aspectRatio = width / height;
+          const camera = new THREE.PerspectiveCamera(cameraFov, aspectRatio, 1, 100);
+          camera.position.z = cameraZ;
+          return camera;
+        }
+
+        createSceneSubjects(scene) {
+          return [new PlaneSubject(scene)];
+        }
+
+        constructor() {
+          this.screenDimensions = { width: canvas.clientWidth, height: canvas.clientHeight };
+          this.scene = this.buildScene();
+          this.renderer = this.buildRender(this.screenDimensions);
+          this.camera = this.buildCamera(this.screenDimensions);
+          this.sceneSubjects = this.createSceneSubjects(this.scene);
+        }
+
+        update() {
+          const delta = Math.min(this.clock.getDelta(), 0.1);
+          this.sceneSubjects.forEach((s) => s.update && s.update(delta));
+          this.renderer.render(this.scene, this.camera);
+        }
+
+        resizeHandler() {
+          const w = canvas.clientWidth;
+          const h = canvas.clientHeight;
+          this.screenDimensions = { width: w, height: h };
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+          this.sceneSubjects.forEach((s) => {
+            if (s.mesh) s.mesh.material.uniforms.aspectRatio.value = w / h;
+          });
+        }
+
+        mouseHandler(mousePos) {
+          Object.assign(this.mouse, mousePos);
+          this.sceneSubjects.forEach((s) => s.mouseHandler && s.mouseHandler(this.mouse, this.camera));
+        }
       }
 
-      update() {
-        const delta = this.clock.getDelta()
-        const elapsed = this.clock.getElapsedTime()
-        this.sceneSubjects.forEach((s) => s.update && s.update(delta, elapsed))
-        this.renderer.render(this.scene, this.camera)
-      }
+      const sceneManager = new SceneManager();
+      let rafId;
 
-      resizeHandler() {
-        const w = canvas.clientWidth
-        const h = canvas.clientHeight
-        this.screenDimensions = { width: w, height: h }
-        this.camera.aspect = w / h
-        this.camera.updateProjectionMatrix()
-        this.renderer.setSize(w, h)
-      }
+      const resizeCanvas = () => {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        sceneManager.resizeHandler();
+      };
 
-      mouseHandler(mousePos) {
-        Object.assign(this.mouse, mousePos)
-        this.sceneSubjects.forEach((s) => s.mouseHandler && s.mouseHandler(this.mouse, this.camera))
-      }
+      const mouseHandler = (e) => {
+        if (disabled) return;
+        const rect = container.getBoundingClientRect();
+        sceneManager.mouseHandler({
+          x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
+          y: -((e.clientY - rect.top) / rect.height) * 2 + 1
+        });
+      };
+
+      const render = () => {
+        rafId = window.requestAnimationFrame(render);
+        sceneManager.update();
+      };
+
+      const ro = new ResizeObserver(resizeCanvas);
+      ro.observe(container);
+      resizeCanvas();
+      container.addEventListener('mousemove', mouseHandler);
+      render();
+
+      return () => {
+        window.cancelAnimationFrame(rafId);
+        ro.disconnect();
+        container.removeEventListener('mousemove', mouseHandler);
+        sceneManager.sceneSubjects.forEach((s) => {
+          s.mesh?.geometry.dispose();
+          s.mesh?.material.dispose();
+        });
+        sceneManager.renderer.dispose();
+      };
+    } catch (e) {
+      setError(e.message);
     }
-
-    const sceneManager = new SceneManager()
-    let rafId
-
-    const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth
-      canvas.height = canvas.clientHeight
-      sceneManager.resizeHandler()
-    }
-
-    const mouseHandler = (e) => {
-      if (disabled) return
-      const rect = container.getBoundingClientRect()
-      sceneManager.mouseHandler({
-        x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
-        y: -((e.clientY - rect.top) / rect.height) * 2 + 1
-      })
-    }
-
-    const render = () => {
-      rafId = window.requestAnimationFrame(render)
-      sceneManager.update()
-    }
-
-    const ro = new ResizeObserver(resizeCanvas)
-    ro.observe(container)
-    resizeCanvas()
-    container.addEventListener('mousemove', mouseHandler)
-    render()
-
-    return () => {
-      window.cancelAnimationFrame(rafId)
-      ro.disconnect()
-      container.removeEventListener('mousemove', mouseHandler)
-      sceneManager.renderer.dispose()
-    }
-  }, [imageUrl, width, height, backgroundColor, planeWidth, planeHeight, zoomLevel, rgbShiftStrength, pixelDisplace, hoverInDuration, tiltStrength, scaleStrength, followStrength, opacity, cameraFov, cameraZ, autoRotate, disabled, onLoad])
+  }, [imageUrl, width, height, backgroundColor, planeWidth, planeHeight, zoomLevel, rgbShiftStrength, pixelDisplace, tiltStrength, scaleStrength, followStrength, opacity, cameraFov, cameraZ, autoRotate, disabled]);
 
   return (
     <div
@@ -296,6 +293,38 @@ export default function PlaneHoverImage({
       style={{ width, height }}
     >
       <canvas ref={canvasRef} className="block h-full w-full" />
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center p-4 text-red-400 text-xs text-center bg-black/70">
+          {error}
+        </div>
+      )}
     </div>
-  )
+  );
+}
+
+
+export default function Demo() {
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setImageUrl(makePlaceholderTexture());
+  }, []);
+
+  return (
+    <div className="w-full min-h-150 flex flex-col items-center justify-center gap-4 bg-zinc-950 p-10 rounded-xl">
+      <p className="text-zinc-500 text-sm">move your mouse over the plane</p>
+      {imageUrl && (
+        <PlaneHoverImage
+          imageUrl={imageUrl}
+          width={420}
+          height={560}
+          zoomLevel={0.25}
+          rgbShiftStrength={0.015}
+          pixelDisplace={0.06}
+          tiltStrength={0.35}
+        />
+      )}
+    </div>
+  );
 }

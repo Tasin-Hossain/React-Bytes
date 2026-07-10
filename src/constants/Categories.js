@@ -40,7 +40,8 @@ export const CATEGORIES = [
     subcategories: [
       'Rotating Cards',
       'Rotating Carousel',
-      'Scroll Stack'
+      'Scroll Stack',
+      'ImageCard Hover'
     ]
   },
   {
