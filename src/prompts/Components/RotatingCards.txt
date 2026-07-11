@@ -4,7 +4,7 @@ You are helping integrate an open-source React component into an existing applic
 
 ### Component: RotatingCards
 ### Variant: JavaScript + Tailwind
-### Dependencies: gsap
+### Dependencies: gsap, react-router
 
 ---
 
@@ -12,20 +12,28 @@ You are helping integrate an open-source React component into an existing applic
 ```jsx
 import RotatingCards from './RotatingCards'
 
+const MY_CARDS = [
+  { id: 1, image: 'https://example.com/photo1.jpg', to: '/item/1', title: 'Card One' },
+  { id: 2, image: 'https://example.com/photo2.jpg', to: '/item/2', title: 'Card Two' },
+  { id: 3, video: 'https://example.com/clip.mp4',   to: '/item/3', title: 'Card Three' },
+  // ... up to 10 cards
+];
+
 <RotatingCards
-  cards={[]}
+  cards={MY_CARDS}
   numberOfCards={10}
   radius={480}
   duration={22}
   cardWidth={165}
   cardHeight={154}
   height={500}
+  direction="right"
   pauseOnHover={false}
   reverse={false}
   draggable={true}
   autoPlay={true}
-  onCardClick={(card, index) => console.log(card, index)}
   mouseWheel={true}
+  onCardClick={(card, index) => console.log(card, index)}
   className=""
   cardClassName=""
   initialRotation={0}
@@ -39,291 +47,228 @@ import RotatingCards from './RotatingCards'
 />
 ```
 
+### Card Data Shape
+Each object in the `cards` array supports the following fields:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string \| number | recommended | Unique key for React reconciliation. Falls back to array index. |
+| to | string | yes | React Router path the card links to (passed to `<Link to={...}>`). |
+| image | string | one of image/video/src | URL of the card image. |
+| video | string | one of image/video/src | URL of a video file (.mp4, .webm, etc). Takes priority over image if both are set. |
+| src | string | one of image/video/src | Generic media URL — auto-detected as video by file extension, otherwise treated as image. |
+| poster | string | no | Poster frame URL shown before a video loads (only used with video). |
+| title | string | no | Short label rendered at the bottom of the card. |
+| label | string | no | Alt text for the image (falls back to empty string). |
+| type | string | no | Set to "video" to force video rendering regardless of `src` extension. |
+
 ### Props
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| cards | array | [] | Array of card objects to display. Each card supports `id`, `image` (URL string), `label` (used as the image's `alt` text), and `content` (node rendered in a bottom-anchored overlay on the card). If left empty, 10 built-in Unsplash placeholder cards are used instead. |
-| numberOfCards | number | 10 | How many cards from `cards` (or the fallback set) to actually render. Internally clamped to between 3 and 10 inclusive, regardless of how many cards are passed in `cards` or what value is given here. |
-| radius | number | 480 | Radius in pixels of the circular orbit the cards rotate along. |
-| duration | number | 22 | Seconds for one full 360° rotation at the current `autoPlay` speed. |
-| cardWidth | number | 165 | Width in pixels of each card. |
-| cardHeight | number | 154 | Height in pixels of each card. |
-| height | number \| string | undefined | CSS height of the outer stage container. No default is set in code — you should supply one, or the stage will collapse to its content's natural height. |
-| pauseOnHover | boolean | false | When `true` (and `autoPlay` is `true`), hovering any card pauses the rotation; rotation resumes on mouse leave (unless separately paused or mid-drag). |
-| reverse | boolean | false | Reverses the rotation direction. |
-| draggable | boolean | true | Enables click-and-drag (and touch-drag) to manually spin the orbit. Dragging temporarily stops autoplay and resumes it on release if conditions allow. |
-| autoPlay | boolean | true | Whether the orbit rotates automatically. Captured once into internal state at mount (see integration note below) — toggling this prop after mount does still start/stop the ticker via a dedicated effect, but the very first `paused` state is fixed at `!autoPlay`'s initial value. |
-| onCardClick | function | undefined | Callback `(card, index) => void` fired when a card is clicked. |
-| mouseWheel | boolean | true | Enables scroll-wheel input to manually spin the orbit. The wheel listener calls `preventDefault()`, so page scroll is captured while hovering the stage. |
-| className | string | "" | Additional CSS classes applied to the outer stage div. |
-| cardClassName | string | "" | Additional CSS classes applied to each individual card div. |
-| initialRotation | number | 0 | Starting rotation in degrees. Changing this after mount snaps the orbit to the new rotation immediately (no animated transition). |
-| filterOnHover | boolean | true | When `true`, hovering a card toggles its grayscale/darken filter (see `defaultFiltered`). |
-| defaultFiltered | boolean | true | Whether cards start with the grayscale filter applied. When `true`, hovering a card **removes** the filter (revealing full color); when `false`, hovering a card **applies** the filter. The hover behavior is the inverse of the resting state either way. |
-| entranceAnimation | boolean | true | Whether cards animate in from `getEntranceVars(entranceType)` on initial mount. Runs once; not retriggered by later prop changes. |
-| entranceDuration | number | 0.9 | Duration in seconds of the entrance animation. |
-| entranceStagger | number | 0.07 | Stagger delay in seconds between each card's entrance animation start. |
-| entranceEase | string | "back.out(1.4)" | GSAP ease string applied to the entrance animation. |
-| entranceType | string | "spin" | Entrance animation style. Options: `"pop"` \| `"fade"` \| `"bottom"` \| `"top"` \| `"left"` \| `"right"` \| `"flip"` \| `"scatter"` \| `"spin"` \| `"zoomBlur"`. See **Entrance Types** below. |
-
-### Entrance Types
-The `entranceType` prop selects the `from`-state GSAP animates each card in from (via `gsap.from`), independent of the orbit's own positioning logic.
-
-| Type | Behavior |
-|------|----------|
-| pop (default fallback) | Scales in from `0` with no rotation, fading in. |
-| fade | Fades in from `opacity: 0` only — no movement or scale change. |
-| bottom | Slides up into place from 140px below, fading in. |
-| top | Slides down into place from 140px above, fading in. |
-| left | Slides in from 180px to the left, fading in. |
-| right | Slides in from 180px to the right, fading in. |
-| flip | Flips in along the X-axis from `scaleX: 0`, fading in. |
-| spin | Scales in from `0` while rotating a full 360° additional turn, fading in. This is the default value of `entranceType`. |
-| zoomBlur | Animates in from `scale: 2.4` and `blur(14px)`, sharpening and shrinking into place while fading in. |
-| scatter | Each card flies in from a random offset (`±300px` on both axes) and random rotation (`±180°`), scaling up from `0.3`, fading in. |
+| cards | array | FALLBACK_CARDS (built-in) | Array of card objects. Falls back to 10 built-in Unsplash images if empty. |
+| numberOfCards | number | 10 | How many cards to render from the `cards` array. Clamped between 3 and 10. |
+| radius | number | 480 | Orbit radius in pixels — controls how spread out the cards are. |
+| duration | number | 22 | Time in seconds for one full orbit revolution. |
+| cardWidth | number | 165 | Width of each card in pixels. |
+| cardHeight | number | 154 | Height of each card in pixels. |
+| height | number \| undefined | undefined | Explicit height of the stage container in pixels. Required if the container has no intrinsic height. |
+| direction | string | "right" | Axis the orbit leans toward. Options: "right" \| "left" \| "top" \| "bottom" |
+| pauseOnHover | boolean | false | If true, auto-rotation pauses when the mouse enters any card. |
+| reverse | boolean | false | Reverses the orbit rotation direction. |
+| draggable | boolean | true | Enables click-and-drag / touch-swipe to rotate the orbit manually. |
+| autoPlay | boolean | true | Starts auto-rotation on mount. Set to false for a static or manually controlled carousel. |
+| mouseWheel | boolean | true | Enables scrollwheel to rotate the orbit (prevents default page scroll while over the component). |
+| onCardClick | function | undefined | Callback fired on card click: `(card, index) => void`. |
+| className | string | "" | Additional CSS classes on the outer stage div. |
+| cardClassName | string | "" | Additional CSS classes on each individual card Link element. |
+| initialRotation | number | 0 | Starting rotation offset in degrees (0–360). |
+| filterOnHover | boolean | true | Toggles the grayscale/brightness filter on a card when hovered. |
+| defaultFiltered | boolean | true | If true, all cards start filtered (grayscale) and clear on hover. If false, all start unfiltered and grey on hover. |
+| entranceAnimation | boolean | true | Plays a GSAP entrance animation on mount. |
+| entranceDuration | number | 0.9 | Duration in seconds of the entrance animation per card. |
+| entranceStagger | number | 0.07 | Delay in seconds between each card's entrance animation start. |
+| entranceEase | string | "back.out(1.4)" | GSAP ease applied during the entrance animation. |
+| entranceType | string | "spin" | Style of entrance animation. Options: "spin" \| "fade" \| "bottom" \| "top" \| "left" \| "right" \| "flip" \| "zoomBlur" \| "scatter" |
 
 ### Full Component Source
 ```jsx
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+// JS-TW variant (uses react-router Link)
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { Link } from 'react-router';
 
 const FALLBACK_CARDS = [
-  { id: 1,  image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=70" },
-  { id: 2,  image: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&q=70" },
-  { id: 3,  image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70" },
-  { id: 4,  image: "https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70" },
-  { id: 5,  image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70" },
-  { id: 6,  image: "https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70" },
-  { id: 7,  image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70" },
-  { id: 8,  image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70" },
-  { id: 9,  image: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70" },
-  { id: 10, image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=70" },
+  { id: 1,  image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=70' },
+  { id: 2,  image: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&q=70' },
+  { id: 3,  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70' },
+  { id: 4,  image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70' },
+  { id: 5,  image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70' },
+  { id: 6,  image: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70' },
+  { id: 7,  image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70' },
+  { id: 8,  image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70' },
+  { id: 9,  image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70' },
+  { id: 10, image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=70' },
 ];
 
-const FILTER_STYLE = "grayscale(100%) brightness(0.52) contrast(1.18)";
+const FILTER_STYLE = 'grayscale(100%) brightness(0.52) contrast(1.18)';
+const VIDEO_EXT_RE = /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i;
+const isVideoSrc = src => !!src && VIDEO_EXT_RE.test(src);
+
+const getCardOffset = (rad, radius, dir) => {
+  switch (dir) {
+    case 'top':    return { x: Math.sin(rad) * radius,  y:  Math.cos(rad) * radius };
+    case 'left':   return { x: Math.cos(rad) * radius,  y:  Math.sin(rad) * radius };
+    case 'right':  return { x: -Math.cos(rad) * radius, y:  Math.sin(rad) * radius };
+    case 'bottom':
+    default:       return { x: Math.sin(rad) * radius,  y: -Math.cos(rad) * radius };
+  }
+};
+
+const getLeanSign = dir => (dir === 'top' || dir === 'right' ? -1 : 1);
+
+const getOrbitPosition = dir => {
+  switch (dir) {
+    case 'top':    return { className: 'absolute left-1/2 -translate-x-1/2', style: { top: -40 } };
+    case 'left':   return { className: 'absolute top-1/2 -translate-y-1/2',  style: { left: -40 } };
+    case 'right':  return { className: 'absolute top-1/2 -translate-y-1/2',  style: { right: -40 } };
+    case 'bottom':
+    default:       return { className: 'absolute left-1/2 -translate-x-1/2', style: { bottom: -40 } };
+  }
+};
 
 export function RotatingCards({
   cards = [],
-   numberOfCards = 10,   
+  numberOfCards = 10,
   radius = 480,
   duration = 22,
   cardWidth = 165,
   cardHeight = 154,
-  height ,
+  height,
+  direction = 'right',
   pauseOnHover = false,
   reverse = false,
   draggable = true,
   autoPlay = true,
   onCardClick,
   mouseWheel = true,
-  className = "",
-  cardClassName = "",
+  className = '',
+  cardClassName = '',
   initialRotation = 0,
   filterOnHover = true,
-  defaultFiltered = true, 
+  defaultFiltered = true,
   entranceAnimation = true,
   entranceDuration = 0.9,
   entranceStagger = 0.07,
-  entranceEase = "back.out(1.4)",
-  entranceType = "spin", // pop | fade | bottom | top | left | right | flip | scatter | spin | zoomBlur
+  entranceEase = 'back.out(1.4)',
+  entranceType = 'spin',
 }) {
- const sourceCards = cards.length > 0 ? cards : FALLBACK_CARDS;
-const activeCards = sourceCards.slice(0, Math.min(Math.max(numberOfCards, 3), 10));
+  const sourceCards = cards.length > 0 ? cards : FALLBACK_CARDS;
+  const activeCards = sourceCards.slice(0, Math.min(Math.max(numberOfCards, 3), 10));
   const total = activeCards.length;
 
-  const stageRef = useRef(null);
-  const orbitRef = useRef(null);
-  const cardRefs = useRef([]);
-  const progressRef = useRef(initialRotation / 360);
-  const tickerFnRef = useRef(null);
-  const tickingRef = useRef(false);
-  const dragRef = useRef({ active: false, startX: 0, startProg: 0 });
-  const hoverPausedRef = useRef(false);
+  const stageRef = useRef(null),
+        orbitRef = useRef(null),
+        cardRefs = useRef([]);
+  const progressRef = useRef(initialRotation / 360),
+        tickerFnRef = useRef(null),
+        tickingRef = useRef(false);
+  const dragRef = useRef({ active: false, startX: 0, startProg: 0 }),
+        hoverPausedRef = useRef(false);
   const [paused] = useState(!autoPlay);
+  const [filteredCards, setFilteredCards] = useState(() =>
+    defaultFiltered ? new Set(activeCards.map((_, i) => i)) : new Set()
+  );
 
+  const totalRef = useRef(total), radiusRef = useRef(radius), reverseRef = useRef(reverse);
+  const durationRef = useRef(duration), autoPlayRef = useRef(autoPlay), pausedRef = useRef(paused);
+  const directionRef = useRef(direction);
 
-  const [filteredCards, setFilteredCards] = useState(() => {
-    if (!defaultFiltered) return new Set();
-    return new Set(activeCards.map((_, i) => i));
-  });
-
-
-  const totalRef = useRef(total);
-  const radiusRef = useRef(radius);
-  const reverseRef = useRef(reverse);
-  const durationRef = useRef(duration);
-  const autoPlayRef = useRef(autoPlay);
-  const pausedRef = useRef(paused);
-
-  // eslint-disable-next-line react-hooks/refs
-  totalRef.current = total;
-  // eslint-disable-next-line react-hooks/refs
-  radiusRef.current = radius;
-  // eslint-disable-next-line react-hooks/refs
-  reverseRef.current = reverse;
-  // eslint-disable-next-line react-hooks/refs
-  durationRef.current = duration;
-  // eslint-disable-next-line react-hooks/refs
-  autoPlayRef.current = autoPlay;
-  // eslint-disable-next-line react-hooks/refs
-  pausedRef.current = paused;
+  useEffect(() => {
+    totalRef.current = total; radiusRef.current = radius; reverseRef.current = reverse;
+    durationRef.current = duration; autoPlayRef.current = autoPlay;
+    pausedRef.current = paused; directionRef.current = direction;
+  }, [total, radius, reverse, duration, autoPlay, paused, direction]);
 
   const placeCards = () => {
     if (!totalRef.current) return;
     const angleStep = 360 / totalRef.current;
     const dir = reverseRef.current ? -1 : 1;
     const orbitDeg = progressRef.current * 360 * dir;
-
     cardRefs.current.forEach((el, i) => {
       if (!el) return;
-      const deg = orbitDeg + i * angleStep;
-      const rad = (deg * Math.PI) / 180;
-      const x = Math.sin(rad) * radiusRef.current;
-      const y = -Math.cos(rad) * radiusRef.current;
-
-      const depth = (Math.cos(rad) + 1) / 2;
-      const scale = 0.38 + depth * 0.72;
-      const lean = Math.sin(rad) * 40;
+      const deg = orbitDeg + i * angleStep, rad = (deg * Math.PI) / 180;
+      const { x, y } = getCardOffset(rad, radiusRef.current, directionRef.current);
+      const depth = (Math.cos(rad) + 1) / 2, scale = 0.38 + depth * 0.72;
+      const lean = Math.sin(rad) * 40 * getLeanSign(directionRef.current);
       const opacity = depth < 0.12 ? 0 : 0.28 + depth * 0.72;
-
-      gsap.set(el, {
-        x, y, scale,
-        rotation: lean,
-        zIndex: Math.round(depth * 100),
-        opacity,
-        transformOrigin: "center center",
-      });
+      gsap.set(el, { x, y, scale, rotation: lean, zIndex: Math.round(depth * 100), opacity, transformOrigin: 'center center' });
     });
   };
 
   const stopTicker = () => {
     if (!tickingRef.current || !tickerFnRef.current) return;
     gsap.ticker.remove(tickerFnRef.current);
-    tickerFnRef.current = null;
-    tickingRef.current = false;
+    tickerFnRef.current = null; tickingRef.current = false;
   };
-
   const startTicker = () => {
     if (tickingRef.current) return;
-    tickerFnRef.current = () => {
-      progressRef.current += 1 / (durationRef.current * 60);
-      placeCards();
-    };
-    gsap.ticker.add(tickerFnRef.current);
-    tickingRef.current = true;
+    tickerFnRef.current = () => { progressRef.current += 1 / (durationRef.current * 60); placeCards(); };
+    gsap.ticker.add(tickerFnRef.current); tickingRef.current = true;
   };
 
   const mountedRef = useRef(false);
 
-  const getEntranceVars = (type) => {
-    switch (type) {
-      case "fade":
-        return { opacity: 0 };
-      case "bottom":
-        return { opacity: 0, y: "+=140" };
-      case "top":
-        return { opacity: 0, y: "-=140" };
-      case "left":
-        return { opacity: 0, x: "-=180" };
-      case "right":
-        return { opacity: 0, x: "+=180" };
-      case "flip":
-        return { opacity: 0, scaleX: 0 };
-      case "spin":
-        return { opacity: 0, scale: 0, rotation: "+=360" };
-      case "zoomBlur":
-        return { opacity: 0, scale: 2.4, filter: "blur(14px)" };
-      case "scatter":
-        return {
-          opacity: 0,
-          scale: 0.3,
-          x: () => gsap.utils.random(-300, 300),
-          y: () => gsap.utils.random(-300, 300),
-          rotation: () => gsap.utils.random(-180, 180),
-        };
-      case "pop":
-      default:
-        return { opacity: 0, scale: 0, rotation: 0 };
-    }
-  };
-
+  const getEntranceVars = type => ({
+    fade:     { opacity: 0 },
+    bottom:   { opacity: 0, y: '+=140' },
+    top:      { opacity: 0, y: '-=140' },
+    left:     { opacity: 0, x: '-=180' },
+    right:    { opacity: 0, x: '+=180' },
+    flip:     { opacity: 0, scaleX: 0 },
+    spin:     { opacity: 0, scale: 0, rotation: '+=360' },
+    zoomBlur: { opacity: 0, scale: 2.4, filter: 'blur(14px)' },
+    scatter:  { opacity: 0, scale: 0.3, x: () => gsap.utils.random(-300, 300), y: () => gsap.utils.random(-300, 300), rotation: () => gsap.utils.random(-180, 180) },
+  }[type] ?? { opacity: 0, scale: 0, rotation: 0 });
 
   useEffect(() => {
     placeCards();
-
     if (!entranceAnimation) {
       mountedRef.current = true;
-      if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) {
-        startTicker();
-      }
+      if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) startTicker();
       return;
     }
-
     const validEls = cardRefs.current.filter(Boolean);
     if (!validEls.length) return;
-
     gsap.from(validEls, {
       ...getEntranceVars(entranceType),
-      duration: entranceDuration,
-      ease: entranceEase,
-      stagger: entranceStagger,
-      overwrite: "auto",
+      duration: entranceDuration, ease: entranceEase, stagger: entranceStagger, overwrite: 'auto',
       onComplete: () => {
         mountedRef.current = true;
-        if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) {
-          startTicker();
-        }
+        if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) startTicker();
       },
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
   useEffect(() => {
     if (!mountedRef.current) return;
-    if (autoPlay && !paused && !hoverPausedRef.current) {
-      startTicker();
-    } else {
-      stopTicker();
-    }
+    if (autoPlay && !paused && !hoverPausedRef.current) startTicker(); else stopTicker();
     return () => stopTicker();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, paused]);
 
-  // radius / reverse / card dimensions change
-  useEffect(() => {
-    if (!mountedRef.current) return;
-    placeCards();
+  useEffect(() => { if (mountedRef.current) placeCards(); }, [radius, reverse, direction, cardWidth, cardHeight, total]);
+  useEffect(() => { if (mountedRef.current) { progressRef.current = initialRotation / 360; placeCards(); } }, [initialRotation]);
 
-  }, [radius, reverse, cardWidth, cardHeight, total]);
-
-  // initialRotation change
-  useEffect(() => {
-    if (!mountedRef.current) return;
-    progressRef.current = initialRotation / 360;
-    placeCards();
-
-  }, [initialRotation]);
-
-  // drag
-  const onPointerDown = (e) => {
+  const onPointerDown = e => {
     if (!draggable) return;
-    dragRef.current = {
-      active: true,
-      startX: e.touches ? e.touches[0].clientX : e.clientX,
-      startProg: progressRef.current,
-    };
+    dragRef.current = { active: true, startX: e.touches ? e.touches[0].clientX : e.clientX, startProg: progressRef.current };
     stopTicker();
   };
-
-  const onPointerMove = (e) => {
+  const onPointerMove = e => {
     if (!dragRef.current.active) return;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const dx = clientX - dragRef.current.startX;
-    progressRef.current = dragRef.current.startProg + dx * 0.0007;
+    progressRef.current = dragRef.current.startProg + (clientX - dragRef.current.startX) * 0.0007;
     placeCards();
   };
-
   const onPointerUp = () => {
     if (!dragRef.current.active) return;
     dragRef.current.active = false;
@@ -331,121 +276,76 @@ const activeCards = sourceCards.slice(0, Math.min(Math.max(numberOfCards, 3), 10
   };
 
   useEffect(() => {
-    window.addEventListener("mousemove", onPointerMove);
-    window.addEventListener("mouseup", onPointerUp);
-    window.addEventListener("touchmove", onPointerMove, { passive: true });
-    window.addEventListener("touchend", onPointerUp);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp);
     return () => {
-      window.removeEventListener("mousemove", onPointerMove);
-      window.removeEventListener("mouseup", onPointerUp);
-      window.removeEventListener("touchmove", onPointerMove);
-      window.removeEventListener("touchend", onPointerUp);
+      window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener('mouseup', onPointerUp);
+      window.removeEventListener('touchmove', onPointerMove);
+      window.removeEventListener('touchend', onPointerUp);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // hover pause
-  const handleMouseEnter = () => {
-    if (!pauseOnHover || !autoPlay) return;
-    hoverPausedRef.current = true;
-    stopTicker();
-  };
+  const handleMouseEnter = () => { if (!pauseOnHover || !autoPlay) return; hoverPausedRef.current = true; stopTicker(); };
+  const handleMouseLeave = () => { if (!pauseOnHover || !autoPlay) return; hoverPausedRef.current = false; if (!pausedRef.current && !dragRef.current.active) startTicker(); };
 
-  const handleMouseLeave = () => {
-    if (!pauseOnHover || !autoPlay) return;
-    hoverPausedRef.current = false;
-    if (!pausedRef.current && !dragRef.current.active) startTicker();
-  };
-
-  // mouse wheel
   useEffect(() => {
     const el = stageRef.current;
     if (!el || !mouseWheel) return;
-    const handler = (e) => {
-      e.preventDefault();
-      progressRef.current += e.deltaY * 0.00035;
-      placeCards();
-    };
-    el.addEventListener("wheel", handler, { passive: false });
-    return () => el.removeEventListener("wheel", handler);
-
+    const handler = e => { e.preventDefault(); progressRef.current += e.deltaY * 0.00035; placeCards(); };
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
   }, [mouseWheel]);
 
-  const handleCardClick = (card, index) => {
-    onCardClick?.(card, index);
-  };
+  const setCardFiltered = (index, value) =>
+    setFilteredCards(prev => { const next = new Set(prev); value ? next.add(index) : next.delete(index); return next; });
 
-  const setCardFiltered = (index, value) => {
-    setFilteredCards((prev) => {
-      const next = new Set(prev);
-      if (value) {
-        next.add(index);
-      } else {
-        next.delete(index);
-      }
-      return next;
-    });
-  };
+  const handleCardMouseEnter = index => { handleMouseEnter(); if (filterOnHover) setCardFiltered(index, !defaultFiltered); };
+  const handleCardMouseLeave = index => { handleMouseLeave(); if (filterOnHover) setCardFiltered(index, defaultFiltered); };
 
-  const handleCardMouseEnter = (index) => {
-    handleMouseEnter();
-    if (filterOnHover) setCardFiltered(index, !defaultFiltered);
-  };
-
-  const handleCardMouseLeave = (index) => {
-    handleMouseLeave();
-    if (filterOnHover) setCardFiltered(index, defaultFiltered);
-  };
+  const orbitPos = getOrbitPosition(direction);
 
   return (
     <div
       ref={stageRef}
       className={`relative overflow-hidden select-none ${className}`}
-      style={{ height, cursor: draggable ? "grab" : "default" }}
+      style={{ height, cursor: draggable ? 'grab' : 'default' }}
       onMouseDown={onPointerDown}
       onTouchStart={onPointerDown}
     >
-      <div
-        ref={orbitRef}
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{ bottom: -40 }}
-      >
-        {activeCards.map((card, i) => (
-          <div
-            key={card.id ?? i}
-            ref={(el) => (cardRefs.current[i] = el)}
-            className={`absolute rounded-2xl overflow-hidden bg-[#111] ${cardClassName}`}
-            style={{
-              width: cardWidth,
-              height: cardHeight,
-              marginLeft: -cardWidth / 2,
-              marginTop: -cardHeight / 2,
-              willChange: "transform",
-              cursor: "pointer",
-            }}
-            onClick={() => handleCardClick(card, i)}
-            onMouseEnter={() => handleCardMouseEnter(i)}
-            onMouseLeave={() => handleCardMouseLeave(i)}
-          >
-            {card.image && (
-              <img
-                src={card.image}
-                alt={card.label ?? ""}
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                style={{
-                  filter: filteredCards.has(i) ? FILTER_STYLE : "none",
-                }}
-              />
-            )}
-            <div
-              className="absolute inset-0"
-              style={{ background: "radial-gradient(ellipse at 65% 35%, transparent 25%, rgba(0,0,0,0.6) 100%)" }}
-            />
-            <div className="absolute inset-0 z-10 flex flex-col justify-end p-3">
-              {card.content}
-            </div>
-          </div>
-        ))}
+      <div ref={orbitRef} className={orbitPos.className} style={orbitPos.style}>
+        {activeCards.map((card, i) => {
+          const mediaSrc = card.video ?? card.image ?? card.src;
+          const useVideo = card.type === 'video' || !!card.video || isVideoSrc(mediaSrc);
+          return (
+            <Link
+              to={card.to}
+              key={card.id ?? i}
+              ref={el => (cardRefs.current[i] = el)}
+              className={`absolute rounded-2xl overflow-hidden bg-[#111] ${cardClassName}`}
+              style={{ width: cardWidth, height: cardHeight, marginLeft: -cardWidth / 2, marginTop: -cardHeight / 2, willChange: 'transform', cursor: 'pointer' }}
+              onClick={() => onCardClick?.(card, i)}
+              onMouseEnter={() => handleCardMouseEnter(i)}
+              onMouseLeave={() => handleCardMouseLeave(i)}
+            >
+              {mediaSrc && (useVideo ? (
+                <video src={mediaSrc} poster={card.poster} autoPlay muted loop playsInline preload="metadata"
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  style={{ filter: filteredCards.has(i) ? FILTER_STYLE : 'none' }} />
+              ) : (
+                <img src={mediaSrc} alt={card.label ?? ''}
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  style={{ filter: filteredCards.has(i) ? FILTER_STYLE : 'none' }} />
+              ))}
+              <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 65% 35%, transparent 25%, rgba(0,0,0,0.6) 100%)' }} />
+              <div className="absolute inset-0 z-10 flex flex-col justify-end p-3">
+                {card.title && <p className="text-sm">{card.title}</p>}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
@@ -455,22 +355,13 @@ export default RotatingCards;
 ```
 
 ### Integration Instructions
-1. Install the required dependency before using this component:
-   ```bash
-   npm install gsap
-   ```
+1. Install required dependencies: `npm install gsap react-router`
 2. Copy the component source above into `./RotatingCards.jsx` in your project.
-3. Import and render using the usage example above as a starting point.
-4. `height` has no default value in code — always pass one explicitly (number in px, or a CSS string), or the stage container will collapse since nothing else constrains its height:
-   ```jsx
-   <RotatingCards height={500} />
-   ```
-5. `numberOfCards` is clamped between 3 and 10 inclusive via `Math.min(Math.max(numberOfCards, 3), 10)`, applied to whichever array is active — either your `cards` prop or, if you don't pass any, the 10 built-in Unsplash placeholder images. Passing more than 10 cards or requesting more than 10 via `numberOfCards` will silently cap at 10; passing fewer than 3 (including an empty array with `numberOfCards={0}`, since the fallback only kicks in when `cards.length === 0`) will not throw, but the per-card angle math (`360 / total`) and orbit feel will degrade since `placeCards` still runs.
-6. Each `cards` entry can include a `content` field (any React node) rendered inside a `z-10`, bottom-anchored flex container layered above the image and its darkening gradient overlay — use this for titles, badges, or captions on top of each card.
-7. `entranceAnimation` only runs once, on initial mount — it is intentionally excluded from the dependency array of its effect (`eslint-disable-next-line react-hooks/exhaustive-deps`), so changing `entranceType`, `entranceDuration`, `entranceStagger`, or `entranceEase` after mount has no visible effect until the component fully remounts (e.g. via a changed `key`).
-8. The autoplay ticker only starts once cards have finished their entrance animation (`mountedRef.current` flips to `true` in the entrance timeline's `onComplete`, or immediately if `entranceAnimation={false}`) — this avoids the orbit silently animating "underneath" the entrance animation.
-9. `autoPlay`'s initial pause state is captured once via `useState(!autoPlay)` and never re-derived from the prop directly afterward — but a separate effect watching `[autoPlay, paused]` does still start/stop the ticker correctly when `autoPlay` changes post-mount, so toggling `autoPlay` dynamically works as expected; just don't expect `paused` itself (an internal, unexposed state) to track `autoPlay` literally.
-10. `defaultFiltered` controls both the *resting* filter state and (because `filterOnHover`'s handlers explicitly flip to `!defaultFiltered` on hover-enter and back to `defaultFiltered` on hover-leave) the *hover* filter state is always the opposite of resting — there's no way to make hover apply the *same* filtered/unfiltered state as resting while `filterOnHover` is enabled.
-11. Dragging (`draggable`) and scrolling (`mouseWheel`) both directly mutate `progressRef.current`, the same value the autoplay ticker increments — so a drag or scroll mid-rotation blends seamlessly with the existing orbit position rather than resetting it. Dragging stops the ticker on pointer-down and restarts it on pointer-up (if conditions allow); scrolling does not pause the ticker at all, so scroll input and autoplay rotation combine continuously.
-12. `pauseOnHover` only takes effect when `autoPlay` is also `true` — hovering on an autoplay-disabled carousel has no pause/resume effect to begin with, since there's nothing running to pause.
-13. The component is exported both as a named export (`RotatingCards`) and a default export — either `import RotatingCards from './RotatingCards'` or `import { RotatingCards } from './RotatingCards'` will work.
+3. The component uses `<Link to={card.to}>` from `react-router` — it must be rendered inside a `<BrowserRouter>` or equivalent Router context. Without a Router, the app will throw.
+4. The stage container uses `overflow-hidden` and positions cards relative to an orbit anchor div. Give the stage a fixed `height` prop or ensure the parent has a defined height — otherwise the container will collapse to zero.
+5. All GSAP animation runs through `gsap.ticker` (not a RAF loop), so it runs independently of React renders. Do not trigger re-renders inside the animation path.
+6. Drag and scroll wheel events are attached to `window`, not the stage element. This means dragging works even when the pointer leaves the component boundary.
+7. `numberOfCards` is hard-clamped between 3 and 10. Passing more than 10 cards in the `cards` array is fine — only the first `numberOfCards` are rendered.
+8. Video cards are auto-detected by file extension (`.mp4`, `.webm`, `.ogg`, `.mov`, `.m4v`). To force video rendering for a URL without a video extension, set `type: "video"` on the card object or use the `video` field instead of `image`.
+9. `defaultFiltered: true` + `filterOnHover: true` gives a grayscale-at-rest, colour-on-hover effect. Swap to `defaultFiltered: false` to invert — cards are full colour at rest and grey on hover.
+10. Each card must have a `to` field for the React Router Link. If navigation is not needed, replace `<Link>` with `<div>` in the source and remove the `react-router` import.

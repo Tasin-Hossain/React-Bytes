@@ -2,6 +2,7 @@ export const getUsageCode = (
   {
     numberOfCards,
     radius,
+    direction,
     duration,
     cardWidth,
     cardHeight,
@@ -36,6 +37,7 @@ const App${typeAnnotation} = () => (
     cards={cards}
     numberOfCards={${numberOfCards}}
     radius={${radius}}
+    direction={${direction}}
     duration={${duration}}
     cardWidth={${cardWidth}}
     cardHeight={${cardHeight}}

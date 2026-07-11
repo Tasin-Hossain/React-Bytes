@@ -16,22 +16,30 @@ export const ENTRANCETYPES = [
   { value: 'left', label: 'Left' },
   { value: 'right', label: 'Right' },
 ];
+export const DIRECTIONS = [
+  { value: 'top', label: 'Top' },
+  { value: 'bottom', label: 'Bottom' },
+  { value: 'left', label: 'Left' },
+  { value: 'right', label: 'Right' },
+
+];
 
 export const INITIAL_PROPS = {
   cards: [
-    { id: 1, image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=70', content: '1' },
-    { id: 2, image: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&q=70', content: '2' },
-    { id: 3, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70', content: '3' },
-    { id: 4, image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70', content: '4' },
-    { id: 5, image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70', content: '5' },
-    { id: 6, image: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70', content: '6' },
-    { id: 7, image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70', content: '7' },
-    { id: 8, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70', content: '8' },
-    { id: 9, image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70', content: '9' },
-    { id: 10, image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=70', content: '10' }
+    { id: 1, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdm5memwzcnUzb2ozazh4cXByN2Q1MWxjaDkyYnc5czIzcnlkYnNsMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/jodgE5JCcENp13V4eZ/giphy.gif', title: '1' },
+    { id: 2, image: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDVvYzZqc2w4Y3gxanlmamczN2U3cDd5NDkwa2J5MXVncGNqMmpncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WtDaSUB8GDiRW/giphy.gif', title: '2' },
+    { id: 3, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70', title: '3' },
+    { id: 4, image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70', title: '4' },
+    { id: 5, image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70', title: '5' },
+    { id: 6, image: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70', title: '6' },
+    { id: 7, image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70', title: '7' },
+    { id: 8, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70', title: '8' },
+    { id: 9, image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70', title: '9' },
+    { id: 10, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdm5memwzcnUzb2ozazh4cXByN2Q1MWxjaDkyYnc5czIzcnlkYnNsMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/2PWBLDJ2KtB1X6o9vY/giphy.gif', title: '10' }
   ],
   radius: 390,
   numberOfCards: 10,
+  direction: 'bottom',
   duration: 22,
   cardWidth: 165,
   cardHeight: 154,

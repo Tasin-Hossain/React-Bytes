@@ -1,23 +1,68 @@
 // TS-CSS variant
-import {
-  useEffect,
-  useRef,
-  useState,
-  CSSProperties,
-  MouseEvent as ReactMouseEvent,
-  TouchEvent as ReactTouchEvent,
-  ReactNode
-} from 'react';
+import { useEffect, useRef, useState, CSSProperties } from 'react';
 import gsap from 'gsap';
+
+type Direction = 'top' | 'bottom' | 'left' | 'right';
+type EntranceType = 'pop' | 'fade' | 'bottom' | 'top' | 'left' | 'right' | 'flip' | 'scatter' | 'spin' | 'zoomBlur';
 
 interface CardItem {
   id?: string | number;
   image?: string;
+  src?: string;
+  video?: string;
+  poster?: string;
   label?: string;
-  content?: ReactNode;
+  title?: string;
+  to?: string;
+  type?: 'video' | 'image';
 }
 
-type EntranceType = 'pop' | 'fade' | 'bottom' | 'top' | 'left' | 'right' | 'flip' | 'scatter' | 'spin' | 'zoomBlur';
+const FALLBACK_CARDS: CardItem[] = [
+  { id: 1, image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=70' },
+  { id: 2, image: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&q=70' },
+  { id: 3, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70' },
+  { id: 4, image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70' },
+  { id: 5, image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70' },
+  { id: 6, image: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70' },
+  { id: 7, image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70' },
+  { id: 8, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70' },
+  { id: 9, image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70' },
+  { id: 10, image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=70' }
+];
+
+const FILTER_STYLE = 'grayscale(100%) brightness(0.52) contrast(1.18)';
+const VIDEO_EXT_RE = /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i;
+const isVideoSrc = (src: string | undefined): boolean => !!src && VIDEO_EXT_RE.test(src);
+
+const getCardOffset = (rad: number, radius: number, dir: Direction) => {
+  switch (dir) {
+    case 'top':
+      return { x: Math.sin(rad) * radius, y: Math.cos(rad) * radius };
+    case 'left':
+      return { x: Math.cos(rad) * radius, y: Math.sin(rad) * radius };
+    case 'right':
+      return { x: -Math.cos(rad) * radius, y: Math.sin(rad) * radius };
+    case 'bottom':
+    default:
+      return { x: Math.sin(rad) * radius, y: -Math.cos(rad) * radius };
+  }
+};
+
+const getLeanSign = (dir: Direction) => (dir === 'top' || dir === 'right' ? -1 : 1);
+
+const getOrbitStyle = (dir: Direction): CSSProperties => {
+  switch (dir) {
+    case 'top':
+      return { position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: -40 };
+    case 'left':
+      return { position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: -40 };
+    case 'right':
+      return { position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: -40 };
+    case 'bottom':
+    default:
+      return { position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: -40 };
+  }
+};
 
 interface RotatingCardsProps {
   cards?: CardItem[];
@@ -27,6 +72,7 @@ interface RotatingCardsProps {
   cardWidth?: number;
   cardHeight?: number;
   height?: string | number;
+  direction?: Direction;
   pauseOnHover?: boolean;
   reverse?: boolean;
   draggable?: boolean;
@@ -45,21 +91,6 @@ interface RotatingCardsProps {
   entranceType?: EntranceType;
 }
 
-const FALLBACK_CARDS: CardItem[] = [
-  { id: 1, image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=70' },
-  { id: 2, image: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&q=70' },
-  { id: 3, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70' },
-  { id: 4, image: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&q=70' },
-  { id: 5, image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=70' },
-  { id: 6, image: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=400&q=70' },
-  { id: 7, image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=70' },
-  { id: 8, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70' },
-  { id: 9, image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=70' },
-  { id: 10, image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=70' }
-];
-
-const FILTER_STYLE = 'grayscale(100%) brightness(0.52) contrast(1.18)';
-
 export function RotatingCards({
   cards = [],
   numberOfCards = 10,
@@ -68,6 +99,7 @@ export function RotatingCards({
   cardWidth = 165,
   cardHeight = 154,
   height,
+  direction = 'right',
   pauseOnHover = false,
   reverse = false,
   draggable = true,
@@ -91,7 +123,7 @@ export function RotatingCards({
 
   const stageRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const progressRef = useRef(initialRotation / 360);
   const tickerFnRef = useRef<(() => void) | null>(null);
   const tickingRef = useRef(false);
@@ -110,6 +142,7 @@ export function RotatingCards({
   const durationRef = useRef(duration);
   const autoPlayRef = useRef(autoPlay);
   const pausedRef = useRef(paused);
+  const directionRef = useRef(direction);
 
   totalRef.current = total;
   radiusRef.current = radius;
@@ -117,25 +150,22 @@ export function RotatingCards({
   durationRef.current = duration;
   autoPlayRef.current = autoPlay;
   pausedRef.current = paused;
+  directionRef.current = direction;
 
   const placeCards = () => {
     if (!totalRef.current) return;
     const angleStep = 360 / totalRef.current;
     const dir = reverseRef.current ? -1 : 1;
     const orbitDeg = progressRef.current * 360 * dir;
-
     cardRefs.current.forEach((el, i) => {
       if (!el) return;
-      const deg = orbitDeg + i * angleStep;
-      const rad = (deg * Math.PI) / 180;
-      const x = Math.sin(rad) * radiusRef.current;
-      const y = -Math.cos(rad) * radiusRef.current;
-
-      const depth = (Math.cos(rad) + 1) / 2;
-      const scale = 0.38 + depth * 0.72;
-      const lean = Math.sin(rad) * 40;
+      const deg = orbitDeg + i * angleStep,
+        rad = (deg * Math.PI) / 180;
+      const { x, y } = getCardOffset(rad, radiusRef.current, directionRef.current);
+      const depth = (Math.cos(rad) + 1) / 2,
+        scale = 0.38 + depth * 0.72;
+      const lean = Math.sin(rad) * 40 * getLeanSign(directionRef.current);
       const opacity = depth < 0.12 ? 0 : 0.28 + depth * 0.72;
-
       gsap.set(el, {
         x,
         y,
@@ -154,7 +184,6 @@ export function RotatingCards({
     tickerFnRef.current = null;
     tickingRef.current = false;
   };
-
   const startTicker = () => {
     if (tickingRef.current) return;
     tickerFnRef.current = () => {
@@ -193,7 +222,6 @@ export function RotatingCards({
           y: () => gsap.utils.random(-300, 300),
           rotation: () => gsap.utils.random(-180, 180)
         };
-      case 'pop':
       default:
         return { opacity: 0, scale: 0, rotation: 0 };
     }
@@ -201,18 +229,13 @@ export function RotatingCards({
 
   useEffect(() => {
     placeCards();
-
     if (!entranceAnimation) {
       mountedRef.current = true;
-      if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) {
-        startTicker();
-      }
+      if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) startTicker();
       return;
     }
-
-    const validEls = cardRefs.current.filter(Boolean) as HTMLDivElement[];
+    const validEls = cardRefs.current.filter(Boolean) as HTMLAnchorElement[];
     if (!validEls.length) return;
-
     gsap.from(validEls, {
       ...getEntranceVars(entranceType),
       duration: entranceDuration,
@@ -221,9 +244,7 @@ export function RotatingCards({
       overwrite: 'auto',
       onComplete: () => {
         mountedRef.current = true;
-        if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) {
-          startTicker();
-        }
+        if (autoPlayRef.current && !pausedRef.current && !hoverPausedRef.current) startTicker();
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,33 +264,28 @@ export function RotatingCards({
   useEffect(() => {
     if (!mountedRef.current) return;
     placeCards();
-  }, [radius, reverse, cardWidth, cardHeight, total]);
-
+  }, [radius, reverse, direction, cardWidth, cardHeight, total]);
   useEffect(() => {
     if (!mountedRef.current) return;
     progressRef.current = initialRotation / 360;
     placeCards();
   }, [initialRotation]);
 
-  const onPointerDown = (e: ReactMouseEvent | ReactTouchEvent) => {
+  const onPointerDown = (e: React.MouseEvent | React.TouchEvent) => {
     if (!draggable) return;
-    const isTouch = 'touches' in e;
     dragRef.current = {
       active: true,
-      startX: isTouch ? e.touches[0].clientX : (e as ReactMouseEvent).clientX,
+      startX: 'touches' in e ? e.touches[0].clientX : e.clientX,
       startProg: progressRef.current
     };
     stopTicker();
   };
-
   const onPointerMove = (e: MouseEvent | TouchEvent) => {
     if (!dragRef.current.active) return;
     const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
-    const dx = clientX - dragRef.current.startX;
-    progressRef.current = dragRef.current.startProg + dx * 0.0007;
+    progressRef.current = dragRef.current.startProg + (clientX - dragRef.current.startX) * 0.0007;
     placeCards();
   };
-
   const onPointerUp = () => {
     if (!dragRef.current.active) return;
     dragRef.current.active = false;
@@ -295,7 +311,6 @@ export function RotatingCards({
     hoverPausedRef.current = true;
     stopTicker();
   };
-
   const handleMouseLeave = () => {
     if (!pauseOnHover || !autoPlay) return;
     hoverPausedRef.current = false;
@@ -314,27 +329,16 @@ export function RotatingCards({
     return () => el.removeEventListener('wheel', handler);
   }, [mouseWheel]);
 
-  const handleCardClick = (card: CardItem, index: number) => {
-    onCardClick?.(card, index);
-  };
-
-  const setCardFiltered = (index: number, value: boolean) => {
+  const setCardFiltered = (index: number, value: boolean) =>
     setFilteredCards(prev => {
       const next = new Set(prev);
-      if (value) {
-        next.add(index);
-      } else {
-        next.delete(index);
-      }
+      value ? next.add(index) : next.delete(index);
       return next;
     });
-  };
-
   const handleCardMouseEnter = (index: number) => {
     handleMouseEnter();
     if (filterOnHover) setCardFiltered(index, !defaultFiltered);
   };
-
   const handleCardMouseLeave = (index: number) => {
     handleMouseLeave();
     if (filterOnHover) setCardFiltered(index, defaultFiltered);
@@ -348,12 +352,6 @@ export function RotatingCards({
       height,
       cursor: draggable ? 'grab' : 'default'
     } as CSSProperties,
-    orbit: {
-      position: 'absolute' as const,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      bottom: -40
-    } as CSSProperties,
     card: {
       position: 'absolute' as const,
       borderRadius: '1rem',
@@ -364,16 +362,18 @@ export function RotatingCards({
       marginLeft: -cardWidth / 2,
       marginTop: -cardHeight / 2,
       willChange: 'transform',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      textDecoration: 'none'
     } as CSSProperties,
-    image: {
-      position: 'absolute' as const,
+    media: (f: string): CSSProperties => ({
+      position: 'absolute',
       inset: 0,
       width: '100%',
       height: '100%',
-      objectFit: 'cover' as const,
-      pointerEvents: 'none' as const
-    },
+      objectFit: 'cover',
+      pointerEvents: 'none',
+      filter: f
+    }),
     overlay: {
       position: 'absolute' as const,
       inset: 0,
@@ -387,7 +387,8 @@ export function RotatingCards({
       flexDirection: 'column' as const,
       justifyContent: 'flex-end',
       padding: '0.75rem'
-    } as CSSProperties
+    } as CSSProperties,
+    title: { fontSize: '0.875rem', color: '#fff', margin: 0 } as CSSProperties
   };
 
   const classes = `${className}`;
@@ -400,33 +401,44 @@ export function RotatingCards({
       onMouseDown={onPointerDown}
       onTouchStart={onPointerDown}
     >
-      <div ref={orbitRef} style={style.orbit}>
-        {activeCards.map((card, i) => (
-          <div
-            key={card.id ?? i}
-            ref={el => {
-              cardRefs.current[i] = el;
-            }}
-            className={cardClassName}
-            style={style.card}
-            onClick={() => handleCardClick(card, i)}
-            onMouseEnter={() => handleCardMouseEnter(i)}
-            onMouseLeave={() => handleCardMouseLeave(i)}
-          >
-            {card.image && (
-              <img
-                src={card.image}
-                alt={card.label ?? ''}
-                style={{
-                  ...style.image,
-                  filter: filteredCards.has(i) ? FILTER_STYLE : 'none'
-                }}
-              />
-            )}
-            <div style={style.overlay} />
-            <div style={style.content}>{card.content}</div>
-          </div>
-        ))}
+      <div ref={orbitRef} style={getOrbitStyle(direction)}>
+        {activeCards.map((card, i) => {
+          const mediaSrc = card.video ?? card.image ?? card.src;
+          const useVideo = card.type === 'video' || !!card.video || isVideoSrc(mediaSrc);
+          const filterVal = filteredCards.has(i) ? FILTER_STYLE : 'none';
+          return (
+            <a
+              href={card.to ?? '#'}
+              key={card.id ?? i}
+              ref={el => {
+                cardRefs.current[i] = el;
+              }}
+              className={cardClassName}
+              style={style.card}
+              onClick={() => onCardClick?.(card, i)}
+              onMouseEnter={() => handleCardMouseEnter(i)}
+              onMouseLeave={() => handleCardMouseLeave(i)}
+            >
+              {mediaSrc &&
+                (useVideo ? (
+                  <video
+                    src={mediaSrc}
+                    poster={card.poster}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    style={style.media(filterVal) as React.CSSProperties}
+                  />
+                ) : (
+                  <img src={mediaSrc} alt={card.label ?? ''} style={style.media(filterVal) as React.CSSProperties} />
+                ))}
+              <div style={style.overlay} />
+              <div style={style.content}>{card.title && <p style={style.title}>{card.title}</p>}</div>
+            </a>
+          );
+        })}
       </div>
     </div>
   );

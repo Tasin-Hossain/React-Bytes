@@ -11,7 +11,8 @@ import {
   CODE_VARIANTS,
   AUTHOR_NAME,
   RotatingCardsPrompt,
-  ENTRANCETYPES
+  ENTRANCETYPES,
+  DIRECTIONS
 } from '../../config/Components/RotatingCards';
 
 import PreviewSlider from '../../components/shared/preview/PreviewSlider';
@@ -52,6 +53,14 @@ const RotatingCardsInner = () => {
           {/* Row 1 – Radius · Duration */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
+              label="Number of Cards"
+              value={props.numberOfCards}
+              onChange={handlePropChange('numberOfCards')}
+              min={3}
+              max={10}
+              step={1}
+            />
+            <PreviewSlider
               label="Radius"
               value={props.radius}
               onChange={handlePropChange('radius')}
@@ -59,6 +68,16 @@ const RotatingCardsInner = () => {
               max={700}
               step={1}
             />
+            <PreviewSelect
+              label="Directions"
+              value={props.direction}
+              onChange={handlePropChange('direction')}
+              options={DIRECTIONS}
+            />
+          </div>
+
+          {/* Row 2 – Card Width · Card Height */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Duration (s)"
               value={props.duration}
@@ -72,12 +91,8 @@ const RotatingCardsInner = () => {
               value={props.entranceType}
               onChange={handlePropChange('entranceType')}
               options={ENTRANCETYPES}
+              isDisabled={!props.entranceAnimation}
             />
-            
-          </div>
-
-          {/* Row 2 – Card Width · Card Height */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Card Width"
               value={props.cardWidth}
@@ -86,6 +101,10 @@ const RotatingCardsInner = () => {
               max={260}
               step={1}
             />
+          </div>
+
+          {/* Row 3 – Toggles */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Card Height"
               value={props.cardHeight}
@@ -95,18 +114,6 @@ const RotatingCardsInner = () => {
               step={1}
             />
             <PreviewSlider
-              label="Number of Cards"
-              value={props.numberOfCards}
-              onChange={handlePropChange('numberOfCards')}
-              min={3}
-              max={10}
-              step={1}
-            />
-          </div>
-
-          {/* Row 3 – Toggles */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
-            <PreviewSlider
               label="Initial Rotation"
               value={props.initialRotation}
               onChange={handlePropChange('initialRotation')}
@@ -115,33 +122,33 @@ const RotatingCardsInner = () => {
               step={1}
             />
             <PreviewSwitch label="Auto Play" value={props.autoPlay} onChange={handlePropChange('autoPlay')} />
-            <PreviewSwitch label="Draggable" value={props.draggable} onChange={handlePropChange('draggable')} />
           </div>
 
           {/* Row 4 – More toggles */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+            <PreviewSwitch label="Draggable" value={props.draggable} onChange={handlePropChange('draggable')} />
             <PreviewSwitch label="Mouse Wheel" value={props.mouseWheel} onChange={handlePropChange('mouseWheel')} />
             <PreviewSwitch label="Reverse" value={props.reverse} onChange={handlePropChange('reverse')} />
+          </div>
+
+          {/* Row 5 – More toggles */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSwitch
               label="Pause On Hover"
               value={props.pauseOnHover}
               onChange={handlePropChange('pauseOnHover')}
             />
-          </div>
-
-          {/* Row 5 – More toggles */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSwitch label="Filter On hover" value={props.filterOnHover} onChange={handlePropChange('filterOnHover')} />
             <PreviewSwitch label="Default Filtered" value={props.defaultFiltered} onChange={handlePropChange('defaultFiltered')} />
+          </div>
+
+          {/* Row 6 – Entrance animation tuning */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSwitch
               label="Entrance Animation"
               value={props.entranceAnimation}
               onChange={handlePropChange('entranceAnimation')}
             />
-          </div>
-
-          {/* Row 6 – Entrance animation tuning */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Entrance Duration (s)"
               value={props.entranceDuration}
@@ -149,7 +156,7 @@ const RotatingCardsInner = () => {
               min={0.2}
               max={3}
               step={0.1}
-              disabled={!props.entranceAnimation}
+              isDisabled={!props.entranceAnimation}
             />
             <PreviewSlider
               label="Entrance Stagger (s)"
@@ -158,7 +165,7 @@ const RotatingCardsInner = () => {
               min={0}
               max={0.3}
               step={0.01}
-              disabled={!props.entranceAnimation}
+              isDisabled={!props.entranceAnimation}
             />
             
           </div>
