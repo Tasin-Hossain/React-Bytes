@@ -67,7 +67,7 @@
   }
 
   p {
-    color: var(--text-dimmed);
+    color: var(--text-muted);
     font-size: 14px;
   }
 
@@ -148,25 +148,25 @@
   @media (min-width: 768px) {
   }
   .btn {
-    @apply flex items-center gap-1.5 px-3 h-8 rounded-md border border-(--border-button) bg-(--bg-button) text-sm font-medium text-(--text-primary)! hover:text-(--text-muted) transition-all duration-150 cursor-pointer;
+    @apply inline-flex items-center gap-2 font-[Geist_Mono] text-[13px] font-medium px-5.5 py-2.75 rounded-[10px] no-underline transition-[filter,background,border-color,transform] duration-200 ease-in-out  bg-(--brand) text-white border border-(--border-button) hover:brightness-[0.88] hover:-translate-y-px max-[600px]:justify-center;
   }
   .btn-none {
-    @apply flex w-8 h-8 rounded-md items-center justify-center transition-all duration-150 hover:bg-(--bg-hover) cursor-pointer;
+    @apply inline-flex items-center gap-2 font-[Geist_Mono] text-[13px] text-(--text-primary)! font-medium px-5.5 py-2.75 rounded-[10px] no-underline z-10 bg-transparent backdrop-blur-[32px] [backdrop-filter:blur(32px)_saturate(1.3)] transition-[filter,background,border-color,transform] duration-200 ease-in-out  border border-(--border-button) hover:border-(--bg-white)/20 hover:bg-(--bg-white)/4 hover:-translate-y-px max-[600px]:justify-center;
   }
   .title {
-    font-size: clamp(28px, 4vw, 42px);
-    margin: 0 0 40px;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    font-weight: 500;
-    text-align: center;
+    @apply text-[clamp(28px,4vw,44px)] text-center font-medium leading-[1.1] tracking-[-0.02em] text-(--text-primary) mb-3 ;
+
+
   }
   .title-two {
     font-size: clamp(28px, 4vw, 30px);
     margin: 0 0 15px;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
     font-weight: 500;
+    font-family: sans-serif;
+
   }
 
   @keyframes fadeDown {

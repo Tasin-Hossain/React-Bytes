@@ -211,7 +211,7 @@ const Header = () => {
           </Link>
 
           {/* theme */}
-          <button className="hidden md:flex btn-none" onClick={toggleTheme} aria-label="Toggle theme">
+          <button className="hidden md:flex items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  " onClick={toggleTheme} aria-label="Toggle theme">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -250,7 +250,7 @@ const Header = () => {
           {/* Mobile hamburger */}
           <div className="flex items-center gap-2">
             {/* theme */}
-            <button className="md:hidden btn-none" onClick={toggleTheme} aria-label="Toggle theme">
+            <button className="md:hidden items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  " onClick={toggleTheme} aria-label="Toggle theme">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

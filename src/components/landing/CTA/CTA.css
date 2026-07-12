@@ -1,0 +1,23 @@
+/* CTA.css — only the parts Tailwind can't express: @property + mask + keyframes */
+
+@property --cta-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.ln-cta-card-border {
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: cta-border-spin 8s linear infinite;
+}
+
+@keyframes cta-border-spin {
+  to { --cta-angle: 360deg; }
+}
