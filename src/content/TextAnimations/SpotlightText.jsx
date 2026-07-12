@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useCallback, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 
 export default function SpotlightText({
-  text = "SPOTLIGHT",
+  text = 'SPOTLIGHT',
   charDelay = 0.09,
   duration = 0.25,
   repeat = false,
   dimOpacity = 0.08,
-  baseColor = "#8a8a86",
-  spotColor = "#e24b4a",
-  ease = "power2.out",
-  className = "",
+  baseColor = '#8a8a86',
+  spotColor = '#e24b4a',
+  ease = 'power2.out',
+  className = ''
 }) {
   const containerRef = useRef(null);
   const tlRef = useRef(null);
@@ -19,7 +19,7 @@ export default function SpotlightText({
   const buildTimeline = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
-    const spans = container.querySelectorAll(".spot-char");
+    const spans = container.querySelectorAll('.spot-char');
 
     if (tlRef.current) tlRef.current.kill();
 
@@ -31,7 +31,7 @@ export default function SpotlightText({
       repeatDelay: 1.2,
       onRepeat() {
         gsap.set(spans, { opacity: dimOpacity, color: baseColor });
-      },
+      }
     });
 
     spans.forEach((s, i) => {
@@ -53,28 +53,23 @@ export default function SpotlightText({
   }, [text, charDelay, duration, repeat, dimOpacity, baseColor, spotColor, ease, buildTimeline]);
 
   return (
-    <div className={`flex flex-col items-center gap-6 ${className}`}>
+    <div>
       {/* Text */}
-      <div
-        ref={containerRef}
-        className="flex flex-wrap items-center justify-center"
-      >
+      <div ref={containerRef} className="flex flex-wrap items-center">
         {[...text].map((char, i) => (
           <span
             key={i}
-            className="spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none select-none"
+            className={`${className} spot-char inline-block text-6xl sm:text-6xl md:text-6xl lg:text-8xl  font-black tracking-tight leading-none`}
             style={{
               opacity: dimOpacity,
               color: baseColor,
-              minWidth: char === " " ? "0.35em" : undefined,
+              minWidth: char === ' ' ? '0.35em' : undefined
             }}
           >
-            {char === " " ? "\u00a0" : char}
+            {char === ' ' ? '\u00a0' : char}
           </span>
         ))}
       </div>
-
-
     </div>
   );
 }
