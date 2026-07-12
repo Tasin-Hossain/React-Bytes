@@ -1,179 +1,115 @@
-import { useState } from 'react';
-
-import MouseRepelCodeMockup from './components/MouseRepelCodeMockup';
-import { MOUSE_REPEL_DEFAULTS } from './constants/mouseRepelConfig';
+import { useEffect, useState } from 'react';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { MdTune } from 'react-icons/md';
-import { IoClose } from 'react-icons/io5';
 import Button from '../../ui/Button/Button';
 import './Hero.css';
 import { Link } from 'react-router';
-import CustomDropdown from '../../common/CustomDropdown';
-import CurtainText from '../../../content/TextAnimations/CurtainText';
-import MouseRepelDots from '../../../content/Backgrounds/MouseRepelDots';
-
-const INSTALL_TABS = ['shadcn', 'jsrepo'];
-const PACKAGE_MANAGERS = ['yarn dlx', 'npx', 'pnpm dlx', 'bunx --bun'];
-const COMMANDS = {
-  shadcn: {
-    'yarn dlx': 'yarn dlx npx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    npx: 'npx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    'pnpm dlx': 'pnpm dlx shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    'bunx --bun': 'bunx --bun shadcn@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS'
-  },
-  jsrepo: {
-    'yarn dlx': 'yarn dlx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    npx: 'npx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    'pnpm dlx': 'pnpm dlx jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS',
-    'bunx --bun': 'bunx --bun jsrepo@latest add https://reactbytes.online/r/MouserepelDots-JS-CSS'
-  }
-};
-
-// ── Get Started Section
-function GetStartedSection() {
-  const [activeTab, setActiveTab] = useState('shadcn');
-  const [activePkg, setActivePkg] = useState('npx');
-  const [copied, setCopied] = useState(false);
-
-  const command = COMMANDS[activeTab][activePkg];
-
-  function handleCopy() {
-    navigator.clipboard.writeText(command);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
-  return (
-    <div
-      className=" w-full max-w-2xl mx-auto mt-10 mb-20"
-      style={{ animation: 'fadeUp 0.7s 0.4s ease both', opacity: 0 }}
-    >
-      <h2 className="title text-[22px]">Get started in seconds</h2>
-
-      {/* Terminal card */}
-      <div className="rounded-md border border-(--border-secondary) bg-(--bg-card) backdrop-blur-md ">
-        {/* Tabs + package manager */}
-        <div className="flex items-center justify-between  px-4 border-b border-(--border-secondary) rounded-t-xl overflow-visible">
-          <div className="flex">
-            {INSTALL_TABS.map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`
-                  px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px cursor-pointer
-                  ${
-                    activeTab === tab
-                      ? 'border-(--text-primary) text-(--text-primary)'
-                      : 'border-transparent text-(--text-muted) hover:text-(--text-primary)'
-                  }
-                `}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-          <CustomDropdown className="" options={PACKAGE_MANAGERS} value={activePkg} onChange={setActivePkg} />
-        </div>
-
-        {/* Command line */}
-        <div className="flex items-center justify-between px-5 py-4 gap-4 rounded-b-xl">
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="text-(--text-muted) text-sm shrink-0">~</span>
-            <code className="text-sm text-(--text-primary) font-mono truncate">{command}</code>
-          </div>
-          <button
-            onClick={handleCopy}
-            className="shrink-0 p-2 rounded-lg border border-(--border-secondary) hover:bg-(--bg-hover) transition-colors text-(--text-muted) hover:text-(--text-primary) cursor-pointer"
-            title="Copy"
-          >
-            {copied ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
+import RotatingCards from '../../../content/Components/RotatingCards';
+import SpotlightText from '../../../content/TextAnimations/SpotlightText';
+import Image_1 from '../../../assets/demo/Hero/image-1.png';
+import Image_2 from '../../../assets/demo/Hero/image-2.png';
+import Image_3 from '../../../assets/demo/Hero/image-3.png';
+import Image_4 from '../../../assets/demo/Hero/image-4.png';
+import Image_5 from '../../../assets/demo/Hero/image-5.png';
+import Image_6 from '../../../assets/demo/Hero/image-6.png';
 // ── Main HeroSection
 export default function HeroSection() {
-  const [params, setParams] = useState(MOUSE_REPEL_DEFAULTS);
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  function handleParamChange(key, val) {
-    setParams(prev => ({ ...prev, [key]: val }));
-  }
+  const [width, setWidth] = useState(0);
+
+  const CARDS = [
+    {
+      id: 1,
+      image: Image_1,
+      title: 'Mouse Repel Dots',
+      to: '/backgrounds/mouserepel-dots'
+    },
+    {
+      id: 2,
+      image: Image_2,
+      title: 'Mouse Repel Grid',
+      to: '/backgrounds/mouserepel-grid'
+
+    },
+    { id: 3, image: Image_3, title: 'Blinking Squares', to: '/backgrounds/blinking-squares'},
+    { id: 4, image: Image_4, title: 'Half Tone', to: '/backgrounds/half-tone' },
+    { id: 5, image: Image_5, title: 'Shapes Dots',  to: '/backgrounds/shapes-dots' },
+    { id: 6, image: Image_6, title: 'Ascii Plasma Wave',  to: '/backgrounds/asciiplasma-wave' }
+  ];
+
+  useEffect(() => {
+    const update = () => setWidth(window.innerWidth);
+
+    update();
+    window.addEventListener('resize', update);
+
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const isMobile = width > 0 && width < 768;
+  const isTablet = width >= 768 && width < 1024;
+  // Bottom-anchored orbit stays through tablet too; only desktop (lg+)
+  // switches to the full-height, right-anchored version.
+  const isCompact = isMobile || isTablet;
+
+  const cardRadius = isMobile ? 150 : isTablet ? 260 : 380;
+
+  const cardWidth = isMobile ? 165 : isTablet ? 200 : 250;
+  const cardHight = isMobile ? 154 : isTablet ? 200 : 250;
+
+  const cardDirection = isCompact ? 'bottom' : 'right';
 
   return (
-    <section className="relative overflow-hidden bg-(--bg) border-b border-(--border-secondary)">
-      {/* MouseRepelDots — full screen background */}
-      <div className="absolute inset-0 ">
-        <MouseRepelDots
-          dotRadius={params.dotRadius}
-          dotSpacing={params.dotSpacing}
-          repelRadius={params.repelRadius}
-          force={params.force}
-          springK={params.springK}
-          damping={params.damping}
-          maxDotSize={params.maxDotSize}
-          dotColor={params.dotColor}
-          dotColorMid={params.dotColorMid}
-          dotColorHot={params.dotColorHot}
-          backgroundColor={params.backgroundColor}
-          gradientFrom={params.gradientFrom}
-          gradientTo={params.gradientTo}
-          bulgeOnly={params.bulgeOnly}
-          bulgeStrength={params.bulgeStrength}
-          waveAmplitude={params.waveAmplitude}
-          sparkleMode={params.sparkleMode}
-          sparkleColor={params.sparkleColor}
-          sparkleSize={params.sparkleSize}
-          sparkleSpeed={params.sparkleSpeed}
-          sparkleDensity={params.sparkleDensity}
-        />
-      </div>
+    <section className="relative h-180 sm:h-170 md:h-200 lg:h-180 overflow-hidden bg-(--bg)">
+      {/* Dark Noise Colored Background */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background: 'var(--bg)',
+          backgroundImage: `
+      radial-gradient(circle at 1px 1px, rgba(211, 90, 248, 0.2) 1px, transparent 0),
+      radial-gradient(circle at 1px 1px, rgba(122, 90, 248, 0.2) 1px, transparent 0)
+    `,
+          backgroundSize: '20px 20px, 30px 30px',
+          backgroundPosition: '0 0, 10px 10px',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 70%)',
+          maskImage: 'radial-gradient(circle at center, black 0%, transparent 70%)'
+        }}
+      />
 
-      {/* Page content */}
-      <div className="relative z-10 flex flex-col gap-4 items-center justify-start px-6 md:px-0 pt-15 md:mb-0">
+      <RotatingCards
+        cards={CARDS}
+        numberOfCards={6}
+        radius={cardRadius}
+        direction={cardDirection}
+        mouseWheel={false}
+        cardWidth={cardWidth}
+        cardHeight={cardHight}
+        draggable={false}
+        entranceType="right"
+        pauseOnHover={true}
+        cardClassName="shadow-2xl shadow-[#d35af8]/10"
+        className="absolute! inset-x-0 bottom-0 h-64 sm:h-80 md:h-96 z-0 flex lg:h-screen lg:top-0 lg:opacity-100 lg:z-2 "
+        defaultFiltered={false}
+      />
+
+      {/*
+        Page content — top-aligned on mobile/tablet, vertically centered on lg+.
+        pointer-events-none here so this full-bleed wrapper doesn't sit on top
+        of RotatingCards (z-10 > lg:z-2) and swallow hover/click before it
+        reaches the cards. Each interactive child re-enables pointer events
+        with pointer-events-auto below.
+      */}
+      <div className="app-container relative z-10 h-full flex flex-col gap-4 items-center lg:items-start justify-start lg:justify-center pt-20 md:pt-20 lg:pt-0 lg:pb-0 pointer-events-none">
         {/* Badge */}
         <div
-          className="mb-10 px-1 py-0.5 rounded-lg border border-(--border-secondary) bg-(--bg-card) text-xs tracking-wide transition-all duration-200"
+          className="pointer-events-auto mb-8 sm:mb-10 px-1 py-0.5 rounded-lg border border-(--border-secondary) bg-(--bg-card) text-xs tracking-wide transition-all duration-200"
           style={{ animation: 'fadeDown 0.6s ease both' }}
         >
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center flex-wrap gap-2">
             <Link to={'/text-animations/curtain-text'}>
               <Button text="New Components" />
             </Link>
             <Link to={'/text-animations/curtain-text'}>
-              <button className="btn gap-2 bg-transparent border-none text- text-[11px]">
+              <button className="flex items-center gap-2 bg-transparent border-none text-(--text-primary) text-[11px] py-2 px-3">
                 CURTAIN
                 <FaArrowRightLong size={12} />
               </button>
@@ -181,27 +117,27 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Headline */}
-        <h1
-          className="text-4xl md:text-5xl lg:text-6xl tracking-wide text-(--text-primary) leading-[1.06] mb-5 text-center font-medium"
-          style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          Build Faster With{' '}
-          <CurtainText
+        <div className="pointer-events-auto flex flex-col lg:items-start gap-2 md:flex md:items-center ">
+          {/* Headline */}
+          <span
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-wide text-(--text-primary)   text-center lg:text-left font-medium wrap-break-word"
+            style={{ animation: 'fadeUp 0.7s 0.1s ease both', opacity: 0 }}
+          >
+            Build Faster With
+          </span>
+          <SpotlightText
             text="React Bytes"
-            externalTrigger={hovered}
-            className="mt-3 md:mt-0 lg:mt-0"
-            activeClassName="text-(--text-primary)!"
-            textClassName="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient"
-            fontClass="font-medium"
+            repeat={true}
+            baseColor="var(--brand) "
+            spotColor="var-(--brand-two)"
+            duration={0.6}
+            className=" tracking-normal! text-3xl! sm:text-4xl! md:text-5xl! lg:text-7xl! font-medium "
           />
-        </h1>
+        </div>
 
         {/* Subtext */}
         <p
-          className="text-(--text-muted) text-base md:text-lg leading-relaxed max-w-lg md:max-w-150 mx-auto mb-10 text-center"
+          className="pointer-events-auto text-(--text-muted) text-sm sm:text-base md:text-lg leading-relaxed max-w-md sm:max-w-lg lg:max-w-150 mx-auto lg:mx-0 mb-8 sm:mb-10 text-center lg:text-left"
           style={{ animation: 'fadeUp 0.7s 0.2s ease both', opacity: 0 }}
         >
           Highly customizable animated components & backgrounds that drop into your project and instantly make it stand
@@ -210,48 +146,14 @@ export default function HeroSection() {
 
         {/* CTA button */}
         <div
-          className="flex items-center justify-center gap-3 flex-wrap"
+          className="pointer-events-auto flex items-center justify-center lg:justify-start gap-3 flex-wrap"
           style={{ animation: 'fadeUp 0.7s 0.3s ease both', opacity: 0 }}
         >
           <Link to="/text-animations/magnetic-text">
             <Button text="Browse Components" className="py-2 px-4" />
           </Link>
         </div>
-
-        {/* Get started section */}
-        <GetStartedSection />
       </div>
-
-      {/* ── Floating customize button ── */}
-      <button
-        onClick={() => setPopupOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-(--bg-card) border border-(--border-secondary) text-(--text-secondary) text-sm font-medium shadow-lg hover:border-[#7a5af8]/60 hover:text-(--text-primary) transition-all duration-200 backdrop-blur-md"
-        style={{ animation: 'fadeUp 0.5s 0.8s ease both', opacity: 0 }}
-      >
-        <MdTune size={16} />
-        Customize
-      </button>
-
-      {/* ── Popup overlay ── */}
-      {popupOpen && (
-        <div className="fixed inset-0 z-100 flex items-end sm:items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
-          <div className="absolute inset-0 " onClick={() => setPopupOpen(false)} />
-
-          {/* Popup panel — fits content, no scroll */}
-          <div className="relative z-10 w-full max-w-lg rounded-md border border-(--border-secondary) bg-(--bg) backdrop-blur-xl shadow-2xl overflow-hidden">
-            {/* Close button only */}
-            <button
-              onClick={() => setPopupOpen(false)}
-              className="absolute top-2 right-3 z-10 p-1.5 border border-(--border-secondary) cursor-pointer rounded-md hover:bg-(--bg-hover) text-(--text-primary) transition-colors"
-            >
-              <IoClose size={16} />
-            </button>
-
-            <MouseRepelCodeMockup params={params} onParamChange={handleParamChange} embedded />
-          </div>
-        </div>
-      )}
     </section>
   );
 }
