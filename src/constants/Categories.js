@@ -1,7 +1,10 @@
 export const NEW = [
   'RainDrop Text',
   'Shatter Text',
-  'Scroll Stack'
+  'Scroll Stack',
+  'Shatter Text',
+  'AsciiPlasma Wave'
+
 
 ];
 export const UPDATED = [];
@@ -41,7 +44,8 @@ export const CATEGORIES = [
       'Rotating Cards',
       'Rotating Carousel',
       'Scroll Stack',
-      'ImageCard Hover'
+      'ImageCard Hover',
+      'Spectra Slider'
     ]
   },
   {
@@ -54,7 +58,7 @@ export const CATEGORIES = [
       'Vortex',
       'Ascii Wave',
       'Emoji Wave',
-      'Shapes Dots'
+      'Shapes Dots',
     ]
   }
 ];

@@ -950,6 +950,70 @@
 			]
 		},
 		{
+			"name": "SpectraSlider-JS-CSS",
+			"title": "SpectraSlider",
+			"description": "A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpectraSlider.jsx"
+				}
+			]
+		},
+		{
+			"name": "SpectraSlider-JS-TW",
+			"title": "SpectraSlider",
+			"description": "A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpectraSlider.jsx"
+				}
+			]
+		},
+		{
+			"name": "SpectraSlider-TS-CSS",
+			"title": "SpectraSlider",
+			"description": "A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpectraSlider.tsx"
+				}
+			]
+		},
+		{
+			"name": "SpectraSlider-TS-TW",
+			"title": "SpectraSlider",
+			"description": "A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpectraSlider.tsx"
+				}
+			]
+		},
+		{
 			"name": "MouseRepelDots-JS-CSS",
 			"title": "MouseRepelDots",
 			"description": "A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.",

@@ -26,6 +26,7 @@ const componentMap = {
   'components/rotating-carousel': () => import('../demo/Components/RotatingCarouselDemo.jsx'),
   'components/scroll-stack': () => import('../demo/Components/ScrollStackDemo.jsx'),
   'components/imagecard-hover': () => import('../demo/Components/ImageCardHoverDemo.jsx'),
+  'components/spectra-slider': () => import('../demo/Components/SpectraSliderDemo.jsx'),
 
   // ── backgrounds 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
