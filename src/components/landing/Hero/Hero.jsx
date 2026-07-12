@@ -117,7 +117,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="pointer-events-auto flex flex-col lg:items-start gap-2 md:flex md:items-center ">
+        <div className="pointer-events-auto flex flex-col md:flex items-center lg:items-start gap-2 ">
           {/* Headline */}
           <span
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-wide text-(--text-primary)   text-center lg:text-left font-medium wrap-break-word"
@@ -137,7 +137,7 @@ export default function HeroSection() {
 
         {/* Subtext */}
         <p
-          className="pointer-events-auto text-(--text-muted) text-sm sm:text-base md:text-lg leading-relaxed max-w-md sm:max-w-lg lg:max-w-150 mx-auto lg:mx-0 mb-8 sm:mb-10 text-center lg:text-left"
+          className="pointer-events-auto text-(--text-muted) text-sm sm:text-base md:text-lg leading-relaxed max-w-xs sm:max-w-lg lg:max-w-150 mx-auto lg:mx-0 mb-8 sm:mb-10 text-center lg:text-left"
           style={{ animation: 'fadeUp 0.7s 0.2s ease both', opacity: 0 }}
         >
           Highly customizable animated components & backgrounds that drop into your project and instantly make it stand
