@@ -3,7 +3,9 @@ export const NEW = [
   'Shatter Text',
   'Scroll Stack',
   'Shatter Text',
-  'AsciiPlasma Wave'
+  'AsciiPlasma Wave',
+
+
 
 
 ];
@@ -59,6 +61,8 @@ export const CATEGORIES = [
       'Ascii Wave',
       'Emoji Wave',
       'Shapes Dots',
+      'AsciiPlasma Wave',
+
     ]
   }
 ];

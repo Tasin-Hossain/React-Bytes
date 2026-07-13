@@ -170,6 +170,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Components/SpectraSlider': {
+    name: 'SpectraSlider',
+    description:'A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.',
+    category: 'Components',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/components/spectra-slider',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   // Backgrounds Animations
   'Backgrounds/MouseRepelDots': {
@@ -241,6 +250,15 @@ export const componentMetadata = {
     category: 'Backgrounds',
     dependencies: [],
     docsUrl: 'https://reactbytes.online/backgrounds/shapes-dots',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+  'Backgrounds/AsciiPlasmaWave': {
+    name: 'AsciiPlasmaWave',
+    description: 'A customizable React ASCII plasma background featuring OGL-powered WebGL shaders, animated plasma waves, configurable ASCII characters, colorful gradients, adjustable glyph density, and high-performance rendering for modern UI designs.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/backgrounds/asciiplasma-wave',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },

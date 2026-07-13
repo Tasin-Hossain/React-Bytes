@@ -1,0 +1,421 @@
+## Integrate the <AsciiPlasmaWave /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: AsciiPlasmaWave
+### Variant: JavaScript + Tailwind
+### Dependencies: ogl
+
+---
+
+### Usage Example
+```jsx
+import AsciiPlasmaWave from './AsciiPlasmaWave'
+
+<div style={{ width: '100%', height: '400px' }}>
+  <AsciiPlasmaWave
+    xOffset={0}
+    yOffset={0}
+    rotationDeg={0}
+    focalLength={0.8}
+    speed1={0.05}
+    speed2={0.05}
+    dir2={1.0}
+    bend1={1}
+    bend2={0.5}
+    colors={['#A855F7', '#06B6D4']}
+    cellSize={14}
+    cellFill={0.6}
+    asciiChars=" .:-=+*#%@"
+  />
+</div>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| xOffset | number | 0 | Horizontal pixel offset applied to the fragment coordinate before raymarching. Shifts the entire plasma field left/right without moving the canvas. |
+| yOffset | number | 0 | Vertical pixel offset applied to the fragment coordinate before raymarching. Shifts the entire plasma field up/down. |
+| rotationDeg | number | 0 | Rotation of the plasma field in degrees, applied around the canvas center before sampling. |
+| focalLength | number | 0.8 | Camera focal length passed to the raymarcher. Lower values produce a wider/fishier perspective; higher values compress the field. |
+| speed1 | number | 0.05 | Animation speed multiplier for the first ribbon's oscillation. |
+| speed2 | number | 0.05 | Animation speed multiplier for the second ribbon's oscillation. |
+| dir2 | number | 1.0 | Direction multiplier for `speed2` — pass `-1.0` to make the second ribbon oscillate in reverse time, creating counter-rotating ribbons. |
+| bend1 | number | 1 | Base bend/wobble amplitude for the first ribbon. Higher = more curved. |
+| bend2 | number | 0.5 | Base bend/wobble amplitude for the second ribbon. |
+| colors | string[] | ['#A855F7', '#06B6D4'] | Two-element array of hex colors for the two plasma ribbons. The first maps to the first ribbon, the second to the second. Each is decoded from hex to `[r, g, b]` floats per frame. |
+| cellSize | number | 14 | Size in pixels of each ASCII character cell on the canvas. Smaller values render a denser, finer grid; larger values render fewer, bigger glyphs. Updated live each frame via `propsRef`. |
+| cellFill | number | 0.6 | Stroke weight / thickness of glyphs baked into the atlas texture (0–1). `0` = thin single-stamp; `1` = maximum dilation (bold/solid). Triggers an atlas rebuild when changed — see note below. |
+| asciiChars | string | `" .:-=+*#%@"` | String of characters used as the brightness ramp. Each character occupies one cell in the atlas texture; the shader selects a glyph by mapping per-cell brightness to an index. **The first character is always transparent** — it is reserved as the empty/background slot (the shader discards any cell whose glyph index is `< 0.5`). Triggers an atlas rebuild when changed. |
+
+### Full Component Source
+```jsx
+import { useRef, useEffect } from 'react';
+import { Renderer, Camera, Transform, Program, Mesh, Geometry, Texture } from 'ogl';
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  return [r, g, b];
+}
+
+function buildGlyphAtlas(chars, fill = 0.5, cellPx = 64) {
+  const list = chars.length > 0 ? Array.from(chars) : [' '];
+  const count = list.length;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = cellPx * count;
+  canvas.height = cellPx;
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `${Math.floor(cellPx * 0.82)}px "Courier New", monospace`;
+
+  const maxOffset = cellPx * 0.09;
+  const offsetR = Math.max(0, fill) * maxOffset;
+  const ringSteps = 10;
+
+  list.forEach((ch, i) => {
+    const cx = i * cellPx + cellPx / 2;
+    const cy = cellPx / 2 + cellPx * 0.04;
+
+    ctx.fillText(ch, cx, cy);
+
+    if (offsetR > 0.01) {
+      for (let s = 0; s < ringSteps; s++) {
+        const angle = (s / ringSteps) * Math.PI * 2;
+        ctx.fillText(
+          ch,
+          cx + Math.cos(angle) * offsetR,
+          cy + Math.sin(angle) * offsetR
+        );
+      }
+    }
+  });
+
+  return { canvas, count };
+}
+
+const VERT = /* glsl */ `
+attribute vec2 position;
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+}
+`;
+
+const FRAG = /* glsl */ `
+precision mediump float;
+uniform float iTime;
+uniform vec2  iResolution;
+uniform vec2  uOffset;
+uniform float uRotation;
+uniform float uFocalLength;
+uniform float uSpeed1;
+uniform float uSpeed2;
+uniform float uDir2;
+uniform float uBend1;
+uniform float uBend2;
+uniform vec3  uColor1;
+uniform vec3  uColor2;
+uniform float uCellSize;
+uniform sampler2D uGlyphAtlas;
+uniform float uGlyphCount;
+
+const float lt   = 0.3;
+const float pi   = 3.14159;
+const float pi2  = 6.28318;
+const float pi_2 = 1.5708;
+#define MAX_STEPS 14
+
+void mainImage(out vec4 C, in vec2 U) {
+  float t = iTime * pi;
+  float s = 1.0;
+  float d = 0.0;
+  vec2  R = iResolution;
+
+  vec3 o = vec3(0.0, 0.0, -7.0);
+  vec3 u = normalize(vec3((U - 0.5 * R) / R.y, uFocalLength));
+  vec2 k = vec2(0.0);
+  vec3 p;
+
+  float t1 = t * 0.7;
+  float t2 = t * 0.9;
+  float tSpeed1 = t * uSpeed1;
+  float tSpeed2 = t * uSpeed2 * uDir2;
+
+  for (int i = 0; i < MAX_STEPS; ++i) {
+    p = o + u * d;
+    p.x -= 15.0;
+
+    float px = p.x;
+    float wob1 = uBend1 + sin(t1 + px * 0.8) * 0.1;
+    float wob2 = uBend2 + cos(t2 + px * 1.1) * 0.1;
+
+    float px2 = px + pi_2;
+    vec2 sinOffset = sin(vec2(px, px2) + tSpeed1) * wob1;
+    vec2 cosOffset = cos(vec2(px, px2) + tSpeed2) * wob2;
+
+    vec2 yz = p.yz;
+    float pxLt = px + lt;
+    k.x = max(pxLt, length(yz - sinOffset) - lt);
+    k.y = max(pxLt, length(yz - cosOffset) - lt);
+
+    float current = min(k.x, k.y);
+    s = min(s, current);
+    if (s < 0.001 || d > 300.0) break;
+    d += s * 0.7;
+  }
+
+  float sqrtD = sqrt(d);
+  vec3 raw = max(cos(d * pi2) - s * sqrtD - vec3(k, 0.0), 0.0);
+  raw.gb += 0.1;
+  raw = raw * 0.4 + raw.brg * 0.6 + raw * raw;
+  float lum = dot(raw, vec3(0.299, 0.587, 0.114));
+  float w1 = max(0.0, 1.0 - k.x * 2.0);
+  float w2 = max(0.0, 1.0 - k.y * 2.0);
+  float wt = w1 + w2 + 0.001;
+  vec3 c = (uColor1 * w1 + uColor2 * w2) / wt * lum * 3.5;
+  C = vec4(c, 1.0);
+}
+
+void main() {
+  vec2 coord = gl_FragCoord.xy + uOffset;
+  coord -= 0.5 * iResolution;
+  float c = cos(uRotation), s = sin(uRotation);
+  coord = mat2(c, -s, s, c) * coord;
+  coord += 0.5 * iResolution;
+
+  vec2 cellId = floor(coord / uCellSize);
+  vec2 cellCenter = (cellId + 0.5) * uCellSize;
+
+  vec4 sampled;
+  mainImage(sampled, cellCenter);
+
+  float brightness = clamp(dot(sampled.rgb, vec3(0.333)), 0.0, 1.0);
+  float glyphIndex = floor(brightness * uGlyphCount);
+  glyphIndex = min(glyphIndex, uGlyphCount - 1.0);
+  if (glyphIndex < 0.5) discard;
+
+  vec2 local = fract(coord / uCellSize);
+  vec2 atlasUV = vec2((glyphIndex + local.x) / uGlyphCount, local.y);
+
+  float glyphAlpha = texture2D(uGlyphAtlas, atlasUV).a;
+  if (glyphAlpha < 0.02) discard;
+
+  gl_FragColor = vec4(sampled.rgb, glyphAlpha);
+}
+`;
+
+export default function AsciiPlasmaWave(props) {
+  const {
+    xOffset = 0,
+    yOffset = 0,
+    rotationDeg = 0,
+    focalLength = 0.8,
+    speed1 = 0.05,
+    speed2 = 0.05,
+    dir2 = 1.0,
+    bend1 = 1,
+    bend2 = 0.5,
+    colors = ['#A855F7', '#06B6D4'],
+    cellSize = 14,
+    cellFill = 0.6,
+    asciiChars = ' .:-=+*#%@'
+  } = props;
+
+  const propsRef = useRef(props);
+  // eslint-disable-next-line react-hooks/refs
+  propsRef.current = props;
+
+  const containerRef = useRef(null);
+  const programRef = useRef(null);
+  const glRef = useRef(null);
+  const textureRef = useRef(null);
+
+  useEffect(() => {
+    const gl = glRef.current;
+    const program = programRef.current;
+    if (!gl || !program) return;
+
+    const { canvas, count } = buildGlyphAtlas(asciiChars, cellFill);
+
+    if (!textureRef.current) {
+      textureRef.current = new Texture(gl, {
+        image: canvas,
+        generateMipmaps: false,
+        minFilter: gl.LINEAR,
+        magFilter: gl.LINEAR,
+        wrapS: gl.CLAMP_TO_EDGE,
+        wrapT: gl.CLAMP_TO_EDGE
+      });
+      program.uniforms.uGlyphAtlas = { value: textureRef.current };
+    } else {
+      textureRef.current.image = canvas;
+      textureRef.current.needsUpdate = true;
+    }
+
+    program.uniforms.uGlyphCount.value = count;
+  }, [asciiChars, cellFill]);
+
+  useEffect(() => {
+    const ctn = containerRef.current;
+    if (!ctn) return;
+
+    const renderer = new Renderer({
+      alpha: true,
+      dpr: Math.min(window.devicePixelRatio, 1.5),
+      antialias: false,
+      depth: false,
+      stencil: false,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false,
+      powerPreference: 'high-performance'
+    });
+
+    const gl = renderer.gl;
+    glRef.current = gl;
+    gl.clearColor(0, 0, 0, 0);
+    ctn.appendChild(gl.canvas);
+
+    const camera = new Camera(gl);
+    const scene = new Transform();
+
+    const geometry = new Geometry(gl, {
+      position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) }
+    });
+
+    const uniformOffset = new Float32Array([xOffset, yOffset]);
+    const uniformResolution = new Float32Array([1, 1]);
+    const c1 = hexToRgb(colors[0]);
+    const c2 = hexToRgb(colors[1]);
+
+    const { canvas: atlasCanvas, count: glyphCount } = buildGlyphAtlas(asciiChars, cellFill);
+    const glyphTexture = new Texture(gl, {
+      image: atlasCanvas,
+      generateMipmaps: false,
+      minFilter: gl.LINEAR,
+      magFilter: gl.LINEAR,
+      wrapS: gl.CLAMP_TO_EDGE,
+      wrapT: gl.CLAMP_TO_EDGE
+    });
+    textureRef.current = glyphTexture;
+
+    const program = new Program(gl, {
+      vertex: VERT,
+      fragment: FRAG,
+      uniforms: {
+        iTime: { value: 0 },
+        iResolution: { value: uniformResolution },
+        uOffset: { value: uniformOffset },
+        uRotation: { value: (rotationDeg * Math.PI) / 180 },
+        uFocalLength: { value: focalLength },
+        uSpeed1: { value: speed1 },
+        uSpeed2: { value: speed2 },
+        uDir2: { value: dir2 },
+        uBend1: { value: bend1 },
+        uBend2: { value: bend2 },
+        uColor1: { value: c1 },
+        uColor2: { value: c2 },
+        uCellSize: { value: cellSize },
+        uGlyphAtlas: { value: glyphTexture },
+        uGlyphCount: { value: glyphCount }
+      }
+    });
+    programRef.current = program;
+
+    new Mesh(gl, { geometry, program }).setParent(scene);
+
+    function resize() {
+      if (!ctn) return;
+      const { width, height } = ctn.getBoundingClientRect();
+      renderer.setSize(width, height);
+      uniformResolution[0] = width * renderer.dpr;
+      uniformResolution[1] = height * renderer.dpr;
+      gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    }
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(ctn);
+    resize();
+
+    const startTime = performance.now();
+    let animateId;
+
+    const update = (now) => {
+      const {
+        xOffset: xOff = 0,
+        yOffset: yOff = 0,
+        rotationDeg: rot = 0,
+        focalLength: fLen = 0.8,
+        speed1: s1 = 0.05,
+        speed2: s2 = 0.05,
+        dir2: d2 = 1.0,
+        bend1: b1 = 1,
+        bend2: b2 = 0.5,
+        colors: cols = ['#A855F7', '#06B6D4'],
+        cellSize: cSize = 14
+      } = propsRef.current;
+
+      uniformOffset[0] = xOff;
+      uniformOffset[1] = yOff;
+      program.uniforms.iTime.value = (now - startTime) * 0.001;
+      program.uniforms.uRotation.value = (rot * Math.PI) / 180;
+      program.uniforms.uFocalLength.value = fLen;
+      program.uniforms.uSpeed1.value = s1;
+      program.uniforms.uSpeed2.value = s2;
+      program.uniforms.uDir2.value = d2;
+      program.uniforms.uBend1.value = b1;
+      program.uniforms.uBend2.value = b2;
+      program.uniforms.uColor1.value = hexToRgb(cols[0]);
+      program.uniforms.uColor2.value = hexToRgb(cols[1]);
+      program.uniforms.uCellSize.value = cSize;
+
+      renderer.render({ scene, camera });
+      animateId = requestAnimationFrame(update);
+    };
+
+    animateId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(animateId);
+      ro.disconnect();
+      if (ctn && gl.canvas.parentNode === ctn) {
+        ctn.removeChild(gl.canvas);
+      }
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <div ref={containerRef} className="w-full h-full" />;
+}
+```
+
+### Integration Instructions
+1. Install the required dependency before using this component:
+   ```bash
+   npm install ogl
+   ```
+   This component uses `ogl` (not `three` or `@react-three/fiber`) for WebGL rendering — a lightweight, lower-level WebGL library. Specifically it imports `Renderer`, `Camera`, `Transform`, `Program`, `Mesh`, `Geometry`, and `Texture` from `ogl`.
+2. Copy the component source above into `./AsciiPlasmaWave.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component fills its parent at `w-full h-full` — wrap it in a sized container:
+   ```jsx
+   <div style={{ width: '100%', height: '400px' }}>
+     <AsciiPlasmaWave />
+   </div>
+   ```
+5. The canvas is appended to the container via `ctn.appendChild(gl.canvas)` (not rendered via React JSX) and removed in the cleanup. The OGL renderer itself manages the `<canvas>` element's size via `ResizeObserver` on the container div.
+6. **Two-tier prop update pattern.** Props are split across two update paths:
+   - **Per-frame via `propsRef`**: `xOffset`, `yOffset`, `rotationDeg`, `focalLength`, `speed1`, `speed2`, `dir2`, `bend1`, `bend2`, `colors`, `cellSize` — read from `propsRef.current` inside the `requestAnimationFrame` loop each tick, so changes to these reflect immediately on the next frame with zero React re-render overhead.
+   - **Atlas rebuild via `useEffect([asciiChars, cellFill])`**: `asciiChars` and `cellFill` trigger `buildGlyphAtlas` and upload a new texture to the GPU. This is heavier — avoid driving these from rapidly-updating state.
+7. **`asciiChars[0]` is always the transparent/empty slot.** The shader discards any cell whose brightness maps to glyph index `< 0.5` — meaning index `0` is always invisible, functioning as the "background" character. The first character in your `asciiChars` string should be a space `' '` (or any character you want to be invisible), with the visible ramp starting from index `1`. The default `' .:-=+*#%@'` follows this convention.
+8. **Glyph thickness is baked into the atlas, not computed in the shader.** `cellFill` controls a dilation pass in `buildGlyphAtlas`: each glyph is stamped once at center, then re-stamped 10 times around a small ring of radius `fill * cellPx * 0.09`. `cellFill = 0` produces a single thin stamp; `cellFill = 1` produces maximum dilation. This is why `cellFill` changes require a full atlas rebuild rather than a simple uniform update.
+9. The underlying shader raymarches two twisted ribbon primitives (up to 14 steps) through a 3D scene. Each ribbon has its own color (`uColor1`/`uColor2`), bend (`uBend1`/`uBend2`), and speed (`uSpeed1`/`uSpeed2`). The per-cell brightness from this raymarch is what drives glyph selection — bright cells get high-index (dense) glyphs, dark cells get low-index (sparse) glyphs or are discarded entirely.
+10. DPR is capped at `1.5` in the renderer (`Math.min(window.devicePixelRatio, 1.5)`) — higher DPR screens will render at 1.5× not 2×. This is a performance trade-off for the raymarched shader's cost.
+11. Cleanup on unmount calls `gl.getExtension('WEBGL_lose_context')?.loseContext()` to explicitly release the GPU context — important when mounting/unmounting this component frequently (e.g. in route transitions), since browsers cap the number of live WebGL contexts per page.
+12. `buildGlyphAtlas` is called twice on initial mount: once inside the main `useEffect` to create the initial texture, and once inside the `[asciiChars, cellFill]` effect. On first mount the atlas effect runs after the main effect's guards (`if (!gl || !program) return`) would have failed anyway, so there's no double-upload on initial render — the atlas from the main effect is the one actually used initially.

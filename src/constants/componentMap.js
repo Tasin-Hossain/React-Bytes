@@ -37,6 +37,7 @@ const componentMap = {
   'backgrounds/ascii-wave': () => import('../demo/Backgrounds/AsciiWaveDemo.jsx'),
   'backgrounds/emoji-wave': () => import('../demo/Backgrounds/EmojiWavedemo.jsx'),
   'backgrounds/shapes-dots': () => import('../demo/Backgrounds/ShapesDots.jsx'),
+  'backgrounds/asciiplasma-wave': () => import('../demo/Backgrounds/AsciiPlasmaWaveDemo.jsx'),
 
 
 
