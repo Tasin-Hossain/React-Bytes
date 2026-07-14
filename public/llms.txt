@@ -39,11 +39,15 @@ Notes:
 - [StaticNoiseText](https://reactbytes.online/text-animations/staticnoise-text): A customizable React static noise text animation featuring animated scanline distortion, glitch-inspired effects, adjustable intensity, responsive canvas rendering, and configurable typography for modern UI designs.
 - [RainDropText](https://reactbytes.online/text-animations/raindrop-text): A customizable React raindrop text animation featuring GSAP-powered falling character reveals, bounce effects, staggered timing, repeat controls, and responsive typography for modern UI and hero sections.
 - [ShatterText](https://reactbytes.online/text-animations/shatter-text): A customizable React shatter text animation featuring GSAP-powered physics effects, randomized character motion, hover or click triggers, bounce reassembly, and fully adjustable animation controls for modern UI designs.
+- [Letter3DSwap](https://reactbytes.online/text-animations/letter3d-swap): A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.
+- [TextPressure](https://reactbytes.online/text-animations/text-pressure): A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.
 
 ## Components
 - [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.
 - [RotatingCarousel](https://reactbytes.online/components/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
 - [ScrollStack](https://reactbytes.online/components/scroll-stack): A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.
+- [ImageCardHover](https://reactbytes.online/components/magecard-hover): A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.
+- [SpectraSlider](https://reactbytes.online/components/spectra-slider): A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.
 
 ## Backgrounds
 - [MouseRepelDots](https://reactbytes.online/backgrounds/mouserepel-dots): A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.
@@ -54,6 +58,8 @@ Notes:
 - [AsciiWave](https://reactbytes.online/backgrounds/ascii-wave): A customizable React Three Fiber ASCII shader background featuring animated wave patterns, interactive cursor effects, custom character sets, procedural noise, and optional video-to-ASCII rendering.
 - [EmojiWave](https://reactbytes.online/backgrounds/emoji-wave): A customizable React Three Fiber emoji shader background featuring animated wave motion, interactive cursor effects, custom emoji sets, procedural animation, and optional video-based rendering.
 - [ShapesDots](https://reactbytes.online/backgrounds/shapes-dots): A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.
+- [AsciiPlasmaWave](https://reactbytes.online/backgrounds/asciiplasma-wave): A customizable React ASCII plasma background featuring OGL-powered WebGL shaders, animated plasma waves, configurable ASCII characters, colorful gradients, adjustable glyph density, and high-performance rendering for modern UI designs.
+- [RotatingStars](https://reactbytes.online/backgrounds/rotating-stars): A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.
 
 ## Optional
 - [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.
