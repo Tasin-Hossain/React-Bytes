@@ -756,6 +756,62 @@
 			]
 		},
 		{
+			"name": "TextPressure-JS-CSS",
+			"title": "TextPressure",
+			"description": "A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "TextPressure.jsx"
+				}
+			]
+		},
+		{
+			"name": "TextPressure-JS-TW",
+			"title": "TextPressure",
+			"description": "A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "TextPressure.jsx"
+				}
+			]
+		},
+		{
+			"name": "TextPressure-TS-CSS",
+			"title": "TextPressure",
+			"description": "A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "TextPressure.tsx"
+				}
+			]
+		},
+		{
+			"name": "TextPressure-TS-TW",
+			"title": "TextPressure",
+			"description": "A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "TextPressure.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",

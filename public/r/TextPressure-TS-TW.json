@@ -1,0 +1,16 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "TextPressure-TS-TW",
+	"title": "TextPressure",
+	"description": "A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.",
+	"type": "registry:component",
+	"files": [
+		{
+			"type": "registry:component",
+			"path": "TextPressure.tsx",
+			"content": "import { ElementType, CSSProperties, ComponentPropsWithoutRef } from 'react';\r\n\r\ninterface TextPressureProps {\r\n  text: string;\r\n  as?: ElementType;\r\n  width?: boolean;\r\n  weight?: boolean;\r\n  italic?: boolean;\r\n  alpha?: boolean;\r\n  flex?: boolean;\r\n  scale?: boolean;\r\n  textColor?: string;\r\n  className?: string;\r\n  style?: CSSProperties;\r\n}\r\n\r\nexport function TextPressure({\r\n  text,\r\n  as = 'h1' as ElementType,\r\n\r\n  width = true,\r\n  weight = true,\r\n  italic = true,\r\n  alpha = false,\r\n\r\n  flex = true,\r\n  scale = false,\r\n\r\n  textColor = '#FFFFFF',\r\n\r\n  className = '',\r\n  style,\r\n  ...rest\r\n}: TextPressureProps & Omit<ComponentPropsWithoutRef<'h1'>, keyof TextPressureProps>) {\r\n  const mergedStyle: CSSProperties = {\r\n    ['--hover-padding' as string]: width ? 'calc(1em / 12)' : '0px',\r\n    color: textColor,\r\n    ...style\r\n  };\r\n\r\n  const weightClasses = weight\r\n    ? 'hover:font-[900] has-[+span:hover]:font-[600] has-[+span+span:hover]:font-[400] [:hover+&]:font-[600] [:hover+span+&]:font-[400]'\r\n    : '';\r\n\r\n  const widthClasses = width\r\n    ? 'hover:[padding-inline:var(--hover-padding)] has-[+span:hover]:[padding-inline:var(--hover-padding)] [:hover+&]:[padding-inline:var(--hover-padding)]'\r\n    : '';\r\n\r\n  const italicClasses = italic ? 'hover:italic' : '';\r\n\r\n  const scaleClasses = scale ? 'hover:scale-125' : '';\r\n\r\n  const alphaClasses = alpha ? 'opacity-50 hover:opacity-100 has-[+span:hover]:opacity-80 [:hover+&]:opacity-80' : '';\r\n\r\n  const wrapperLayout = flex ? 'flex flex-wrap' : 'inline-flex';\r\n  const TagComponent = as as any;\r\n\r\n  return (\r\n    <TagComponent\r\n      {...rest}\r\n      className={`${wrapperLayout} font-light text-6xl sm:text-6xl md:text-6xl lg:text-8xl ${className}`}\r\n      style={mergedStyle}\r\n    >\r\n      {text.split('').map((letter, i) => (\r\n        <span\r\n          key={i}\r\n          aria-hidden=\"true\"\r\n          style={{\r\n            transition: 'font-weight 0.4s, padding 0.4s, opacity 0.4s, transform 0.4s',\r\n            willChange: 'font-weight, padding, opacity, transform'\r\n          }}\r\n          className={['inline-block', weightClasses, widthClasses, italicClasses, scaleClasses, alphaClasses]\r\n            .filter(Boolean)\r\n            .join(' ')}\r\n        >\r\n          {letter === ' ' ? '\\u00A0' : letter}\r\n        </span>\r\n      ))}\r\n      <span className=\"sr-only\">{text}</span>\r\n    </TagComponent>\r\n  );\r\n}"
+		}
+	],
+	"registryDependencies": [],
+	"dependencies": []
+}

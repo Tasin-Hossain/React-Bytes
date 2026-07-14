@@ -140,6 +140,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/TextPressure': {
+    name: 'TextPressure',
+    description:'A free open-source React interactive typography component featuring pressure-style hover animations, dynamic font weight, width expansion, scaling, italics, opacity effects, and Tailwind CSS-powered transitions for modern websites and UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/text-pressure',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

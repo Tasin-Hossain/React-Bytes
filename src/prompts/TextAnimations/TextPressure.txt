@@ -1,0 +1,135 @@
+## Integrate the <TextPressure /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: TextPressure
+### Variant: JavaScript + Tailwind
+### Dependencies: none
+
+---
+
+### Usage Example
+```jsx
+import TextPressure from './TextPressure'
+
+<TextPressure
+  text="Hello!"
+  as="h1"
+  width={true}
+  weight={true}
+  italic={true}
+  alpha={false}
+  flex={true}
+  scale={false}
+  textColor="#FFFFFF"
+  className=""
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "Hello!" | Display text, split into individual letters, each rendered as its own `<span>`. |
+| as | ElementType | "h1" | HTML tag (or component) rendered as the root wrapper element. |
+| width | boolean | true | Whether the hovered letter (and its two nearest neighbors) gains horizontal padding, simulating a variable-width axis via `:has()`/adjacent-sibling selectors. |
+| weight | boolean | true | Whether the hovered letter jumps to `font-weight: 900`, cascading down to `600` and `400` on its two nearest neighbors on each side. |
+| italic | boolean | true | Whether the hovered letter tilts to `font-style: italic`. |
+| alpha | boolean | false | Whether non-hovered letters sit at `opacity: 50%`, with the hovered letter at `100%` and its immediate neighbors at `80%`. |
+| flex | boolean | true | Layout mode: `flex flex-wrap` (multi-line, letters can wrap) when true, `inline-flex` (single line) when false. |
+| scale | boolean | false | Whether the hovered letter scales up to `1.25x` via `transform`. |
+| textColor | string | "#FFFFFF" | Base color applied to the text via inline style. |
+| className | string | "" | Additional CSS classes applied to the root `Tag` wrapper. |
+| style | object | undefined | Additional inline styles merged onto the root `Tag` wrapper (merged after the internal `--hover-padding` CSS variable and `color`). |
+
+### Full Component Source
+```jsx
+export function TextPressure({
+  text,
+  as: Tag = "h1",
+
+  width = true,
+  weight = true,
+  italic = true,
+  alpha = false,
+
+  flex = true,
+  scale = false,
+
+  textColor = "#FFFFFF",
+
+  className = "",
+  style,
+  ...rest
+}) {
+  const mergedStyle = {
+    "--hover-padding": width ? "calc(1em / 12)" : "0px",
+    color: textColor,
+    ...style,
+  };
+
+  const weightClasses = weight
+    ? "hover:font-[900] has-[+span:hover]:font-[600] has-[+span+span:hover]:font-[400] [:hover+&]:font-[600] [:hover+span+&]:font-[400]"
+    : "";
+
+  const widthClasses = width
+    ? "hover:[padding-inline:var(--hover-padding)] has-[+span:hover]:[padding-inline:var(--hover-padding)] [:hover+&]:[padding-inline:var(--hover-padding)]"
+    : "";
+
+  const italicClasses = italic ? "hover:italic" : "";
+
+  const scaleClasses = scale ? "hover:scale-125" : "";
+
+  const alphaClasses = alpha
+    ? "opacity-50 hover:opacity-100 has-[+span:hover]:opacity-80 [:hover+&]:opacity-80"
+    : "";
+
+  const wrapperLayout = flex ? "flex flex-wrap" : "inline-flex";
+
+  return (
+    <Tag
+      {...rest}
+      className={`${wrapperLayout} font-light text-6xl sm:text-6xl md:text-6xl lg:text-8xl ${className}`}
+      style={mergedStyle}
+    >
+      {text.split("").map((letter, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          style={{
+            transition: "font-weight 0.4s, padding 0.4s, opacity 0.4s, transform 0.4s",
+            willChange: "font-weight, padding, opacity, transform",
+          }}
+          className={[
+            "inline-block",
+            weightClasses,
+            widthClasses,
+            italicClasses,
+            scaleClasses,
+            alphaClasses,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {letter === " " ? "\u00A0" : letter}
+        </span>
+      ))}
+      <span className="sr-only">{text}</span>
+    </Tag>
+  );
+}
+```
+
+### Integration Instructions
+1. No external dependencies to install — this variant is pure Tailwind CSS, no GSAP or JS animation loop.
+2. Copy the component source above into `./TextPressure.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component renders as an `<h1>` by default. Base size/weight (`font-light text-6xl ... lg:text-8xl`) is baked into the component's className string — override or extend via the `className` prop, which is appended after the built-in classes.
+5. All hover behavior is driven by pure CSS selectors (`:hover`, `has-[+span:hover]`, `[:hover+&]`) — there is no JavaScript event listener, state, or animation frame loop. This means the effect only activates on devices with real hover support (mouse), and does nothing on touch-only devices.
+6. The "cascade" (neighboring letters reacting to a hovered letter) only reaches **one letter in each direction** for `width`/`weight`, and **one letter in each direction** for `alpha` — it does not ripple further than immediate neighbors, unlike stagger-based animations.
+7. `weight`'s cascade uses three discrete steps: `900` (hovered letter) → `600` (immediate neighbor) → `400` (rest state, also the value two-away neighbors fall back to). There is no continuous interpolation between these — CSS `:has()`/sibling selectors only support discrete rule matching, not tweened values.
+8. `width`'s effect is implemented as `padding-inline`, not an actual variable-font width axis — it does not require or depend on any special font being loaded, and will render identically regardless of the page's font-family.
+9. `italic` and `scale` apply only to the directly-hovered letter — they do not cascade to neighbors.
+10. Requires a browser supporting the CSS `:has()` selector (Chrome 105+, Safari 15.4+, Firefox 121+) for the `weight`/`width`/`alpha` cascade effects to work. Without `:has()` support, only the directly-hovered letter's own `hover:` classes will apply — the neighbor-cascade classes (`has-[+span:hover]:...`) will silently have no effect.
+11. Each letter is rendered as its own `<span aria-hidden="true">` for the visual effect; a separate `<span className="sr-only">{text}</span>` carries the actual accessible text content for screen readers.
+12. The component spreads `...rest` onto the root `Tag` — you can pass `onClick`, `id`, `aria-label`, and other native (or custom-component) props directly.
+13. `as` accepts any valid HTML tag name or custom component (e.g. `as="span"`, `as={Link}`) — the component does not enforce heading semantics, so choose a tag appropriate to your document structure.

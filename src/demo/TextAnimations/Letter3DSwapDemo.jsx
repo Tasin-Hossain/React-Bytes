@@ -51,7 +51,7 @@ const Letter3DSwapInner = () => {
   return (
     <DemoBuilder
       title="Letter 3D Swap"
-      favKey="text-animations/letter-3d-swap"
+      favKey="text-animations/letter3d-swap"
       prompt={Letter3DSwapPrompt}
       PreviewComponent={
         <Letter3DSwap

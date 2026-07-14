@@ -5,7 +5,8 @@ export const NEW = [
   'Shatter Text',
   'AsciiPlasma Wave',
   'Rotating Stars',
-  'Letter3D Swap'
+  'Letter3D Swap',
+  'Text Pressure'
 
 
 
@@ -23,6 +24,7 @@ export const CATEGORIES = [
     name: 'Text Animations',
     subcategories: [
       'Letter3D Swap',
+      'Text Pressure',
       'Magnetic Text',
       'Curtain Text',
       'Cursor Trail',
