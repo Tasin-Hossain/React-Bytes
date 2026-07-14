@@ -1572,6 +1572,62 @@
 					"path": "AsciiPlasmaWave.tsx"
 				}
 			]
+		},
+		{
+			"name": "RotatingStars-JS-CSS",
+			"title": "RotatingStars",
+			"description": "A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingStars.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingStars-JS-TW",
+			"title": "RotatingStars",
+			"description": "A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingStars.jsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingStars-TS-CSS",
+			"title": "RotatingStars",
+			"description": "A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingStars.tsx"
+				}
+			]
+		},
+		{
+			"name": "RotatingStars-TS-TW",
+			"title": "RotatingStars",
+			"description": "A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "RotatingStars.tsx"
+				}
+			]
 		}
 	]
 }

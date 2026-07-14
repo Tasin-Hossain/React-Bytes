@@ -4,6 +4,8 @@ export const NEW = [
   'Scroll Stack',
   'Shatter Text',
   'AsciiPlasma Wave',
+  'Rotating Stars',
+
 
 
 
@@ -30,7 +32,7 @@ export const CATEGORIES = [
       'Spotlight Text',
       'StaticNoise Text',
       'RainDrop Text',
-      'Shatter Text'
+      'Shatter Text',
 
     ]
   },
@@ -62,7 +64,7 @@ export const CATEGORIES = [
       'Emoji Wave',
       'Shapes Dots',
       'AsciiPlasma Wave',
-
+      'Rotating Stars',
     ]
   }
 ];

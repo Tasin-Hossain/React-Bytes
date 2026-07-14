@@ -21,6 +21,7 @@ const componentMap = {
   'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
 
 
+
   // ── Components
   'components/rotating-cards': () => import('../demo/Components/RotatingCardsDemo.jsx'),
   'components/rotating-carousel': () => import('../demo/Components/RotatingCarouselDemo.jsx'),
@@ -38,7 +39,7 @@ const componentMap = {
   'backgrounds/emoji-wave': () => import('../demo/Backgrounds/EmojiWavedemo.jsx'),
   'backgrounds/shapes-dots': () => import('../demo/Backgrounds/ShapesDots.jsx'),
   'backgrounds/asciiplasma-wave': () => import('../demo/Backgrounds/AsciiPlasmaWaveDemo.jsx'),
-
+  'backgrounds/rotating-stars': () => import('../demo/Backgrounds/RotatingStarsDemo.jsx'),
 
 
 };

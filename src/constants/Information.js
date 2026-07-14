@@ -262,6 +262,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/RotatingStars': {
+    name: 'RotatingStars',
+    description: 'A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/backgrounds/rotating-stars',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };
