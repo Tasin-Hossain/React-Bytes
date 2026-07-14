@@ -131,6 +131,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/Letter3DSwap': {
+    name: 'Letter3DSwap',
+    description:'A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/letter3d-swap',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

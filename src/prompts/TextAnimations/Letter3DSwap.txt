@@ -1,0 +1,226 @@
+## Integrate the <Letter3DSwap /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: TextFlipBoard
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import TextFlipBoard from './TextFlipBoard'
+
+<TextFlipBoard
+  text="DEPARTURES"
+  direction="right"
+  staggerFrom="first"
+  staggerDuration={50}
+  flipDuration={0.45}
+  trigger="hover"
+  className=""
+  charClassName=""
+  onFlipComplete={() => {}}
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "DEPARTURES" | The text string to display and animate. Words are split on spaces; each word's characters flip independently. |
+| direction | string | "right" | Direction the characters flip toward. Options: `"top"` \| `"right"` \| `"bottom"` \| `"left"` |
+| staggerFrom | string \| number | "first" | Where the stagger cascade starts. Options: `"first"` \| `"last"` \| `"center"` \| `"random"` \| a numeric index. |
+| staggerDuration | number | 50 | Delay in **milliseconds** between each character's flip start. |
+| flipDuration | number | 0.45 | Duration in **seconds** of each individual character's flip tween. |
+| trigger | string | "hover" | What initiates the flip animation. Options: `"hover"` (fires on `mouseenter`) \| `"mount"` (fires immediately on mount). |
+| className | string | "" | Additional CSS classes applied to the outer `<h1>` wrapper. |
+| charClassName | string | "" | Additional CSS classes applied to each individual character `<span>`. |
+| onFlipComplete | function | — | Callback fired once all characters have finished flipping (called from the GSAP timeline's `onComplete`). |
+| ref | React ref | — | Forwarded ref that exposes a `flip()` method for programmatic triggering. |
+
+### Full Component Source
+```jsx
+import { useEffect, useMemo, useRef, useImperativeHandle, forwardRef } from 'react';
+import gsap from 'gsap';
+
+const ROTATION_MAP = {
+  top: 'rotateX(90deg)',
+  right: 'rotateY(90deg)',
+  bottom: 'rotateX(-90deg)',
+  left: 'rotateY(-90deg)'
+};
+
+const SECOND_FACE_TRANSFORMS = {
+  top: 'rotateX(-90deg) translateZ(0.5lh)',
+  right: 'rotateY(90deg) translateX(50%) rotateY(-90deg) translateX(-50%) rotateY(-90deg) translateX(50%)',
+  bottom: 'rotateX(90deg) translateZ(0.5lh)',
+  left: 'rotateY(90deg) translateX(50%) rotateY(-90deg) translateX(50%) rotateY(-90deg) translateX(50%)'
+};
+
+const FRONT_FACE_TRANSFORMS = {
+  top: 'translateZ(0.5lh)',
+  bottom: 'translateZ(0.5lh)',
+  left: 'rotateY(90deg) translateX(50%) rotateY(-90deg)',
+  right: 'rotateY(-90deg) translateX(50%) rotateY(90deg)'
+};
+
+const CONTAINER_TRANSFORMS = {
+  top: 'translateZ(-0.5lh)',
+  bottom: 'translateZ(-0.5lh)',
+  left: 'rotateY(90deg) translateX(50%) rotateY(-90deg)',
+  right: 'rotateY(90deg) translateX(50%) rotateY(-90deg)'
+};
+
+const HAS_SEGMENTER = typeof Intl !== 'undefined' && 'Segmenter' in Intl;
+function splitIntoCharacters(text) {
+  if (HAS_SEGMENTER) {
+    const seg = new Intl.Segmenter('en', { granularity: 'grapheme' });
+    return Array.from(seg.segment(text), s => s.segment);
+  }
+  return Array.from(text);
+}
+
+function getStaggerDelay(index, totalChars, staggerFrom, staggerDuration) {
+  if (staggerFrom === 'first') return index * staggerDuration;
+  if (staggerFrom === 'last') return (totalChars - 1 - index) * staggerDuration;
+  if (staggerFrom === 'center') {
+    const center = Math.floor(totalChars / 2);
+    return Math.abs(center - index) * staggerDuration;
+  }
+  if (staggerFrom === 'random') {
+    const r = Math.floor(Math.random() * totalChars);
+    return Math.abs(r - index) * staggerDuration;
+  }
+  return Math.abs(staggerFrom - index) * staggerDuration;
+}
+
+const TextFlipBoard = forwardRef(function TextFlipBoard(
+  {
+    text = 'DEPARTURES',
+    direction = 'right',
+    staggerFrom = 'first',
+    staggerDuration = 50,
+    flipDuration = 0.45,
+    trigger = 'hover',
+    className = '',
+    charClassName = '',
+    onFlipComplete,
+    ...rest
+  },
+  ref
+) {
+  const rootRef = useRef(null);
+  const charRefs = useRef([]);
+  const isAnimating = useRef(false);
+
+  const words = useMemo(() => text.split(' '), [text]);
+
+  charRefs.current = [];
+  const registerChar = el => {
+    if (el) charRefs.current.push(el);
+  };
+
+  const flip = () => {
+    const charEls = charRefs.current;
+    if (!charEls.length || isAnimating.current) return;
+    isAnimating.current = true;
+
+    const total = charEls.length;
+    const staggerSec = staggerDuration / 1000;
+    const delays = charEls.map((_, i) => getStaggerDelay(i, total, staggerFrom, staggerSec));
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        gsap.set(charEls, { css: { transform: CONTAINER_TRANSFORMS[direction] } });
+        isAnimating.current = false;
+        onFlipComplete?.();
+      }
+    });
+
+    charEls.forEach((el, i) => {
+      tl.to(
+        el,
+        {
+          duration: flipDuration,
+          ease: 'back.out(1.6)',
+          css: { transform: ROTATION_MAP[direction] }
+        },
+        delays[i]
+      );
+    });
+  };
+
+  useImperativeHandle(ref, () => ({ flip }));
+
+  useEffect(() => {
+    gsap.set(charRefs.current, { css: { transform: CONTAINER_TRANSFORMS[direction] } });
+    isAnimating.current = false;
+
+    if (trigger === 'mount') flip();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, direction]);
+
+  return (
+    <h1
+      ref={rootRef}
+      className={`inline-flex flex-wrap [perspective:900px] ${className}`}
+      onMouseEnter={trigger === 'hover' ? flip : undefined}
+      {...rest}
+    >
+      {words.map((word, wi) => (
+        <span key={wi} className="inline-flex">
+          {splitIntoCharacters(word).map((ch, ci) => (
+            <span
+              key={ci}
+              ref={registerChar}
+              className={`relative inline-block h-[1lh] [transform-style:preserve-3d] will-change-transform ${charClassName}`}
+              style={{ transform: CONTAINER_TRANSFORMS[direction] }}
+            >
+              <span
+                className="relative flex h-[1lh] items-center justify-center [backface-visibility:hidden]"
+                style={{ transform: FRONT_FACE_TRANSFORMS[direction] }}
+              >
+                {ch}
+              </span>
+              <span
+                className="absolute left-0 top-0 flex h-[1lh] items-center justify-center [backface-visibility:hidden]"
+                style={{ transform: SECOND_FACE_TRANSFORMS[direction] }}
+              >
+                {ch}
+              </span>
+            </span>
+          ))}
+          {wi !== words.length - 1 && <span className="whitespace-pre"> </span>}
+        </span>
+      ))}
+    </h1>
+  );
+});
+
+export default TextFlipBoard;
+```
+
+### Integration Instructions
+1. Install required dependencies:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./TextFlipBoard.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component renders as an `<h1>` tag by default. Style its font size, weight, color, letter-spacing, and font family via `className` — none of these are controlled by props.
+5. Each character is a two-faced 3D `<span>` using `transform-style: preserve-3d`. The outer `<h1>` has `perspective: 900px` applied via Tailwind's arbitrary value syntax. Ensure a parent element is not setting `transform-style: flat` or `overflow: hidden`, as these will break the 3D effect.
+6. `staggerDuration` is in **milliseconds** (e.g. `50` = 50ms between characters). `flipDuration` is in **seconds** (e.g. `0.45` = 450ms per character flip). These use different units intentionally — match the pattern when customizing.
+7. The animation is **non-reentrant** — a flip in progress blocks any new trigger via the `isAnimating` ref guard. A second `mouseenter` during an active animation is silently ignored. The lock releases in the GSAP timeline's `onComplete`.
+8. To trigger the flip programmatically (e.g. from a button or scroll event), pass a ref and call `flip()`:
+   ```jsx
+   const boardRef = useRef(null);
+   <TextFlipBoard ref={boardRef} text="HELLO" />
+   <button onClick={() => boardRef.current?.flip()}>Flip</button>
+   ```
+9. `trigger="mount"` fires `flip()` once inside a `useEffect` after the initial render. It also re-fires when `text` or `direction` changes, since the effect depends on both.
+10. When `text` or `direction` changes, all characters are immediately reset to their resting `CONTAINER_TRANSFORMS` position via `gsap.set` before the new text renders — preventing characters from being mid-flip when content swaps.
+11. `staggerFrom="random"` picks a random pivot character on each flip call — every hover produces a different cascade order.
+12. `staggerFrom` accepts a numeric index in addition to string options — pass `staggerFrom={0}` to start from the first character explicitly, or `staggerFrom={4}` to ripple outward from the 5th character.
+13. Each character is split using `Intl.Segmenter` when available (modern browsers) for correct grapheme cluster handling — emoji and multi-codepoint characters are treated as single units. Falls back to `Array.from(text)` in environments without `Intl.Segmenter`.
+14. The component spreads `...rest` onto the `<h1>` — you can pass `onClick`, `aria-label`, `id`, and other native attributes directly as props.

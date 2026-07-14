@@ -19,7 +19,7 @@ const componentMap = {
   'text-animations/staticnoise-text': () => import('../demo/TextAnimations/StaticNoiseDemo.jsx'),
   'text-animations/raindrop-text': () => import('../demo/TextAnimations/RainDropTextDemo.jsx'),
   'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
-
+  'text-animations/letter3d-swap': () => import('../demo/TextAnimations/Letter3DSwapDemo.jsx'),
 
 
   // ── Components

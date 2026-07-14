@@ -692,6 +692,70 @@
 			]
 		},
 		{
+			"name": "Letter3DSwap-JS-CSS",
+			"title": "Letter3DSwap",
+			"description": "A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Letter3DSwap.jsx"
+				}
+			]
+		},
+		{
+			"name": "Letter3DSwap-JS-TW",
+			"title": "Letter3DSwap",
+			"description": "A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Letter3DSwap.jsx"
+				}
+			]
+		},
+		{
+			"name": "Letter3DSwap-TS-CSS",
+			"title": "Letter3DSwap",
+			"description": "A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Letter3DSwap.tsx"
+				}
+			]
+		},
+		{
+			"name": "Letter3DSwap-TS-TW",
+			"title": "Letter3DSwap",
+			"description": "A free React 3D Letter Swap animation powered by GSAP, featuring smooth letter flip transitions, customizable flip directions, staggered animations, hover or programmatic triggers, and realistic 3D effects.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Letter3DSwap.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
