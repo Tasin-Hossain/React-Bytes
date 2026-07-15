@@ -8,7 +8,10 @@ export const NEW = [
   'Letter3D Swap',
   'Text Pressure',
   'WavePath Text',
-  'Particle Text'
+  'Particle Text',
+  'Mask Reveal',
+  'Blur Highlight'
+
 
 
 
@@ -29,6 +32,7 @@ export const CATEGORIES = [
       'Letter3D Swap',
       'Text Pressure',
       'Particle Text',
+      'Blur Highlight',
       'Magnetic Text',
       'Curtain Text',
       'Cursor Trail',

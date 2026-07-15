@@ -167,6 +167,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/BlurHighlight': {
+    name: 'BlurHighlight',
+    description:'A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/blur-highlight',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

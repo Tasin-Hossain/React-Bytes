@@ -23,6 +23,7 @@ const componentMap = {
   'text-animations/text-pressure': () => import('../demo/TextAnimations/TextPressureDemo.jsx'),
   'text-animations/wavepath-text': () => import('../demo/TextAnimations/WavePathTextDemo.jsx'),
   'text-animations/particle-text': () => import('../demo/TextAnimations/ParticleTextDemo.jsx'),
+  'text-animations/blur-highlight': () => import('../demo/TextAnimations/BlurHighlightDemo.jsx'),
 
 
   // ── Components

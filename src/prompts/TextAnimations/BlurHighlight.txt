@@ -1,0 +1,190 @@
+## Integrate the <BlurHighlight /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: BlurHighlight
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import BlurHighlight from './BlurHighlight'
+
+<BlurHighlight
+  as="p"
+  direction="left"
+  highlightedBits={["highlighted"]}
+  maskColor="#7C3AED"
+  textColor="inherit"
+  revealDuration={0.6}
+  revealDelay={0}
+  staggerAmount={0.35}
+  viewportOptions={{ once: true, amount: 0.6 }}
+  rootMargin="0px 0px -100px 0px"
+  className=""
+>
+  This is some highlighted text in a sentence.
+</BlurHighlight>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | string | — | The text content to render. Must resolve to a plain string — it is coerced via `String(children)` before splitting. |
+| as | string | "p" | The HTML tag the component renders as (e.g. `"p"`, `"h1"`, `"span"`). |
+| direction | string | "left" | Direction the highlight wipe animates from. Options: `"left"` \| `"right"` \| `"top"` \| `"bottom"`. Also controls the mask's static background position. |
+| highlightedBits | string[] | [] | Substrings of `children` to wrap in an animated highlight pill. Matched left-to-right, first occurrence wins on overlap; unmatched text renders plain. |
+| maskColor | string | "#7C3AED" | Color of the highlight pill background, applied as a solid-color `linear-gradient`. |
+| textColor | string | "inherit" | Text color of the wrapper element. |
+| revealDuration | number | 0.6 | Duration in **seconds** of the pill wipe tween. The blur/opacity intro tween runs for `revealDuration + 0.2`. |
+| revealDelay | number | 0 | Delay in **seconds** before the reveal starts. |
+| staggerAmount | number | 0.35 | Total time in **seconds** GSAP spreads the per-pill stagger across — not a per-character delay. |
+| viewportOptions | { once, amount } | { once: true, amount: 0.6 } | `once: false` re-arms the animation (resets on exit, replays on re-entry). `amount` is the IntersectionObserver threshold. |
+| rootMargin | string | "0px 0px -100px 0px" | Passed directly to the IntersectionObserver, shifting when the trigger fires relative to the viewport. |
+| className | string | "" | Additional classes applied to the outer wrapper element. |
+| style | object | {} | Inline styles merged onto the outer wrapper, after `color`. |
+
+### Full Component Source
+```jsx
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+
+function splitWithHighlights(text, bits) {
+  if (!bits || bits.length === 0) return [{ text, hi: false }];
+  let remaining = text;
+  const out = [];
+  while (remaining.length > 0) {
+    let idx = -1, bit = null;
+    for (const b of bits) {
+      const i = remaining.indexOf(b);
+      if (i !== -1 && (idx === -1 || i < idx)) { idx = i; bit = b; }
+    }
+    if (idx === -1) { out.push({ text: remaining, hi: false }); break; }
+    if (idx > 0) out.push({ text: remaining.slice(0, idx), hi: false });
+    out.push({ text: bit, hi: true });
+    remaining = remaining.slice(idx + bit.length);
+  }
+  return out;
+}
+
+// direction -> { from, to, position } for the background-size wipe
+function bgParams(direction) {
+  switch (direction) {
+    case "right":  return { from: "0% 100%", to: "100% 100%", position: "right center" };
+    case "top":    return { from: "100% 0%", to: "100% 100%", position: "center top" };
+    case "bottom": return { from: "100% 0%", to: "100% 100%", position: "center bottom" };
+    case "left":
+    default:       return { from: "0% 100%", to: "100% 100%", position: "left center" };
+  }
+}
+
+export default function BlurHighlight({
+  children,
+  as = "p",
+  direction = "left",
+  highlightedBits = [],
+  maskColor = "#7C3AED",
+  textColor = "inherit",
+  revealDuration = 0.6,
+  revealDelay = 0,
+  staggerAmount = 0.35,
+  viewportOptions = { once: true, amount: 0.6 },
+  rootMargin = "0px 0px -100px 0px",
+  className = "",
+  style = {},
+}) {
+  const Tag = as;
+  const wrapperRef = useRef(null);
+  const segments = splitWithHighlights(String(children), highlightedBits);
+  const bg = bgParams(direction);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const pills = el.querySelectorAll(".mr-pill");
+
+    const runAnimation = () => {
+      gsap.fromTo(
+        el,
+        { autoAlpha: 0.25, filter: "blur(9px)" },
+        { autoAlpha: 1, filter: "blur(0px)", duration: revealDuration + 0.2, ease: "power2.out", delay: revealDelay }
+      );
+      gsap.fromTo(
+        pills,
+        { backgroundSize: bg.from },
+        {
+          backgroundSize: bg.to,
+          duration: revealDuration,
+          ease: "power3.out",
+          delay: revealDelay + revealDuration * 0.3,
+          stagger: { amount: staggerAmount },
+        }
+      );
+    };
+
+    const resetAnimation = () => {
+      gsap.set(el, { autoAlpha: 0.25, filter: "blur(9px)" });
+      gsap.set(pills, { backgroundSize: bg.from });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runAnimation();
+          if (viewportOptions.once !== false) observer.unobserve(el);
+        } else if (viewportOptions.once === false) {
+          resetAnimation();
+        }
+      }),
+      { rootMargin, threshold: [viewportOptions.amount ?? 0.6] }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [direction]);
+
+  return (
+    <Tag ref={wrapperRef} className={`max-w-full ${className}`} style={{ color: textColor, ...style }}>
+      {segments.map((seg, i) =>
+        seg.hi ? (
+          <span
+            className="mr-pill px-[0.3em] py-[0.05em] rounded-[0.4em] box-decoration-clone"
+            key={i}
+            style={{
+              backgroundImage: `linear-gradient(${maskColor}, ${maskColor})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: bg.position,
+              backgroundSize: bg.from,
+            }}
+          >
+            {seg.text}
+          </span>
+        ) : (
+          <React.Fragment key={i}>{seg.text}</React.Fragment>
+        )
+      )}
+    </Tag>
+  );
+}
+```
+
+### Integration Instructions
+1. Install required dependencies:
+   ```bash
+   npm install gsap
+   ```
+2. Copy the component source above into `./BlurHighlight.jsx` in your project.
+3. Import and render using the usage example above as a starting point. Tailwind must be configured in the project — the pill's padding, radius, and box-decoration-clone are Tailwind arbitrary-value utilities, not inline CSS.
+4. `maskColor` and the per-direction `backgroundPosition`/`backgroundSize` are applied via inline `style` on each pill span, not Tailwind classes — these are runtime values Tailwind's static class generation can't express, so they're intentionally left as inline styles even in the Tailwind variant.
+5. The highlight is two independent GSAP tweens per reveal: an opacity+blur tween on the whole wrapper, and a `backgroundSize` wipe tween on each `.mr-pill`. The pill tween starts at `revealDelay + revealDuration * 0.3`, so it begins partway through the blur-in rather than simultaneously.
+6. `staggerAmount` is GSAP's `stagger: { amount }` — the total spread across all pills, not a fixed per-pill delay. More highlighted bits compress the gap between each; it does not lengthen with more bits.
+7. `highlightedBits` matching is a manual left-to-right scan via `indexOf`, not regex — for multiple candidate bits at the same position, whichever appears first in the array wins if their start indices tie, otherwise the earliest match in the string wins. Matching is case-sensitive and does not support overlapping bits.
+8. `viewportOptions.once: false` makes the reveal replay every time the element re-enters the viewport, and resets to the pre-animation state (blurred, pill collapsed) on exit via `resetAnimation`. With `once: true` (default), the IntersectionObserver disconnects after the first reveal and the element stays revealed.
+9. The `useEffect` dependency array is `[direction]` only — changing `direction` re-creates the IntersectionObserver and re-registers its start position, but changing `highlightedBits`, `maskColor`, `revealDuration`, etc. does not re-run the effect. If you need those to update live post-mount, re-mount the component (e.g. by changing its `key`).
+10. `as` accepts any valid HTML tag string (`"p"`, `"h1"`, `"span"`, `"div"`, etc.) and is rendered directly as the DOM tag — no prop validation is done against block vs inline semantics.
+11. `children` is coerced with `String(children)` before splitting, so pass a plain string. JSX children with embedded elements or expressions are not supported — nested markup will stringify incorrectly.
+12. The wrapper start state is `autoAlpha: 0.25, filter: blur(9px)` and each pill starts at `backgroundSize: bg.from` (fully collapsed) — if you server-render or need a no-JS fallback, expect the text to render dim and blurred, with highlight pills invisible, until GSAP runs client-side.

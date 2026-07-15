@@ -932,6 +932,70 @@
 			]
 		},
 		{
+			"name": "BlurHighlight-JS-CSS",
+			"title": "BlurHighlight",
+			"description": "A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurHighlight.jsx"
+				}
+			]
+		},
+		{
+			"name": "BlurHighlight-JS-TW",
+			"title": "BlurHighlight",
+			"description": "A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurHighlight.jsx"
+				}
+			]
+		},
+		{
+			"name": "BlurHighlight-TS-CSS",
+			"title": "BlurHighlight",
+			"description": "A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurHighlight.tsx"
+				}
+			]
+		},
+		{
+			"name": "BlurHighlight-TS-TW",
+			"title": "BlurHighlight",
+			"description": "A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "BlurHighlight.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",
