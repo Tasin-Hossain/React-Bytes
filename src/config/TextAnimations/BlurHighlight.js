@@ -55,7 +55,7 @@ export const INITIAL_PROPS = {
   staggerAmount:   0.7,
   once:            true,
   amount:          1,
-  className: 'text-2xl sm:text-2xl md:text-2xl lg:text-2xl '
+  className: 'text-2xl sm:text-2xl md:text-2xl lg:text-2xl text-(--primary)!'
   
 };
 
