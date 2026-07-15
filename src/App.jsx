@@ -4,6 +4,7 @@ import SidebarLayout from './components/layout/SidebarLayout';
 import CategoryPage from './pages/CategoryPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ToolsPage from './pages/ToolsPage';
+import SponsorsPage from './pages/SponsorsPage';
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
             </SidebarLayout>
           }
         />
+        <Route path="/sponsors" element={<SponsorsPage />} />
         <Route path="/tools/:toolId?" element={<ToolsPage />} />
       </Routes>
     </>

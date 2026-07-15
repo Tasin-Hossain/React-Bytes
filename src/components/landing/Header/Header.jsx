@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import Logo from '../../../assets/logos/logo.svg';
 import DarkLogo from '../../../assets/logos/dark-logo.png';
 import './Header.css';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { FaGithub, FaLongArrowAltRight } from 'react-icons/fa';
 import { GITHUB_URL } from '../../../constants/site';
 import { useStars } from '../../../hooks/useStarts';
@@ -16,16 +16,32 @@ const NAV_LINKS = [
   { label: 'Docs', to: '/get-started/introduction' },
   { label: 'Components', to: '/text-animations/curtain-text' },
   // { label: 'Blocks', to: '/', comingSoon: true },
-  { label: 'Tools', to: '/tools' }
+  { label: 'Tools', to: '/tools' },
+  { label: 'Sponsors', to: '/sponsors' }
 ];
 
-const formatStars = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : Math.round(n));
+const formatStars = n => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : Math.round(n));
+
+// Pick the NAV_LINKS entry whose `to` best matches the current pathname.
+// Exact match wins; otherwise the longest `to` that the pathname starts with
+// (so nested routes like /get-started/foo still highlight "Docs").
+const getActiveLinkLabel = pathname => {
+  let best = null;
+  for (const link of NAV_LINKS) {
+    if (pathname === link.to) return link.label;
+    if (pathname.startsWith(link.to + '/')) {
+      if (!best || link.to.length > best.to.length) best = link;
+    }
+  }
+  return best?.label ?? '';
+};
 
 const Header = () => {
   const stars = useStars();
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
-  const [activeLink, setActiveLink] = useState('');
+  const location = useLocation();
+  const activeLink = useMemo(() => getActiveLinkLabel(location.pathname), [location.pathname]);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const menuRef = useRef(null);
@@ -51,14 +67,32 @@ const Header = () => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // close mobile menu on route change
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  // close dropdown when clicking outside of it
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onClickOutside = e => {
+      if (menuRef.current && !menuRef.current.contains(e.target) && !e.target.closest('[data-mobile-menu-toggle]')) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [menuOpen]);
+
   // init hidden state on mount
   useEffect(() => {
     if (menuRef.current) {
-      gsap.set(menuRef.current, { height: 0, overflow: 'hidden', display: 'none' });
+      gsap.set(menuRef.current, { display: 'none', opacity: 0, scale: 0.96, y: -8 });
     }
   }, []);
 
-  // mobile menu open/close animation
+  // mobile menu open/close animation (dropdown style: fade + scale + slide, no height push)
   useEffect(() => {
     const menu = menuRef.current;
     if (!menu) return;
@@ -67,26 +101,26 @@ const Header = () => {
     if (menuTl.current) menuTl.current.kill();
 
     if (menuOpen) {
-      gsap.set(menu, { display: 'block', height: 'auto' });
-      const fullHeight = menu.offsetHeight;
-      gsap.set(menu, { height: 0, overflow: 'hidden' });
+      gsap.set(menu, { display: 'block' });
       gsap.set(links, { opacity: 0, y: -8 });
 
       menuTl.current = gsap
         .timeline()
-        .to(menu, { height: fullHeight, duration: 0.35, ease: 'power2.out' })
-        .to(links, { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, '-=0.15')
-        .set(menu, { height: 'auto' });
+        .to(menu, { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: 'power2.out', transformOrigin: 'top right' })
+        .to(links, { opacity: 1, y: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' }, '-=0.1');
     } else {
       menuTl.current = gsap
         .timeline()
-        .to(links, { opacity: 0, y: -8, duration: 0.15, stagger: 0.03, ease: 'power1.in' })
+        .to(links, { opacity: 0, y: -8, duration: 0.12, stagger: 0.02, ease: 'power1.in' })
         .to(
           menu,
           {
-            height: 0,
-            duration: 0.3,
+            opacity: 0,
+            scale: 0.96,
+            y: -8,
+            duration: 0.18,
             ease: 'power2.in',
+            transformOrigin: 'top right',
             onComplete: () => gsap.set(menu, { display: 'none' })
           },
           '-=0.05'
@@ -180,11 +214,17 @@ const Header = () => {
             <Link
               key={label}
               to={to}
-              ref={(el) => (navBtnRefs.current[label] = el)}
-              onClick={() => setActiveLink(label)}
+              ref={el => (navBtnRefs.current[label] = el)}
               onMouseEnter={() => setHoveredLink(label)}
             >
-              <CurtainText  text={label} fontSize={13} className='px-4 py-2.5  cursor-pointer' textClassName='font-medium! text-(--text-primary)!' tracking staggerMs={0}/>
+              <CurtainText
+                text={label}
+                fontSize={13}
+                className="px-4 py-2.5  cursor-pointer"
+                textClassName="font-medium! text-(--text-primary)!"
+                tracking
+                staggerMs={0}
+              />
 
               {comingSoon && (
                 <span className="text-[10px] uppercase px-1.5 py-0.5 rounded-full bg-(--bg-elevated) text-(--text-muted) leading-none">
@@ -211,7 +251,11 @@ const Header = () => {
           </Link>
 
           {/* theme */}
-          <button className="hidden md:flex items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  " onClick={toggleTheme} aria-label="Toggle theme">
+          <button
+            className="hidden md:flex items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  "
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -234,23 +278,14 @@ const Header = () => {
             {/* Theme icon */}
           </button>
 
-          {/* Community button */}
-          {/* <button
-            type="button"
-            className="relative inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-md border-none bg-[linear-gradient(0deg,#7a5af8,#7a5af8),radial-gradient(65.28%_65.28%_at_50%_100%,rgba(223,113,255,0.8)_0%,rgba(223,113,255,0)_100%)] px-3 py-1.5 outline-none transition-all duration-300 active:scale-95 group button-custom"
-          >
-            <div className="absolute inset-0 z-1 overflow-hidden pointer-events-none">
-              {[...Array(10)].map((_, i) => (
-                <i key={i} className={`point point-${i + 1}`}></i>
-              ))}
-            </div>
-            <span className="relative z-2 flex items-center justify-center gap-1.5 text-white ">Community</span>
-          </button> */}
-
           {/* Mobile hamburger */}
-          <div className="flex items-center gap-2">
+          <div className="relative flex items-center gap-2">
             {/* theme */}
-            <button className="md:hidden items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  " onClick={toggleTheme} aria-label="Toggle theme">
+            <button
+              className="md:hidden items-center gap-1.5 px-2.5 h-8 rounded-md cursor-pointer transition-all duration-150 hover:bg-(--bg-hover)  "
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -274,6 +309,7 @@ const Header = () => {
             </button>
             {/* menu */}
             <button
+              data-mobile-menu-toggle
               onClick={() => setMenuOpen(!menuOpen)}
               className="md:hidden w-8 h-8 rounded-md border border-(--border-primary) flex items-center justify-center  text-(--text-primary) hover:text-(--text-muted) transition-colors duration-150 cursor-pointer"
             >
@@ -281,54 +317,52 @@ const Header = () => {
                 {menuOpen ? <MdOutlineClose size={20} /> : <RiMenu4Line size={20} />}
               </span>
             </button>
-          </div>
-        </div>
-      </div>
 
-      {/* Mobile Menu — full width, no app-container so it bleeds edge to edge */}
-      <div ref={menuRef} className="md:hidden">
-        <div className="app-container px-4 pb-4 py-2 border-t border-(--border-secondary) flex flex-col gap-1 ">
-          {NAV_LINKS.map(({ label, to, comingSoon }, i) => (
-            <Link
-              key={label}
-              to={to}
-              ref={(el) => (linkRefs.current[i] = el)}
-              onClick={() => {
-                setActiveLink(label);
-                setMenuOpen(false);
-              }}
-              className={`
-      group px-3 py-2.5 rounded-md text-sm transition-colors duration-150 text-(--text-primary)
-      flex items-center justify-between
-      ${activeLink === label ? ' bg-(--bg-elevated)' : ' hover:bg-(--bg-elevated)'}
-    `}
+            {/* Mobile dropdown menu — floats under the hamburger, doesn't push page content */}
+            <div
+              ref={menuRef}
+              className="md:hidden absolute top-full right-0 mt-2 w-64 rounded-xl border border-(--border-secondary) bg-(--bg-card) shadow-[0_8px_32px_rgba(0,0,0,0.16)] p-2 z-50 flex flex-col gap-1"
             >
-              <span className="flex items-center gap-1.5">
-                {label}
-                {comingSoon && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-(--bg-elevated) text-(--text-muted) leading-none">
-                    Soon
+              {NAV_LINKS.map(({ label, to, comingSoon }, i) => (
+                <Link
+                  key={label}
+                  to={to}
+                  ref={el => (linkRefs.current[i] = el)}
+                  onClick={() => setMenuOpen(false)}
+                  className={`
+        group px-3 py-2.5 rounded-md text-sm transition-colors duration-150 text-(--text-primary)
+        flex items-center justify-between
+        ${activeLink === label ? ' bg-(--bg-elevated)' : ' hover:bg-(--bg-elevated)'}
+      `}
+                >
+                  <span className="flex items-center gap-1.5">
+                    {label}
+                    {comingSoon && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-(--bg-elevated) text-(--text-muted) leading-none">
+                        Soon
+                      </span>
+                    )}
                   </span>
-                )}
-              </span>
-              <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out text-(--text-primary)">
-                <FaLongArrowAltRight />
-              </span>
-            </Link>
-          ))}
+                  <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out text-(--text-primary)">
+                    <FaLongArrowAltRight />
+                  </span>
+                </Link>
+              ))}
 
-          <Link
-            to={GITHUB_URL}
-            target="_blank"
-            ref={(el) => (linkRefs.current[NAV_LINKS.length] = el)}
-            className="mt-2 flex items-center gap-2 px-3 h-9 btn"
-          >
-            <FaGithub size={18} />
-            <span className="tracking-wider text-(--text-primary)">GITHUB</span>
-            <span ref={starMobileRef} className="text-xs text-(--text-muted)">
-              {formattedStars}
-            </span>
-          </Link>
+              <Link
+                to={GITHUB_URL}
+                target="_blank"
+                ref={el => (linkRefs.current[NAV_LINKS.length] = el)}
+                className="mt-1 flex items-center gap-2 px-3 h-9 btn-none"
+              >
+                <FaGithub size={18} />
+                <span className="tracking-wider text-(--text-primary)">GITHUB</span>
+                <span ref={starMobileRef} className="text-xs text-(--text-muted)">
+                  {formattedStars}
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </header>

@@ -52,6 +52,11 @@ const NAV_LINKS = [
     to: '/tools',
     isActive: (path) => path.startsWith('/tools'),
   },
+  {
+    label: 'Sponsors',
+    to: '/sponsors',
+    isActive: (path) => path.startsWith('/sponsors'),
+  },
 ];
 
 // ThemeToggleIcon — shared between desktop and mobile

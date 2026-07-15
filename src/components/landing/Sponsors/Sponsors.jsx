@@ -1,33 +1,8 @@
 import { motion } from 'motion/react';
 import { FiArrowRight, FiBox } from 'react-icons/fi';
-import { PiMedalDuotone, PiTrophyDuotone } from 'react-icons/pi';
-import { IoDiamondSharp } from 'react-icons/io5';
 import { Link } from 'react-router';
-const tiers = [
-  {
-    label: 'Diamond',
-    icon: <IoDiamondSharp className="text-(--brand)" size={14} />,
-    size: 'lg',
-    slots: 2,
-    sponsors: [
-      // { name: '', desc: '', link: '', logo: '/sponsors/novakit.png' }
-    ]
-  },
-  {
-    label: 'Platinum',
-    icon: <PiTrophyDuotone className="text-slate-300" size={14} />,
-    size: 'md',
-    slots: 3,
-    sponsors: []
-  },
-  {
-    label: 'Silver',
-    icon: <PiMedalDuotone className="text-amber-500" size={14} />,
-    size: 'sm',
-    slots: 4,
-    sponsors: []
-  }
-];
+import { tiers } from '../../../data/Sponsors';
+
 
 const sizeConfig = {
   lg: {
@@ -156,8 +131,8 @@ const Sponsors = () => {
           {tiers.map(tier => (
             <div key={tier.label}>
               <div className="mb-3 flex items-center justify-between">
-                <span className="flex bg-(--bg-white)/5 btn-none py-1.5 px-3 text-[10px]">
-                  {tier.icon}
+                <span className="flex items-center gap-1.5 bg-(--bg-white)/5 btn-none py-1.5 px-3 text-[10px]">
+                  <tier.icon className={tier.iconClassName} size={14} />
                   {tier.label}
                 </span>
                 <ByteBar filled={tier.sponsors.length} total={tier.slots} />
