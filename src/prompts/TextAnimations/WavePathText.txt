@@ -1,0 +1,155 @@
+## Integrate the <WavePathText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: WavePathText
+### Variant: JavaScript + Tailwind
+### Dependencies: gsap
+
+---
+
+### Usage Example
+```jsx
+import WavePathText from './WavePathText'
+import gsap from 'gsap'
+
+<WavePathText
+  text="lorem ipsum dolor sit amet consectetur adipiscing elit sed do"
+  path="M-400,90 C-350,50 -300,50 -250,90 C-200,130 -150,130 -100,90 C-50,50 0,50 50,90 C100,130 150,130 200,90 C250,50 300,50 350,90 C400,130 450,130 500,90 C550,50 600,50 650,90 C700,130 750,130 800,90 C850,50 900,50 950,90 C1000,130 1050,130 1100,90 C1150,50 1200,50 1250,90"
+  className=""
+  textClassName="text-6xl sm:text-6xl md:text-6xl lg:text-5xl"
+  duration={21}
+  reversed={false}
+  letterSpacing="normal"
+  viewBox="0 0 700 160"
+  pathScale={1}
+  gap="   "
+/>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "lorem ipsum dolor sit amet consectetur adipiscing elit sed do" | Text tiled repeatedly along the path so it's always visible, never runs out. |
+| path | string | (long wavy `M...` path) | SVG path data (the `d` attribute) the text flows along. Drawn with `fill="none" stroke="none"` — invisible itself, only the text following it is rendered. |
+| className | string | "" | Extra classes applied to the root `<svg>` element. |
+| textClassName | string | "text-6xl sm:text-6xl md:text-6xl lg:text-5xl" | Tailwind (or any) classes applied directly to the `<text>` element — this is how font size/weight/color utilities are set, since there's no `fontSize` prop. |
+| duration | number | 21 | Seconds for one full shift of a single repeated "tile" (`text` + `gap`) — controls scroll speed. |
+| reversed | boolean | false | Reverses the scroll direction of the text. |
+| letterSpacing | string | "normal" | Letter spacing applied to the text via inline style. |
+| viewBox | string | "0 0 700 160" | SVG viewBox for the root `<svg>` element. Also used to compute the center point for `pathScale`. |
+| pathScale | number | 1 | Scale factor applied to the path/text group, scaled from the **center** of `viewBox` (not the top-left corner). |
+| gap | string | "   " (3 spaces) | Separator inserted between each repeated copy of `text` when tiling. |
+
+### Full Component Source
+```jsx
+import { useRef, useEffect, useLayoutEffect, useId, useState } from 'react';
+import gsap from 'gsap';
+
+const WavePathText = ({
+  text = 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do',
+  path = 'M-400,90 C-350,50 -300,50 -250,90 C-200,130 -150,130 -100,90 C-50,50 0,50 50,90 C100,130 150,130 200,90 C250,50 300,50 350,90 C400,130 450,130 500,90 C550,50 600,50 650,90 C700,130 750,130 800,90 C850,50 900,50 950,90 C1000,130 1050,130 1100,90 C1150,50 1200,50 1250,90',
+  className = '',
+  textClassName = 'text-6xl sm:text-6xl md:text-6xl lg:text-5xl',
+  duration = 21,
+  reversed = false,
+  letterSpacing = 'normal',
+  viewBox = '0 0 700 160',
+  pathScale = 1,
+  gap = '   '
+}) => {
+  const uid = useId().replace(/:/g, '');
+  const pathId = `curved-loop-path-${uid}`;
+  const measureRef = useRef(null);
+  const pathRef = useRef(null);
+  const textPathRef = useRef(null);
+  const tweenRef = useRef(null);
+  const [ready, setReady] = useState(false);
+  const stateRef = useRef({ repeatedText: text, unitLength: 0 });
+  const [repeatedText, setRepeatedText] = useState(text);
+
+  // scale from the center of the viewBox instead of the top-left origin
+  const [vbX, vbY, vbW, vbH] = viewBox.split(' ').map(Number);
+  const cx = vbX + vbW / 2;
+  const cy = vbY + vbH / 2;
+  const groupTransform = `translate(${cx} ${cy}) scale(${pathScale}) translate(${-cx} ${-cy})`;
+
+  // Tile the text (with a small gap) just enough times to fully cover the
+  // path — so text is ALWAYS present somewhere along it, never runs out.
+  // Then animate by exactly one tile's measured length: since the pattern
+  // repeats with that exact period, wrapping back after one shift lands on
+  // a frame that looks identical to the start — a true, gapless infinite loop.
+  useLayoutEffect(() => {
+    if (!measureRef.current || !pathRef.current) return;
+
+    const unitText = `${text}${gap}`;
+    measureRef.current.textContent = unitText;
+    const unitLength = measureRef.current.getComputedTextLength();
+    const pathLength = pathRef.current.getTotalLength();
+
+    const copies = unitLength > 0 ? Math.ceil(pathLength / unitLength) + 1 : 1;
+
+    stateRef.current = {
+      repeatedText: unitText.repeat(Math.max(copies, 1)),
+      unitLength
+    };
+    setRepeatedText(unitText.repeat(Math.max(copies, 1)));
+    setReady(true);
+    // re-measure whenever the text-size classes change too, since that
+    // changes the rendered length of each tile
+  }, [text, gap, path, textClassName]);
+
+  useEffect(() => {
+    if (!ready || !textPathRef.current || !stateRef.current.unitLength) return;
+
+    tweenRef.current?.kill();
+
+    const shift = reversed ? stateRef.current.unitLength : -stateRef.current.unitLength;
+
+    tweenRef.current = gsap.fromTo(
+      textPathRef.current,
+      { attr: { startOffset: 0 } },
+      {
+        attr: { startOffset: shift },
+        duration,
+        ease: 'none',
+        repeat: -1
+      }
+    );
+
+    return () => tweenRef.current?.kill();
+  }, [ready, duration, reversed]);
+
+  return (
+    <svg className={className} viewBox={viewBox} width="100%" style={{ overflow: 'visible', display: 'block' }}>
+      <g transform={groupTransform}>
+        <path ref={pathRef} id={pathId} d={path} fill="none" stroke="none" />
+        <text className={textClassName} style={{ letterSpacing, whiteSpace: 'pre' }} fill="currentColor">
+          {/* hidden — used only to measure one tile's rendered length */}
+          <tspan ref={measureRef} opacity="0" />
+          <textPath ref={textPathRef} href={`#${pathId}`} startOffset="0">
+            {repeatedText}
+          </textPath>
+        </text>
+      </g>
+    </svg>
+  );
+};
+
+export default WavePathText;
+```
+
+### Integration Instructions
+1. Install the one required dependency: `npm install gsap` (or `pnpm add gsap` / `yarn add gsap` / `bun add gsap`).
+2. Copy the component source above into `./WavePathText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. Text size/weight/color are controlled entirely through `textClassName` on the `<text>` element — there is no `fontSize` or `color` prop. Set typography with Tailwind utilities (or any CSS classes) here, and use `fill="currentColor"` (already set) with a `color` utility to tint it.
+5. The animation works by **tiling** `text` (joined with `gap`) enough times with `Math.ceil(pathLength / unitLength) + 1` copies to fully cover the SVG path's real rendered length (`path.getTotalLength()`), measured via a hidden `<tspan>` (`getComputedTextLength()`). This guarantees text is visible everywhere along the path at all times — it never "runs out" mid-loop.
+6. The loop is driven by GSAP shifting `startOffset` on the `<textPath>` by **exactly one tile's measured length** (not a percentage). Because the tiled pattern repeats with that exact period, the moment GSAP's `repeat: -1` wraps back to the start, the visual frame is identical to where it began — there is no visible jump, snap, or restart, just continuous motion.
+7. Measurement runs inside `useLayoutEffect` (before paint) so the tile count and the GSAP tween are both derived from real, on-screen text/path dimensions rather than guesses — this means it stays correct if `text`, `gap`, `path`, or `textClassName` change (all four are effect dependencies, since a `textClassName` size change alters each tile's rendered length).
+8. `pathScale` scales the entire path/text group from the **center of `viewBox`**, not the top-left corner — implemented via `translate(cx, cy) scale(pathScale) translate(-cx, -cy)`, where `cx`/`cy` are derived by parsing `viewBox`. Scaling up or down keeps the composition centered instead of drifting toward one corner.
+9. `path` itself is rendered with `fill="none" stroke="none"` — it is never visibly drawn; it exists purely as an invisible guide for `<textPath>` to follow. Only the text is visible.
+10. The root `<svg>` uses `style={{ overflow: 'visible' }}` — the path/text can extend beyond the nominal `viewBox` bounds and will not be clipped. If you need clipping (e.g. to avoid horizontal overflow on narrow containers), wrap the component in a container with `overflow: hidden`.
+11. Requires the SVG `<textPath>` element and `getComputedTextLength()` / `getTotalLength()` DOM APIs — supported in all modern browsers (Chrome, Firefox, Safari, Edge). This component is client-rendered; if used in a server-rendered framework (Next.js, etc.), ensure it only runs in a client component (`"use client"` or equivalent), since `useLayoutEffect` and SVG geometry measurement require the DOM.
+12. `reversed` flips the direction of the `startOffset` shift (positive vs. negative), reversing which way the text appears to travel along the path.
+13. Each render uses `useId()` to generate a unique `pathId` (`curved-loop-path-<id>`) so multiple `WavePathText` instances on the same page don't collide over the same SVG `id` when one instance's `<textPath>` references another's `<path>`.

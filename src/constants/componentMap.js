@@ -21,6 +21,7 @@ const componentMap = {
   'text-animations/shatter-text': () => import('../demo/TextAnimations/ShatterTextDemo.jsx'),
   'text-animations/letter3d-swap': () => import('../demo/TextAnimations/Letter3DSwapDemo.jsx'),
   'text-animations/text-pressure': () => import('../demo/TextAnimations/TextPressureDemo.jsx'),
+  'text-animations/wavepath-text': () => import('../demo/TextAnimations/WavePathTextDemo.jsx'),
 
 
   // ── Components

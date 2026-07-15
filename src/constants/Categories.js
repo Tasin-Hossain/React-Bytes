@@ -6,7 +6,9 @@ export const NEW = [
   'AsciiPlasma Wave',
   'Rotating Stars',
   'Letter3D Swap',
-  'Text Pressure'
+  'Text Pressure',
+  'WavePath Text',
+
 
 
 
@@ -36,6 +38,7 @@ export const CATEGORIES = [
       'StaticNoise Text',
       'RainDrop Text',
       'Shatter Text',
+      'WavePath Text',
 
     ]
   },

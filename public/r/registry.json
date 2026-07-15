@@ -812,6 +812,70 @@
 			]
 		},
 		{
+			"name": "WavePathText-JS-CSS",
+			"title": "WavePathText",
+			"description": "A customizable React wave-path text animation powered by GSAP, featuring SVG curved-path scrolling, seamless infinite looping with zero visible restart, adjustable wave shapes, responsive Tailwind CSS typography, and smooth marquee-style motion for banners, headers, and modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "WavePathText.jsx"
+				}
+			]
+		},
+		{
+			"name": "WavePathText-JS-TW",
+			"title": "WavePathText",
+			"description": "A customizable React wave-path text animation powered by GSAP, featuring SVG curved-path scrolling, seamless infinite looping with zero visible restart, adjustable wave shapes, responsive Tailwind CSS typography, and smooth marquee-style motion for banners, headers, and modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "WavePathText.jsx"
+				}
+			]
+		},
+		{
+			"name": "WavePathText-TS-CSS",
+			"title": "WavePathText",
+			"description": "A customizable React wave-path text animation powered by GSAP, featuring SVG curved-path scrolling, seamless infinite looping with zero visible restart, adjustable wave shapes, responsive Tailwind CSS typography, and smooth marquee-style motion for banners, headers, and modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "WavePathText.tsx"
+				}
+			]
+		},
+		{
+			"name": "WavePathText-TS-TW",
+			"title": "WavePathText",
+			"description": "A customizable React wave-path text animation powered by GSAP, featuring SVG curved-path scrolling, seamless infinite looping with zero visible restart, adjustable wave shapes, responsive Tailwind CSS typography, and smooth marquee-style motion for banners, headers, and modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "WavePathText.tsx"
+				}
+			]
+		},
+		{
 			"name": "RotatingCards-JS-CSS",
 			"title": "RotatingCards",
 			"description": "A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.",

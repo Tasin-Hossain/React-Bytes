@@ -149,6 +149,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/WavePathText': {
+    name: 'WavePathText',
+    description:'A customizable React wave-path text animation powered by GSAP, featuring SVG curved-path scrolling, seamless infinite looping with zero visible restart, adjustable wave shapes, responsive Tailwind CSS typography, and smooth marquee-style motion for banners, headers, and modern UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/wavepath-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components
