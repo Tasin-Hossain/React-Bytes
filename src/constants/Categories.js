@@ -8,6 +8,7 @@ export const NEW = [
   'Letter3D Swap',
   'Text Pressure',
   'WavePath Text',
+  'Particle Text'
 
 
 
@@ -27,6 +28,7 @@ export const CATEGORIES = [
     subcategories: [
       'Letter3D Swap',
       'Text Pressure',
+      'Particle Text',
       'Magnetic Text',
       'Curtain Text',
       'Cursor Trail',

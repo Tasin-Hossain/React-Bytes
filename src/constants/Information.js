@@ -158,6 +158,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/ParticleText': {
+    name: 'ParticleText',
+    description:'A free open-source React particle text animation featuring interactive mouse effects, physics-based particle motion, customizable colors, responsive canvas rendering, auto-fit typography, and high-performance animations for modern websites and UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/particle-text',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
   // Components

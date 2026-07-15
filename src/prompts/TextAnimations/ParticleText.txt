@@ -1,0 +1,250 @@
+## Integrate the <ParticleText /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: ParticleText
+### Variant: JavaScript + Tailwind
+### Dependencies: none (uses native Canvas API)
+
+---
+
+### Usage Example
+```jsx
+import ParticleText from './ParticleText'
+
+<div style={{ width: '100%', height: '300px' }}>
+  <ParticleText
+    text="brilliant."
+    colors={["#40ffaa", "#40aaff", "#ff40aa", "#aa40ff"]}
+    particleSize={2}
+    particleGap={2}
+    mouseControls={{ enabled: true, radius: 150, strength: 5 }}
+    fontSize={200}
+    autoFit={true}
+    backgroundColor="transparent"
+    friction={0.75}
+    ease={0.05}
+    className=""
+  />
+</div>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | string | "brilliant." | The text to render as particles. Rasterized onto an offscreen canvas at the configured `fontSize`, then sampled pixel-by-pixel to determine particle spawn positions. |
+| colors | string[] | ["#40ffaa", "#40aaff", "#ff40aa", "#aa40ff"] | Pool of hex colors each particle randomly picks from on build. Color is assigned once at build time — particles don't change color during animation. |
+| particleSize | number | 2 | Radius-like size of each particle in pixels (drawn as a filled circle of radius `particleSize / 2`). Also contributes to sampling density — see `particleGap`. |
+| particleGap | number | 2 | Gap between sampled pixel positions. Sampling step = `max(1, particleSize + particleGap)`. Increasing either `particleSize` or `particleGap` reduces total particle count and improves performance. |
+| mouseControls | object | `{ enabled: true, radius: 150, strength: 5 }` | Mouse/touch repulsion config. `enabled` toggles interaction on/off; `radius` is the pixel radius of influence; `strength` is the force magnitude applied per frame within radius. All three fields have individual fallbacks, so partial objects are safe (e.g. `{ strength: 10 }` works). |
+| fontSize | number | 200 | Base font size in pixels used to rasterize the text onto the offscreen canvas before particle sampling. If `autoFit` is true, this is scaled down automatically to fit the container — treat it as a maximum. |
+| autoFit | boolean | true | When `true`, `fontSize` is reduced so the rendered text fits within 90% of the container width (and no more than 80% of container height). The scaling is computed on the offscreen canvas before sampling, so particle density stays consistent regardless of container size. |
+| backgroundColor | string | "transparent" | Canvas background on each frame. `"transparent"` calls `clearRect`; any other value calls `fillRect` with that color as `fillStyle`. |
+| friction | number | 0.75 | Per-frame velocity damping factor (0–1). Applied as `vx *= friction` after all forces. Lower = more drag, particles settle faster; higher = less drag, more floaty movement. |
+| ease | number | 0.05 | Spring constant pulling each particle back to its home position each frame (`vx += (baseX - x) * ease`). Higher = snappier return; lower = slower drift back. |
+| className | string | "" | Additional CSS classes applied to the outer container div. |
+
+### Full Component Source
+```jsx
+import { useEffect, useRef } from "react";
+
+export default function ParticleText({
+  text = "brilliant.",
+  colors = ["#40ffaa", "#40aaff", "#ff40aa", "#aa40ff"],
+  particleSize = 2,
+  particleGap = 2,
+  mouseControls = { enabled: true, radius: 150, strength: 5 },
+  fontSize = 200,
+  autoFit = true,
+  backgroundColor = "transparent",
+  friction = 0.75,
+  ease = 0.05,
+  className = "",
+}) {
+  const canvasRef = useRef(null);
+  const containerRef = useRef(null);
+  const particlesRef = useRef([]);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
+  const rafRef = useRef(null);
+  const dprRef = useRef(1);
+
+  const mc = {
+    enabled: mouseControls?.enabled ?? true,
+    radius: mouseControls?.radius ?? 150,
+    strength: mouseControls?.strength ?? 5,
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const build = () => {
+      const rect = container.getBoundingClientRect();
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dprRef.current = dpr;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      const off = document.createElement("canvas");
+      off.width = width;
+      off.height = height;
+      const octx = off.getContext("2d");
+
+      let size = fontSize;
+      if (autoFit) {
+        octx.font = `700 ${size}px "Helvetica Neue", Arial, sans-serif`;
+        let w = octx.measureText(text).width;
+        const maxW = width * 0.9;
+        if (w > maxW && w > 0) size = Math.max(8, size * (maxW / w));
+        if (size > height * 0.8) size = height * 0.8;
+      }
+
+      octx.clearRect(0, 0, width, height);
+      octx.fillStyle = "#fff";
+      octx.font = `700 ${size}px "Helvetica Neue", Arial, sans-serif`;
+      octx.textAlign = "center";
+      octx.textBaseline = "middle";
+      octx.fillText(text, width / 2, height / 2);
+
+      const { data } = octx.getImageData(0, 0, width, height);
+      const step = Math.max(1, particleSize + particleGap);
+      const particles = [];
+
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const idx = (y * width + x) * 4 + 3;
+          if (data[idx] > 128) {
+            particles.push({
+              baseX: x,
+              baseY: y,
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: 0,
+              vy: 0,
+              color: colors[Math.floor(Math.random() * colors.length)] || "#40ffaa",
+            });
+          }
+        }
+      }
+      particlesRef.current = particles;
+    };
+
+    build();
+
+    const ro = new ResizeObserver(build);
+    ro.observe(container);
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, fontSize, autoFit, particleSize, particleGap, JSON.stringify(colors)]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    const tick = () => {
+      const dpr = dprRef.current;
+      const w = canvas.width / dpr;
+      const h = canvas.height / dpr;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (backgroundColor === "transparent") {
+        ctx.clearRect(0, 0, w, h);
+      } else {
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      const mouse = mouseRef.current;
+      const particles = particlesRef.current;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        if (mc.enabled) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mc.radius && dist > 0.001) {
+            const force = ((mc.radius - dist) / mc.radius) * mc.strength;
+            p.vx += (dx / dist) * force;
+            p.vy += (dy / dist) * force;
+          }
+        }
+
+        p.vx += (p.baseX - p.x) * ease;
+        p.vy += (p.baseY - p.y) * ease;
+
+        p.vx *= friction;
+        p.vy *= friction;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, particleSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [friction, ease, particleSize, backgroundColor, mc.enabled, mc.radius, mc.strength]);
+
+  const handleMouseMove = (e) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  };
+  const handleMouseLeave = () => {
+    mouseRef.current = { x: -9999, y: -9999 };
+  };
+  const handleTouchMove = (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    mouseRef.current = { x: t.clientX - rect.left, y: t.clientY - rect.top };
+  };
+
+  return (
+    <div ref={containerRef} className={`relative w-full h-full ${className}`}>
+      <canvas
+        ref={canvasRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseLeave}
+        className="block w-full h-full"
+      />
+    </div>
+  );
+}
+```
+
+### Integration Instructions
+1. No external dependencies required — uses the native Canvas API only.
+2. Copy the component source above into `./ParticleText.jsx` in your project.
+3. Import and render using the usage example above as a starting point.
+4. The component fills its parent at `w-full h-full` — wrap it in a sized container:
+   ```jsx
+   <div style={{ width: '100%', height: '300px' }}>
+     <ParticleText />
+   </div>
+   ```
+   Container height is meaningful here — unlike pure background components, the text is sampled at the actual CSS pixel dimensions of the container, so a taller container produces taller rendered text (up to `autoFit` limits).
+5. **Particle placement works by rasterizing text onto an offscreen canvas.** The `build` function draws white text onto a hidden `<canvas>` at CSS pixel resolution (not DPR-scaled), then reads its `ImageData` alpha channel pixel by pixel. Any pixel with `alpha > 128` becomes a particle `baseX/baseY` home position. The sampling step is `max(1, particleSize + particleGap)`, so changing either affects both visual density and performance.
+6. **Two-effect split:** `build` (particle set construction) and `tick` (animation loop) are intentionally in separate effects with different dependency arrays. `build` is the expensive operation — avoid triggering it unnecessarily. The split also means `tick` can restart (e.g. when `friction` changes) without rebuilding the particle set.
+7. **`JSON.stringify(colors)` in the build effect dependency array** is intentional — it performs a deep equality check on the array contents, avoiding a rebuild every render when a stable array reference can't be guaranteed. If you pass a memoized `colors` array (via `useMemo` or a module-level constant), `JSON.stringify` adds minor overhead but is otherwise harmless. If you pass an inline array literal (`colors={["#fff"]}`) without memoization, `JSON.stringify` is what prevents the build effect from running on every parent render.
+8. **`mc` is destructured outside both effects.** `mc.enabled`, `mc.radius`, and `mc.strength` are primitive values used as tick effect dependencies. This means passing a new `mouseControls` object literal with the same values on every render will still correctly avoid restarting the tick loop (since primitives are compared by value in React's dep check). However, passing different `mouseControls` field values will restart the tick, which is fine — it closes over the updated `mc` values.
+9. Each particle spawns at a random position anywhere on the canvas (`x: Math.random() * width, y: Math.random() * height`) and animates toward its `baseX/baseY` home via the spring-friction system each frame. On first mount (or after a rebuild) all particles fly in from random positions simultaneously, producing an assembly-from-chaos entrance automatically — there is no separate entrance animation prop.
+10. Mouse repulsion (`mouseControls`) pushes particles away from the cursor with force proportional to proximity within `radius`. The spring (`ease`) continuously pulls them back home, so particles return after the cursor moves away. `friction` controls how much velocity bleeds off per frame — too high (`> 0.95`) and particles oscillate visibly; too low (`< 0.5`) and they feel sluggish.
+11. DPR is capped at `2` (`Math.min(window.devicePixelRatio || 1, 2)`) for canvas resolution. The main canvas is drawn at `width * dpr` physical pixels but the particle coordinates and physics all run in CSS pixel space — `ctx.setTransform(dpr, 0, 0, dpr, 0, 0)` scales the drawing context up to match, so particle positions don't need to be DPR-adjusted manually.
+12. Touch support is included via `onTouchMove` / `onTouchEnd` on the canvas element — touch moves the repulsion origin exactly like mouse, and touch end resets the mouse position to `{-9999, -9999}` (off-canvas), letting particles settle back to their home positions.
