@@ -12,6 +12,8 @@ export default function ParticleText({
   friction = 0.75,
   ease = 0.05,
   className = "",
+  shape = "ascii",
+  asciiChars = "bytes",
 }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -26,6 +28,7 @@ export default function ParticleText({
     strength: mouseControls?.strength ?? 5,
   };
 
+  // Rebuild the particle field whenever text / sizing props change.
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -80,6 +83,7 @@ export default function ParticleText({
               vx: 0,
               vy: 0,
               color: colors[Math.floor(Math.random() * colors.length)] || "#40ffaa",
+              char: asciiChars[Math.floor(Math.random() * asciiChars.length)] || "0",
             });
           }
         }
@@ -93,8 +97,9 @@ export default function ParticleText({
     ro.observe(container);
     return () => ro.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text, fontSize, autoFit, particleSize, particleGap, JSON.stringify(colors)]);
+  }, [text, fontSize, autoFit, particleSize, particleGap, JSON.stringify(colors), asciiChars]);
 
+  // Animation loop.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -115,6 +120,12 @@ export default function ParticleText({
 
       const mouse = mouseRef.current;
       const particles = particlesRef.current;
+
+      if (shape === "ascii") {
+        ctx.font = `${Math.max(6, particleSize * 5)}px "Courier New", monospace`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+      }
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -140,9 +151,18 @@ export default function ParticleText({
         p.y += p.vy;
 
         ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, particleSize / 2, 0, Math.PI * 2);
-        ctx.fill();
+
+        if (shape === "square") {
+          const s = particleSize;
+          ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+        } else if (shape === "ascii") {
+          ctx.fillText(p.char, p.x, p.y);
+        } else {
+          // default: circle
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, particleSize / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -150,7 +170,7 @@ export default function ParticleText({
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [friction, ease, particleSize, backgroundColor, mc.enabled, mc.radius, mc.strength]);
+  }, [friction, ease, particleSize, backgroundColor, mc.enabled, mc.radius, mc.strength, shape]);
 
   const handleMouseMove = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();

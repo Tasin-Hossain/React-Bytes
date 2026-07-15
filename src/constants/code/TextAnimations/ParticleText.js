@@ -9,6 +9,8 @@ export const getUsageCode = (
     autoFit,
     backgroundColor,
     friction,
+    shape,
+    asciiChars,
     ease,
   },
   lang = 'js'
@@ -29,6 +31,8 @@ const App${typeAnnotation} = () => (
       autoFit={${autoFit}}
       backgroundColor="${backgroundColor}"
       friction={${friction}}
+      shape="${shape}"
+      asciiChars="${asciiChars}"
       ease={${ease}}
     />
   </div>

@@ -14,6 +14,8 @@ export const INITIAL_PROPS = {
   autoFit:         true,
   backgroundColor: 'transparent',
   friction:        0.75,
+  shape : "ascii",
+  asciiChars : "mew",
   ease:            0.05,
 };
 
@@ -31,6 +33,9 @@ export const PROPS_DATA = [
   // PHYSICS
   { name: 'friction',        type: 'number',   def: '0.75',                desc: 'Velocity damping applied each frame, 0-1.' },
   { name: 'ease',            type: 'number',   def: '0.05',                desc: 'Spring pull strength back toward the sampled base position.' },
+  // SHAPE
+  { name: 'shape',           type: 'string',   def: '"ascii"',             desc: 'Particle render shape: "square", "circle", or "ascii".' },
+  { name: 'asciiChars',      type: 'string',   def: '"mew"',               desc: 'Character pool each particle randomly picks from when shape is "ascii".' },
   // STYLE
   { name: 'backgroundColor', type: 'string',   def: '"transparent"',       desc: 'Canvas background color, or "transparent".' },
   // CLASSNAMES

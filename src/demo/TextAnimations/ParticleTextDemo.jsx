@@ -12,12 +12,13 @@ import {
   ParticleTextPrompt,
   CODE_VARIANTS,
   AUTHOR_NAME,
-  getJsrepoCmds,
+  getJsrepoCmds
 } from '../../config/TextAnimations/ParticleText';
 
 import PreviewSlider from '../../components/shared/preview/PreviewSlider';
 import PreviewSwitch from '../../components/shared/preview/PreviewSwitch';
 import PreviewInput from '../../components/shared/preview/PreviewInput';
+import PreviewSelect from '../../components/shared/preview/PreviewSelect';
 import PreviewColorPicker from '../../components/shared/preview/PreviewColorPicker';
 
 import Dependencies from '../../components/shared/preview/Dependencies';
@@ -30,7 +31,12 @@ import DemoBuilder from '../../components/layout/DemoBuilder';
 
 import ParticleText from '../../content/TextAnimations/ParticleText';
 
-
+// ─────────────────────────────────────────────────────────────────────────────
+const SHAPE_OPTIONS = [
+  { label: 'Square', value: 'square' },
+  { label: 'Circle', value: 'circle' },
+  { label: 'ASCII', value: 'ascii' }
+];
 
 // ─────────────────────────────────────────────────────────────────────────────
 const ParticleTextInner = () => {
@@ -71,21 +77,9 @@ const ParticleTextInner = () => {
       customize={
         <Customize>
           {/* Row 0 – Text, autoFit */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
-            <PreviewInput
-              title="Text"
-              value={props.text}
-              onChange={handlePropChange('text')}
-            />
-            <PreviewSwitch
-              label="Auto Fit"
-              value={props.autoFit}
-              onChange={handlePropChange('autoFit')}
-            />
-          </div>
-
-          {/* Row 1 – Sizing */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+            <PreviewInput title="Text" value={props.text} onChange={handlePropChange('text')} />
+            <PreviewSwitch label="Auto Fit" value={props.autoFit} onChange={handlePropChange('autoFit')} />
             <PreviewSlider
               label="Font Size (px)"
               value={props.fontSize}
@@ -95,6 +89,10 @@ const ParticleTextInner = () => {
               step={10}
               display={props.fontSize}
             />
+          </div>
+
+          {/* Row 1 – Sizing */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Particle Size (px)"
               value={props.particleSize}
@@ -113,15 +111,15 @@ const ParticleTextInner = () => {
               step={0.5}
               display={props.particleGap}
             />
-          </div>
-
-          {/* Row 2 – Mouse controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSwitch
               label="Mouse Interaction"
               value={props.mouseControls.enabled}
               onChange={handleMouseControlChange('enabled')}
             />
+          </div>
+
+          {/* Row 2 – Mouse controls */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
             <PreviewSlider
               label="Mouse Radius (px)"
               value={props.mouseControls.radius}
@@ -140,10 +138,6 @@ const ParticleTextInner = () => {
               step={0.5}
               display={props.mouseControls.strength}
             />
-          </div>
-
-          {/* Row 3 – Physics */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <PreviewSlider
               label="Friction"
               value={props.friction}
@@ -153,6 +147,10 @@ const ParticleTextInner = () => {
               step={0.01}
               display={props.friction.toFixed(2)}
             />
+          </div>
+
+          {/* Row 3 – Physics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <PreviewSlider
               label="Ease"
               value={props.ease}
@@ -162,22 +160,6 @@ const ParticleTextInner = () => {
               step={0.01}
               display={props.ease.toFixed(2)}
             />
-          </div>
-
-          {/* Row 4 – Colors */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
-            {props.colors.map((c, i) => (
-              <PreviewColorPicker
-                key={i}
-                title={`Color ${i + 1}`}
-                color={c}
-                onChange={handleColorChange(i)}
-              />
-            ))}
-          </div>
-
-          {/* Row 5 – Background */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <PreviewColorPicker
               title="Background Color"
               color={props.backgroundColor === 'transparent' ? '#000000' : props.backgroundColor}
@@ -185,6 +167,32 @@ const ParticleTextInner = () => {
             />
           </div>
 
+          {/* Row 4 – Colors */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+            {props.colors.map((c, i) => (
+              <PreviewColorPicker key={i} title={`Color ${i + 1}`} color={c} onChange={handleColorChange(i)} />
+            ))}
+          </div>
+
+          {/* Row 5 – Shape */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+            <PreviewSelect
+              label="Shape"
+              value={props.shape}
+              onChange={handlePropChange('shape')}
+              options={SHAPE_OPTIONS}
+            />
+            {props.shape === 'ascii' && (
+              <PreviewInput
+                title="ASCII Characters"
+                value={props.asciiChars}
+                onChange={handlePropChange('asciiChars')}
+              />
+            )}
+          </div>
+
+          {/* Row 6 – Background */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2"></div>
         </Customize>
       }
       propsTable={<PropsTable PROPS_DATA={PROPS_DATA} />}
