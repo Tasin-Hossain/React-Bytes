@@ -40,7 +40,7 @@ const ScrollStackInner = () => {
   return (
     <DemoBuilder
       title="Scroll Stack"
-      favKey="components/scroll-stack"
+      favKey="carousels/scroll-stack"
       prompt={ScrollStackPrompt}
       childrenClassname="w-full h-[460px]"
       PreviewComponent={<ScrollStack key={props.count} {...props} />}

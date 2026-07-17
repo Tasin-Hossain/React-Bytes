@@ -48,7 +48,7 @@ const ImageCardHoverInner = () => {
   return (
     <DemoBuilder
       title="Image Card Hover"
-      favKey="components/image-card-hover"
+      favKey="cards/image-card-hover"
       prompt={ImageCardHoverPrompt}
       childrenClassname="w-full"
       PreviewComponent={<ImageCardHover {...props} className="w-full" />}

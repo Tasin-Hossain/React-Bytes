@@ -44,7 +44,7 @@ const SpectraSliderInner = () => {
   return (
     <DemoBuilder
       title="Spectra Slider"
-      favKey="components/spectra-slider"
+      favKey="carousels/spectra-slider"
       prompt={SpectraSliderPrompt}
       childrenClassname="w-full"
       PreviewComponent={<SpectraSlider {...props} className="w-full min-h-120" />}

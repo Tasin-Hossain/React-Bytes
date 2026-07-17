@@ -45,7 +45,7 @@ const RotatingCarouselInner = () => {
   return (
     <DemoBuilder
       title="Rotating Carousel"
-      favKey="components/rotating-carousel"
+      favKey="carousels/rotating-carousel"
       prompt={RotatingCarouselPrompt}
       childrenClassname="w-full"
       PreviewComponent={<RotatingCarousel {...props} className="w-full min-h-120" />}
