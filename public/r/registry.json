@@ -1190,70 +1190,6 @@
 			]
 		},
 		{
-			"name": "ImageCardHover-JS-CSS",
-			"title": "ImageCardHover",
-			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
-			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
-			"registryDependencies": [],
-			"files": [
-				{
-					"type": "registry:component",
-					"path": "ImageCardHover.jsx"
-				}
-			]
-		},
-		{
-			"name": "ImageCardHover-JS-TW",
-			"title": "ImageCardHover",
-			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
-			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
-			"registryDependencies": [],
-			"files": [
-				{
-					"type": "registry:component",
-					"path": "ImageCardHover.jsx"
-				}
-			]
-		},
-		{
-			"name": "ImageCardHover-TS-CSS",
-			"title": "ImageCardHover",
-			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
-			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
-			"registryDependencies": [],
-			"files": [
-				{
-					"type": "registry:component",
-					"path": "ImageCardHover.tsx"
-				}
-			]
-		},
-		{
-			"name": "ImageCardHover-TS-TW",
-			"title": "ImageCardHover",
-			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
-			"type": "registry:component",
-			"dependencies": [
-				"gsap@^3.15.0"
-			],
-			"registryDependencies": [],
-			"files": [
-				{
-					"type": "registry:component",
-					"path": "ImageCardHover.tsx"
-				}
-			]
-		},
-		{
 			"name": "SpectraSlider-JS-CSS",
 			"title": "SpectraSlider",
 			"description": "A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.",
@@ -1314,6 +1250,70 @@
 				{
 					"type": "registry:component",
 					"path": "SpectraSlider.tsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-JS-CSS",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.jsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-JS-TW",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.jsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-TS-CSS",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.tsx"
+				}
+			]
+		},
+		{
+			"name": "ImageCardHover-TS-TW",
+			"title": "ImageCardHover",
+			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"gsap@^3.15.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "ImageCardHover.tsx"
 				}
 			]
 		},

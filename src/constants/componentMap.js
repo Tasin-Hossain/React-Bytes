@@ -26,12 +26,14 @@ const componentMap = {
   'text-animations/blur-highlight': () => import('../demo/TextAnimations/BlurHighlightDemo.jsx'),
 
 
-  // ── Components
-  'components/rotating-cards': () => import('../demo/Components/RotatingCardsDemo.jsx'),
-  'components/rotating-carousel': () => import('../demo/Components/RotatingCarouselDemo.jsx'),
-  'components/scroll-stack': () => import('../demo/Components/ScrollStackDemo.jsx'),
-  'components/imagecard-hover': () => import('../demo/Components/ImageCardHoverDemo.jsx'),
-  'components/spectra-slider': () => import('../demo/Components/SpectraSliderDemo.jsx'),
+  // ── Carousels
+  'carousels/rotating-cards': () => import('../demo/Carousels/RotatingCardsDemo.jsx'),
+  'carousels/rotating-carousel': () => import('../demo/Carousels/RotatingCarouselDemo.jsx'),
+  'carousels/scroll-stack': () => import('../demo/Carousels/ScrollStackDemo.jsx'),
+  'carousels/spectra-slider': () => import('../demo/Carousels/SpectraSliderDemo.jsx'),
+  
+  // ── Cards
+  'cards/imagecard-hover': () => import('../demo/Cards/ImageCardHoverDemo.jsx'),
 
   // ── backgrounds 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),

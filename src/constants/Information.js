@@ -178,49 +178,51 @@ export const componentMetadata = {
   },
 
 
-  // Components
-  'Components/RotatingCards': {
+  // Carousels
+  'Carousels/RotatingCards': {
     name: 'RotatingCards',
     description:'A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.',
-    category: 'Components',
+    category: 'Carousels',
     dependencies: [],
-    docsUrl: 'https://reactbytes.online/components/rotating-cards',
+    docsUrl: 'https://reactbytes.online/carousels/rotating-cards',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
-  'Components/RotatingCarousel': {
+  'Carousels/RotatingCarousel': {
     name: 'RotatingCarousel',
     description:'A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.',
-    category: 'Components',
+    category: 'Carousels',
     dependencies: [],
-    docsUrl: 'https://reactbytes.online/components/rotating-carousel',
+    docsUrl: 'https://reactbytes.online/carousels/rotating-carousel',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
-  'Components/ScrollStack': {
+  'Carousels/ScrollStack': {
     name: 'ScrollStack',
     description:'A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.',
-    category: 'Components',
+    category: 'Carousels',
     dependencies: [],
-    docsUrl: 'https://reactbytes.online/components/scroll-stack',
+    docsUrl: 'https://reactbytes.online/carousels/scroll-stack',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
-  'Components/ImageCardHover': {
-    name: 'ImageCardHover',
-    description:'A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.',
-    category: 'Components',
-    dependencies: [],
-    docsUrl: 'https://reactbytes.online/components/magecard-hover',
-    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
-    tags: []
-  },
-  'Components/SpectraSlider': {
+  'Carousels/SpectraSlider': {
     name: 'SpectraSlider',
     description:'A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.',
-    category: 'Components',
+    category: 'Carousels',
     dependencies: [],
-    docsUrl: 'https://reactbytes.online/components/spectra-slider',
+    docsUrl: 'https://reactbytes.online/carousels/spectra-slider',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
+  // Cards
+  'Cards/ImageCardHover': {
+    name: 'ImageCardHover',
+    description:'A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.',
+    category: 'Cards',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/cards/magecard-hover',
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },

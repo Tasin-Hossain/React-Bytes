@@ -1,14 +1,20 @@
-import { useRef, useState, useCallback, useMemo, memo, useEffect, Fragment } from 'react';
+import { useRef, useState, useCallback, memo, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 // React Icons
-import { RiHeartFill, RiArrowDownSLine, RiArrowRightUpLine } from 'react-icons/ri';
+import {
+  RiHeartFill,
+  RiArrowDownSLine,
+  RiArrowRightUpLine,
+  RiBookOpenLine,
+  RiDownload2Line,
+  RiPlugLine,
+  RiApps2Line,
+  RiFolderLine
+} from 'react-icons/ri';
 
-import { CATEGORIES, NEW, UPDATED } from '../../constants/Categories';
+import { CATEGORIES, DEFAULT_CATEGORY_ICON } from '../../constants/Categories';
 import { TOOLS } from '../../constants/Tools';
-
-// Constants
-// const SCROLL_OFFSET = 100;
 
 // Helpers
 const scrollToTop = () => window.scrollTo(0, 0);
@@ -20,6 +26,14 @@ const getSavedComponents = () => {
   } catch {
     return [];
   }
+};
+
+// Icons for the "Get Started" flat doc links
+const GET_STARTED_ICONS = {
+  Introduction: RiBookOpenLine,
+  Installation: RiDownload2Line,
+  MCP: RiPlugLine,
+  'All Components': RiApps2Line
 };
 
 // Custom Hooks
@@ -165,100 +179,70 @@ const FavoritesSection = ({ savedSet, onClose, location }) => {
   );
 };
 
-// AccordionCategory — defaultOpen=true means always starts open
-const AccordionCategory = memo(
-  ({ category, onClose, location, pendingActivePath, onNavigation, savedSet, defaultOpen }) => {
-    const [open, setOpen] = useState(defaultOpen ?? true);
-
-    const items = useMemo(
-      () =>
-        category.subcategories.map(sub => {
-          const path = `/${slug(category.name)}/${slug(sub)}`;
-          const activePath = pendingActivePath || location.pathname;
-          const favKey = `${slug(category.name)}/${slug(sub)}`;
-          return {
-            sub,
-            path,
-            isActive: activePath === path,
-            isNew: NEW.includes(sub),
-            isUpdated: UPDATED.includes(sub),
-            isFavorited: savedSet?.has?.(favKey)
-          };
-        }),
-      [category, location.pathname, pendingActivePath, savedSet]
-    );
-
-    const hasActive = items.some(i => i.isActive);
-
-    useEffect(() => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (hasActive) setOpen(true);
-    }, [hasActive]);
-
-    return (
-      <div>
+// GetStartedLinks — flat, individual doc links (no accordion, no counts)
+const GetStartedLinks = memo(({ category, onClose, location, onNavigation }) => (
+  <div className="flex flex-col gap-0.5 pb-2">
+    {category.subcategories.map(sub => {
+      const path = `/${slug(category.name)}/${slug(sub)}`;
+      const isActive = location.pathname === path;
+      const Icon = GET_STARTED_ICONS[sub] || RiFolderLine;
+      return (
         <button
-          onClick={() => setOpen(v => !v)}
-          className="w-full flex items-center justify-between pl-6 pr-3 py-2 text-left"
+          key={path}
+          onClick={() => {
+            onNavigation(path);
+            onClose?.();
+          }}
+          className={`w-full flex items-center cursor-pointer gap-2 pl-6 pr-3 py-2 text-[13px] transition-all duration-150 text-left
+            ${isActive ? 'text-(--brand) font-medium' : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'}`}
         >
-          <span className={`text-[13px] font-medium ${hasActive ? 'text-(--brand)' : 'text-(--brand)'}`}>
-            {category.name}
-          </span>
-          <RiArrowDownSLine
-            size={16}
-            className={`text-(--text-muted) transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-          />
+          <Icon size={15} className={isActive ? 'text-(--brand) shrink-0' : 'text-(--text-muted) shrink-0'} />
+          <span className="truncate">{sub}</span>
         </button>
+      );
+    })}
+  </div>
+));
+GetStartedLinks.displayName = 'GetStartedLinks';
 
-        <div
-          className="overflow-hidden transition-all duration-300"
-          style={{ maxHeight: open ? `${items.length * 44}px` : '0px' }}
-        >
-          <div className="flex flex-col gap-0.5 pb-5 pl-3 ">
-            {items.map(({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
-              <button
-                key={path}
-                onClick={() => {
-                  onNavigation?.(path, sub);
-                  onClose?.();
-                }}
-                className={`w-full flex items-center cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
-                ${
-                  isActive
-                    ? 'text-(--brand) font-medium'
-                    : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'
-                }`}
-              >
-                <span className="truncate flex-1">{sub}</span>
-                {isNew && (
-                  <span className="shrink-0 text-[9px] font-bold px-1.5 py-px rounded-md bg-linear-to-r from-purple-500 to-violet-500 text-white">
-                    New
-                  </span>
-                )}
-                {isUpdated && (
-                  <span className="shrink-0 text-[10px] font-bold px-1.5 py-px rounded-md bg-(--bg-button) text-(--text-muted) border border-(--border-button)">
-                    Updated
-                  </span>
-                )}
-                {isFavorited && <RiHeartFill className="shrink-0 text-(--brand)" size={12} />}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-);
-AccordionCategory.displayName = 'AccordionCategory';
+// CategoryRow — flat row for a whole category, no expand/collapse.
+// Clicking it navigates to the category's grid page (/category-slug),
+// which shows all of that category's components as hover-to-preview cards.
+const CategoryRow = memo(({ category, onClose, location, onNavigation }) => {
+  const path = `/${slug(category.name)}`;
+  const isActive = location.pathname === path || location.pathname.startsWith(`${path}/`);
+  const Icon = category.icon || DEFAULT_CATEGORY_ICON;
+
+  return (
+    <button
+      onClick={() => {
+        onNavigation(path);
+        onClose?.();
+      }}
+      className={`w-full flex items-center justify-between gap-2 pl-6 pr-3 py-2 text-[13px] cursor-pointer transition-all duration-150 text-left
+        ${isActive ? 'text-(--brand) font-medium' : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'}`}
+    >
+      <span className="flex items-center gap-2 min-w-0">
+        <Icon size={15} className={isActive ? 'text-(--brand) shrink-0' : 'text-(--text-muted) shrink-0'} />
+        <span className="truncate">{category.name}</span>
+      </span>
+      <span className="shrink-0 text-[11px] text-(--text-muted)">{category.subcategories.length}</span>
+    </button>
+  );
+});
+CategoryRow.displayName = 'CategoryRow';
 
 // MainDrawer — slides in from LEFT
-const MainDrawer = ({ isOpen, onClose, location, pendingActivePath, onNavigation, savedSet }) => {
+const MainDrawer = ({ isOpen, onClose, location, onNavigation, savedSet }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  const getStarted = CATEGORIES.find(c => c.name === 'Get Started');
+  const otherCategories = CATEGORIES.filter(c => c.name !== 'Get Started');
 
   return (
     <>
@@ -291,22 +275,35 @@ const MainDrawer = ({ isOpen, onClose, location, pendingActivePath, onNavigation
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto sidebar-scroll">
           <FavoritesSection savedSet={savedSet} onClose={onClose} location={location} />
+
           <div className="mt-1">
-            {CATEGORIES.map((cat, i) => (
-              <Fragment key={cat.name}>
-                <AccordionCategory
+            {getStarted && (
+              <GetStartedLinks
+                category={getStarted}
+                onClose={onClose}
+                location={location}
+                onNavigation={onNavigation}
+              />
+            )}
+
+            <ToolsLinks onClose={onClose} location={location} />
+
+            <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
+              Categories
+            </p>
+            <div className="flex flex-col gap-0.5 pb-5">
+              {otherCategories.map(cat => (
+                <CategoryRow
+                  key={cat.name}
                   category={cat}
                   onClose={onClose}
                   location={location}
-                  pendingActivePath={pendingActivePath}
                   onNavigation={onNavigation}
-                  savedSet={savedSet}
-                  defaultOpen={true}
                 />
-                {i === 0 && <ToolsLinks onClose={onClose} location={location} />}
-              </Fragment>
-            ))}
+              ))}
+            </div>
           </div>
+
           <UsefulLinks onClose={onClose} />
         </div>
       </div>
@@ -316,8 +313,6 @@ const MainDrawer = ({ isOpen, onClose, location, pendingActivePath, onNavigation
 
 // Main Sidebar
 const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
-  const [pendingActivePath, setPendingActivePath] = useState(null);
-
   const containerRef = useRef(null);
   const hoverTimeout = useRef(null);
   const hoverDelayTimer = useRef(null);
@@ -326,13 +321,6 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
   const navigate = useNavigate();
   const savedSet = useFavoritesSync();
   const atBottom = useScrolledToBottom(containerRef);
-
-  useEffect(() => {
-    if (pendingActivePath && location.pathname === pendingActivePath) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPendingActivePath(null);
-    }
-  }, [location.pathname, pendingActivePath]);
 
   useEffect(
     () => () => {
@@ -345,12 +333,14 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
   const handleNavigate = useCallback(
     path => {
       if (location.pathname === path) return;
-      setPendingActivePath(path);
       navigate(path);
       scrollToTop();
     },
     [location.pathname, navigate]
   );
+
+  const getStarted = CATEGORIES.find(c => c.name === 'Get Started');
+  const otherCategories = CATEGORIES.filter(c => c.name !== 'Get Started');
 
   return (
     <>
@@ -359,12 +349,11 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
         isOpen={isDrawerOpen}
         onClose={onDrawerClose}
         location={location}
-        pendingActivePath={pendingActivePath}
         onNavigation={handleNavigate}
         savedSet={savedSet}
       />
 
-      {/* Desktop sidebar — same accordion design as mobile */}
+      {/* Desktop sidebar — flat list, no accordion, no search box */}
       <nav
         ref={containerRef}
         className="hidden md:block fixed top-14.25 left-0 h-[calc(100vh-57px)] w-62 overflow-y-auto bg-(--bg) sidebar-scroll"
@@ -375,20 +364,31 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
       >
         <div className="py-4">
           <div className="mt-1">
-            {CATEGORIES.map((cat, i) => (
-              <Fragment key={cat.name}>
-                <AccordionCategory
+            {getStarted && (
+              <GetStartedLinks
+                category={getStarted}
+                onClose={null}
+                location={location}
+                onNavigation={handleNavigate}
+              />
+            )}
+
+            <ToolsLinks onClose={null} location={location} />
+
+            <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
+              Categories
+            </p>
+            <div className="flex flex-col gap-0.5 pb-5">
+              {otherCategories.map(cat => (
+                <CategoryRow
+                  key={cat.name}
                   category={cat}
                   onClose={null}
                   location={location}
-                  pendingActivePath={pendingActivePath}
                   onNavigation={handleNavigate}
-                  savedSet={savedSet}
-                  defaultOpen={true}
                 />
-                {i === 0 && <ToolsLinks onClose={null} location={location} />}
-              </Fragment>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </nav>

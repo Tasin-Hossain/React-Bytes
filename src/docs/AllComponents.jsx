@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { RiSearchLine } from 'react-icons/ri';
-import { CATEGORIES } from '../constants/Categories';
+import { CATEGORIES, NEW } from '../constants/Categories';
 import { Input, InputGroup } from '../components/ui/Input/Input';
 import CategoryDropdown from '../components/shared/CategoryDropdown';
 import ComponentCard from '../components/shared/ComponentsGrid/ComponentCard';
@@ -25,7 +25,9 @@ const buildAllItems = () => {
       });
     }
   }
-  return items;
+  // NEW components float to the top; once the NEW tag is removed the item
+  // settles back into its original place since the sort is stable.
+  return items.sort((a, b) => (NEW.includes(b.name) ? 1 : 0) - (NEW.includes(a.name) ? 1 : 0));
 };
 
 const ALL_ITEMS = buildAllItems();
@@ -47,7 +49,7 @@ const AllComponents = () => {
 
   return (
     <>
-      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto  sm:px-6 text-(--text-primary) flex flex-col overflow-hidden">
+      <div className="md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto   text-(--text-primary) flex flex-col overflow-hidden">
 
         <div className="flex flex-col gap-4 mb-6 sm:mb-8 min-w-0">
           <h1 className="title-two shrink-0">All Components</h1>

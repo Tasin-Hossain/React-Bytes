@@ -14,7 +14,7 @@ import CurtainText from '../../../content/TextAnimations/CurtainText';
 
 const NAV_LINKS = [
   { label: 'Docs', to: '/get-started/introduction' },
-  { label: 'Components', to: '/text-animations/curtain-text' },
+  { label: 'Components', to: '/text-animations' },
   // { label: 'Blocks', to: '/', comingSoon: true },
   { label: 'Tools', to: '/tools' },
   { label: 'Sponsors', to: '/sponsors' }

@@ -36,7 +36,7 @@ const NAV_LINKS = [
   },
   {
     label: 'Components',
-    to: '/text-animations/magnetic-text',
+    to: '/text-animations',
     isActive: (path) => {
       const category = path.split('/')[1];
       return COMPONENTS_CATEGORIES.includes(category);

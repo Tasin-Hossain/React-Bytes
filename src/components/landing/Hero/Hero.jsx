@@ -3,7 +3,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import Button from '../../ui/Button/Button';
 import './Hero.css';
 import { Link } from 'react-router';
-import RotatingCards from '../../../content/Components/RotatingCards';
+import RotatingCards from '../../../content/Carousels/RotatingCards';
 import SpotlightText from '../../../content/TextAnimations/SpotlightText';
 import Image_1 from '../../../assets/demo/Hero/image-1.png';
 import Image_2 from '../../../assets/demo/Hero/image-2.png';
@@ -105,7 +105,7 @@ export default function HeroSection() {
           style={{ animation: 'fadeDown 0.6s ease both' }}
         >
           <div className="flex items-center justify-center flex-wrap gap-2">
-            <Link to={'/text-animations/curtain-text'}>
+            <Link to={'/text-animations'}>
               <Button text="New Components" />
             </Link>
             <Link to={'/text-animations/curtain-text'}>
@@ -149,7 +149,7 @@ export default function HeroSection() {
           className="pointer-events-auto flex items-center justify-center lg:justify-start gap-3 flex-wrap"
           style={{ animation: 'fadeUp 0.7s 0.3s ease both', opacity: 0 }}
         >
-          <Link to="/text-animations/magnetic-text">
+          <Link to="/text-animations">
             <Button text="Browse Components" className="py-2 px-4" />
           </Link>
         </div>

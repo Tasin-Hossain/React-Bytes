@@ -12,7 +12,7 @@ export const INITIAL_PROPS = {
   alpha: false,
   flex: true,
   scale: false,
-  textColor: '#FFFFFF'
+  textColor: '#d35af8'
 };
 
 export const PROPS_DATA = [

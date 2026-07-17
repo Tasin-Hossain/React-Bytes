@@ -5,9 +5,6 @@ export const getUsageCode = (
     direction,
     baseColor,
     activeColor,
-    fontClass,
-    textSize,
-    tracking,
     staggerMs,
     durationMs,
     easing,
@@ -26,9 +23,6 @@ const App${typeAnnotation} = () => (
     direction="${direction}"
     baseColor="${baseColor}"
     activeColor="${activeColor}"
-    fontClass="${fontClass}"
-    textSize="${textSize}"
-    tracking="${tracking}"
     staggerMs={${staggerMs}}
     durationMs={${durationMs}}
     easing="${easing}"

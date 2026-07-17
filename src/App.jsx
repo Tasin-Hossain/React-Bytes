@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router';
 import RootPage from './pages/RootPage';
 import SidebarLayout from './components/layout/SidebarLayout';
 import CategoryPage from './pages/CategoryPage';
+import CategoryGridPage from './pages/CategoryGridPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ToolsPage from './pages/ToolsPage';
 import SponsorsPage from './pages/SponsorsPage';
@@ -12,6 +13,14 @@ const App = () => {
     <>
       <Routes>
         <Route exact path="/" element={<RootPage />} />
+        <Route
+          path="/:category"
+          element={
+            <SidebarLayout showSponsors={false}>
+              <CategoryGridPage />
+            </SidebarLayout>
+          }
+        />
         <Route
           path="/:category/:subcategory"
           element={
