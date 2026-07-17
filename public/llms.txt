@@ -1,9 +1,9 @@
 # React Bytes
 
-> React Bytes is an open source showcase of creative React components - Text Animations, Components, Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
+> React Bytes is an open source showcase of creative React components - Text Animations, Carousels, Cards, Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
 
 Important notes for agents:
-- Components are organized by semantics first: Text Animations, Components, Backgrounds.
+- Components are organized by semantics first: Text Animations, Carousels, Cards, Backgrounds.
 - Each component has 4 variants. All variants are kept in sync when updated.
 - Dependencies vary by component (e.g., gsap, motion). Always check and install dependencies before usage.
 - This file is auto-generated from src/constants/Information.js. Do not edit it by hand — run `npm run llms` instead.
@@ -45,12 +45,14 @@ Notes:
 - [ParticleText](https://reactbytes.online/text-animations/particle-text): A free open-source React particle text animation featuring interactive mouse effects, physics-based particle motion, customizable colors, responsive canvas rendering, auto-fit typography, and high-performance animations for modern websites and UI designs.
 - [BlurHighlight](https://reactbytes.online/text-animations/blur-highlight): A free open-source React text highlight animation featuring GSAP-powered blur effects, animated highlight wipes, customizable reveal directions, staggered animations, scroll-triggered viewport detection, and responsive typography for modern websites and UI designs.
 
-## Components
-- [RotatingCards](https://reactbytes.online/components/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.
-- [RotatingCarousel](https://reactbytes.online/components/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
-- [ScrollStack](https://reactbytes.online/components/scroll-stack): A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.
-- [ImageCardHover](https://reactbytes.online/components/magecard-hover): A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.
-- [SpectraSlider](https://reactbytes.online/components/spectra-slider): A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.
+## Carousels
+- [RotatingCards](https://reactbytes.online/carousels/rotating-cards): A customizable React rotating card carousel powered by GSAP, featuring smooth orbit animations, draggable controls, autoplay, hover effects, mouse wheel navigation, and animated card entrances.
+- [RotatingCarousel](https://reactbytes.online/carousels/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
+- [ScrollStack](https://reactbytes.online/carousels/scroll-stack): A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.
+- [SpectraSlider](https://reactbytes.online/carousels/spectra-slider): A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.
+
+## Cards
+- [ImageCardHover](https://reactbytes.online/cards/magecard-hover): A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.
 
 ## Backgrounds
 - [MouseRepelDots](https://reactbytes.online/backgrounds/mouserepel-dots): A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.

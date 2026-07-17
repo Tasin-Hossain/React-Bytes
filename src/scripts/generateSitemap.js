@@ -17,7 +17,10 @@ if (!categoriesMatch) {
   throw new Error("Could not parse CATEGORIES from Categories.js");
 }
 
-const CATEGORIES = eval(categoriesMatch[1]);
+
+const cleanedCategories = categoriesMatch[1].replace(/icon:\s*\w+\s*,/g, "");
+
+const CATEGORIES = eval(cleanedCategories);
 
 const staticPages = [
   { loc: "/", priority: "1.0", changefreq: "weekly" },
