@@ -49,6 +49,7 @@ const ComponentCard = ({ item, onRemove }) => {
   // mobile: treat tap as hover
   const isActive = hovered || touched;
 
+  // Video plays on hover, pauses (and resets) on mouse-out.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -95,15 +96,11 @@ const ComponentCard = ({ item, onRemove }) => {
   };
 
   return (
-    <Link
-      to={item.path}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <Link to={item.path} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <div
         className="
           group relative rounded-2xl overflow-hidden
-          border border-white/[0.04] bg-(--bg-card) cursor-pointer
+          border border-white/4 bg-(--bg-card) cursor-pointer
           p-1.5
           transition-colors duration-200
           hover:border-white/10
@@ -147,11 +144,11 @@ const ComponentCard = ({ item, onRemove }) => {
           {(isNew || isUpdated) && (
             <div className="absolute top-2 left-2 z-10">
               {isNew ? (
-                <span className="shrink-0 font-mono text-[10px] font-semibold uppercase leading-none tracking-wide px-2 py-[3px] rounded-md text-(--brand) border border-(--brand)/70 bg-(--brand)/25 backdrop-blur-[8px]">
+                <span className="shrink-0 font-mono text-[10px] font-semibold uppercase leading-none tracking-wide px-2 py-0.75 rounded-md text-(--brand) border border-(--brand)/70 bg-(--brand)/25 backdrop-blur-sm">
                   New
                 </span>
               ) : (
-                <span className="shrink-0 font-mono text-[10px] font-semibold uppercase leading-none tracking-wide px-2 py-[3px] rounded-md text-(--text-muted) border border-white/10 bg-black/35 backdrop-blur-[8px]">
+                <span className="shrink-0 font-mono text-[10px] font-semibold uppercase leading-none tracking-wide px-2 py-0.75 rounded-md text-(--text-muted) border border-white/10 bg-black/35 backdrop-blur-sm">
                   Updated
                 </span>
               )}
@@ -166,7 +163,7 @@ const ComponentCard = ({ item, onRemove }) => {
                 absolute top-2 right-2 z-10
                 w-7 h-7 flex items-center justify-center
                 rounded-lg bg-black/35 border border-white/10 text-white/85
-                backdrop-blur-[8px]
+                backdrop-blur-sm
                 transition-all duration-200
                 hover:bg-black/55 hover:scale-110 hover:text-red-400 cursor-pointer
                 opacity-100 sm:opacity-0 sm:group-hover:opacity-100

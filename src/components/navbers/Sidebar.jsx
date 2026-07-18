@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, memo, useEffect } from 'react';
+import { useRef, useState, useCallback, memo, forwardRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 // React Icons
@@ -6,15 +6,19 @@ import {
   RiHeartFill,
   RiArrowDownSLine,
   RiArrowRightUpLine,
+  RiArrowLeftSLine,
   RiBookOpenLine,
   RiDownload2Line,
   RiPlugLine,
   RiApps2Line,
-  RiFolderLine
+  RiFolderLine,
+  RiListUnordered,
+  RiGridLine
 } from 'react-icons/ri';
 
 import { CATEGORIES, DEFAULT_CATEGORY_ICON } from '../../constants/Categories';
 import { TOOLS } from '../../constants/Tools';
+import { COMPONENT_VIDEOS } from '../../constants/ComponentVideos';
 
 // Helpers
 const scrollToTop = () => window.scrollTo(0, 0);
@@ -205,9 +209,170 @@ const GetStartedLinks = memo(({ category, onClose, location, onNavigation }) => 
 ));
 GetStartedLinks.displayName = 'GetStartedLinks';
 
-// CategoryRow — flat row for a whole category, no expand/collapse.
-// Clicking it navigates to the category's grid page (/category-slug),
-// which shows all of that category's components as hover-to-preview cards.
+// SubcategoryThumb — mini video-preview card used in the sidebar's "Grid" view.
+// Video plays on hover, pauses (and resets) on mouse-out.
+const SubcategoryThumb = forwardRef(({ name, path, videoKey, active, onNavigate, onClose }, ref) => {
+  const videoRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const videoSrc = COMPONENT_VIDEOS[videoKey];
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (hovered) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+      v.currentTime = 0.1;
+    }
+  }, [hovered]);
+
+  return (
+    <button
+      ref={ref}
+      onClick={() => {
+        onNavigate(path);
+        onClose?.();
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={`w-full text-left cursor-pointer rounded-lg overflow-hidden border transition-colors duration-150
+        ${active ? 'border-(--brand)/20' : 'border-(--border-secondary) hover:border-(--bg-white)/15'}`}
+    >
+      <div className="relative w-full bg-(--bg) overflow-hidden" style={{ aspectRatio: '4/3' }}>
+        {videoSrc ? (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            onLoadedMetadata={e => {
+              e.target.currentTime = 0.1;
+            }}
+            className="absolute inset-0 w-full! h-full! object-cover"
+            style={{ pointerEvents: 'none' }}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center px-2">
+            <span className="text-[11px] text-(--text-muted) text-center leading-tight">{name}</span>
+          </div>
+        )}
+      </div>
+      <p className={`px-2 py-1.5 text-[12px] font-semibold truncate ${active ? 'text-(--brand)' : 'text-(--text-primary)'}`}>
+        {name}
+      </p>
+    </button>
+  );
+});
+SubcategoryThumb.displayName = 'SubcategoryThumb';
+
+// ViewToggle — the "List / Grid" pill switch shown above a category's
+// subcategory list.
+const ViewToggle = ({ mode, onChange }) => (
+  <div className="flex items-center gap-0.5 mx-3 mb-3 p-0.5 rounded-lg bg-(--bg-hover)">
+    {[
+      { key: 'list', label: 'List', Icon: RiListUnordered },
+      { key: 'grid', label: 'Grid', Icon: RiGridLine }
+    ].map(({ key, label, Icon }) => (
+      <button
+        key={key}
+        onClick={() => onChange(key)}
+        className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors duration-150
+          ${mode === key ? 'bg-(--bg-card) text-(--text-primary)' : 'text-(--text-muted) hover:text-(--text-primary)'}`}
+      >
+        <Icon size={13} />
+        {label}
+      </button>
+    ))}
+  </div>
+);
+
+// CategoryFocusView — replaces the ENTIRE sidebar body while the user is
+// inside a category (on one of its demo pages). Shows only: a back button
+// (returns to the category's grid page), the List/Grid toggle, and that
+// category's subcategories. Everything else (Get Started, Tools, other
+// categories, Favorites, Useful Links) is hidden until the user backs out.
+const CategoryFocusView = ({ category, location, onNavigation, onClose }) => {
+  const path = `/${slug(category.name)}`;
+  const [viewMode, setViewMode] = useState('list');
+  const activeItemRef = useRef(null);
+
+  useEffect(() => {
+    activeItemRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [location.pathname, viewMode]);
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          onNavigation(path);
+          onClose?.();
+        }}
+        className="w-full flex items-center gap-1.5 px-3 py-3 text-left cursor-pointer group"
+      >
+        <RiArrowLeftSLine
+          size={20}
+          className="text-(--text-muted) group-hover:text-(--text-primary) transition-colors duration-150 shrink-0"
+        />
+        <span className="text-[13px] font-bold uppercase tracking-wide text-(--text-primary) truncate">
+          {category.name}
+        </span>
+      </button>
+
+      <hr className="border-(--border-secondary) mb-3" />
+
+      <ViewToggle mode={viewMode} onChange={setViewMode} />
+
+      {viewMode === 'list' ? (
+        <div className="flex flex-col gap-0.5 pb-4">
+          {category.subcategories.map(sub => {
+            const subPath = `${path}/${slug(sub)}`;
+            const subActive = location.pathname === subPath;
+            return (
+              <button
+                key={subPath}
+                ref={subActive ? activeItemRef : null}
+                onClick={() => {
+                  onNavigation(subPath);
+                  onClose?.();
+                }}
+                className={`w-full flex items-center gap-2 pl-6 pr-3 py-2 text-[13px] cursor-pointer transition-all duration-150 text-left
+                  ${subActive ? 'text-(--brand) font-medium' : 'text-(--text-muted) hover:text-(--brand) hover:translate-x-1'}`}
+              >
+                <span className="truncate">{sub}</span>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2 px-3 pb-4">
+          {category.subcategories.map(sub => {
+            const subPath = `${path}/${slug(sub)}`;
+            const subActive = location.pathname === subPath;
+            return (
+              <SubcategoryThumb
+                key={subPath}
+                ref={subActive ? activeItemRef : null}
+                name={sub}
+                path={subPath}
+                videoKey={`${slug(category.name)}/${slug(sub)}`}
+                active={subActive}
+                onNavigate={onNavigation}
+                onClose={onClose}
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// CategoryRow — flat row for a whole category. Clicking it navigates to the
+// category's grid page (/category-slug), which shows all of that category's
+// components as hover-to-preview cards.
 const CategoryRow = memo(({ category, onClose, location, onNavigation }) => {
   const path = `/${slug(category.name)}`;
   const isActive = location.pathname === path || location.pathname.startsWith(`${path}/`);
@@ -233,7 +398,7 @@ const CategoryRow = memo(({ category, onClose, location, onNavigation }) => {
 CategoryRow.displayName = 'CategoryRow';
 
 // MainDrawer — slides in from LEFT
-const MainDrawer = ({ isOpen, onClose, location, onNavigation, savedSet }) => {
+const MainDrawer = ({ isOpen, onClose, location, onNavigation, savedSet, activeCategory }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => {
@@ -274,37 +439,48 @@ const MainDrawer = ({ isOpen, onClose, location, onNavigation, savedSet }) => {
 
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto sidebar-scroll">
-          <FavoritesSection savedSet={savedSet} onClose={onClose} location={location} />
+          {activeCategory ? (
+            <CategoryFocusView
+              category={activeCategory}
+              location={location}
+              onNavigation={onNavigation}
+              onClose={onClose}
+            />
+          ) : (
+            <>
+              <FavoritesSection savedSet={savedSet} onClose={onClose} location={location} />
 
-          <div className="mt-1">
-            {getStarted && (
-              <GetStartedLinks
-                category={getStarted}
-                onClose={onClose}
-                location={location}
-                onNavigation={onNavigation}
-              />
-            )}
+              <div className="mt-1">
+                {getStarted && (
+                  <GetStartedLinks
+                    category={getStarted}
+                    onClose={onClose}
+                    location={location}
+                    onNavigation={onNavigation}
+                  />
+                )}
 
-            <ToolsLinks onClose={onClose} location={location} />
+                <ToolsLinks onClose={onClose} location={location} />
 
-            <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
-              Categories
-            </p>
-            <div className="flex flex-col gap-0.5 pb-5">
-              {otherCategories.map(cat => (
-                <CategoryRow
-                  key={cat.name}
-                  category={cat}
-                  onClose={onClose}
-                  location={location}
-                  onNavigation={onNavigation}
-                />
-              ))}
-            </div>
-          </div>
+                <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
+                  Categories
+                </p>
+                <div className="flex flex-col gap-0.5 pb-5">
+                  {otherCategories.map(cat => (
+                    <CategoryRow
+                      key={cat.name}
+                      category={cat}
+                      onClose={onClose}
+                      location={location}
+                      onNavigation={onNavigation}
+                    />
+                  ))}
+                </div>
+              </div>
 
-          <UsefulLinks onClose={onClose} />
+              <UsefulLinks onClose={onClose} />
+            </>
+          )}
         </div>
       </div>
     </>
@@ -342,6 +518,11 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
   const getStarted = CATEGORIES.find(c => c.name === 'Get Started');
   const otherCategories = CATEGORIES.filter(c => c.name !== 'Get Started');
 
+  // While the user is on a demo page inside a category (e.g.
+  // /text-animations/blur-text), the whole sidebar collapses down to just
+  // that category's back button + subcategory list.
+  const activeCategory = otherCategories.find(cat => location.pathname.startsWith(`/${slug(cat.name)}/`));
+
   return (
     <>
       {/* Mobile drawer */}
@@ -351,6 +532,7 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
         location={location}
         onNavigation={handleNavigate}
         savedSet={savedSet}
+        activeCategory={activeCategory}
       />
 
       {/* Desktop sidebar — flat list, no accordion, no search box */}
@@ -363,33 +545,42 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
         }}
       >
         <div className="py-4">
-          <div className="mt-1">
-            {getStarted && (
-              <GetStartedLinks
-                category={getStarted}
-                onClose={null}
-                location={location}
-                onNavigation={handleNavigate}
-              />
-            )}
-
-            <ToolsLinks onClose={null} location={location} />
-
-            <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
-              Categories
-            </p>
-            <div className="flex flex-col gap-0.5 pb-5">
-              {otherCategories.map(cat => (
-                <CategoryRow
-                  key={cat.name}
-                  category={cat}
+          {activeCategory ? (
+            <CategoryFocusView
+              category={activeCategory}
+              location={location}
+              onNavigation={handleNavigate}
+              onClose={null}
+            />
+          ) : (
+            <div className="mt-1">
+              {getStarted && (
+                <GetStartedLinks
+                  category={getStarted}
                   onClose={null}
                   location={location}
                   onNavigation={handleNavigate}
                 />
-              ))}
+              )}
+
+              <ToolsLinks onClose={null} location={location} />
+
+              <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
+                Categories
+              </p>
+              <div className="flex flex-col gap-0.5 pb-5">
+                {otherCategories.map(cat => (
+                  <CategoryRow
+                    key={cat.name}
+                    category={cat}
+                    onClose={null}
+                    location={location}
+                    onNavigation={handleNavigate}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
     </>
