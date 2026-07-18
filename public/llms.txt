@@ -50,6 +50,7 @@ Notes:
 - [RotatingCarousel](https://reactbytes.online/carousels/rotating-carousel): A customizable React 3D carousel component featuring GSAP-powered rotation, draggable interactions, inertia physics, autoplay, responsive image cards, hover effects, dynamic shading, and configurable entrance animations for modern UI designs.
 - [ScrollStack](https://reactbytes.online/carousels/scroll-stack): A customizable React scroll stack component featuring GSAP ScrollTrigger-powered card stacking, pinning, scaling, rotation, blur effects, responsive layouts, and smooth scroll-driven animations for modern UI designs.
 - [SpectraSlider](https://reactbytes.online/carousels/spectra-slider): A customizable React card slider featuring GSAP-powered 3D animations, draggable interactions, smooth mouse wheel navigation, autoplay, curved layouts, responsive card positioning, and interactive transitions for modern UI designs.
+- [SpiralImages](https://reactbytes.online/carousels/spiral-images): A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.
 
 ## Cards
 - [ImageCardHover](https://reactbytes.online/cards/magecard-hover): A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.
@@ -66,6 +67,7 @@ Notes:
 - [AsciiPlasmaWave](https://reactbytes.online/backgrounds/asciiplasma-wave): A customizable React ASCII plasma background featuring OGL-powered WebGL shaders, animated plasma waves, configurable ASCII characters, colorful gradients, adjustable glyph density, and high-performance rendering for modern UI designs.
 - [RotatingStars](https://reactbytes.online/backgrounds/rotating-stars): A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.
 - [PrismaticBurst](https://reactbytes.online/backgrounds/prismatic-burst): A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.
+- [GradientBarsBackground](https://reactbytes.online/backgrounds/gradient-bars): A free open-source React animated gradient bars background featuring customizable color gradients, pulsing vertical bars, procedural noise textures, directional animations, and high-performance CSS effects for modern websites and UI designs.
 
 ## Optional
 - [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.
