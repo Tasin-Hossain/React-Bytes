@@ -57,7 +57,7 @@ const PrismaticBurstInner = () => {
       favKey="backgrounds/prismatic-burst"
       prompt={PrismaticBurstPrompt}
       demoContent={props.demoContent}
-
+      onToggleDemoContent={handlePropChange('demoContent')}
       childrenClassname="absolute inset-0"
       PreviewComponent={
         <PrismaticBurst

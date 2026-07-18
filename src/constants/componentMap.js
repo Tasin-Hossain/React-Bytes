@@ -47,6 +47,7 @@ const componentMap = {
   'backgrounds/asciiplasma-wave': () => import('../demo/Backgrounds/AsciiPlasmaWaveDemo.jsx'),
   'backgrounds/rotating-stars': () => import('../demo/Backgrounds/RotatingStarsDemo.jsx'),
   'backgrounds/prismatic-burst': () => import('../demo/Backgrounds/PrismaticBurstDemo.jsx'),
+  'backgrounds/gradient-bars': () => import('../demo/Backgrounds/GradientBarsBackgroundDemo.jsx'),
 
 
 };

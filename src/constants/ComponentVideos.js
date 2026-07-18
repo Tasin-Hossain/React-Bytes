@@ -30,6 +30,7 @@ import asciiWave from '../assets/videos/Backgrounds/ascii-wave.mp4';
 import emojiWave from '../assets/videos/Backgrounds/emoji-wave.mp4';
 import shapesDots from '../assets/videos/Backgrounds/shapes-dots.mp4';
 import prismaticBurst from '../assets/videos/Backgrounds/prismatic-burst.mp4';
+import gradientBars  from '../assets/videos/Backgrounds/gradient-bars.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -71,6 +72,7 @@ export const COMPONENT_VIDEOS = {
   'backgrounds/emoji-wave': emojiWave,
   'backgrounds/shapes-dots': shapesDots,
   'backgrounds/prismatic-burst': prismaticBurst,
+  'backgrounds/gradient-bars': gradientBars,
 
 
 

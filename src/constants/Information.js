@@ -327,6 +327,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/GradientBarsBackground': {
+    name: 'GradientBarsBackground',
+    description: 'A free open-source React animated gradient bars background featuring customizable color gradients, pulsing vertical bars, procedural noise textures, directional animations, and high-performance CSS effects for modern websites and UI designs.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/backgrounds/gradient-bars',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };

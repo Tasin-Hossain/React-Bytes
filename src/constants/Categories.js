@@ -25,7 +25,8 @@ export const NEW = [
   'Particle Text',
   'Mask Reveal',
   'Blur Highlight',
-  'Prismatic Burst'
+  'Prismatic Burst',
+  'Gradient Bars'
 
 
 
@@ -99,6 +100,7 @@ export const CATEGORIES = [
       'AsciiPlasma Wave',
       'Rotating Stars',
       'Prismatic Burst',
+      'Gradient Bars',
     ]
   }
 ];
