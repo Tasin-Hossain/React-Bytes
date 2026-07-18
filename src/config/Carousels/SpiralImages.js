@@ -106,10 +106,10 @@ export const PROPS_DATA = [
 export const dep = [];
 
 export const PKG_CMDS = {
-  pnpm: 'No additional dependencies required',
-  npm: 'No additional dependencies required',
-  yarn: 'No additional dependencies required',
-  bun: 'No additional dependencies required'
+  pnpm: null,
+  npm: null,
+  yarn: null,
+  bun: null
 };
 
 export const getShadcnCmds = variant => ({

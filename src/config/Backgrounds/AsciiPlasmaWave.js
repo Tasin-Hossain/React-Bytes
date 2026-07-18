@@ -49,7 +49,10 @@ export const PROPS_DATA = [
   { name: 'style',        type: 'object', def: '{}',   desc: 'Inline styles forwarded to the wrapper div.' },
 ];
 
-export const dep = ['ogl'];
+export const dep = [
+  { name: 'ogl', version: '1.0.11' },
+
+];
 
 export const PKG_CMDS = {
   pnpm: 'pnpm add ogl',

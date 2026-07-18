@@ -75,15 +75,15 @@ export const PROPS_DATA = [
   },
 ];
 export const dep = [
-  { name: '@react-three/fiber', version: '8.0.0' },
-  { name: 'three',              version: '0.160.0' },
+  { name: "@react-three/fiber", version: "^8.18.0" },
+  { name: "three", version: "^0.160.0" },
 ];
 
 export const PKG_CMDS = {
-  pnpm: null,
-  npm:  null,
-  yarn: null,
-  bun:  null,
+  pnpm: "pnpm add @react-three/fiber three",
+  npm: "npm install @react-three/fiber three",
+  yarn: "yarn add @react-three/fiber three",
+  bun: "bun add @react-three/fiber three",
 };
 
 export const getShadcnCmds = variant => ({

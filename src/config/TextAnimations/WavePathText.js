@@ -82,7 +82,9 @@ export const PROPS_DATA = [
   }
 ];
 
-export const dep = ['gsap'];
+export const dep = [
+  { name: 'gsap', version: '3.15.0' },
+];
 
 export const PKG_CMDS = {
   pnpm: 'pnpm add gsap',

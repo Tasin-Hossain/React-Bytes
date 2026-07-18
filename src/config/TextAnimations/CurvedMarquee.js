@@ -48,10 +48,10 @@ export const PROPS_DATA = [
 export const dep = [];
 
 export const PKG_CMDS = {
-  pnpm: '',
-  npm:  '',
-  yarn: '',
-  bun:  '',
+  pnpm: null,
+  npm:  null,
+  yarn: null,
+  bun:  null,
 };
 
 export const getShadcnCmds = (variant) => ({
