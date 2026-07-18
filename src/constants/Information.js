@@ -318,6 +318,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/PrismaticBurst': {
+    name: 'PrismaticBurst',
+    description: 'A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/backgrounds/prismatic-burst',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };

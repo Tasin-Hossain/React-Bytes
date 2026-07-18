@@ -1932,6 +1932,74 @@
 					"path": "RotatingStars.tsx"
 				}
 			]
+		},
+		{
+			"name": "PrismaticBurst-JS-CSS",
+			"title": "PrismaticBurst",
+			"description": "A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "PrismaticBurst.jsx"
+				}
+			]
+		},
+		{
+			"name": "PrismaticBurst-JS-TW",
+			"title": "PrismaticBurst",
+			"description": "A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "PrismaticBurst.jsx"
+				}
+			]
+		},
+		{
+			"name": "PrismaticBurst-TS-CSS",
+			"title": "PrismaticBurst",
+			"description": "A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "PrismaticBurst.tsx"
+				}
+			]
+		},
+		{
+			"name": "PrismaticBurst-TS-TW",
+			"title": "PrismaticBurst",
+			"description": "A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "PrismaticBurst.tsx"
+				}
+			]
 		}
 	]
 }

@@ -29,6 +29,7 @@ import vortex from '../assets/videos/Backgrounds/vortex.mp4';
 import asciiWave from '../assets/videos/Backgrounds/ascii-wave.mp4';
 import emojiWave from '../assets/videos/Backgrounds/emoji-wave.mp4';
 import shapesDots from '../assets/videos/Backgrounds/shapes-dots.mp4';
+import prismaticBurst from '../assets/videos/Backgrounds/prismatic-burst.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -69,6 +70,7 @@ export const COMPONENT_VIDEOS = {
   'backgrounds/ascii-wave': asciiWave,
   'backgrounds/emoji-wave': emojiWave,
   'backgrounds/shapes-dots': shapesDots,
+  'backgrounds/prismatic-burst': prismaticBurst,
 
 
 

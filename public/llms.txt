@@ -65,6 +65,7 @@ Notes:
 - [ShapesDots](https://reactbytes.online/backgrounds/shapes-dots): A customizable React canvas background featuring animated geometric shapes, interactive cursor effects, ripple bursts, multiple animation modes, gradient colors, and responsive motion.
 - [AsciiPlasmaWave](https://reactbytes.online/backgrounds/asciiplasma-wave): A customizable React ASCII plasma background featuring OGL-powered WebGL shaders, animated plasma waves, configurable ASCII characters, colorful gradients, adjustable glyph density, and high-performance rendering for modern UI designs.
 - [RotatingStars](https://reactbytes.online/backgrounds/rotating-stars): A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.
+- [PrismaticBurst](https://reactbytes.online/backgrounds/prismatic-burst): A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.
 
 ## Optional
 - [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.

@@ -1,0 +1,380 @@
+## Integrate the <PrismaticBurst /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: PrismaticBurst
+### Variant: JavaScript + Tailwind
+### Dependencies: three, @react-three/fiber
+
+---
+
+### Usage Example
+```jsx
+import PrismaticBurst from './PrismaticBurst'
+
+<div style={{ width: '100%', height: '400px' }}>
+  <PrismaticBurst
+    intensity={2}
+    speed={0.5}
+    animationType="rotate3d"
+    colors={[]}
+    distort={0}
+    paused={false}
+    offset={{ x: 0, y: 0 }}
+    hoverDampness={0}
+    rayCount={undefined}
+    mixBlendMode="lighten"
+    className=""
+  />
+</div>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| intensity | number | 2 | Global brightness multiplier applied to the final color output (`col *= uIntensity`). Values above 1 overbrighten; values below 1 dim the effect. |
+| speed | number | 0.5 | Multiplier on the elapsed time accumulator (`elapsedRef.current += delta * speed`). Higher = faster animation; `0` freezes the time value (but `paused` is the intended way to freeze). |
+| animationType | string | "rotate3d" | Controls how UV space is transformed each frame. Options: `"rotate"` (planar 2D rotation), `"rotate3d"` (lifted into 3D, rotated on two axes simultaneously for a spherical tumble), `"hover"` (no auto-rotation — the focal origin tracks the mouse pointer with optional smoothing via `hoverDampness`). |
+| colors | string[] | [] | Array of up to 8 hex color strings used as a gradient ramp mapped to the shader's brightness value. When empty (default), the built-in `applyColor` function is used instead — a hardcoded blue→cyan→white→magenta ramp. Capped at 8 entries (`MAX_COLORS`) regardless of array length. |
+| distort | number | 0 | Strength of organic domain-warp distortion applied to the angle and radius before the radial noise layer. `0` = no distortion; higher values produce more warped, less symmetrical bursts. |
+| paused | boolean | false | When `true`, the time accumulator stops incrementing (`elapsedRef` is not advanced), freezing the animation at its current frame. |
+| offset | object | `{ x: 0, y: 0 }` | Pixel or CSS-length offset of the burst's focal origin from the canvas center. Each field accepts a raw number (pixels), a `"px"` string (e.g. `"12px"`), or a `"%"` string (e.g. `"10%"` — relative to container width for `x`, height for `y`). Resolved each frame via `resolveLength()` then converted to shader UV space. |
+| hoverDampness | number | 0 | Smoothing time constant (seconds) for the pointer-tracking offset when `animationType="hover"`. `0` = instant (no smoothing, pointer position applied directly); positive values apply exponential smoothing (`factor = 1 - exp(-delta / hoverDampness)`), making the burst lag behind the cursor with a fluid follow. |
+| rayCount | number | undefined | When set, applies an angular comb filter dividing the burst into `rayCount` discrete radial spokes. `undefined` or `0` disables the comb and renders a continuous burst. |
+| mixBlendMode | string | "lighten" | CSS `mix-blend-mode` applied to the outer wrapper div. `"none"` resolves to `"normal"` (no blending). Use `"lighten"`, `"screen"`, `"add"`, etc. to layer this effect over page content. |
+| className | string | "" | **Note: due to a bug in the source, `className` is currently silently dropped.** The outer div's `className` is set via a comma-expression `("hardcoded string", className)` which evaluates only to `className` in JS — but since the hardcoded string `"flex flex-col items-center gap-4 p-0 rounded-lg w-full h-screen"` is the first operand of the comma, the `className` value is what's actually assigned. In practice this means the Tailwind layout classes (`w-full h-screen` etc.) are **not applied** — only your `className` is. See integration note 5 below. |
+
+### Animation Types
+| Value | Behavior |
+|-------|----------|
+| `"rotate"` | Simple planar 2D rotation of UV space around the origin at a fixed rate (`uTime * 0.15`). |
+| `"rotate3d"` | UV is lifted onto a unit sphere, rotated simultaneously on the X-axis (`uTime * 0.21`) and Y-axis (`uTime * 0.33`), then projected back to 2D. Produces a tumbling, spherical motion. |
+| `"hover"` | No auto-rotation. The burst's focal point tracks the mouse/pointer position (normalized `−1..1` from R3F's `pointer`), optionally smoothed by `hoverDampness`. |
+
+### Full Component Source
+```jsx
+// speed-lines-shader.jsx
+
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
+import { useMemo, useRef } from "react";
+
+const MAX_COLORS = 8;
+
+const hexToVec3 = (hex) => {
+  const c = hex.replace("#", "").padEnd(6, "0");
+  const r = parseInt(c.slice(0, 2), 16) / 255;
+  const g = parseInt(c.slice(2, 4), 16) / 255;
+  const b = parseInt(c.slice(4, 6), 16) / 255;
+  return new THREE.Vector3(r, g, b);
+};
+
+const resolveLength = (value, referencePx) => {
+  if (value === undefined || value === null) return 0;
+  if (typeof value === "number") return value;
+  const str = String(value).trim();
+  if (str.endsWith("%")) {
+    return (parseFloat(str) / 100) * referencePx;
+  }
+  if (str.endsWith("px")) {
+    return parseFloat(str);
+  }
+  const n = parseFloat(str);
+  return Number.isNaN(n) ? 0 : n;
+};
+
+const ANIMATION_TYPES = { rotate: 0, rotate3d: 1, hover: 2 };
+
+function FullscreenShader({
+  intensity,
+  speed,
+  animationType,
+  colors,
+  distort,
+  paused,
+  offset,
+  hoverDampness,
+  rayCount,
+}) {
+  const shaderRef = useRef(null);
+  const { size, gl } = useThree();
+
+  const elapsedRef = useRef(0);
+  const hoverRef = useRef([0, 0]);
+
+  const colorVectors = useMemo(() => {
+    const list = (colors || []).slice(0, MAX_COLORS).map((hex) => hexToVec3(hex));
+    while (list.length < MAX_COLORS) {
+      list.push(new THREE.Vector3(0, 0, 0));
+    }
+    return list;
+  }, [colors]);
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uResolution: { value: new THREE.Vector3(size.width, size.height, 1) },
+      uIntensity: { value: intensity },
+      uDistort: { value: distort },
+      uRayCount: { value: rayCount || 0 },
+      uAnimationType: { value: ANIMATION_TYPES[animationType] ?? ANIMATION_TYPES.rotate3d },
+      uOffset: { value: new THREE.Vector2(0, 0) },
+      uColors: { value: colorVectors },
+      uColorCount: { value: Math.min(colors?.length || 0, MAX_COLORS) },
+    }),
+    [animationType, colorVectors, colors?.length, distort, intensity, rayCount, size.height, size.width]
+  );
+
+  useFrame(({ pointer }, delta) => {
+    if (!shaderRef.current) return;
+    const u = shaderRef.current.uniforms;
+
+    if (!paused) {
+      elapsedRef.current += delta * speed;
+    }
+    u.uTime.value = elapsedRef.current;
+
+    const bufferSize = new THREE.Vector2();
+    gl.getDrawingBufferSize(bufferSize);
+    u.uResolution.value.set(bufferSize.x, bufferSize.y, 1);
+
+    u.uIntensity.value = intensity;
+    u.uDistort.value = distort;
+    u.uRayCount.value = rayCount || 0;
+    u.uAnimationType.value = ANIMATION_TYPES[animationType] ?? ANIMATION_TYPES.rotate3d;
+    u.uColors.value = colorVectors;
+    u.uColorCount.value = Math.min(colors?.length || 0, MAX_COLORS);
+
+    const staticX = resolveLength(offset?.x, size.width) / size.height;
+    const staticY = resolveLength(offset?.y, size.height) / size.height;
+
+    let hoverX = 0;
+    let hoverY = 0;
+    if (animationType === "hover") {
+      const targetX = pointer.x * 0.5;
+      const targetY = pointer.y * 0.5;
+      if (hoverDampness > 0) {
+        const tau = hoverDampness;
+        const factor = Math.min(1, 1 - Math.exp(-delta / tau));
+        hoverRef.current[0] += (targetX - hoverRef.current[0]) * factor;
+        hoverRef.current[1] += (targetY - hoverRef.current[1]) * factor;
+      } else {
+        hoverRef.current[0] = targetX;
+        hoverRef.current[1] = targetY;
+      }
+      hoverX = hoverRef.current[0];
+      hoverY = hoverRef.current[1];
+    }
+
+    u.uOffset.value.set(staticX + hoverX, staticY + hoverY);
+  });
+
+  return (
+    <mesh>
+      <planeGeometry args={[2, 2]} />
+      <shaderMaterial
+        ref={shaderRef}
+        depthWrite={false}
+        depthTest={false}
+        transparent={false}
+        uniforms={uniforms}
+        vertexShader={/* glsl */ `
+          void main() {
+            gl_Position = vec4(position, 1.0);
+          }
+        `}
+        fragmentShader={/* glsl */ `
+          precision highp float;
+
+          #define MAX_COLORS 8
+          #define TWO_PI 6.28318530718
+
+          uniform vec3 uResolution;
+          uniform float uTime;
+          uniform float uIntensity;
+          uniform float uDistort;
+          uniform float uRayCount;
+          uniform int uAnimationType; // 0 rotate, 1 rotate3d, 2 hover
+          uniform vec2 uOffset;
+          uniform vec3 uColors[MAX_COLORS];
+          uniform int uColorCount;
+
+          float randVal(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+
+          float noise2d(vec2 p){
+              vec2 i = floor(p);
+              vec2 f = fract(p);
+              vec2 u = f*f*(3.0-2.0*f);
+              float a = randVal(i + vec2(0.0, 0.0));
+              float b = randVal(i + vec2(1.0, 0.0));
+              float c = randVal(i + vec2(0.0, 1.0));
+              float d = randVal(i + vec2(1.0, 1.0));
+              return (a + (b-a)*u.x + (c-a)*u.y + (a-b-c+d)*u.x*u.y) / 4.0;
+          }
+
+          float mirrored(float t, float shift){
+              t = fract(t + shift);
+              return 2.0*abs(t-0.5);
+          }
+
+          float radialLayer(float angle, float radius){
+              const float SCALE = 45.0;
+              radius = pow(radius, 0.01);
+              float offset = -uTime * 0.07;
+              vec2 pos = vec2(mirrored(angle, 0.1), radius + offset);
+              float n1 = noise2d(pos * SCALE);
+              pos = 2.1*vec2(mirrored(angle,0.4), radius+offset);
+              float n2 = noise2d(pos * SCALE);
+              pos = 3.7*vec2(mirrored(angle,0.8), radius+offset);
+              float n3 = noise2d(pos * SCALE);
+              pos = 5.8*vec2(mirrored(angle,0.0), radius+offset);
+              float n4 = noise2d(pos * SCALE);
+              return pow((n1 + 0.5*n2 + 0.25*n3 + 0.125*n4) * 3.0, 1.0);
+          }
+
+          vec3 applyColor(float v){
+              v = clamp(v, 0.0, 1.0);
+              vec3 col = mix(vec3(0.0,0.0,1.1), vec3(0.0,1.0,1.0), v);
+              col = mix(col, vec3(1.0,1.0,1.0), v*4.0-3.0) * v;
+              col = max(col, vec3(0.0));
+              col = mix(col, vec3(1.0, 0.25, 1.0), smoothstep(1.0, 0.2, v) * smoothstep(0.15, 0.9, v));
+              return col;
+          }
+
+          vec3 colorFromGradient(float v){
+              v = clamp(v, 0.0, 1.0);
+              if (uColorCount <= 1) return uColors[0];
+              float scaled = v * float(uColorCount - 1);
+              int idx = int(floor(scaled));
+              float frac = fract(scaled);
+              vec3 c0 = uColors[idx];
+              vec3 c1 = uColors[idx + 1];
+              return mix(c0, c1, frac);
+          }
+
+          void renderMain(out vec4 fragColor, in vec2 fragCoord){
+              vec2 uv = (fragCoord * 2.0 - uResolution.xy) / uResolution.y * 0.5;
+              uv -= uOffset;
+
+              if (uAnimationType == 0) {
+                  float a = uTime * 0.15;
+                  float ca = cos(a);
+                  float sa = sin(a);
+                  uv = mat2(ca, -sa, sa, ca) * uv;
+              } else if (uAnimationType == 1) {
+                  vec3 p3 = vec3(uv, sqrt(max(0.0, 1.0 - dot(uv, uv))));
+                  float ax = uTime * 0.21;
+                  float ay = uTime * 0.33;
+                  mat3 rotX = mat3(
+                      1.0, 0.0, 0.0,
+                      0.0, cos(ax), -sin(ax),
+                      0.0, sin(ax), cos(ax)
+                  );
+                  mat3 rotY = mat3(
+                      cos(ay), 0.0, sin(ay),
+                      0.0, 1.0, 0.0,
+                      -sin(ay), 0.0, cos(ay)
+                  );
+                  p3 = rotY * rotX * p3;
+                  uv = p3.xy;
+              }
+
+              float dist = dot(uv, uv);
+              float ang = atan(uv.y, uv.x) / TWO_PI;
+
+              if (uDistort > 0.0) {
+                  float d = noise2d(vec2(ang * 3.0, dist * 3.0) + uTime * 0.05);
+                  ang += (d - 0.5) * uDistort * 0.6;
+                  dist += (d - 0.5) * uDistort * 0.3;
+              }
+
+              float val = radialLayer(ang, dist);
+              val = val * 2.5 - 1.4;
+              val = mix(0.0, val, 0.8 * smoothstep(0.0, 0.8, dist));
+
+              if (uRayCount > 0.0) {
+                  float spoke = fract(ang * uRayCount);
+                  float comb = smoothstep(0.0, 0.12, spoke) * smoothstep(1.0, 0.88, spoke);
+                  val *= mix(0.15, 1.0, comb);
+              }
+
+              vec3 col = (uColorCount > 0) ? colorFromGradient(val) : applyColor(val);
+              col *= uIntensity;
+
+              fragColor = vec4(col, 1.0);
+          }
+
+          void main(){
+            vec4 outColor;
+            renderMain(outColor, gl_FragCoord.xy);
+            gl_FragColor = outColor;
+          }
+        `}
+      />
+    </mesh>
+  );
+}
+
+export const PrismaticBurst = ({
+  intensity = 2,
+  speed = 0.5,
+  animationType = "rotate3d",
+  colors = [],
+  distort = 0,
+  paused = false,
+  offset = { x: 0, y: 0 },
+  hoverDampness = 0,
+  rayCount = undefined,
+  mixBlendMode = "lighten",
+  className,
+}) => {
+  return (
+    <div
+      className={(
+        "flex flex-col items-center gap-4 p-0 rounded-lg w-full h-screen",
+        className
+      )}
+      style={{ mixBlendMode: mixBlendMode === "none" ? "normal" : mixBlendMode }}
+    >
+      <Canvas orthographic camera={{ position: [0, 0, 1], zoom: 1 }} dpr={[1, 2]}>
+        <color attach="background" args={["#000000"]} />
+        <FullscreenShader
+          intensity={intensity}
+          speed={speed}
+          animationType={animationType}
+          colors={colors}
+          distort={distort}
+          paused={paused}
+          offset={offset}
+          hoverDampness={hoverDampness}
+          rayCount={rayCount}
+        />
+      </Canvas>
+    </div>
+  );
+};
+
+export default PrismaticBurst;
+```
+
+### Integration Instructions
+1. Install the required dependencies before using this component:
+   ```bash
+   npm install three @react-three/fiber
+   ```
+2. Copy the component source above into `./PrismaticBurst.jsx` in your project.
+3. Import and render using the usage example above as a starting point. Both a named export (`PrismaticBurst`) and a default export are available.
+4. Wrap the component in a sized container — the `<Canvas>` fills its parent via R3F's default behavior:
+   ```jsx
+   <div style={{ width: '100%', height: '400px' }}>
+     <PrismaticBurst />
+   </div>
+   ```
+5. **`className` bug — the Tailwind layout classes are not applied.** The outer div's `className` is set via a JS comma expression: `("flex flex-col ... w-full h-screen", className)`. In JavaScript, a comma expression evaluates both operands and returns the **last** one — so `className` is what gets applied, not the hardcoded Tailwind string. This means none of the layout classes (`w-full`, `h-screen`, etc.) are actually on the element — only whatever you pass as `className` is. To work around this until the source is fixed, pass the layout classes yourself: `className="w-full h-full"` or size the component via a parent container.
+6. **`colors={[]}` (default) uses the built-in color palette.** When `colors` is empty, `uColorCount` is `0`, and the shader takes the `applyColor` branch — a hardcoded blue→cyan→white→magenta gradient baked into the GLSL. Pass at least one color to `colors` to switch to the `colorFromGradient` path, which linearly interpolates across your supplied array. A single-color `colors` array (`uColorCount === 1`) returns `uColors[0]` with no interpolation.
+7. All props except `colors` (which requires a `useMemo` recompute of `colorVectors`) are read directly from `propsRef`-equivalent closure captures inside `useFrame` each tick — changes reflect on the next frame with no effect re-run. The `uniforms` `useMemo` also recreates when `animationType`, `colors.length`, `distort`, `intensity`, `rayCount`, or canvas size changes, but this only replaces the uniform object — not the shader program itself.
+8. **`offset` supports px, %, and raw number values per axis**, resolved by `resolveLength()`: a plain number is treated as pixels; a string ending in `"px"` is parsed as pixels; a string ending in `"%"` is resolved relative to `size.width` for `x` and `size.height` for `y`. The resolved pixel value is then divided by `size.height` to convert to shader UV space (both axes use height as the denominator for aspect-ratio-correct scaling).
+9. **`hoverDampness` is only active when `animationType="hover"`.** The exponential smoothing formula is `factor = 1 - exp(-delta / tau)` where `tau = hoverDampness` — at `tau = 0.1` the pointer is followed very tightly; at `tau = 1.0` the burst lags significantly. When `animationType` is `"rotate"` or `"rotate3d"`, `hoverRef` is never written and pointer position has no effect.
+10. The `<Canvas>` always renders a black background (`<color attach="background" args={["#000000"]} />`). To use `mixBlendMode` for compositing over page content, you'll need to remove or override this background attachment, since the black fill will occlude everything beneath it regardless of the blend mode.
+11. The fragment shader is an opaque fullscreen quad (`transparent={false}`, `depthWrite={false}`, `depthTest={false}`) — `gl_FragColor.a` is always `1.0`. CSS `mixBlendMode` on the wrapper div is the only way to blend this with underlying content.
+12. DPR is set via `dpr={[1, 2]}` on the Canvas — R3F will use the device's actual pixel ratio clamped to that range.

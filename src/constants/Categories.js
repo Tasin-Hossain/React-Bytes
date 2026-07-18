@@ -24,7 +24,8 @@ export const NEW = [
   'WavePath Text',
   'Particle Text',
   'Mask Reveal',
-  'Blur Highlight'
+  'Blur Highlight',
+  'Prismatic Burst'
 
 
 
@@ -97,6 +98,7 @@ export const CATEGORIES = [
       'Shapes Dots',
       'AsciiPlasma Wave',
       'Rotating Stars',
+      'Prismatic Burst',
     ]
   }
 ];
