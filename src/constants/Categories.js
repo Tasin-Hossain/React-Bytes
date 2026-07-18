@@ -27,7 +27,8 @@ export const NEW = [
   'Blur Highlight',
   'Prismatic Burst',
   'Gradient Bars',
-  'Spiral Images'
+  'Spiral Images',
+  'Curved Marquee'
 
 
 
@@ -66,6 +67,7 @@ export const CATEGORIES = [
       'RainDrop Text',
       'Shatter Text',
       'WavePath Text',
+      'Curved Marquee'
 
     ]
   },

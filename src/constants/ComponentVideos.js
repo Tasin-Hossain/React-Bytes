@@ -32,6 +32,7 @@ import shapesDots from '../assets/videos/Backgrounds/shapes-dots.mp4';
 import prismaticBurst from '../assets/videos/Backgrounds/prismatic-burst.mp4';
 import gradientBars  from '../assets/videos/Backgrounds/gradient-bars.mp4';
 import spiralImages  from '../assets/videos/Carousels/spiral-images.mp4';
+import curvedMarquee  from '../assets/videos/TextAnimations/curved-marquee.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -51,6 +52,7 @@ export const COMPONENT_VIDEOS = {
   'text-animations/smoke-away': smokeAway,
   'text-animations/spotlight-text': spotLightText,
   'text-animations/staticnoise-text': staticNoiseText,
+  'text-animations/curved-marquee': curvedMarquee,
 
   // Carousels
   'carousels/rotating-cards': rotatingCards,

@@ -133,6 +133,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://reactbytes.online/text-animations/curved-marquee</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://reactbytes.online/carousels/rotating-cards</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>

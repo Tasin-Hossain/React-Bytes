@@ -176,6 +176,18 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'TextAnimations/CurvedMarquee': {
+    name: 'CurvedMarquee',
+    description:'A free open-source React curved marquee component featuring SVG path-based text animations, smooth infinite scrolling, draggable interactions, customizable curve depth, fade edge effects, responsive typography, and high-performance animations for modern websites and UI designs.',
+    category: 'TextAnimations',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/text-animations/curved-marquee',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
+
+
 
 
   // Carousels

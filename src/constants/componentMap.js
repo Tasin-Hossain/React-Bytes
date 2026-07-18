@@ -24,6 +24,7 @@ const componentMap = {
   'text-animations/wavepath-text': () => import('../demo/TextAnimations/WavePathTextDemo.jsx'),
   'text-animations/particle-text': () => import('../demo/TextAnimations/ParticleTextDemo.jsx'),
   'text-animations/blur-highlight': () => import('../demo/TextAnimations/BlurHighlightDemo.jsx'),
+  'text-animations/curved-marquee': () => import('../demo/TextAnimations/CurvedMarqueeDemo.jsx'),
 
 
   // ── Carousels
