@@ -1254,6 +1254,62 @@
 			]
 		},
 		{
+			"name": "SpiralImages-JS-CSS",
+			"title": "SpiralImages",
+			"description": "A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpiralImages.jsx"
+				}
+			]
+		},
+		{
+			"name": "SpiralImages-JS-TW",
+			"title": "SpiralImages",
+			"description": "A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpiralImages.jsx"
+				}
+			]
+		},
+		{
+			"name": "SpiralImages-TS-CSS",
+			"title": "SpiralImages",
+			"description": "A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpiralImages.tsx"
+				}
+			]
+		},
+		{
+			"name": "SpiralImages-TS-TW",
+			"title": "SpiralImages",
+			"description": "A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "SpiralImages.tsx"
+				}
+			]
+		},
+		{
 			"name": "ImageCardHover-JS-CSS",
 			"title": "ImageCardHover",
 			"description": "A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.",

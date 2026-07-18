@@ -215,6 +215,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Carousels/SpiralImages': {
+    name: 'SpiralImages',
+    description:'A free open-source React spiral image gallery featuring animated Archimedean spiral layouts, infinite image flow, Canvas-powered rendering, customizable spacing, fade transitions, responsive scaling, and high-performance animations for modern websites and UI designs.',
+    category: 'Carousels',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/carousels/spiral-images',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
   // Cards
   'Cards/ImageCardHover': {

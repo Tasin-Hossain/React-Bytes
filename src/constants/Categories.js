@@ -26,7 +26,9 @@ export const NEW = [
   'Mask Reveal',
   'Blur Highlight',
   'Prismatic Burst',
-  'Gradient Bars'
+  'Gradient Bars',
+  'Spiral Images'
+
 
 
 
@@ -75,7 +77,8 @@ export const CATEGORIES = [
       'Rotating Cards',
       'Rotating Carousel',
       'Scroll Stack',
-      'Spectra Slider'
+      'Spectra Slider',
+      'Spiral Images'
     ]
   },
    {

@@ -31,6 +31,7 @@ const componentMap = {
   'carousels/rotating-carousel': () => import('../demo/Carousels/RotatingCarouselDemo.jsx'),
   'carousels/scroll-stack': () => import('../demo/Carousels/ScrollStackDemo.jsx'),
   'carousels/spectra-slider': () => import('../demo/Carousels/SpectraSliderDemo.jsx'),
+  'carousels/spiral-images': () => import('../demo/Carousels/SpiralImagesDemo.jsx'),
   
   // ── Cards
   'cards/imagecard-hover': () => import('../demo/Cards/ImageCardHoverDemo.jsx'),

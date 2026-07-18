@@ -31,6 +31,7 @@ import emojiWave from '../assets/videos/Backgrounds/emoji-wave.mp4';
 import shapesDots from '../assets/videos/Backgrounds/shapes-dots.mp4';
 import prismaticBurst from '../assets/videos/Backgrounds/prismatic-burst.mp4';
 import gradientBars  from '../assets/videos/Backgrounds/gradient-bars.mp4';
+import spiralImages  from '../assets/videos/Carousels/spiral-images.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -56,6 +57,7 @@ export const COMPONENT_VIDEOS = {
   'carousels/scroll-stack': scrollStack,
   'carousels/rotating-carousel': rotatingCarousel,
   'carousels/spectra-slider': spectraSlider,
+  'carousels/spiral-images': spiralImages,
 
   // Cards
   'cards/imagecard-hover': imageCardHover,
