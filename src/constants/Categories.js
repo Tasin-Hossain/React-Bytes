@@ -3,7 +3,7 @@ import {
   RiFolderLine
 } from 'react-icons/ri';
 
-import { BackgroundsIcon, CardsIcon, CarouselsIcon, CursorIcon, TextAnimationsIcon } from './CustomIcons';
+import { BackgroundsIcon, CardsIcon, CarouselsIcon, CursorIcon, TextAnimationsIcon } from './CustomIcons.jsx';
 
 
 // Fallback icon used for any category that doesn't set its own `icon`.
