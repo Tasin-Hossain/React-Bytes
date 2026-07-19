@@ -1,9 +1,9 @@
 # React Bytes
 
-> React Bytes is an open source showcase of creative React components - Text Animations, Carousels, Cards, Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
+> React Bytes is an open source showcase of creative React components - Text Animations, Carousels, Cards, Cursors, Backgrounds - provided in four implementation variants: JavaScript + CSS, JavaScript + Tailwind, TypeScript + CSS, and TypeScript + Tailwind. Components are copy-friendly and installable via CLI (jsrepo or shadcn).
 
 Important notes for agents:
-- Components are organized by semantics first: Text Animations, Carousels, Cards, Backgrounds.
+- Components are organized by semantics first: Text Animations, Carousels, Cards, Cursors, Backgrounds.
 - Each component has 4 variants. All variants are kept in sync when updated.
 - Dependencies vary by component (e.g., gsap, motion). Always check and install dependencies before usage.
 - This file is auto-generated from src/constants/Information.js. Do not edit it by hand — run `npm run llms` instead.
@@ -55,6 +55,9 @@ Notes:
 
 ## Cards
 - [ImageCardHover](https://reactbytes.online/cards/magecard-hover): A customizable React layered image hover component featuring GSAP-powered 3D tilt, parallax effects, stacked image layers, shape clipping, blur, rotation, color filters, and interactive hover animations for modern UI designs.
+
+## Cursors
+- [SmokeyCursorEffect](https://reactbytes.online/cards/smokeycursor-effect): A free open-source React fluid cursor effect featuring WebGL-powered fluid simulations, interactive mouse and touch splashes, customizable physics, dynamic shading, colorful particle effects, and GPU-accelerated animations for modern websites and UI designs.
 
 ## Backgrounds
 - [MouseRepelDots](https://reactbytes.online/backgrounds/mouserepel-dots): A customizable React interactive dot background featuring mouse repulsion, smooth physics-based motion, animated gradients, wave effects, sparkle animations, and high-performance canvas rendering.

@@ -37,6 +37,10 @@ const componentMap = {
   // ── Cards
   'cards/imagecard-hover': () => import('../demo/Cards/ImageCardHoverDemo.jsx'),
 
+  // Cursors
+  'cursors/smokeycursor-effect': () => import('../demo/Cursors/SmokeyCursorEffectDemo.jsx'),
+
+
   // ── backgrounds 
   'backgrounds/mouserepel-dots': () => import('../demo/Backgrounds/MouseRepelDotsDemo.jsx'),
   'backgrounds/mouserepel-grid': () => import('../demo/Backgrounds/MouseRepelGridDemo.jsx'),

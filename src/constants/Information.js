@@ -237,6 +237,11 @@ export const componentMetadata = {
     tags: []
   },
 
+
+
+
+
+
   // Cards
   'Cards/ImageCardHover': {
     name: 'ImageCardHover',
@@ -247,6 +252,22 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+
+
+
+  // Cards
+  'Cursors/SmokeyCursorEffect': {
+    name: 'SmokeyCursorEffect',
+    description:'A free open-source React fluid cursor effect featuring WebGL-powered fluid simulations, interactive mouse and touch splashes, customizable physics, dynamic shading, colorful particle effects, and GPU-accelerated animations for modern websites and UI designs.',
+    category: 'Cursors',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/cards/smokeycursor-effect',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
+
+
+
 
   // Backgrounds Animations
   'Backgrounds/MouseRepelDots': {

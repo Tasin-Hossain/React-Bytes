@@ -33,6 +33,7 @@ import prismaticBurst from '../assets/videos/Backgrounds/prismatic-burst.mp4';
 import gradientBars  from '../assets/videos/Backgrounds/gradient-bars.mp4';
 import spiralImages  from '../assets/videos/Carousels/spiral-images.mp4';
 import curvedMarquee  from '../assets/videos/TextAnimations/curved-marquee.mp4';
+import smokeyCursorEffect  from '../assets/videos/Cursors/smokey-cursor-effect.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -63,6 +64,10 @@ export const COMPONENT_VIDEOS = {
 
   // Cards
   'cards/imagecard-hover': imageCardHover,
+
+  // Cursors
+  'cursors/smokeycursor-effect': smokeyCursorEffect,
+
 
   // Backgrounds
   'backgrounds/asciiplasma-wave': asciiPlasmaWave,

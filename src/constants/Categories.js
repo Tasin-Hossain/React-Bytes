@@ -2,11 +2,8 @@ import {
   RiRocketLine,
   RiFolderLine
 } from 'react-icons/ri';
-import { RxText } from "react-icons/rx";
-import { TbCarouselHorizontal } from "react-icons/tb";
-import { TbPlayCardStar } from "react-icons/tb";
-import { PiSelectionBackground } from "react-icons/pi";
 
+import { BackgroundsIcon, CardsIcon, CarouselsIcon, CursorIcon, TextAnimationsIcon } from './CustomIcons';
 
 
 // Fallback icon used for any category that doesn't set its own `icon`.
@@ -37,10 +34,6 @@ export const NEW = [
 ];
 export const UPDATED = [];
 
-// Used for main sidebar navigation.
-// `icon` is the react-icons component shown next to the category in the
-// sidebar — set it here (not in Sidebar.jsx) so adding a new category
-// automatically gets its icon without touching the sidebar component.
 export const CATEGORIES = [
   {
     name: 'Get Started',
@@ -49,7 +42,7 @@ export const CATEGORIES = [
   },
   {
     name: 'Text Animations',
-    icon: RxText,
+    icon: TextAnimationsIcon,
     subcategories: [
       'Letter3D Swap',
       'Text Pressure',
@@ -67,14 +60,15 @@ export const CATEGORIES = [
       'RainDrop Text',
       'Shatter Text',
       'WavePath Text',
-      'Curved Marquee'
+      'Curved Marquee',
+      'SmokeyCursor Effect'
 
     ]
   },
 
   {
     name: 'Carousels',
-    icon: TbCarouselHorizontal,
+    icon: CarouselsIcon,
     subcategories: [
       'Rotating Cards',
       'Rotating Carousel',
@@ -85,14 +79,21 @@ export const CATEGORIES = [
   },
    {
     name: 'Cards',
-    icon: TbPlayCardStar,
+    icon: CardsIcon,
     subcategories: [
       'ImageCard Hover',
     ]
   },
   {
+    name: 'Cursors',
+    icon: CursorIcon,
+    subcategories: [
+      'SmokeyCursor Effect',
+    ]
+  },
+  {
     name: 'Backgrounds',
-    icon: PiSelectionBackground,
+    icon: BackgroundsIcon,
     subcategories: [
       'MouseRepel Dots',
       'MouseRepel Grid',
