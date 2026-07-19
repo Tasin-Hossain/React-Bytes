@@ -2224,6 +2224,74 @@
 					"path": "GradientBarsBackground.tsx"
 				}
 			]
+		},
+		{
+			"name": "Silk-JS-CSS",
+			"title": "Silk",
+			"description": "A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Silk.jsx"
+				}
+			]
+		},
+		{
+			"name": "Silk-JS-TW",
+			"title": "Silk",
+			"description": "A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Silk.jsx"
+				}
+			]
+		},
+		{
+			"name": "Silk-TS-CSS",
+			"title": "Silk",
+			"description": "A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Silk.tsx"
+				}
+			]
+		},
+		{
+			"name": "Silk-TS-TW",
+			"title": "Silk",
+			"description": "A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.",
+			"type": "registry:component",
+			"dependencies": [
+				"@react-three/fiber@^9.6.1",
+				"three@^0.184.0"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"type": "registry:component",
+					"path": "Silk.tsx"
+				}
+			]
 		}
 	]
 }

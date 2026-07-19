@@ -378,6 +378,15 @@ export const componentMetadata = {
     variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
     tags: []
   },
+  'Backgrounds/Silk': {
+    name: 'Silk',
+    description: 'A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.',
+    category: 'Backgrounds',
+    dependencies: [],
+    docsUrl: 'https://reactbytes.online/backgrounds/silk',
+    variants: ['JS-CSS', 'JS-TW', 'TS-CSS', 'TS-TW'],
+    tags: []
+  },
 
 
 };

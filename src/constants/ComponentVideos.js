@@ -34,6 +34,7 @@ import gradientBars  from '../assets/videos/Backgrounds/gradient-bars.mp4';
 import spiralImages  from '../assets/videos/Carousels/spiral-images.mp4';
 import curvedMarquee  from '../assets/videos/TextAnimations/curved-marquee.mp4';
 import smokeyCursorEffect  from '../assets/videos/Cursors/smokey-cursor-effect.mp4';
+import silk  from '../assets/videos/Backgrounds/silk.mp4';
 
 
 export const COMPONENT_VIDEOS = {
@@ -82,6 +83,7 @@ export const COMPONENT_VIDEOS = {
   'backgrounds/shapes-dots': shapesDots,
   'backgrounds/prismatic-burst': prismaticBurst,
   'backgrounds/gradient-bars': gradientBars,
+  'backgrounds/silk': silk,
 
 
 

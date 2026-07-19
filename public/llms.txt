@@ -72,6 +72,7 @@ Notes:
 - [RotatingStars](https://reactbytes.online/backgrounds/rotating-stars): A free React WebGL background component featuring rotating star rings, customizable colors, speed, thickness, blur, opacity, and smooth shader-powered animations. Perfect for modern websites, landing pages, dashboards, and hero sections. No license required.
 - [PrismaticBurst](https://reactbytes.online/backgrounds/prismatic-burst): A free open-source React shader background featuring React Three Fiber-powered prismatic light bursts, customizable color gradients, animated ray effects, 3D rotation, hover interactions, WebGL rendering, and responsive visuals for modern websites and UI designs.
 - [GradientBarsBackground](https://reactbytes.online/backgrounds/gradient-bars): A free open-source React animated gradient bars background featuring customizable color gradients, pulsing vertical bars, procedural noise textures, directional animations, and high-performance CSS effects for modern websites and UI designs.
+- [Silk](https://reactbytes.online/backgrounds/silk): A free open-source React silk shader background featuring React Three Fiber-powered flowing fabric animations, customizable colors, procedural noise, adjustable speed, scale, rotation, and high-performance WebGL rendering for modern websites and UI designs.
 
 ## Optional
 - [GitHub Repository](https://github.com/Tasin-Hossain/React-Bytes): Source code, issues, and contribution guide.

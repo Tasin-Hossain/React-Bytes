@@ -54,6 +54,7 @@ const componentMap = {
   'backgrounds/rotating-stars': () => import('../demo/Backgrounds/RotatingStarsDemo.jsx'),
   'backgrounds/prismatic-burst': () => import('../demo/Backgrounds/PrismaticBurstDemo.jsx'),
   'backgrounds/gradient-bars': () => import('../demo/Backgrounds/GradientBarsBackgroundDemo.jsx'),
+  'backgrounds/silk': () => import('../demo/Backgrounds/SilkDemo.jsx'),
 
 
 };

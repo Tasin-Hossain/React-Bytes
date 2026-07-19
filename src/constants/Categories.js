@@ -25,7 +25,8 @@ export const NEW = [
   'Prismatic Burst',
   'Gradient Bars',
   'Spiral Images',
-  'Curved Marquee'
+  'Curved Marquee',
+  'Silk'
 
 
 
@@ -107,6 +108,7 @@ export const CATEGORIES = [
       'Rotating Stars',
       'Prismatic Burst',
       'Gradient Bars',
+      'Silk'
     ]
   }
 ];

@@ -1,0 +1,210 @@
+## Integrate the <Silk /> component from React Bytes
+
+You are helping integrate an open-source React component into an existing application.
+
+### Component: Silk
+### Variant: JavaScript + Tailwind
+### Dependencies: `three`, `@react-three/fiber`
+
+---
+
+### Usage Example
+```jsx
+import Silk from './Silk'
+
+<div style={{ width: '100%', height: '500px' }}>
+  <Silk
+    speed={5}
+    scale={1}
+    color="#7B7481"
+    noiseIntensity={1.5}
+    rotation={0}
+    className=""
+  />
+</div>
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| speed | number | 5 | Controls the animation speed of the silk effect. Internally normalized (`speed * 0.05`) before being passed to the shader's `uSpeed` uniform. |
+| scale | number | 1 | Controls the scale of the silk pattern. Internally normalized (`scale * 2`) before being passed to `uScale`. |
+| color | string | "#7B7481" | Hex color code for the silk pattern. Converted once to normalized RGB and used as the shader's base color, which the pattern function then modulates for light/dark bands. |
+| noiseIntensity | number | 1.5 | Controls the intensity of the grain/noise effect. Subtracted directly from the final color channels in the fragment shader (`col -= rnd / 15.0 * uNoiseIntensity`), matching the noise treatment used in the Vortex component. |
+| rotation | number | 0 | Controls the rotation of the silk pattern, in radians. Rotates the sampling coordinates around the pattern center before the wave math runs. |
+| className | string | "" | Additional CSS classes applied to the outer wrapper div. |
+
+### Full Component Source
+```jsx
+// JS-TW variant
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { forwardRef, useRef, useMemo, useLayoutEffect } from 'react';
+import { Color } from 'three';
+
+const hexToNormalizedRGB = hex => {
+  hex = hex.replace('#', '');
+  return [
+    parseInt(hex.slice(0, 2), 16) / 255,
+    parseInt(hex.slice(2, 4), 16) / 255,
+    parseInt(hex.slice(4, 6), 16) / 255
+  ];
+};
+
+const vertexShader = `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const fragmentShader = `
+varying vec2 vUv;
+uniform float uTime;
+uniform vec3  uColor;
+uniform float uSpeed;
+uniform float uScale;
+uniform float uRotation;
+uniform float uNoiseIntensity;
+uniform vec2  uResolution;
+
+const float e = 2.71828182845904523536;
+
+float noise(vec2 texCoord) {
+  float G = e;
+  vec2  r = (G * sin(G * texCoord));
+  return fract(r.x * r.y * (1.0 + texCoord.x));
+}
+
+void main() {
+  vec2 uv = vUv * uScale;
+  uv.x   *= uResolution.x / uResolution.y;
+
+  // Rotate the sampling coordinates around the pattern center.
+  vec2  center = vec2(uScale * 0.5 * (uResolution.x / uResolution.y), uScale * 0.5);
+  float c = cos(uRotation);
+  float s = sin(uRotation);
+  vec2  cuv = uv - center;
+  uv = vec2(cuv.x * c - cuv.y * s, cuv.x * s + cuv.y * c) + center;
+
+  float t      = uTime * uSpeed;
+  float tex_x  = uv.x;
+  float tex_y  = uv.y + 0.03 * sin(8.0 * tex_x - t);
+
+  float pattern = 0.6 + 0.4 * sin(
+    5.0 * (tex_x + tex_y + cos(3.0 * tex_x + 5.0 * tex_y) + 0.02 * t) +
+    sin(20.0 * (tex_x + tex_y - 0.1 * t))
+  );
+
+  vec3 col = uColor * pattern;
+
+  // Same noise treatment as the Vortex shader: subtract straight from the
+  // finished color channels rather than folding it into the pattern first.
+  float rnd = noise(gl_FragCoord.xy);
+  col -= rnd / 15.0 * uNoiseIntensity;
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+const SilkPlane = forwardRef(function SilkPlane({ uniforms }, ref) {
+  const { viewport, size } = useThree();
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      ref.current.scale.set(viewport.width, viewport.height, 1);
+      // update the material uniform directly via the mesh ref to avoid mutating the `uniforms` prop
+      if (ref.current.material && ref.current.material.uniforms && ref.current.material.uniforms.uResolution) {
+        ref.current.material.uniforms.uResolution.value = [size.width, size.height];
+      }
+    }
+  }, [ref, viewport, size]);
+
+  useFrame((_, delta) => {
+    ref.current.material.uniforms.uTime.value += delta;
+  });
+
+  return (
+    <mesh ref={ref}>
+      <planeGeometry args={[1, 1, 1, 1]} />
+      <shaderMaterial
+        uniforms={uniforms}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+      />
+    </mesh>
+  );
+});
+SilkPlane.displayName = 'SilkPlane';
+
+const Silk = ({
+  speed          = 5,
+  scale          = 1,
+  color          = '#7B7481',
+  noiseIntensity = 1.5,
+  rotation       = 0,
+  className      = '',
+}) => {
+  const meshRef = useRef();
+
+  // Keep the same friendly public numbers (speed=5, scale=1) as the canvas
+  // version, normalized down to ranges that read well in the shader.
+  const uniforms = useMemo(
+    () => ({
+      uTime:           { value: 0 },
+      uSpeed:          { value: speed * 0.05 },
+      uScale:          { value: scale * 2 },
+      uColor:          { value: new Color(...hexToNormalizedRGB(color)) },
+      uRotation:       { value: rotation },
+      uNoiseIntensity: { value: noiseIntensity },
+      uResolution:     { value: [1, 1] },
+    }),
+    [speed, scale, color, rotation, noiseIntensity]
+  );
+
+  const classes = `relative h-screen w-full overflow-hidden bg-black ${className}`;
+
+  return (
+    <div className={classes}>
+      <Canvas
+        dpr={[1, 2]}
+        frameloop="always"
+        className="w-full! h-full!"
+        onCreated={({ gl }) => {
+          gl.setSize(
+            gl.domElement.parentElement.clientWidth,
+            gl.domElement.parentElement.clientHeight
+          );
+        }}
+      >
+        <SilkPlane ref={meshRef} uniforms={uniforms} />
+      </Canvas>
+
+      {/* Gradient overlay for depth, matching the canvas version */}
+      <div className="absolute inset-0 z-10 bg-linear-to-b from-black/30 via-transparent to-black/50 pointer-events-none" />
+    </div>
+  );
+};
+
+export default Silk;
+```
+
+### Integration Instructions
+1. Install the two required dependencies before copying the component in:
+   ```bash
+   npm install three @react-three/fiber
+   ```
+2. Copy the component source above into `./Silk.jsx` in your project.
+3. The component fills its parent via `h-screen w-full` — it's built as a full-viewport hero/background by default. To use it in a fixed-size container instead of the full screen, override the height with `className`, e.g. `className="!h-[500px]"`, or wrap it:
+   ```jsx
+   <div style={{ width: '100%', height: '500px' }}>
+     <Silk className="!h-full" />
+   </div>
+   ```
+4. All animation state lives in the shader's `uTime` uniform, advanced every frame inside `useFrame` via `delta` — there's no manual `requestAnimationFrame` loop to manage or clean up; React Three Fiber's `<Canvas>` owns the render loop.
+5. Prop changes rebuild the `uniforms` object through `useMemo` and get pushed straight into the shader — unlike a full WebGL re-init, there's no shader recompile per prop change, so `speed`, `scale`, `color`, `noiseIntensity`, and `rotation` can be animated or driven by state without a performance penalty.
+6. `speed` and `scale` are intentionally friendly round numbers (defaults `5` and `1`) rather than the raw shader-facing values — they get normalized internally (`speed * 0.05`, `scale * 2`) before reaching `uSpeed`/`uScale`. If you need finer control, adjust those multipliers directly in the component rather than passing extreme prop values.
+7. `noiseIntensity` is subtracted directly from the final RGB output per pixel, so very high values (roughly above `4`) can push shadow areas to pure black. Keep it in the `0–4` range for a natural grain look.
+8. `rotation` is in radians, not degrees — use `Math.PI / 4` for a 45° rotation, not `45`.
+9. `uResolution` is kept in sync with the canvas's actual pixel size via `useThree()`'s `size`, so the pattern's aspect ratio stays correct on resize without needing a manual `resize` listener (React Three Fiber handles this internally).
+10. The gradient overlay (`bg-linear-to-b from-black/30 via-transparent to-black/50`) sits above the canvas purely for visual depth and has `pointer-events: none` — it won't block clicks or interaction with anything layered on top of the background.
