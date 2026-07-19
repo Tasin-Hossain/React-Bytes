@@ -28,13 +28,16 @@ export const PROPS_DATA = [
   { name: 'showContent', type: 'boolean', def: 'true', desc: 'Toggles the built-in "silk" title and subtitle overlay. Set to false to use the canvas purely as a background behind your own content.' }
 ];
 
-export const dep = [];
+export const dep = [
+  { name: 'three', version: '0.180.0' },
+  { name: '@react-three/fiber', version: '8.17.10' },
+];
 
 export const PKG_CMDS = {
-  pnpm: null,
-  npm: null,
-  yarn: null,
-  bun: null
+  pnpm: 'pnpm add three @react-three/fiber',
+  npm:  'npm install three @react-three/fiber',
+  yarn: 'yarn add three @react-three/fiber',
+  bun:  'bun add three @react-three/fiber',
 };
 
 export const getShadcnCmds = variant => ({
