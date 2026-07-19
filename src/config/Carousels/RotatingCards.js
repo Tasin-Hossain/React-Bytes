@@ -175,7 +175,7 @@ export const PROPS_DATA = [
   },
   {
     name: 'entranceType',
-    type: '"pop" | "fade" | "bottom" | "top" | "left" | "right" | "flip" | "spin" | "zoomBlur" | "scatter"',
+    type: '"pop" | "fade" | "bottom" | "top" | "left" | ...',
     def: '"pop"',
     desc: 'Preset style for the mount entrance animation.'
   },
