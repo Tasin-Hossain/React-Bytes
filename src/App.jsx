@@ -6,6 +6,8 @@ import CategoryGridPage from './pages/CategoryGridPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ToolsPage from './pages/ToolsPage';
 import SponsorsPage from './pages/SponsorsPage';
+import TemplatesGridPage from './pages/TemplatesGridPage';
+import TemplateDetailPage from './pages/TemplateDetailPage';
 
 
 const App = () => {
@@ -26,6 +28,22 @@ const App = () => {
           element={
             <SidebarLayout>
               <CategoryPage />
+            </SidebarLayout>
+          }
+        />
+        <Route
+          path="/templates"
+          element={
+            <SidebarLayout showSponsors={false}>
+              <TemplatesGridPage />
+            </SidebarLayout>
+          }
+        />
+        <Route
+          path="/templates/:slug"
+          element={
+            <SidebarLayout>
+              <TemplateDetailPage />
             </SidebarLayout>
           }
         />

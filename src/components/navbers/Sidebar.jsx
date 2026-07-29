@@ -19,6 +19,8 @@ import {
 import { CATEGORIES, DEFAULT_CATEGORY_ICON } from '../../constants/Categories';
 import { TOOLS } from '../../constants/Tools';
 import { COMPONENT_VIDEOS } from '../../constants/ComponentVideos';
+import { TEMPLATES } from '../../constants/Templates';
+import { TemplatesIcon } from '../../constants/CustomIcons';
 
 // Helpers
 const scrollToTop = () => window.scrollTo(0, 0);
@@ -85,7 +87,7 @@ const ToolsLinks = ({ onClose, location }) => {
   return (
     <>
       <p className="w-full pl-6 text-(--brand) pr-3 py-2 text-left">Tools</p>
-      <div className="flex flex-col gap-0.5 pb-5 pl-3 ">
+      <div className="flex flex-col gap-0.5  pl-3 ">
         {TOOLS.map(tool => (
           <Link
             key={tool.id}
@@ -99,7 +101,7 @@ const ToolsLinks = ({ onClose, location }) => {
             >
               <div className='w-full flex items-center justify-between'>
                 <div className="flex gap-1 items-center justify-center">
-                  {tool.icon && <tool.icon className="text-(--brand) " size={16} />}
+                  {tool.icon && <tool.icon className="text-(--text-primary) " size={16} />}
                   <span className="truncate">{tool.label}</span>
                 </div>
                 {tool.comingSoon && (
@@ -111,6 +113,34 @@ const ToolsLinks = ({ onClose, location }) => {
             </div>
           </Link>
         ))}
+      </div>
+    </>
+  );
+};
+
+// TemplatesLink — single row linking to the Templates gallery (/templates)
+const TemplatesLink = ({ onClose, location, onNavigation }) => {
+  const path = '/templates';
+  const isActive = location?.pathname === path || location?.pathname.startsWith(`${path}/`);
+
+  return (
+    <>
+      <p className="w-full pl-6 text-(--brand) pr-3 py-2 text-left">Templates</p>
+      <div className="flex flex-col gap-0.5 pb-5 pl-3">
+        <button
+          onClick={() => {
+            onNavigation(path);
+            onClose?.();
+          }}
+          className={`w-full flex items-center justify-between cursor-pointer gap-2 px-6 py-2 text-[13px] transition-all duration-150 text-left
+            ${isActive ? 'text-(--brand) font-medium' : 'text-(--text-primary) hover:text-(--brand) hover:translate-x-1'}`}
+        >
+          <span className="flex items-center gap-2 min-w-0">
+            <TemplatesIcon size={16} className={isActive ? 'text-(--text-primary) shrink-0' : ''} />
+            <span className="truncate">Browse Templates</span>
+          </span>
+          <span className="shrink-0 text-[11px] text-(--text-muted)">{TEMPLATES.length}</span>
+        </button>
       </div>
     </>
   );
@@ -462,6 +492,8 @@ const MainDrawer = ({ isOpen, onClose, location, onNavigation, savedSet, activeC
 
                 <ToolsLinks onClose={onClose} location={location} />
 
+                <TemplatesLink onClose={onClose} location={location} onNavigation={onNavigation} />
+
                 <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
                   Categories
                 </p>
@@ -564,6 +596,8 @@ const Sidebar = ({ isDrawerOpen, onDrawerClose }) => {
               )}
 
               <ToolsLinks onClose={null} location={location} />
+
+              <TemplatesLink onClose={null} location={location} onNavigation={handleNavigate} />
 
               <p className="w-full pl-6 pr-3 py-2 text-left text-[11px] font-semibold tracking-widest uppercase text-(--text-muted)">
                 Categories
