@@ -34,7 +34,7 @@ const sizeConfig = {
 };
 
 // Change this to your real sponsor inbox
-const SPONSOR_EMAIL = 'reactbytes.support@gmail.com';
+const SPONSOR_EMAIL = 'reactbytes.dev@gmail.com';
 const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${SPONSOR_EMAIL}&su=${encodeURIComponent(
   'React bytes Sponsorship Inquiry'
 )}`;

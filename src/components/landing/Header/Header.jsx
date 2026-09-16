@@ -17,7 +17,8 @@ const NAV_LINKS = [
   { label: 'Components', to: '/text-animations' },
   // { label: 'Blocks', to: '/', comingSoon: true },
   { label: 'Tools', to: '/tools' },
-  { label: 'Sponsors', to: '/sponsors' }
+  { label: 'Sponsors', to: '/sponsors' },
+  { label: 'Insert your post', to: '/insert-your-post' },
 ];
 
 const formatStars = n => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : Math.round(n));
@@ -185,7 +186,7 @@ const Header = () => {
   }, [targetLink]);
 
   return (
-    <header className=" sticky top-0 z-50 w-full bg-(--bg) border-b border-(--border-secondary)">
+    <header className=" sticky top-0 z-99999 w-full bg-(--bg) border-b border-(--border-secondary)">
       <div className="app-container flex items-center gap-4 py-4 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Ads from '../navbers/Ads';
 import Header from '../navbers/Header';
 import Sidebar from '../navbers/Sidebar';
+import PromoCard from '../navbers/PromoCard';
 
 export function SidebarLayout({ children, showSponsors = true }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -12,10 +13,7 @@ export function SidebarLayout({ children, showSponsors = true }) {
 
       <div className="flex pt-14.25">
         {/* Left sidebar */}
-        <Sidebar
-          isDrawerOpen={drawerOpen}
-          onDrawerClose={() => setDrawerOpen(false)}
-        />
+        <Sidebar isDrawerOpen={drawerOpen} onDrawerClose={() => setDrawerOpen(false)} />
 
         {/* Main content — fills all remaining space when ads hidden */}
         <div
@@ -33,9 +31,17 @@ export function SidebarLayout({ children, showSponsors = true }) {
         {/* Right side (sponsor) — fixed, only xl+ */}
         {showSponsors && (
           <div
-            className="hidden xl:block shrink-0 w-(--right-panel-width)
-            fixed right-6 top-14.25 h-[calc(100vh-57px)] overflow-y-auto py-6"
+            className="hidden xl:flex flex-col shrink-0 w-(--right-panel-width)
+              fixed right-6 top-14.25 h-[calc(100vh-57px)] overflow-y-auto py-6 gap-4"
           >
+            <PromoCard
+              badgeText="ReactBytes"
+              title="Get verified guest posts across 100+ sites."
+              description="Instant placements, fixed pricing"
+              stats={['100+ Sites · 12 Countries', 'Fixed Pricing · Instant TAT']}
+              buttonText="Browse All Sites"
+              buttonHref="/insert-your-post"
+            />
             <Ads />
           </div>
         )}

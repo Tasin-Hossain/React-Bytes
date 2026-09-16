@@ -8,7 +8,8 @@ import ToolsPage from './pages/ToolsPage';
 import SponsorsPage from './pages/SponsorsPage';
 import TemplatesGridPage from './pages/TemplatesGridPage';
 import TemplateDetailPage from './pages/TemplateDetailPage';
-
+import InsertYourPostsPage from './pages/InsertYourPostsPage';
+import 'flag-icons/css/flag-icons.min.css'
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
         />
         <Route path="/sponsors" element={<SponsorsPage />} />
         <Route path="/tools/:toolId?" element={<ToolsPage />} />
+        <Route path="/insert-your-post" element={<InsertYourPostsPage />} />
       </Routes>
     </>
   );

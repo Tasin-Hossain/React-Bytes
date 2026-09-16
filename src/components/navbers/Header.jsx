@@ -57,6 +57,11 @@ const NAV_LINKS = [
     to: '/sponsors',
     isActive: (path) => path.startsWith('/sponsors'),
   },
+  {
+    label: 'Insert your posts',
+    to: '/insert-your-post',
+    isActive: (path) => path.startsWith('/insert-your-post'),
+  },
 ];
 
 // ThemeToggleIcon — shared between desktop and mobile

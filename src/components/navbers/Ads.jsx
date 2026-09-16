@@ -97,7 +97,7 @@ const Ads = () => {
   }, []);
 
   return (
-    <aside className="hidden xl:flex flex-col w-(--right-panel-width) shrink-0">
+    <aside className="hidden xl:flex flex-col w-(--right-panel-width) shrink-0 shadow-md">
       <div
         ref={containerRef}
         className="sticky top-20.25 rounded-2xl border border-(--border-secondary) bg-(--bg-card) p-4 flex flex-col gap-4"
