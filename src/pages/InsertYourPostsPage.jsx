@@ -43,9 +43,9 @@ const parseFiltersFromParams = params => ({
 
 const InsertYourPostsPage = () => {
   useSEO({
-    title: 'Insert Your Post — All Websites | Linkerbuddy',
+    title: 'Insert Your Post — All Websites | React Bytes',
     description:
-      "Browse Linkerbuddy's full guest post & link insertion inventory. Filter by country, niche, Moz DA, Ahrefs DR, traffic and price.",
+      "Browse React Bytes full guest post & link insertion inventory. Filter by country, niche, Moz DA, Ahrefs DR, traffic and price.",
     path: '/insert-your-post'
   });
 
