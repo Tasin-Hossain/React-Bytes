@@ -5,7 +5,7 @@ export const WEBSITES_DATA = [
     da: 43,
     dr: 50,
     traffic: '62.1k',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     niche: 'Tech',
@@ -13,8 +13,8 @@ export const WEBSITES_DATA = [
     owner: 'Admin',
     trend: 'Rising',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
     ]
   },
 
@@ -24,7 +24,7 @@ export const WEBSITES_DATA = [
     da: 43,
     dr: 58,
     traffic: '62.1k',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     niche: 'Social Media',
@@ -32,8 +32,8 @@ export const WEBSITES_DATA = [
     owner: 'Admin',
     trend: 'Rising',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -46,13 +46,13 @@ export const WEBSITES_DATA = [
     dr: 36,
     traffic: '55.7k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -65,13 +65,13 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '53.4k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -84,13 +84,13 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '47.1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -103,13 +103,13 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '47.1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -122,13 +122,13 @@ export const WEBSITES_DATA = [
     dr: 66,
     traffic: '44.8k',
     country: 'UK',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -141,13 +141,13 @@ export const WEBSITES_DATA = [
     dr: 36,
     traffic: '42.1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -160,13 +160,13 @@ export const WEBSITES_DATA = [
     dr: 36,
     traffic: '40.3k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -178,13 +178,13 @@ export const WEBSITES_DATA = [
     dr: 36,
     traffic: '36k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -196,13 +196,13 @@ export const WEBSITES_DATA = [
     dr: 67,
     traffic: '29.7k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -214,13 +214,13 @@ export const WEBSITES_DATA = [
     dr: 29,
     traffic: '27.6k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -233,13 +233,13 @@ export const WEBSITES_DATA = [
     dr: 37,
     traffic: '26.3K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -252,13 +252,13 @@ export const WEBSITES_DATA = [
     dr: 57,
     traffic: '26.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -271,13 +271,13 @@ export const WEBSITES_DATA = [
     dr: 35,
     traffic: '23.9K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -290,13 +290,13 @@ export const WEBSITES_DATA = [
     dr: 58,
     traffic: '20.9K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -308,13 +308,13 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '18.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -326,13 +326,13 @@ export const WEBSITES_DATA = [
     dr: 47,
     traffic: '18.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -344,13 +344,13 @@ export const WEBSITES_DATA = [
     dr: 35,
     traffic: '18.1K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -362,13 +362,13 @@ export const WEBSITES_DATA = [
     dr: 47,
     traffic: '16.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -381,13 +381,13 @@ export const WEBSITES_DATA = [
     dr: 58,
     traffic: '16.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },
@@ -401,13 +401,13 @@ export const WEBSITES_DATA = [
     dr: 38,
     traffic: '16.1K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -419,13 +419,13 @@ export const WEBSITES_DATA = [
     dr: 20,
     traffic: '14.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -437,13 +437,13 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '13.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -455,13 +455,13 @@ export const WEBSITES_DATA = [
     dr: 58,
     traffic: '12.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -473,13 +473,13 @@ export const WEBSITES_DATA = [
     dr: 57,
     traffic: '12.8K',
     country: 'Bangladesh',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -491,13 +491,13 @@ export const WEBSITES_DATA = [
     dr: 70,
     traffic: '12.5K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -509,13 +509,13 @@ export const WEBSITES_DATA = [
     dr: 52,
     traffic: '12.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -527,13 +527,13 @@ export const WEBSITES_DATA = [
     dr: 47,
     traffic: '11.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -545,13 +545,13 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '10.7K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -563,13 +563,13 @@ export const WEBSITES_DATA = [
     dr: 47,
     traffic: '10.2K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
-      { id: 'li', label: 'Link insert / Niche edit', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 40, gray: 70 },
 
     ]
   },{
@@ -581,12 +581,12 @@ export const WEBSITES_DATA = [
     dr: 70,
     traffic: '9.1K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 65,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 65 },
+      { id: 'gp', label: 'Guest post', regular: 50, gray: 65 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -599,12 +599,12 @@ export const WEBSITES_DATA = [
     dr: 52,
     traffic: '8.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 65,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 65 },
+      { id: 'gp', label: 'Guest post', regular: 50, gray: 65 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -617,12 +617,12 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '8.7K',
     country: 'Ethiopia',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 65,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 65 },
+      { id: 'gp', label: 'Guest post', regular: 50, gray: 65 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -635,12 +635,12 @@ export const WEBSITES_DATA = [
     dr: 57,
     traffic: '8.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -653,12 +653,12 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '8.1K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -671,12 +671,12 @@ export const WEBSITES_DATA = [
     dr: 69,
     traffic: '7.5K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -689,12 +689,12 @@ export const WEBSITES_DATA = [
     dr: 66,
     traffic: '6.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -707,12 +707,12 @@ export const WEBSITES_DATA = [
     dr: 38,
     traffic: '6K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -725,12 +725,12 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '5.3K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -743,12 +743,12 @@ export const WEBSITES_DATA = [
     dr: 37,
     traffic: '4.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -761,12 +761,12 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '4.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -779,12 +779,12 @@ export const WEBSITES_DATA = [
     dr: 30,
     traffic: '4.5K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -798,12 +798,12 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '4.3K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -816,12 +816,12 @@ export const WEBSITES_DATA = [
     dr: 51,
     traffic: '3.4K',
     country: 'Philippines',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -834,12 +834,12 @@ export const WEBSITES_DATA = [
     dr: 55,
     traffic: '3K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -852,12 +852,12 @@ export const WEBSITES_DATA = [
     dr: 52,
     traffic: '2.9K',
     country: 'Bangladesh',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -870,12 +870,12 @@ export const WEBSITES_DATA = [
     dr: 35,
     traffic: '2.6K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -888,12 +888,12 @@ export const WEBSITES_DATA = [
     dr: 62,
     traffic: '2.5K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -906,12 +906,12 @@ export const WEBSITES_DATA = [
     dr: 69,
     traffic: '2.2K',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -924,12 +924,12 @@ export const WEBSITES_DATA = [
     dr: 59,
     traffic: '2.2K',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -942,12 +942,12 @@ export const WEBSITES_DATA = [
     dr: 59,
     traffic: '2.1K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -960,12 +960,12 @@ export const WEBSITES_DATA = [
     dr: 52,
     traffic: '1.8K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -978,12 +978,12 @@ export const WEBSITES_DATA = [
     dr: 71,
     traffic: '1.4K',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -996,12 +996,12 @@ export const WEBSITES_DATA = [
     dr: 54,
     traffic: '1.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1014,12 +1014,12 @@ export const WEBSITES_DATA = [
     dr: 54,
     traffic: '1.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1032,12 +1032,12 @@ export const WEBSITES_DATA = [
     dr: 54,
     traffic: '1.4K',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1050,12 +1050,12 @@ export const WEBSITES_DATA = [
     dr: 59,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1068,12 +1068,12 @@ export const WEBSITES_DATA = [
     dr: 67,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1086,12 +1086,12 @@ export const WEBSITES_DATA = [
     dr: 68,
     traffic: '1k',
     country: 'UK',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1104,12 +1104,12 @@ export const WEBSITES_DATA = [
     dr: 35,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1122,12 +1122,12 @@ export const WEBSITES_DATA = [
     dr: 35,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1140,12 +1140,12 @@ export const WEBSITES_DATA = [
     dr: 36,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1158,12 +1158,12 @@ export const WEBSITES_DATA = [
     dr: 37,
     traffic: '1k',
     country: 'USA',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1176,12 +1176,12 @@ export const WEBSITES_DATA = [
     dr: 37,
     traffic: '1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1194,12 +1194,12 @@ export const WEBSITES_DATA = [
     dr: 54,
     traffic: '1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1212,12 +1212,12 @@ export const WEBSITES_DATA = [
     dr: 54,
     traffic: '1k',
     country: 'India',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1230,12 +1230,12 @@ export const WEBSITES_DATA = [
     dr: 52,
     traffic: '1k',
     country: 'Singapore',
-    generalPrice: 40,
+    generalPrice: 50,
     greyPrice: 70,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'gp', label: 'Guest post', regular: 50, generalPrice: 85 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1248,12 +1248,12 @@ export const WEBSITES_DATA = [
     dr: 42,
     traffic: '901',
     country: 'Malaysia',
-    generalPrice: 30,
+    generalPrice: 40,
     greyPrice: 60,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
@@ -1266,12 +1266,30 @@ export const WEBSITES_DATA = [
     dr: 39,
     traffic: '860',
     country: 'India',
-    generalPrice: 30,
+    generalPrice: 40,
     greyPrice: 60,
     maxDofollow: 2,
     tat: 'Instant',
     services: [
-      { id: 'gp', label: 'Guest post', regular: 30, gray: 60 },
+      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
+      { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
+
+    ]
+  },{
+    website: 'filmyhitblog.in',
+    trend: 'Stable',
+    owner: 'Admin',
+    niche: 'General',
+    da: 35,
+    dr: 14,
+    traffic: '860',
+    country: 'India',
+    generalPrice: 40,
+    greyPrice: 60,
+    maxDofollow: 2,
+    tat: 'Instant',
+    services: [
+      { id: 'gp', label: 'Guest post', regular: 40, gray: 70 },
       { id: 'li', label: 'Link insert / Niche edit', regular: 25, gray: 50 },
 
     ]
